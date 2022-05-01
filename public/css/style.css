@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Source+Sans+Pro:wght@400;600;700&display=swap');
+
+@media (max-width: 400px) {
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Source Sans Pro', sans-serif;
+  
+    display: grid;
+    grid-template-columns: 1fr 8em 8em 1fr;
+    grid-template-rows: auto auto auto auto;
+    background: url("/img/login-background.jpg") center/cover fixed;
+  }
+  
+  #header {
+    grid-column-start: 1;
+    grid-column-end: 5;
+  
+    grid-row-start: 3;
+    grid-row-end: 4;
+  
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    width: 100%;
+    margin-bottom: 8em;
+
+    background-color: #fcc603;
+  }
+  
+  h1 {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    justify-self: center;
+    text-align: end;
+    font-size: 30pt;
+    margin: 0;
+    color: black;
+    padding-top: .45em;
+  }
+  
+  .slogan-top {
+    padding: 0;
+    margin: 0;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    justify-self: center;
+    align-self: end;
+    text-align: center;
+    font-size: 17pt;
+    color: black;
+  }
+  
+  .slogan-bottom {
+    padding-bottom: 1em;
+    margin: 0;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    justify-self: center;
+    align-self: end;
+    text-align: center;
+    font-size: 17pt;
+    color: black;
+  }
+  
+  #form-container {
+    grid-column-start: 2;
+    grid-column-end: 4;
+  
+    grid-row-start: 4;
+    grid-row-end: 5;
+  
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    width: 100%;
+
+    background-color:#fcc603;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    padding: 2em 2em 2em 2em;
+  }
+  
+  label {
+    padding-bottom: 1em;
+    font-size: 14pt;
+    color: black;
+  }
+  
+  #username {
+    margin-bottom: 1em;
+    padding: 1em;
+  }
+  
+  #password {
+    margin-bottom: 1em;
+    padding: 1em;
+  }
+  
+  #login-button {
+    padding: 1em;
+    margin-top: 1em;
+    font-size: 14pt;
+    background-color: green;
+    border: none;
+    color: white;
+    border-radius: .5em;
+  }
+}
+
+@media (min-width: 401px) {
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Source Sans Pro', sans-serif;
+  
+    display: grid;
+    grid-template-columns: 1fr 12em 12em 1fr;
+    grid-template-rows: auto auto auto auto;
+    background: url("/img/login-background.jpg") center/cover fixed;
+  }
+  
+  #header {
+    grid-column-start: 1;
+    grid-column-end: 5;
+  
+    grid-row-start: 3;
+    grid-row-end: 4;
+  
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    width: 100%;
+    margin-bottom: 8em;
+
+    background-color: #fcc603;
+  }
+  
+  h1 {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    justify-self: center;
+    text-align: end;
+    font-size: 40pt;
+    margin: 0;
+    color: black;
+    padding-top: .45em;
+  }
+  
+  .slogan-top {
+    padding: 0;
+    margin: 0;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    justify-self: center;
+    align-self: end;
+    text-align: center;
+    font-size: 20pt;
+    color: black;
+  }
+  
+  .slogan-bottom {
+    padding-bottom: 1em;
+    margin: 0;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    justify-self: center;
+    align-self: end;
+    text-align: center;
+    font-size: 20pt;
+    color: black;
+  }
+  
+  #form-container {
+    grid-column-start: 2;
+    grid-column-end: 4;
+  
+    grid-row-start: 4;
+    grid-row-end: 5;
+  
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    width: 100%;
+    margin-bottom: 3em;
+
+    background-color: #fcc603;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    padding: 2em 2em 2em 2em;
+  }
+  
+  label {
+    padding-bottom: 1em;
+    font-size: 14pt;
+    color: black;
+  }
+  
+  #username {
+    margin-bottom: 1em;
+    padding: 1em;
+  }
+  
+  #password {
+    margin-bottom: 1em;
+    padding: 1em;
+  }
+  
+  #login-button {
+    padding: 1em;
+    margin-top: 1em;
+    font-size: 14pt;
+    background-color: green;
+    border: none;
+    color: white;
+    border-radius: .5em;
+  }
+}
+
