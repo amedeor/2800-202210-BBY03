@@ -99,6 +99,10 @@
     margin-bottom: 1em;
     padding: 1em;
   }
+
+  #error-message {
+    text-align: center;
+  }
   
   #login-button {
     padding: 1em;
@@ -107,7 +111,8 @@
     background-color: green;
     border: none;
     color: white;
-    border-radius: .5em;
+    border-radius: 2px;
+    cursor: pointer;
   }
 }
 
@@ -219,7 +224,8 @@
     background-color: green;
     border: none;
     color: white;
-    border-radius: .5em;
+    border-radius: 2px;
+    cursor: pointer;
   }
 }
 
