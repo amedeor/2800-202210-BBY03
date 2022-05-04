@@ -114,6 +114,17 @@
     border-radius: 2px;
     cursor: pointer;
   }
+
+  #signup-button {
+    padding: 1em;
+    margin-top: 1em;
+    font-size: 14pt;
+    background-color: green;
+    border: none;
+    color: white;
+    border-radius: 2px;
+    cursor: pointer;
+  }
 }
 
 @media (min-width: 401px) {
@@ -190,7 +201,7 @@
     flex-direction: column;
     border-radius: 5px;
     width: 100%;
-    margin-bottom: 3em;
+    margin-bottom: 1em;
 
     background-color: #fcc603;
   }
@@ -198,7 +209,7 @@
   form {
     display: flex;
     flex-direction: column;
-    padding: 2em 2em 2em 2em;
+    padding: 2em 2em 1em 2em;
   }
   
   label {
@@ -218,6 +229,17 @@
   }
   
   #login-button {
+    padding: 1em;
+    margin-top: 1em;
+    font-size: 14pt;
+    background-color: green;
+    border: none;
+    color: white;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  #signup-button {
     padding: 1em;
     margin-top: 1em;
     font-size: 14pt;

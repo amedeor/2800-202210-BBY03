@@ -124,6 +124,21 @@ app.get("/profile", async (req, res) => {
 }
 );
 
+app.get("/signup", async (req, res) => {
+
+      let signup = fs.readFileSync("./app/html/signup.html", "utf-8");
+
+      console.log("Regular profile loaded");
+
+      let signupDOM = new JSDOM(signup);
+
+  
+      res.send(signupDOM.serialize());
+
+    }
+
+);
+
 app.post("/login", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
 

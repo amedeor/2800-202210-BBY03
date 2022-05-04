@@ -2,9 +2,11 @@
 
 const loginButton = document.querySelector("#login-button");
 
+const signupButton = document.querySelector("#signup-button");
+
 loginButton.addEventListener("click", async e => {
   e.preventDefault();
-  
+
   let usernameElement = document.querySelector("#username");
   let passwordElement = document.querySelector("#password");
 
@@ -28,4 +30,9 @@ loginButton.addEventListener("click", async e => {
   else {
     window.location.replace("/profile");
   }
+});
+
+signupButton.addEventListener("click", async e => {
+  e.preventDefault();
+  window.location.replace("/signup");
 });
