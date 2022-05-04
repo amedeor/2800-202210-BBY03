@@ -37,8 +37,6 @@ app.get("/profile", async (req, res) => {
     if (req.session.usertype === "regular") {
       let profile = fs.readFileSync("./app/html/profile.html", "utf-8");
 
-      console.log("Regular profile loaded");
-
       let profileDOM = new JSDOM(profile);
 
       let avatarImage = profileDOM.window.document.createElement("img");
@@ -80,8 +78,6 @@ app.get("/profile", async (req, res) => {
 
     } else if (req.session.usertype === "admin") {
       let adminProfile = fs.readFileSync("./app/html/adminprofile.html", "utf-8");
-
-      console.log("Administrator profile loaded");
 
       let profileDOM = new JSDOM(adminProfile);
   
