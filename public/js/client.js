@@ -87,27 +87,19 @@ if (signupButton != null) {
       if (parsedResponse.status === "fail") {
         document.querySelector("#error-message").innerHTML = "";
         document.querySelector("#error-message").insertAdjacentText("afterbegin", parsedResponse.message);
-      } else if (parsedResponse.status === "success") {
-        
+      } else {
         let response = await fetch("/login", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: `username=${signupUsername}&password=${signupPassword}`
-      });
+          method: "post",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: `username=${signupUsername}&password=${signupPassword}`
+        });
 
-      let parsedResponse = await response.json();
-
-      console.log(parsedResponse);
-
-
+        let parsedResponse = await response.json();
+        parsedResponse;
+        window.location.replace("/profile");
       }
-    }
-    else {
-
-
-      //MAYBE PUT SOMETHING HERE
     }
   });
 }
