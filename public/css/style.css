@@ -100,11 +100,84 @@
     padding: 1em;
   }
 
+  #email {
+    margin-bottom: 1em;
+    padding: 1em;
+  }
+
+  #fName {
+    margin-bottom: 1em;
+    padding: 1em;
+  }
+
+  #lName {
+    margin-bottom: 1em;
+    padding: 1em;
+  }
+
+  #signup-username {
+    margin-bottom: 1em;
+    padding: 1em;
+  }
+  
+  #signup-password {
+    margin-bottom: 1em;
+    padding: 1em;
+  }
+
+  #signup-email {
+    margin-bottom: 1em;
+    padding: 1em;
+  }
+
+  #signup-fName {
+    margin-bottom: 1em;
+    padding: 1em;
+  }
+
+  #signup-lName {
+    margin-bottom: 1em;
+    padding: 1em;
+  }
+
   #error-message {
     text-align: center;
   }
   
   #login-button {
+    padding: 1em;
+    margin-top: 1em;
+    font-size: 14pt;
+    background-color: green;
+    border: none;
+    color: white;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  #go-to-signup-button {
+    padding: 1em;
+    margin-top: 1em;
+    font-size: 14pt;
+    background-color: green;
+    border: none;
+    color: white;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  #signup-button {
+    padding: 1em;
+    margin-top: 1em;
+    font-size: 14pt;
+    background-color: green;
+    border: none;
+    color: white;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  #signup-back-button {
     padding: 1em;
     margin-top: 1em;
     font-size: 14pt;
@@ -188,9 +261,9 @@
   
     display: flex;
     flex-direction: column;
-    border-radius: 5px;
+    border-radius: 10px;
     width: 100%;
-    margin-bottom: 3em;
+    margin-bottom: 1em;
 
     background-color: #fcc603;
   }
@@ -198,7 +271,7 @@
   form {
     display: flex;
     flex-direction: column;
-    padding: 2em 2em 2em 2em;
+    padding: 2em 2em 1em 2em;
   }
   
   label {
@@ -216,6 +289,31 @@
     margin-bottom: 1em;
     padding: 1em;
   }
+
+  #signup-username {
+    margin-bottom: 1em;
+    padding: 1em;
+  }
+  
+  #signup-password {
+    margin-bottom: 1em;
+    padding: 1em;
+  }
+
+  #signup-email {
+    margin-bottom: 1em;
+    padding: 1em;
+  }
+
+  #signup-fName {
+    margin-bottom: 1em;
+    padding: 1em;
+  }
+
+  #signup-lName {
+    margin-bottom: 1em;
+    padding: 1em;
+  }
   
   #login-button {
     padding: 1em;
@@ -224,7 +322,40 @@
     background-color: green;
     border: none;
     color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  #go-to-signup-button {
+    padding: 1em;
+    margin-top: 1em;
+    font-size: 14pt;
+    background-color: green;
+    border: none;
+    color: white;
     border-radius: 2px;
+    cursor: pointer;
+  }
+
+  #signup-button {
+    padding: 1em;
+    margin-top: 1em;
+    font-size: 14pt;
+    background-color: green;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  #signup-back-button {
+    padding: 1em;
+    margin-top: 1em;
+    font-size: 14pt;
+    background-color: green;
+    border: none;
+    color: white;
+    border-radius: 5px;
     cursor: pointer;
   }
 }
