@@ -118,25 +118,9 @@ a {
 }
 
 @media (min-width: 401px) {
-  #nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #fcc603;
-    padding-left: 1em;
-    padding-right: 1em;
+  body {
+    display: grid;
+    grid-template-rows: 20% 50% 30%;
   }
 
-  ul {
-    padding: 0;
-  }
-
-  li {
-    list-style: none;
-  }
-
-  #footer {
-
-  }
 }
