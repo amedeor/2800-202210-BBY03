@@ -238,7 +238,7 @@ app.post("/createUser", async (req, res) => {
 
     // res.send({ status: "success", message: "Logged in" });
   } else {
-    res.send({ "status": "fail", "message": "email or username is already inuse." });
+    res.send({ "status": "fail", "message": "Email or Username is already in use" });
   }
 });
 
