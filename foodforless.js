@@ -195,7 +195,7 @@ app.post("/createUser", async (req, res) => {
   });
 
   //Check to see If a user with selected username or email exist.
-  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user WHERE user_username = ? AND user_email = ?", [signupUsername, signupEmail]);
+  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user WHERE user_username = ? OR user_email = ?", [signupUsername, signupEmail]);
 
 
   if (results.length === 0) {
@@ -207,8 +207,6 @@ app.post("/createUser", async (req, res) => {
     //[recordValues] destructuring assignment recordValues are passed into ? in the userRecord SQL statement string
     await connection.query(userRecord, [recordValues]);
 
-    // let newUser = results[0];
-
     // let retrievedUserId = newUser.user_id;
     // let retrievedUsername = newUser.user_username;
     // let retrievedPassword = newUser.user_password;
@@ -218,16 +216,16 @@ app.post("/createUser", async (req, res) => {
     // let retrievedUserType = newUser.user_type;
     // let retrievedAvatarUrl = newUser.user_avatar_url;
 
-    // req.session.loggedIn = true;
+    req.session.loggedIn = true;
 
-    // req.session.username = retrievedUsername;
-    // req.session.firstName = retrievedFirstName;
-    // req.session.lastName = retrievedLastName;
-    // req.session.email = retrievedEmail;
-    // req.session.usertype = retrievedUserType;
-    // req.session.avatarUrl = retrievedAvatarUrl;
+    req.session.username = recordValues[0];
+    req.session.firstName = recordValues[1];
+    req.session.lastName = recordValues[2];
+    req.session.email = recordValues[3];
+    req.session.usertype = recordValues[5];
+    req.session.avatarUrl = recordValues[6];
 
-    // res.send({ status: "success", message: "Logged in" });
+    res.send({ status: "success", message: "Logged in" });
   } else {
     res.send({ "status": "fail", "message": "Email or Username is already in use" });
   }
