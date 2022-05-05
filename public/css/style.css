@@ -5,29 +5,29 @@
     margin: 0;
     padding: 0;
     font-family: 'Source Sans Pro', sans-serif;
-  
+
     display: grid;
     grid-template-columns: 1fr 8em 8em 1fr;
     grid-template-rows: auto auto auto auto;
     background: url("/img/login-background.jpg") center/cover fixed;
   }
-  
+
   #header {
     grid-column-start: 1;
     grid-column-end: 5;
-  
+
     grid-row-start: 3;
     grid-row-end: 4;
-  
+
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
     width: 100%;
-    margin-bottom: 8em;
+    margin-bottom: 3em;
 
     background-color: #fcc603;
   }
-  
+
   h1 {
     grid-column-start: 1;
     grid-column-end: 3;
@@ -38,7 +38,7 @@
     color: black;
     padding-top: .45em;
   }
-  
+
   .slogan-top {
     padding: 0;
     margin: 0;
@@ -50,7 +50,7 @@
     font-size: 17pt;
     color: black;
   }
-  
+
   .slogan-bottom {
     padding-bottom: 1em;
     margin: 0;
@@ -62,39 +62,61 @@
     font-size: 17pt;
     color: black;
   }
-  
+
   #form-container {
     grid-column-start: 2;
     grid-column-end: 4;
-  
+
     grid-row-start: 4;
     grid-row-end: 5;
-  
+
     display: flex;
     flex-direction: column;
     border-radius: 5px;
     width: 100%;
 
-    background-color:#fcc603;
+    background-color: #fcc603;
+
+    margin-bottom: 2em;
   }
-  
+
+  .sign-up-title {
+    text-align: center;
+    margin: 0;
+    padding-top: 2em;
+    font-size: 16pt;
+    text-decoration: underline;
+  }
+
+  .login-title {
+    text-align: center;
+    margin: 0;
+    padding-top: 2em;
+    font-size: 16pt;
+    text-decoration: underline;
+  }
+
   form {
     display: flex;
     flex-direction: column;
-    padding: 2em 2em 2em 2em;
+    padding: 2em 2em 0em 2em;
   }
-  
+
+  #look-like-button-form {
+    padding: 0 0 2em 0;
+  }
+
   label {
     padding-bottom: 1em;
     font-size: 14pt;
     color: black;
   }
-  
+
   #username {
     margin-bottom: 1em;
     padding: 1em;
   }
-  
+
   #password {
     margin-bottom: 1em;
     padding: 1em;
@@ -119,7 +141,7 @@
     margin-bottom: 1em;
     padding: 1em;
   }
-  
+
   #signup-password {
     margin-bottom: 1em;
     padding: 1em;
@@ -143,7 +165,7 @@
   #error-message {
     text-align: center;
   }
-  
+
   #login-button {
     padding: 1em;
     margin-top: 1em;
@@ -187,6 +209,33 @@
     border-radius: 2px;
     cursor: pointer;
   }
+
+  /*makes the button it look like a link*/
+  #back-to-login-button {
+    background: none;
+    border: none;
+    font: inherit;
+    color: blue;
+    cursor: pointer;
+  }
+
+  #to-signup-button {
+    background: none;
+    border: none;
+    font: inherit;
+    color: blue;
+    cursor: pointer;
+  }
+
+  #existing-account-paragraph {
+    text-align: center;
+    margin: 0;
+  }
+
+  #no-account-paragraph {
+    text-align: center;
+    margin: 0;
+  }
 }
 
 @media (min-width: 401px) {
@@ -194,29 +243,29 @@
     margin: 0;
     padding: 0;
     font-family: 'Source Sans Pro', sans-serif;
-  
+
     display: grid;
     grid-template-columns: 1fr 12em 12em 1fr;
     grid-template-rows: auto auto auto auto;
     background: url("/img/login-background.jpg") center/cover fixed;
   }
-  
+
   #header {
     grid-column-start: 1;
     grid-column-end: 5;
-  
+
     grid-row-start: 3;
     grid-row-end: 4;
-  
+
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
     width: 100%;
-    margin-bottom: 8em;
+    margin-bottom: 3em;
 
     background-color: #fcc603;
   }
-  
+
   h1 {
     grid-column-start: 1;
     grid-column-end: 3;
@@ -227,7 +276,7 @@
     color: black;
     padding-top: .45em;
   }
-  
+
   .slogan-top {
     padding: 0;
     margin: 0;
@@ -239,7 +288,7 @@
     font-size: 20pt;
     color: black;
   }
-  
+
   .slogan-bottom {
     padding-bottom: 1em;
     margin: 0;
@@ -251,40 +300,61 @@
     font-size: 20pt;
     color: black;
   }
-  
+
+  .sign-up-title {
+    text-align: center;
+    margin: 0;
+    padding-top: 2em;
+    font-size: 16pt;
+    text-decoration: underline;
+  }
+
+  .login-title {
+    text-align: center;
+    margin: 0;
+    padding-top: 2em;
+    font-size: 16pt;
+    text-decoration: underline;
+  }
+
   #form-container {
     grid-column-start: 2;
     grid-column-end: 4;
-  
+
     grid-row-start: 4;
     grid-row-end: 5;
-  
+
     display: flex;
     flex-direction: column;
-    border-radius: 10px;
+    border-radius: 5px;
     width: 100%;
-    margin-bottom: 1em;
 
     background-color: #fcc603;
+
+    margin-bottom: 2em;
   }
-  
+
   form {
     display: flex;
     flex-direction: column;
     padding: 2em 2em 1em 2em;
   }
-  
+
+  #look-like-button-form {
+    padding: 0 0 2em 0;
+  }
+
   label {
     padding-bottom: 1em;
     font-size: 14pt;
     color: black;
   }
-  
+
   #username {
     margin-bottom: 1em;
     padding: 1em;
   }
-  
+
   #password {
     margin-bottom: 1em;
     padding: 1em;
@@ -294,7 +364,7 @@
     margin-bottom: 1em;
     padding: 1em;
   }
-  
+
   #signup-password {
     margin-bottom: 1em;
     padding: 1em;
@@ -314,7 +384,7 @@
     margin-bottom: 1em;
     padding: 1em;
   }
-  
+
   #login-button {
     padding: 1em;
     margin-top: 1em;
@@ -324,6 +394,10 @@
     color: white;
     border-radius: 5px;
     cursor: pointer;
+  }
+
+  #error-message {
+    text-align: center;
   }
 
   #go-to-signup-button {
@@ -358,5 +432,31 @@
     border-radius: 5px;
     cursor: pointer;
   }
-}
 
+  /*makes the button it look like a link*/
+  #back-to-login-button {
+    background: none;
+    border: none;
+    font: inherit;
+    color: blue;
+    cursor: pointer;
+  }
+
+  #to-signup-button {
+    background: none;
+    border: none;
+    font: inherit;
+    color: blue;
+    cursor: pointer;
+  }
+
+  #existing-account-paragraph {
+    text-align: center;
+    margin: 0;
+  }
+
+  #no-account-paragraph {
+    text-align: center;
+    margin: 0;
+  }
+}
