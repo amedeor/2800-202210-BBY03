@@ -10,9 +10,8 @@ body {
   body {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 15% 20% 20% 30% 10% 5%;
+    grid-template-rows: 15% 20% 20% 35% 5% 5%;
     height: 100vh;
-    width: 100vw;
   }
 
   #nav-icons {
@@ -24,12 +23,13 @@ body {
   #profile-info {
     grid-column-start: 1;
     grid-column-end: 4;
-
+    grid-row-start: 2;
+    grid-row-end: 5;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto auto auto;
-    padding-top: 2em;
-
+    padding-top: 1em;
+    white-space: nowrap;
   }
 
   .profile-info-piece {
@@ -85,9 +85,10 @@ body {
 
   #footer {
     grid-column-start: 1;
-    grid-column-end: 1;
+    grid-column-end: 4;
     grid-row-start: 6;
     grid-row-end: 6;
+    text-align: center;
   }
 
   #logout-button {
@@ -96,11 +97,13 @@ body {
     font: inherit;
     cursor: pointer;
   }
-  button{
+
+  button {
     background-color: white;
     border-width: 1px;
   }
-  #profile-abilities{
+
+  #profile-abilities {
     text-align: center;
     grid-column-start: 1;
     grid-column-end: 4;
@@ -117,7 +120,67 @@ a {
 @media (min-width: 401px) {
   body {
     display: grid;
-    grid-template-rows: 20% 50% 30%;
+    grid-template-rows: 7vw 1fr 5vh;
+  }
+
+  .profile-info {
+    grid-row: 2 / span 1;
+  }
+
+  .profile-info-piece {
+    text-align: center;
+  }
+
+  nav {
+    grid-row: 1 / span 1;
+    background-color: #fcc603;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+  }
+
+  #title {
+    grid-area: 1 / 1 / span 1 / span 1;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #nav-clickable {
+    grid-area: 1 / 2 / span 1 / span 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  figure {
+    display: flex;
+    justify-content: center;
+  }
+
+  figcaption {
+    text-align: center;
+  }
+
+  .nav-icon {
+    width: 50px;
+  }
+
+  #logout-button {
+    background: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .avatar-image {
+    height: 50vh;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2vh;
+    margin-bottom: 3vh;
   }
 
 }
