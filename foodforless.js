@@ -6,6 +6,7 @@ const fs = require("fs");
 const session = require("express-session");
 const { JSDOM } = require("jsdom");
 const mysql = require("mysql2/promise");
+const bcrypt = require("bcrypt");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
