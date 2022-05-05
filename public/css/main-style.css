@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Source+Sans+Pro:wght@400;600;700&display=swap');
-
+* {
+  outline: 1px solid #f00 !important;
+}
 body {
   font-family: 'Source Sans Pro', sans-serif;
   margin: 0;
@@ -7,11 +9,10 @@ body {
 }
 
 @media (max-width: 400px) {
-
   body {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 9em 20% 20% 40%;
+    grid-template-rows: 15% 20% 20% 35% 5% 5%;
     height: 100vh;
   }
 
@@ -24,20 +25,21 @@ body {
   #profile-info {
     grid-column-start: 1;
     grid-column-end: 4;
-
-
+    grid-row-start: 2;
+    grid-row-end: 5;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto auto auto;
-    padding-top: 2em;
-
+    padding-top: 1em;
+    white-space: nowrap;
   }
 
   .profile-info-piece {
     grid-column-start: 1;
     grid-column-end: 2;
-    justify-self: center;
+    padding-left: 2em;
   }
+
 
   .avatar-image {
     padding-left: 2em;
@@ -45,8 +47,10 @@ body {
   }
 
   .username {
+    text-align: center;
     font-size: 16pt;
     font-weight: bold;
+    padding-left: 0;
   }
 
 
@@ -64,7 +68,8 @@ body {
   }
 
   h1 {
-    padding-top: 1em;
+    font-weight: bolder;
+    padding-top: 0.5em;
     padding-bottom: 1em;
     margin: 0;
   }
@@ -81,7 +86,11 @@ body {
   }
 
   #footer {
-    
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 6;
+    grid-row-end: 6;
+    text-align: center;
   }
 
   #logout-button {
@@ -89,6 +98,17 @@ body {
     border: none;
     font: inherit;
     cursor: pointer;
+  }
+  button{
+    background-color: white;
+    border-width: 1px;
+  }
+  #profile-abilities{
+    text-align: center;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 5;
+    grid-row-end: 5;
   }
 }
 
@@ -117,7 +137,6 @@ a {
   }
 
   #footer {
-    background-color: #fcc603;
 
   }
 }
