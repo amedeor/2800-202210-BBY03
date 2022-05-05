@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Source+Sans+Pro:wght@400;600;700&display=swap');
-
+* {
+  outline: 1px solid #f00 !important;
+}
 body {
   font-family: 'Source Sans Pro', sans-serif;
   margin: 0;
@@ -10,9 +12,8 @@ body {
   body {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 15% 20% 20% 30% 10% 5%;
+    grid-template-rows: 15% 20% 20% 35% 5% 5%;
     height: 100vh;
-    width: 100vw;
   }
 
   #nav-icons {
@@ -24,12 +25,13 @@ body {
   #profile-info {
     grid-column-start: 1;
     grid-column-end: 4;
-
+    grid-row-start: 2;
+    grid-row-end: 5;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto auto auto;
-    padding-top: 2em;
-
+    padding-top: 1em;
+    white-space: nowrap;
   }
 
   .profile-info-piece {
@@ -85,9 +87,10 @@ body {
 
   #footer {
     grid-column-start: 1;
-    grid-column-end: 1;
+    grid-column-end: 4;
     grid-row-start: 6;
     grid-row-end: 6;
+    text-align: center;
   }
 
   #logout-button {
