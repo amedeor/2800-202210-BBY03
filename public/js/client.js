@@ -58,8 +58,9 @@ if (signupButton != null) {
     let signupFName = signupFNameElement.value;
     let signupLName = signupLNameElement.value;
     let signupEmail = signupEmailElement.value;
-    let signupUsername = signupPasswordElement.value;
-    let signupPassword = signupUsernameElement.value;
+    let signupUsername = signupUsernameElement.value;
+    let signupPassword = signupPasswordElement.value;
+    
 
     let response = await fetch("/createUser", {
       method: "post",

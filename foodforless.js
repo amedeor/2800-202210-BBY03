@@ -209,16 +209,12 @@ app.post("/createUser", async (req, res) => {
 
   if (results.length === 0) {
 
-    connection.query('INSERT INTO bby03_user (user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url) values ( ?, ?, ?, ?, ?, ?, ?, ?)',
-      [signupUsername, signupFName, signupLName, signupEmail, signupPassword, 'regular', '/img/avatar1.svg'],
-      function (error, results, fields) {
-        if (error) {
-          console.log(error);
-        }
-        //console.log('Rows returned are: ', results);
-        res.send({ status: "success", msg: "Record added." });
+    let userRecord = "INSERT INTO bby03_user (user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url) values (?)";
 
-      });
+    let recordValues = [signupUsername, signupFName, signupLName, signupEmail, signupPassword, "regular", "/img/avatar1.svg"];
+
+    //[recordValues] destructuring assignment recordValues are passed into ? in the userRecord SQL statement string
+    await connection.query(userRecord, [recordValues]);
 
     // let newUser = results[0];
 
