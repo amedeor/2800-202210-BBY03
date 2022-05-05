@@ -8,6 +8,8 @@ const goToSignupButton = document.querySelector("#go-to-signup-button");
 
 const backButton = document.querySelector("#back-button");
 
+const logoutButton = document.querySelector("#adminlogout");
+
 if (loginButton != null) {
   loginButton.addEventListener("click", async e => {
 
@@ -40,6 +42,29 @@ if (loginButton != null) {
       }
     }
   });
+}
+
+if (logoutButton != null) {
+  console.log("logout not null");
+  logoutButton.addEventListener("click", async e => {
+    e.preventDefault();
+    let response = await fetch("/logout", {
+      method: "get",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+    });
+
+    let parsedResponse = await response.json();
+
+    if (parsedResponse.status === "fail") {
+      document.querySelector("#error-message").innerHTML = "";
+      document.querySelector("#error-message").insertAdjacentText("afterbegin", parsedResponse.message);
+    }
+    else {
+      window.location.replace("/");
+    }
+  })
 }
 
 if (goToSignupButton != null) {

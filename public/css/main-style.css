@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Source+Sans+Pro:wght@400;600;700&display=swap');
-* {
-  outline: 1px solid #f00 !important;
-}
+
 body {
   font-family: 'Source Sans Pro', sans-serif;
   margin: 0;
