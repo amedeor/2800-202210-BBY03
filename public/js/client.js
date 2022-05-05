@@ -82,21 +82,14 @@ if (signupButton != null) {
 
       let parsedResponse = await response.json();
 
+      console.log(parsedResponse);
+
       if (parsedResponse.status === "fail") {
         document.querySelector("#error-message").innerHTML = "";
         document.querySelector("#error-message").insertAdjacentText("afterbegin", parsedResponse.message);
-      }
-    }
-    else {
-      let signupUsernameElement = document.querySelector("#signup-username");
-      let signupPasswordElement = document.querySelector("#signup-password");
-
-      console.log("in else statement that is supposed to redirect")
-
-      let signupUsername = signupUsernameElement.value;
-      let signupPassword = signupPasswordElement.value;
-
-      let response = await fetch("/login", {
+      } else if (parsedResponse.status === "success") {
+        
+        let response = await fetch("/login", {
         method: "post",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
@@ -104,8 +97,17 @@ if (signupButton != null) {
         body: `username=${signupUsername}&password=${signupPassword}`
       });
 
-      let parsedResponse = await response.json();      
-        window.location.replace("/profile");
+      let parsedResponse = await response.json();
+
+      console.log(parsedResponse);
+
+
+      }
+    }
+    else {
+
+
+      //MAYBE PUT SOMETHING HERE
     }
   });
 }

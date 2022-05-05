@@ -227,7 +227,7 @@ app.post("/createUser", async (req, res) => {
     // req.session.usertype = retrievedUserType;
     // req.session.avatarUrl = retrievedAvatarUrl;
 
-    // res.send({ status: "success", message: "Logged in" });
+    res.send({ status: "success", message: "Logged in" });
   } else {
     res.send({ "status": "fail", "message": "Email or Username is already in use" });
   }
