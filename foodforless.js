@@ -39,10 +39,16 @@ app.get("/profile", async (req, res) => {
 
       let profileDOM = new JSDOM(profile);
 
+      let avatar = profileDOM.window.document.createElement("div");
+      avatar.setAttribute("class", "avatar");
+
       let avatarImage = profileDOM.window.document.createElement("img");
       avatarImage.setAttribute("src", req.session.avatarUrl);
       avatarImage.setAttribute("alt", "Avatar image");
       avatarImage.setAttribute("class", "profile-info-piece avatar-image");
+
+      let profileText = profileDOM.window.document.createElement("div");
+      profileText.setAttribute("class", "profileText");
 
       let usernameParagraph = profileDOM.window.document.createElement("p");
       usernameParagraph.setAttribute("class", "profile-info-piece username");
@@ -67,12 +73,20 @@ app.get("/profile", async (req, res) => {
 
       let profileInfoElement = profileDOM.window.document.querySelector("#profile-info");
 
-      profileInfoElement.insertAdjacentElement("beforeend", avatarImage);
-      profileInfoElement.insertAdjacentElement("beforeend", usernameParagraph);
-      profileInfoElement.insertAdjacentElement("beforeend", firstNameParagraph);
-      profileInfoElement.insertAdjacentElement("beforeend", lastNameParagraph);
-      profileInfoElement.insertAdjacentElement("beforeend", emailParagraph);
-      profileInfoElement.insertAdjacentElement("beforeend", userTypeParagraph);
+      profileInfoElement.insertAdjacentElement("beforeend", avatar);
+      profileInfoElement.insertAdjacentElement("beforeend", profileText);
+
+      let avatarElement = profileDOM.window.document.querySelector(".avatar");
+
+      avatarElement.insertAdjacentElement("beforeend", avatarImage);
+      avatarElement.insertAdjacentElement("beforeend", usernameParagraph);
+
+      let profileTextElement = profileDOM.window.document.querySelector(".profileText");
+
+      profileTextElement.insertAdjacentElement("beforeend", firstNameParagraph);
+      profileTextElement.insertAdjacentElement("beforeend", lastNameParagraph);
+      profileTextElement.insertAdjacentElement("beforeend", emailParagraph);
+      profileTextElement.insertAdjacentElement("beforeend", userTypeParagraph);
 
       res.send(profileDOM.serialize());
 
@@ -83,10 +97,16 @@ app.get("/profile", async (req, res) => {
 
       let profileDOM = new JSDOM(adminProfile);
 
+      let avatar = profileDOM.window.document.createElement("div");
+      avatar.setAttribute("class", "avatar");
+
       let avatarImage = profileDOM.window.document.createElement("img");
       avatarImage.setAttribute("src", req.session.avatarUrl);
       avatarImage.setAttribute("alt", "Avatar image");
       avatarImage.setAttribute("class", "profile-info-piece avatar-image");
+
+      let profileText = profileDOM.window.document.createElement("div");
+      profileText.setAttribute("class", "profileText");
 
       let usernameParagraph = profileDOM.window.document.createElement("p");
       usernameParagraph.setAttribute("class", "profile-info-piece username");
@@ -111,12 +131,20 @@ app.get("/profile", async (req, res) => {
 
       let profileInfoElement = profileDOM.window.document.querySelector("#profile-info");
 
-      profileInfoElement.insertAdjacentElement("beforeend", avatarImage);
-      profileInfoElement.insertAdjacentElement("beforeend", usernameParagraph);
-      profileInfoElement.insertAdjacentElement("beforeend", firstNameParagraph);
-      profileInfoElement.insertAdjacentElement("beforeend", lastNameParagraph);
-      profileInfoElement.insertAdjacentElement("beforeend", emailParagraph);
-      profileInfoElement.insertAdjacentElement("beforeend", userTypeParagraph);
+      profileInfoElement.insertAdjacentElement("beforeend", avatar);
+      profileInfoElement.insertAdjacentElement("beforeend", profileText);
+
+      let avatarElement = profileDOM.window.document.querySelector(".avatar");
+
+      avatarElement.insertAdjacentElement("beforeend", avatarImage);
+      avatarElement.insertAdjacentElement("beforeend", usernameParagraph);
+
+      let profileTextElement = profileDOM.window.document.querySelector(".profileText");
+
+      profileTextElement.insertAdjacentElement("beforeend", firstNameParagraph);
+      profileTextElement.insertAdjacentElement("beforeend", lastNameParagraph);
+      profileTextElement.insertAdjacentElement("beforeend", emailParagraph);
+      profileTextElement.insertAdjacentElement("beforeend", userTypeParagraph);
 
       res.send(profileDOM.serialize());
     }
