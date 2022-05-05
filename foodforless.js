@@ -184,10 +184,6 @@ app.post("/createUser", async (req, res) => {
   let signupLName = req.body.signupLName;
   let signupEmail = req.body.signupEmail;
   let signupUsername = req.body.signupUsername;
-
-  
-
-
   let signupPassword = req.body.signupPassword;
 
   const connection = await mysql.createConnection({
@@ -201,7 +197,6 @@ app.post("/createUser", async (req, res) => {
   //Check to see If a user with selected username or email exist.
   let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user WHERE user_username = ? OR user_email = ?", [signupUsername, signupEmail]);
 
-
   if (results.length === 0) {
 
     let userRecord = "INSERT INTO bby03_user (user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url) values (?)";
@@ -210,15 +205,6 @@ app.post("/createUser", async (req, res) => {
 
     //[recordValues] destructuring assignment recordValues are passed into ? in the userRecord SQL statement string
     await connection.query(userRecord, [recordValues]);
-
-    // let retrievedUserId = newUser.user_id;
-    // let retrievedUsername = newUser.user_username;
-    // let retrievedPassword = newUser.user_password;
-    // let retrievedFirstName = newUser.user_firstname;
-    // let retrievedLastName = newUser.user_lastname;
-    // let retrievedEmail = newUser.user_email;
-    // let retrievedUserType = newUser.user_type;
-    // let retrievedAvatarUrl = newUser.user_avatar_url;
 
     req.session.loggedIn = true;
 
