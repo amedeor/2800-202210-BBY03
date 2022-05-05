@@ -184,6 +184,10 @@ app.post("/createUser", async (req, res) => {
   let signupLName = req.body.signupLName;
   let signupEmail = req.body.signupEmail;
   let signupUsername = req.body.signupUsername;
+
+  
+
+
   let signupPassword = req.body.signupPassword;
 
   const connection = await mysql.createConnection({
