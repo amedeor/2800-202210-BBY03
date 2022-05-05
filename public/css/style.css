@@ -88,6 +88,13 @@
     text-decoration: underline;
   }
 
+  .login-title {
+    text-align: center;
+    margin: 0;
+    padding-top: 2em;
+    font-size: 16pt;
+    text-decoration: underline;
+  }
 
   form {
     display: flex;
@@ -295,6 +302,14 @@
   }
 
   .sign-up-title {
+    text-align: center;
+    margin: 0;
+    padding-top: 2em;
+    font-size: 16pt;
+    text-decoration: underline;
+  }
+
+  .login-title {
     text-align: center;
     margin: 0;
     padding-top: 2em;
