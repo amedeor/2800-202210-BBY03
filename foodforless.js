@@ -208,7 +208,6 @@ app.post("/createUser", async (req, res) => {
     //Check to see If a user with selected username or email exist.
     let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user WHERE user_username = ? AND user_email = ?", [signupUsername, signupEmail]);
 
-    
     if (results.length === 0) {
 
         connection.query('INSERT INTO bby03_user (user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url) values ( ?, ?, ?, ?, ?, ?, ?, ?)',
