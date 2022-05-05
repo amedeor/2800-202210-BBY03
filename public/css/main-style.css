@@ -12,7 +12,7 @@ body {
   body {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 15% 20% 20% 35% 5% 5%;
+    grid-template-rows: 15% 20% 20% 35% 7% 3%;
     height: 100vh;
   }
 
@@ -59,18 +59,62 @@ body {
     grid-column-end: 4;
     grid-row-start: 1;
     grid-row-end: 2;
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-rows: 20% 80%;
     text-align: center;
     background-color: #fcc603;
+    width: 100%;
+    overflow: scroll;
+    
   }
-
+  #title{
+    grid-column-start: 1;
+    grid-column-end: 6;
+    grid-row-start: 1;
+    grid-row-end: 1;
+    overflow: scroll;
+    text-align: start;
+    padding: 0 0 0;
+    
+  }
+  .browse{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 2;
+  }
+  .my-deals{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 2;
+  }
+  .post{
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 2;
+  }
+  .profile{
+    grid-column-start: 4;
+    grid-column-end: 5;
+    grid-row-start: 2;
+    grid-row-end: 2;
+  }
+  .logout{
+    grid-column-start: 5;
+    grid-column-end: 6;
+    grid-row-start: 2;
+    grid-row-end: 2;
+  }
   .nav-icon {
     width: 2em;
   }
 
   h1 {
     font-weight: bolder;
-    padding-top: 0.5em;
-    padding-bottom: 1em;
+    text-align: center;
     margin: 0;
   }
 
