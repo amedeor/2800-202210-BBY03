@@ -134,15 +134,27 @@ a {
 @media (min-width: 401px) {
   body {
     display: grid;
-    grid-template-rows: 7vw 1fr 5vh;
+    grid-template-rows: 20% 1fr 5%;
   }
 
-  .profile-info {
+  #profile-info {
     grid-row: 2 / span 1;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .avatar {
+    margin-right: 10vh;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
   }
 
-  .profile-info-piece {
-    text-align: center;
+  .profileText {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 20px;
   }
 
   nav {
