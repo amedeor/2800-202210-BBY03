@@ -4,8 +4,8 @@ use COMP2800;
 CREATE TABLE IF NOT EXISTS bby03_user(
     user_id int NOT NULL AUTO_INCREMENT,
     PRIMARY KEY (user_id),
-    user_username VARCHAR(50) NOT NULL ,
-    user_firstname VARCHAR(50) NOT NULL ,
+    user_username VARCHAR(50) NOT NULL,
+    user_firstname VARCHAR(50) NOT NULL,
     user_lastname VARCHAR(50) NOT NULL,
     user_email VARCHAR(50) NOT NULL,
     user_password VARCHAR(50) NOT NULL,
