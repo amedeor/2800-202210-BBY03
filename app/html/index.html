@@ -18,16 +18,24 @@
   </header>
 
   <div id="form-container">
+    <p class="login-title">Login</p>
     <form>
       <label for="username">Username</label>
-      <input type="text" id="username" name="username">
+      <input type="text" id="username" name="username" autofocus required />
+
       <label for="password">Password</label>
-      <input type="password" id="password" name="password">
+      <input type="password" id="password" name="password" required />
+
       <input type="submit" id="login-button" value="Login">
       <p id="error-message"></p>
+    </form>
+    <form id="look-like-button-form" action="/signup" method="get">
+      <p id="no-account-paragraph">Don't have an account yet?</p>
+      <input id="to-signup-button" type="submit" value="Create account" />
     </form>
   </div>
 
   <script src="/js/client.js"></script>
 </body>
+
 </html>

@@ -6,13 +6,12 @@ body {
   padding: 0;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 600px) {
 
   body {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 9em 20% 20% 40%;
-    height: 100vh;
+    grid-template-rows: 9em auto auto auto auto auto auto;
   }
 
   #nav-icons {
@@ -24,13 +23,10 @@ body {
   #profile-info {
     grid-column-start: 1;
     grid-column-end: 4;
-
-
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto auto auto;
     padding-top: 2em;
-
   }
 
   .profile-info-piece {
@@ -49,7 +45,6 @@ body {
     font-weight: bold;
   }
 
-
   #nav {
     grid-column-start: 1;
     grid-column-end: 4;
@@ -60,7 +55,7 @@ body {
   }
 
   .nav-icon {
-    width: 2em;
+    width: 1.5em;
   }
 
   h1 {
@@ -80,8 +75,41 @@ body {
     list-style: none;
   }
 
+  table, tr, td, th {
+    border: solid black 1px;
+    border-collapse: collapse;
+    font-size: 10pt;
+  }
+
+  td {
+    padding: .2em;
+  }
+
+  #users-table {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    justify-self: center;
+    margin-bottom: 2em;
+  }
+  #profile-abilities {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    justify-self: center;
+    padding-bottom: 3em;
+  }
+
   #footer {
-    
+    grid-column-start: 1;
+    grid-column-end: 4;
+
+    justify-self: center;
+  }
+
+  .look-like-button {
+    background: none;
+    border: none;
+    font: inherit;
+    cursor: pointer;
   }
 
   #logout-button {
@@ -97,8 +125,62 @@ a {
   color: black;
 }
 
-@media (min-width: 401px) {
+#user-accounts-heading {
+  grid-column-start: 1;
+  grid-column-end: 5;
+  justify-self: center;
+}
+
+@media (min-width: 601px) {
+  body {
+    display: grid;
+    grid-template-columns: 20em 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto;
+  }
+
+  h1 {
+    font-size: 24pt;
+  }
+
+  table, tr, td, th {
+    border: solid black 1px;
+    border-collapse: collapse;
+  }
+
+  td {
+    padding: .2em;
+  }
+
+  #users-table {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    justify-self: center;
+    margin-bottom: 2em;
+  }
+
+  #nav-icons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    justify-content: center;
+  }
+
+  #nav-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    justify-items: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  #nav-items-container {
+    width: 60%;
+  }
+
   #nav {
+    grid-column-start: 1;
+    grid-column-end: 5;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -106,18 +188,95 @@ a {
     background-color: #fcc603;
     padding-left: 1em;
     padding-right: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+
+  .nav-icon {
+    width: 1.5em;
+    justify-self: center;
+  }
+
+  #profile-info {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    justify-self: center;
+    display: grid;
+    grid-template-columns: 20em;
+    grid-template-rows: auto auto auto auto auto;
+    padding-top: 2em;
+  }
+
+  .avatar-image {
+    justify-self: center;
+  }
+
+  .username {
+    justify-self: center;
+  }
+
+  .firstName {
+    justify-self: center;
+  }
+
+  .lastName {
+    justify-self: center;
+  }
+
+  .email {
+    justify-self: center;
+  }
+
+  .user-type {
+    justify-self: center;
+  }
+
+  .username {
+    font-size: 16pt;
+    font-weight: bold;
   }
 
   ul {
     padding: 0;
   }
 
+  #profile-abilities {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    justify-self: center;
+    padding-bottom: 3em;
+  }
+
   li {
     list-style: none;
+    text-align: center;
+  }
+
+  .look-like-button {
+    background: none;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  #logout-button {
+    background: none;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+  }
+
+  #user-accounts-heading {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    justify-self: center;
   }
 
   #footer {
-    background-color: #fcc603;
-
+    grid-column-start: 1;
+    grid-column-end: 5;
+    justify-self: center;
   }
 }

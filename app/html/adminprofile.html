@@ -13,35 +13,49 @@
 <body>
   <nav id="nav">
     <h1>FoodForLess</h1>
-    <div id="nav-icons">
-      <img class="nav-icon" src="/img/magnifying-glass-icon.svg" alt="" />
-      <img class="nav-icon" src="/img/list-icon.svg" alt="" />
-      <img class="nav-icon" src="/img/add-icon.svg" alt="" />
-      <img class="nav-icon" src="/img/profile-icon.svg" alt="" />
-      <img class="nav-icon" src="/img/logout-icon.svg" alt="" />
-    </div>
+    <div id="nav-items-container">
+      <div id="nav-icons">
+        <img class="nav-icon" src="/img/magnifying-glass-icon.svg" alt="" />
+        <img class="nav-icon" src="/img/list-icon.svg" alt="" />
+        <img class="nav-icon" src="/img/add-icon.svg" alt="" />
+        <img class="nav-icon" src="/img/profile-icon.svg" alt="" />
+        <img class="nav-icon" src="/img/logout-icon.svg" alt="" />
+      </div>
 
-    <ul id="nav-links">
-      <li class="nav-link"><a href="#">Browse</a></li>
-      <li class="nav-link"><a href="#">My Deals</a></li>
-      <li class="nav-link"><a href="#">Post</a></li>
-      <li class="nav-link"><a href="#">Profile</a></li>
-      <li class="nav-link">
-        <form action="/logout" method="get">
-          <input id="logout-button" type="submit" value="Logout" />
-        </form>
-      </li>
-    </ul>
+      <ul id="nav-links">
+        <li class="nav-link"><a href="#">Browse</a></li>
+        <li class="nav-link"><a href="#">My Deals</a></li>
+        <li class="nav-link"><a href="#">Post</a></li>
+        <li class="nav-link">
+          <form action="/profile" method="get">
+            <input id="profile-button" class="look-like-button" type="submit" value="Profile">
+          </form>
+        </li>
+        <li class="nav-link">
+          <form action="/logout" method="get">
+            <input id="logout-button" type="submit" value="Logout" />
+          </form>
+        </li>
+      </ul>
+
+    </div>
 
   </nav>
 
   <div id="profile-info"></div>
 
+  <div id="profile-abilities">
+    <form action="/users" method="get">
+      <input id="view-user-account-button" type="submit" value="View User Accounts">
+    </form>
+  </div>
+
   <footer id="footer">
     <div>
-      <p></p>
+      <small>Copyright 2022, FoodForLess</small>
     </div>
   </footer>
+  <script src="/js/client.js"></script>
 </body>
 
 </html>
