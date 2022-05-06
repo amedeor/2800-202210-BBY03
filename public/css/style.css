@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Source+Sans+Pro:wght@400;600;700&display=swap');
 
-@media (max-width: 450px) {
+@media (max-width: 600px) {
   body {
     margin: 0;
     padding: 0;
@@ -238,7 +238,7 @@
   }
 }
 
-@media (min-width: 451px) {
+@media (min-width: 601px) {
   body {
     margin: 0;
     padding: 0;
@@ -253,10 +253,8 @@
   #header {
     grid-column-start: 1;
     grid-column-end: 5;
-
     grid-row-start: 3;
     grid-row-end: 4;
-
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;

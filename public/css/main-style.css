@@ -6,7 +6,7 @@ body {
   padding: 0;
 }
 
-@media (max-width: 450px) {
+@media (max-width: 600px) {
 
   body {
     display: grid;
@@ -80,10 +80,11 @@ body {
   table, tr, td, th {
     border: solid black 1px;
     border-collapse: collapse;
+    font-size: 10pt;
   }
 
   td {
-    padding: .5em;
+    padding: .2em;
   }
 
   #users-table {
@@ -106,6 +107,13 @@ body {
     justify-self: center;
   }
 
+  .look-like-button {
+    background: none;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+  }
+
   #logout-button {
     background: none;
     border: none;
@@ -125,7 +133,7 @@ a {
   justify-self: center;
 }
 
-@media (min-width: 451px) {
+@media (min-width: 601px) {
   body {
     display: grid;
     grid-template-columns: 20em 1fr 1fr 1fr;
@@ -142,7 +150,7 @@ a {
   }
 
   td {
-    padding: .5em;
+    padding: .2em;
   }
 
   #users-table {
@@ -249,6 +257,13 @@ a {
   li {
     list-style: none;
     text-align: center;
+  }
+
+  .look-like-button {
+    background: none;
+    border: none;
+    font: inherit;
+    cursor: pointer;
   }
 
   #logout-button {

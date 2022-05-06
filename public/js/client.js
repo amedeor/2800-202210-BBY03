@@ -101,10 +101,3 @@ if (signupButton != null) {
     }
   });
 }
-
-// if (viewUserAccountsButton != null) {
-//   viewUserAccountsButton.addEventListener("click", async e => {
-//     e.preventDefault();
-//     let response = await fetch("/users");
-//   });
-// }
