@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Source+Sans+Pro:wght@400;600;700&display=swap');
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
   body {
     margin: 0;
     padding: 0;
@@ -238,7 +238,7 @@
   }
 }
 
-@media (min-width: 401px) {
+@media (min-width: 451px) {
   body {
     margin: 0;
     padding: 0;

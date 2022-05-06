@@ -48,16 +48,16 @@ app.get("/profile", async (req, res) => {
       usernameParagraph.setAttribute("class", "profile-info-piece username");
 
       let firstNameParagraph = profileDOM.window.document.createElement("p");
-      firstNameParagraph.setAttribute("class", "profile-info-piece");
+      firstNameParagraph.setAttribute("class", "profile-info-piece firstName");
 
       let lastNameParagraph = profileDOM.window.document.createElement("p");
-      lastNameParagraph.setAttribute("class", "profile-info-piece");
+      lastNameParagraph.setAttribute("class", "profile-info-piece lastName");
 
       let emailParagraph = profileDOM.window.document.createElement("p");
-      emailParagraph.setAttribute("class", "profile-info-piece");
+      emailParagraph.setAttribute("class", "profile-info-piece email");
 
       let userTypeParagraph = profileDOM.window.document.createElement("p");
-      userTypeParagraph.setAttribute("class", "profile-info-piece");
+      userTypeParagraph.setAttribute("class", "profile-info-piece user-type");
 
       usernameParagraph.insertAdjacentText("beforeend", `${req.session.username}`);
       firstNameParagraph.insertAdjacentText("beforeend", `First Name: ${req.session.firstName}`);
@@ -92,16 +92,16 @@ app.get("/profile", async (req, res) => {
       usernameParagraph.setAttribute("class", "profile-info-piece username");
 
       let firstNameParagraph = profileDOM.window.document.createElement("p");
-      firstNameParagraph.setAttribute("class", "profile-info-piece");
+      firstNameParagraph.setAttribute("class", "profile-info-piece firstName");
 
       let lastNameParagraph = profileDOM.window.document.createElement("p");
-      lastNameParagraph.setAttribute("class", "profile-info-piece");
+      lastNameParagraph.setAttribute("class", "profile-info-piece lastName");
 
       let emailParagraph = profileDOM.window.document.createElement("p");
-      emailParagraph.setAttribute("class", "profile-info-piece");
+      emailParagraph.setAttribute("class", "profile-info-piece email");
 
       let userTypeParagraph = profileDOM.window.document.createElement("p");
-      userTypeParagraph.setAttribute("class", "profile-info-piece");
+      userTypeParagraph.setAttribute("class", "profile-info-piece user-type");
 
       usernameParagraph.insertAdjacentText("beforeend", `${req.session.username}`);
       firstNameParagraph.insertAdjacentText("beforeend", `First Name: ${req.session.firstName}`);
@@ -240,6 +240,7 @@ app.get("/users", async (req, res) => {
     console.log(results);
 
     let table = usersDOM.window.document.createElement("table");
+    table.setAttribute("id", "users-table");
 
     let thead = usersDOM.window.document.createElement("thead");
 
