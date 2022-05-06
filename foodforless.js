@@ -227,7 +227,7 @@ app.post("/createUser", async (req, res) => {
 
     let userRecord = "INSERT INTO bby03_user (user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url) values (?)";
 
-    let recordValues = [signupUsername, signupFName, signupLName, signupEmail, signupPassword, "regular", "/img/avatar1.svg"];
+    let recordValues = [signupUsername, signupFName, signupLName, signupEmail, signupPassword, "regular", "/img/default-avatar.svg"];
 
     //[recordValues] destructuring assignment recordValues are passed into ? in the userRecord SQL statement string
     await connection.query(userRecord, [recordValues]);

@@ -4,13 +4,13 @@ use COMP2800;
 CREATE TABLE IF NOT EXISTS bby03_user(
     user_id int NOT NULL AUTO_INCREMENT,
     PRIMARY KEY (user_id),
-    user_username NOT NULL VARCHAR(50),
-    user_firstname NOT NULL VARCHAR(50),
-    user_lastname NOT NULL VARCHAR(50),
-    user_email NOT NULL VARCHAR(50),
-    user_password NOT NULL VARCHAR(50),
-    user_type NOT NULL VARCHAR(50),
-    user_avatar_url NOT NULL VARCHAR(80)
+    user_username VARCHAR(50) NOT NULL ,
+    user_firstname VARCHAR(50) NOT NULL ,
+    user_lastname VARCHAR(50) NOT NULL,
+    user_email VARCHAR(50) NOT NULL,
+    user_password VARCHAR(50) NOT NULL,
+    user_type VARCHAR(50) NOT NULL,
+    user_avatar_url VARCHAR(80) NOT NULL
 );
 
 INSERT INTO bby03_user (user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url) VALUES (1, 'bgreen', 'Bill', 'Green', 'bgreen@email.com', 'password123', 'admin', '/img/avatar1.svg');

@@ -26,7 +26,11 @@
         <li class="nav-link"><a href="#">Browse</a></li>
         <li class="nav-link"><a href="#">My Deals</a></li>
         <li class="nav-link"><a href="#">Post</a></li>
-        <li class="nav-link"><a href="#">Profile</a></li>
+        <li class="nav-link">
+          <form action="/profile" method="get">
+            <input id="profile-button" class="look-like-button" type="submit" value="Profile">
+          </form>
+        </li>
         <li class="nav-link">
           <form action="/logout" method="get">
             <input id="logout-button" type="submit" value="Logout" />
