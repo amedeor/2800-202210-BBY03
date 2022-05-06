@@ -8,7 +8,7 @@ const goToSignupButton = document.querySelector("#go-to-signup-button");
 
 const backButton = document.querySelector("#back-button");
 
-const logoutButton = document.querySelector("#adminlogout");
+const logoutButton = document.querySelector("#logoutOption");
 
 if (loginButton != null) {
   loginButton.addEventListener("click", async e => {
@@ -46,7 +46,7 @@ if (loginButton != null) {
 
 if (logoutButton != null) {
   console.log("logout not null");
-  logoutButton.addEventListener("click", async e => {
+  profileLogoutButton.addEventListener("click", async e => {
     e.preventDefault();
     let response = await fetch("/logout", {
       method: "get",
@@ -65,6 +65,8 @@ if (logoutButton != null) {
       window.location.replace("/");
     }
   })
+} else {
+  console.log("logout is null");
 }
 
 if (goToSignupButton != null) {
