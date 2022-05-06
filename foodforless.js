@@ -6,6 +6,7 @@ const fs = require("fs");
 const session = require("express-session");
 const { JSDOM } = require("jsdom");
 const mysql = require("mysql2/promise");
+const bcrypt = require("bcrypt");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -30,6 +31,24 @@ app.get("/", (req, res) => {
     res.send(doc);
   }
 });
+
+app.get("/profile", async (req, res) => {
+  if (req.session.loggedIn === true && req.session.user_type === "admin") {
+
+    let users = fs.readFileSync("./app/html/users.html", "utf-8");
+    let usersDOM = new JSDOM(users);
+
+    let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user");
+
+    console.log(results);
+
+
+    
+
+    res.send(usersDOM.serialize());
+  }
+});
+
 
 app.get("/profile", async (req, res) => {
   if (req.session.loggedIn === true) {
