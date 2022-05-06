@@ -192,7 +192,7 @@ app.post("/createUser", async (req, res) => {
     multipleStatements: true
   });
 
-  //Check to see If a user with selected username or email exist.
+  //Check to see if a user with selected username or email exists.
   let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user WHERE user_username = ? OR user_email = ?", [signupUsername, signupEmail]);
 
   if (results.length === 0) {
@@ -201,7 +201,6 @@ app.post("/createUser", async (req, res) => {
 
     let recordValues = [signupUsername, signupFName, signupLName, signupEmail, signupPassword, "regular", "/img/default-avatar.svg"];
 
-    //[recordValues] destructuring assignment recordValues are passed into ? in the userRecord SQL statement string
     await connection.query(userRecord, [recordValues]);
 
     req.session.loggedIn = true;

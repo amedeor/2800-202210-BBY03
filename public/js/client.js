@@ -59,7 +59,6 @@ if (signupButton != null) {
     let signupPasswordElement = document.querySelector("#signup-password");
 
     //Check the validity of each HTML5 element
-    //If the HTML5 element validity doesn't pass, then do not fetch /createUser and prevent user from signing up
     if (signupFNameElement.checkValidity() !== false && signupLNameElement.checkValidity() !== false && signupEmailElement.checkValidity() !== false &&
       signupUsernameElement.checkValidity() != false && signupPasswordElement.checkValidity() != false) {
 
