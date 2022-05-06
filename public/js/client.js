@@ -6,7 +6,7 @@ const signupButton = document.querySelector("#signup-button");
 
 const goToSignupButton = document.querySelector("#go-to-signup-button");
 
-const backButton = document.querySelector("#back-button");
+const viewUserAccountsButton = document.querySelector("#view-user-accounts-button");
 
 const logoutButton = document.querySelector("#logoutOption");
 
@@ -109,8 +109,6 @@ if (signupButton != null) {
 
       let parsedResponse = await response.json();
 
-      console.log(parsedResponse);
-
       if (parsedResponse.status === "fail") {
         document.querySelector("#error-message").innerHTML = "";
         document.querySelector("#error-message").insertAdjacentText("afterbegin", parsedResponse.message);
@@ -131,10 +129,9 @@ if (signupButton != null) {
   });
 }
 
-if (backButton != null) {
-  backButton.addEventListener("click", async e => {
-    e.preventDefault();
-    window.location.replace("/login");
-    console.log("back button clicked");
-  });
-}
+// if (viewUserAccountsButton != null) {
+//   viewUserAccountsButton.addEventListener("click", async e => {
+//     e.preventDefault();
+//     let response = await fetch("/users");
+//   });
+// }
