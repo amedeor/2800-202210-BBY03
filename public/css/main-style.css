@@ -23,8 +23,6 @@ body {
   #profile-info {
     grid-column-start: 1;
     grid-column-end: 4;
-
-
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto auto auto;
@@ -203,9 +201,7 @@ a {
   #profile-info {
     grid-column-start: 1;
     grid-column-end: 5;
-
     justify-self: center;
-
     display: grid;
     grid-template-columns: 20em;
     grid-template-rows: auto auto auto auto auto;
@@ -217,9 +213,7 @@ a {
   }
 
   .username {
-
     justify-self: center;
-
   }
 
   .firstName {
