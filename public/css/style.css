@@ -5,7 +5,6 @@
     margin: 0;
     padding: 0;
     font-family: 'Source Sans Pro', sans-serif;
-
     display: grid;
     grid-template-columns: 1fr 8em 8em 1fr;
     grid-template-rows: auto auto auto auto;
@@ -15,16 +14,13 @@
   #header {
     grid-column-start: 1;
     grid-column-end: 5;
-
     grid-row-start: 3;
     grid-row-end: 4;
-
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
     width: 100%;
     margin-bottom: 3em;
-
     background-color: #fcc603;
   }
 
@@ -66,17 +62,13 @@
   #form-container {
     grid-column-start: 2;
     grid-column-end: 4;
-
     grid-row-start: 4;
     grid-row-end: 5;
-
     display: flex;
     flex-direction: column;
     border-radius: 5px;
     width: 100%;
-
     background-color: #fcc603;
-
     margin-bottom: 2em;
   }
 
@@ -210,7 +202,6 @@
     cursor: pointer;
   }
 
-  /*makes the button it look like a link*/
   #back-to-login-button {
     background: none;
     border: none;
@@ -243,7 +234,6 @@
     margin: 0;
     padding: 0;
     font-family: 'Source Sans Pro', sans-serif;
-
     display: grid;
     grid-template-columns: 1fr 12em 12em 1fr;
     grid-template-rows: auto auto auto auto;
@@ -253,10 +243,8 @@
   #header {
     grid-column-start: 1;
     grid-column-end: 5;
-
     grid-row-start: 3;
     grid-row-end: 4;
-
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
@@ -320,17 +308,13 @@
   #form-container {
     grid-column-start: 2;
     grid-column-end: 4;
-
     grid-row-start: 4;
     grid-row-end: 5;
-
     display: flex;
     flex-direction: column;
     border-radius: 5px;
     width: 100%;
-
     background-color: #fcc603;
-
     margin-bottom: 2em;
   }
 
@@ -433,7 +417,6 @@
     cursor: pointer;
   }
 
-  /*makes the button it look like a link*/
   #back-to-login-button {
     background: none;
     border: none;

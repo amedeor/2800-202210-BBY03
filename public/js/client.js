@@ -45,7 +45,6 @@ if (loginButton != null) {
 }
 
 if (logoutButton != null) {
-  console.log("logout not null");
   profileLogoutButton.addEventListener("click", async e => {
     e.preventDefault();
     let response = await fetch("/logout", {
@@ -65,8 +64,6 @@ if (logoutButton != null) {
       window.location.replace("/");
     }
   })
-} else {
-  console.log("logout is null");
 }
 
 if (goToSignupButton != null) {
@@ -128,10 +125,3 @@ if (signupButton != null) {
     }
   });
 }
-
-// if (viewUserAccountsButton != null) {
-//   viewUserAccountsButton.addEventListener("click", async e => {
-//     e.preventDefault();
-//     let response = await fetch("/users");
-//   });
-// }

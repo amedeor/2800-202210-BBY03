@@ -175,7 +175,6 @@ a {
   #nav {
     grid-column-start: 1;
     grid-column-end: 5;
-
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -195,9 +194,7 @@ a {
   #profile-info {
     grid-column-start: 1;
     grid-column-end: 5;
-
     justify-self: center;
-
     display: grid;
     grid-template-columns: 20em;
     grid-template-rows: auto auto auto auto auto;

@@ -93,8 +93,6 @@ app.get("/profile", async (req, res) => {
     } else if (req.session.usertype === "admin") {
       let adminProfile = fs.readFileSync("./app/html/adminprofile.html", "utf-8");
 
-      console.log("Administrator profile loaded");
-
       let profileDOM = new JSDOM(adminProfile);
 
       let avatar = profileDOM.window.document.createElement("div");
@@ -265,8 +263,6 @@ app.get("/users", async (req, res) => {
 
     let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user");
 
-    console.log(results);
-
     let table = usersDOM.window.document.createElement("table");
     table.setAttribute("id", "users-table");
 
@@ -342,6 +338,4 @@ app.get("/logout", function (req, res) {
 });
 
 const port = 8000;
-app.listen(port, () => {
-  console.log("Application is listening on port 8000!");
-});
+app.listen(port);
