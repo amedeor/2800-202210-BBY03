@@ -50,10 +50,25 @@ body {
     grid-column-end: 4;
     grid-row-start: 1;
     grid-row-end: 2;
-    text-align: center;
     background-color: #fcc603;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 40% 60%;
+    overflow:scroll;
   }
-
+  #nav-clickable {
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+  }
+  figure{
+    margin: 0;
+    
+  }
   .nav-icon {
     width: 1.5em;
   }
