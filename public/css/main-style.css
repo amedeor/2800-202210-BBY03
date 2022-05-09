@@ -56,6 +56,7 @@ body {
 
   .nav-icon {
     width: 1.5em;
+    cursor: pointer;
   }
 
   h1 {
@@ -195,6 +196,7 @@ a {
   .nav-icon {
     width: 1.5em;
     justify-self: center;
+    cursor: pointer;
   }
 
   #profile-info {

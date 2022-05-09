@@ -8,6 +8,19 @@ const goToSignupButton = document.querySelector("#go-to-signup-button");
 
 const viewUserAccountsButton = document.querySelector("#view-user-accounts-button");
 
+const logoutIcon = document.querySelector("#logout-icon");
+
+const logoutButton = document.querySelector("#logout-button");
+
+if (logoutIcon != null) {
+  logoutIcon.addEventListener("click", async e => {
+    if (logoutButton != null) {
+      logoutButton.click();
+    }
+  });
+}
+
+
 if (loginButton != null) {
   loginButton.addEventListener("click", async e => {
 
