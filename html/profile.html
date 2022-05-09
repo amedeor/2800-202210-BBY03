@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/main-style.css">
+  <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
+  <title>FoodForLess</title>
+</head>
+
+<body>
+  <nav id="nav">
+    <h1>FoodForLess</h1>
+    <div id="nav-items-container">
+      <div id="nav-icons">
+        <img class="nav-icon" src="/img/magnifying-glass-icon.svg" alt="" />
+        <img class="nav-icon" src="/img/list-icon.svg" alt="" />
+        <img class="nav-icon" src="/img/add-icon.svg" alt="" />
+        <img class="nav-icon" src="/img/profile-icon.svg" alt="" />
+        <img class="nav-icon" src="/img/logout-icon.svg" alt="" />
+      </div>
+
+      <ul id="nav-links">
+        <li class="nav-link"><a href="#">Browse</a></li>
+        <li class="nav-link"><a href="#">My Deals</a></li>
+        <li class="nav-link"><a href="#">Post</a></li>
+        <li class="nav-link">
+          <form action="/profile" method="get">
+            <input id="profile-button" class="look-like-button" type="submit" value="Profile">
+          </form>
+        </li>
+        <li class="nav-link">
+          <form action="/logout" method="get">
+            <input id="logout-button" type="submit" value="Logout" />
+          </form>
+        </li>
+      </ul>
+
+    </div>
+
+  </nav>
+
+  <div id="profile-info"></div>
+
+  <div id="profile-abilities">
+  </div>
+
+  <footer id="footer">
+    <div>
+      <small>Copyright 2022, FoodForLess</small>
+    </div>
+  </footer>
+  <script src="/js/client.js"></script>
+</body>
+
+</html>
