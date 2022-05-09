@@ -10,12 +10,26 @@ const viewUserAccountsButton = document.querySelector("#view-user-accounts-butto
 
 const logoutIcon = document.querySelector("#logout-icon");
 
+const profileIcon = document.querySelector("#profile-icon");
+
 const logoutButton = document.querySelector("#logout-button");
 
+const profileButton = document.querySelector("#profile-button");
+
+//Check if the logout icon is null, if it is not, attach an event listener to the link that will fire the /logout get request
 if (logoutIcon != null) {
   logoutIcon.addEventListener("click", async e => {
     if (logoutButton != null) {
       logoutButton.click();
+    }
+  });
+}
+
+//Check if the profile icon is null, if it is not, attach an event listener to the link that will fire the /profile get request
+if (profileIcon != null) {
+  profileIcon.addEventListener("click", async e => {
+    if (logoutButton != null) {
+      profileButton.click();
     }
   });
 }
