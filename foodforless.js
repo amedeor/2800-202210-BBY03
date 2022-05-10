@@ -296,6 +296,27 @@ app.get("/users", async (req, res) => {
   }
 });
 
+/*
+app.POST("/admin-update", function (req, res) {
+  if (req.session.loggedIn === true && req.session.usertype === "admin") {
+
+    let currentUserName = document.querySelector('.username').innerText;
+
+    const connection = await mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "",
+      database: "COMP2800",
+      multipleStatements: true
+    });    
+    
+    UPDATE bby03_user SET user_username = ?, user_firstname = ?, user_lastname = ?, user_email = ?, user_password = ? WHERE user_id = ?" [formUserName, formFirstName, formLastName, formEmail, formPassword, currentUserName]);
+
+    res.send({ status: "success", message: "Successfully updated user info" })
+  }
+});
+*/
+
 app.get("/logout", function (req, res) {
   if (req.session) {
     req.session.destroy(error => {
