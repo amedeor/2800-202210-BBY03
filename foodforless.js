@@ -137,7 +137,7 @@ app.post("/login", async (req, res) => {
   let password = req.body.password;
 
   const connection = await mysql.createConnection({
-    host: "localhost",
+    host: "127.0.0.1",
     user: "root",
     password: "",
     database: "COMP2800",
@@ -185,7 +185,7 @@ app.post("/createUser", async (req, res) => {
   let signupPassword = req.body.signupPassword;
 
   const connection = await mysql.createConnection({
-    host: "localhost",
+    host: "127.0.0.1",
     user: "root",
     password: "",
     database: "COMP2800",
@@ -218,6 +218,47 @@ app.post("/createUser", async (req, res) => {
   }
 });
 
+
+app.post("/deleteUser", async (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+
+  let inputUserFName = req.body.inputUserFName;
+  let inputUserLName = req.body.inputUserLName;
+  let inputUserEmail = req.body.inputUserEmail;
+  let inputUserUsername = req.body.inputUserUsername;
+  let inputUserPassword = req.body.inputUserPassword;
+
+  const connection = await mysql.createConnection({
+    host: "127.0.0.1",
+    user: "root",
+    password: "",
+    database: "COMP2800",
+    multipleStatements: true
+  });
+
+  //Check to see if a user with selected username or email exists.
+  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user WHERE user_username = ? OR user_email = ?", [signupUsername, signupEmail]);
+
+  if (results.length === 0) {
+
+    await connection.query("SELECT * FROM bb03_user WHERE user_username = ?", [signupUsername]);
+
+    // req.session.loggedIn = true;
+
+    // req.session.username = recordValues[0];
+    // req.session.firstName = recordValues[1];
+    // req.session.lastName = recordValues[2];
+    // req.session.email = recordValues[3];
+    // req.session.usertype = recordValues[5];
+    // req.session.avatarUrl = recordValues[6];
+
+    // res.send({ status: "success", message: "Logged in" });
+  } else {
+    res.send({ "status": "fail", "message": "could not delete user." });
+  }
+});
+
+
 app.get("/users", async (req, res) => {
   if (req.session.loggedIn === true && req.session.usertype === "admin") {
 
@@ -225,7 +266,7 @@ app.get("/users", async (req, res) => {
     let usersDOM = new JSDOM(users);
 
     const connection = await mysql.createConnection({
-      host: "localhost",
+      host: "127.0.0.1",
       user: "root",
       password: "",
       database: "COMP2800",
