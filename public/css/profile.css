@@ -18,11 +18,11 @@ body {font-family: Arial, Helvetica, sans-serif;}
 /* Modal Content */
 .edit-window-content {
   position: relative;
-  background-color: #fefefe;
+  background-color: white;
   margin: auto;
   padding: 0;
   border: 1px solid #888;
-  width: 80%;
+  width: 250px;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
   -webkit-animation-name: animatetop;
   -webkit-animation-duration: 0.4s;
@@ -42,12 +42,14 @@ body {font-family: Arial, Helvetica, sans-serif;}
 }
 
 .edit-window-header {
+  text-align: center;
   padding: 2px 16px;
   background-color: #fcc603;
   color: black;
 }
 
 .edit-window-body {
+  /* text-align: center; */
   padding: 2px 16px;
   padding-bottom: 10px;
 }
@@ -56,3 +58,90 @@ body {font-family: Arial, Helvetica, sans-serif;}
   background-color: #fcc603;
   text-align: center;
 }
+.edit-window-body p{
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+form input{
+  background-color: white;
+  text-align: center;
+  cursor: pointer;
+  border-color: green;
+  border-radius: 5px;
+}
+#view-user-account input[type="submit"]:hover{
+  background-color: green;
+  color: white;
+}
+button{
+  cursor: pointer;
+}
+#edit-profile-button{
+  background-color: white;
+  text-align: center;
+  cursor: pointer;
+  border-color: green;
+  border-radius: 5px;
+}
+#edit-profile-button:hover{
+  background-color: green;
+  color: white;
+}
+#save{
+  background-color: green;
+  border-color: green;
+  border-radius: 5px;
+  color: white;
+}
+.cancel{
+  border-color: red;
+}
+input[type="submit"].cancel:hover{
+  background-color: red;
+  color: white;
+}
+
+
+
+
+
+
+
+
+
+
+/* body .nav-link a {
+  text-decoration: none;
+  color: #222;
+  padding: 0px;
+  text-align: center;
+  position: relative;
+  margin: 0px;
+  flex-grow: 1;
+  cursor: pointer;
+}
+body .nav-link a:before {
+  content: "";
+  position: absolute;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  top: calc(2px/ -1);
+  left: calc(2px/ -1);
+  background: linear-gradient(to right, black 0%, black 100%), 
+  linear-gradient(to top, black 50%, transparent 50%), 
+  linear-gradient(to top, black 50%, transparent 50%), 
+  linear-gradient(to right, black 0%, black 100%), 
+  linear-gradient(to left, black 0%, black 100%);
+  background-size: 100% 2px, 2px 200%, 2px 200%, 0% 2px, 0% 2px;
+  background-position: 50% 100%, 0% 0%, 100% 0%, 100% 0%, 0% 0%;
+  background-repeat: no-repeat, no-repeat;
+  transition: transform 0.3s ease-in-out, background-position 0.3s ease-in-out, background-size 0.3s ease-in-out;
+  transform: scaleX(0) rotate(0deg);
+  transition-delay: 0.6s, 0.3s, 0s;
+}
+body .nav-link a:hover:before {
+  background-size: 200% 2px, 2px 400%, 2px 400%, 55% 2px, 55% 2px;
+  background-position: 50% 100%, 0% 100%, 100% 100%, 100% 0%, 0% 0%;
+  transform: scaleX(1) rotate(0deg);
+  transition-delay: 0s, 0.3s, 0.6s;
+} */

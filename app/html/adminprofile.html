@@ -53,7 +53,7 @@
         <h2>Edit Information</h2>
       </div>
       <div class="edit-window-body">
-        <p>UserName: </p>
+        <p>Username: </p>
         <input type="text">
         <br/>
         <p>First Name: </p>
@@ -68,8 +68,9 @@
         <p>Password: </p>
         <input type="text">
         <form action="" method="">
+          <br/>
+          <input id="save" type="submit" value="Save Changes">
           <input class="cancel" type="submit" value="Cancel">
-          <input id="" type="submit" value="Save Changes">
         </form>
       </div>
       <div class="edit-window-footer">
@@ -80,9 +81,10 @@
   </div>
 
   <div id="profile-abilities">
-    <form action="/users" method="get">
+    <form action="/users" method="get" id = "view-user-account">
       <input id="view-user-account-button" type="submit" value="View User Accounts">
     </form>
+    <br/>
     <button id = "edit-profile-button">Edit Information</button>
   </div>
 

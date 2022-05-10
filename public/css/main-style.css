@@ -58,6 +58,7 @@ body {
     width: 1.5em;
     cursor: pointer;
   }
+  
 
   h1 {
     padding-top: 1em;
@@ -97,6 +98,7 @@ body {
     grid-column-end: 4;
     justify-self: center;
     padding-bottom: 3em;
+    text-align: center;
   }
 
   #footer {
@@ -247,6 +249,7 @@ a {
     grid-column-end: 5;
     justify-self: center;
     padding-bottom: 3em;
+    text-align: center;
   }
 
   li {
