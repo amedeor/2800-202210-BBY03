@@ -1,6 +1,7 @@
 "use strict;"
 
 let editSubmitButton = document.querySelector("#edit-user-info-submit-button");
+let adminEditSubmitButon = document.querySelector("#edit-admin-user-info-submit-button");
 
 if (editSubmitButton != null) {
   editSubmitButton.addEventListener("click", async e => {
@@ -40,6 +41,19 @@ if (editSubmitButton != null) {
     //   document.querySelector("#error-message").insertAdjacentText("afterbegin", parsedResponse.message);
     // }
 
+  })
+}
+
+if (editSubmitButton != null) {
+  editSubmitButton.addEventListener("click", async e => {
+    e.preventDefault();
+
+    console.log("Save Changes buton clicked");
+
+    let currentUsername = document.querySelector(".username").innerText;
+
+     
+    let lastName = document.querySelector("#lastname").value;
   })
 }
 

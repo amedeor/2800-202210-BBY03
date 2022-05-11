@@ -56,30 +56,39 @@
       <div class="edit-window-header">
         <h2>Edit Information</h2>
       </div>
-      <div class="edit-window-body">
-        <p>Username: </p>
-        <input type="text" id="formUserName">
-        <br/>
-        <p>First Name: </p>
-        <input type="text" id="formFirstName">
-        <br/>
-        <p>Last Name: </p>
-        <input type="text" id="formLastName">
-        <br/>
-        <p>Email: </p>
-        <input type="text" id="formEmail">
-        <br/>
-        <p>Password: </p>
-        <input type="text" id="formPassword">
-        <form action="/update-admin-user" method="post">
-          <br/>
-          <input id="save-button" type="submit" value="Save Changes">
-        </form>
-          <button class="cancel" value="Cancel">Cancel</button>
+
+      <div class="edit-window-header">
+        <h2>Edit Information</h2>
       </div>
+
+      <div class="edit-window-body">
+
+        <label for="username">Username:</label>
+        <input id="username" type="text" name="username">
+
+        <label for="firstname">First Name:</label>
+        <input id="firstname" type="text" name="firstname">
+
+        <label for="lastname">Last Name:</label>
+        <input id="lastname" type="text" name="lastname">
+
+        <label for="email">Email:</label>
+        <input id="email" type="text" name="email">
+
+        <label for="password">Password:</label>
+        <input id="password" type="text" name="password">
+
+        <form id="edit-user-info-form">
+          <input id="edit-admin-user-info-submit-button" type="submit" value="Save Changes">
+          <input class="cancel" type="submit" value="Cancel">
+        </form>
+
+      </div>
+
       <div class="edit-window-footer">
         <small>Copyright 2022, FoodForLess</small>
       </div>
+
     </div>
   
   </div>
