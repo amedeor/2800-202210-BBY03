@@ -39,7 +39,7 @@ if (editSubmitButton != null) {
 
     console.log(parsedResponse);
 
-        if (parsedResponse.status === "fail") {
+    if (parsedResponse.status === "fail") {
       document.querySelector("#error-message").innerHTML = "";
       document.querySelector("#error-message").insertAdjacentText("afterbegin", parsedResponse.message);
     }
@@ -85,12 +85,10 @@ let btn = document.querySelector("#edit-profile-button");
 // Get the close button to close the modal
 let span = document.getElementsByClassName("cancel")[0];
 
+
+// When the user clicks the button, open the modal 
 btn.addEventListener("click", e => {
   modal.style.display = "block";
-
-
-
-
 
   //Get the user's first name from the span element
   let firstName = document.querySelector(".firstName").innerText;
@@ -108,28 +106,82 @@ btn.addEventListener("click", e => {
   document.querySelector("#password").value = password;
   document.querySelector("#username").value = username;
 
-
-
-
-
-
 })
 
-// // When the user clicks the button, open the modal 
-// btn.onclick = function() {
-//   modal.style.display = "block";
-// }
-
+// When the user uses button "cancel"
 span.addEventListener("click", e => {
   e.preventDefault();
   modal.style.display = "none";
 })
 
-// // When the user uses button "cancel"
-// span.onclick = function() {
-//   modal.style.display = "none";
-// }
+
+
+//Code for edit window
+// Get the modal
+let changeAvatarModalWindow = document.querySelector("#changeAvatarWindow");
+
+// Get the button that opens the modal
+let changeAvatarButton = document.querySelector("#change-avatar-button");
+
+// Get the close button to close the modal
+let cancelAvatarUploadButton = document.getElementsByClassName("cancel-avatar-upload");
+
+changeAvatarButton.addEventListener("click", e => {
+  modal.style.display = "block";
+});
 
 
 
 
+//Get the upload image form element
+const uploadImageForm = document.getElementById("upload-images-form");
+
+//Attach an event listener to the upload image form's submit eventhandler
+//The uploadImage function will fire when the uploadImageForm's submit event is triggered
+uploadImageForm.addEventListener("submit", uploadImage);
+
+
+//Function to upload a new avatar image on the user's profile page
+async function uploadImage(e) {
+  e.preventDefault();
+
+  const imageUpload = document.querySelector('#image-upload');
+  const formData = new FormData();
+
+  //Use a loop to get the image from the image upload input and store it in a variable called file
+  for (let i = 0; i < imageUpload.files.length; i++) {
+    formData.append("file", imageUpload.files[i]);
+  }
+
+  //append the user's username to the formData that will be sent to the server
+  //this allows us to update the avatar URL for the correct user in the database
+  formData.append("username", document.querySelector(".username").innerText);
+
+  const options = {
+    method: 'POST',
+    body: formData,
+  };
+
+  await fetch("/upload-image", options
+  ).then(function (res) {
+    console.log(res);
+  }).catch(function (err) { ("Error:", err) }
+  );
+
+  let updatedRecordResponse = await fetch("/get-user");
+
+  let parsedUpdatedRecordResponse = await updatedRecordResponse.json();
+
+  // get the parsed json from the /get-user route and store it in a variable
+  // if the /get-user request was successful, the response will contain the user's row from the database
+  let userRecord = parsedUpdatedRecordResponse.rows[0];
+
+  //Update the HTML on the profile page to reflect the new changes made to the user's profile data in the database
+  let userAvatarElement = document.querySelector(".avatar-image");
+  let userAvatarUrl = userAvatarElement.getAttribute("src");
+  userAvatarElement.setAttribute("src", userRecord.user_avatar_url);
+
+  //hide the form after the Save Changes button is pressed
+  modal.style.display = "none";
+
+}

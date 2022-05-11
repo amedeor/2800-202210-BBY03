@@ -7,6 +7,19 @@ const session = require("express-session");
 const { JSDOM } = require("jsdom");
 const mysql = require("mysql2/promise");
 
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, "./public/img");
+  },
+  filename: (req, file, callback) => {
+    callback(null, `${Date.now()}-${file.originalname}`);
+  }
+})
+
+const upload = multer({ storage: storage });
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -54,10 +67,51 @@ app.get("/get-user", async (req, res) => {
   console.log('Rows returned are: ', results);
 
   connection.end();
+});
 
 
 
-})
+
+
+//the argument to single is the name of the HTML input that is uploading the file
+app.post("/upload-image", upload.single("file"), async (req, res) => {
+  
+  let savedFileName = `/img/${req.file.filename}`;
+  let username = req.body.username;
+
+  console.log(savedFileName);
+  console.log(username);
+
+  const connection = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "COMP2800",
+    multipleStatements: true
+  });
+
+  await connection.connect();
+  let [results, fields] = await connection.query("UPDATE bby03_user SET user_avatar_url = ? WHERE user_username = ?",
+    [savedFileName, username],
+    function (error, results, fields) {
+      if (error) {
+        console.log(error);
+      }
+    });
+
+  //update session variable with new profile picture URL
+  req.session.avatarUrl = savedFileName;
+
+
+  res.send({"status": "success", "message": "Image uploaded successfully."})
+});
+
+
+
+
+
+
+
 
 app.get("/profile", async (req, res) => {
   if (req.session.loggedIn === true) {
@@ -66,6 +120,43 @@ app.get("/profile", async (req, res) => {
       let profile = fs.readFileSync("./app/html/profile.html", "utf-8");
 
       let profileDOM = new JSDOM(profile);
+
+      // let imageUploadForm = profileDOM.window.document.createElement("form");
+      // imageUploadForm.setAttribute("id", "image-upload-form");
+
+      // let imageUploadInput = profileDOM.window.document.createElement("input");
+      // imageUploadInput.setAttribute("id", "image-upload-input");
+      // imageUploadInput.setAttribute("type", "file");
+      // imageUploadInput.setAttribute("value", "Change Avatar Picture");
+      // imageUploadInput.setAttribute("accept", "image/png, image/gif, image/jpeg, image/svg+xml");
+      // //imageUploadInput.setAttribute("name", "image");
+
+      // let imageFormSubmitButton = profileDOM.window.document.createElement("input");
+      // imageFormSubmitButton.setAttribute("id", "photo-upload-submit-button");
+      // imageFormSubmitButton.setAttribute("type", "submit");
+      // imageFormSubmitButton.setAttribute("value", "Submit");
+
+
+      // // let imageUploadForm = profileDOM.window.document.createElement("form");
+      // // imageUploadForm.setAttribute("id", "image-upload-form");
+      // // imageUploadForm.setAttribute("method", "post");
+      // // imageUploadForm.setAttribute("action", "/upload-image")
+      // // imageUploadForm.setAttribute("enctype", "/multipart/form-data")
+
+      // // let imageUploadInput = profileDOM.window.document.createElement("input");
+      // // imageUploadInput.setAttribute("id", "image-upload-input");
+      // // imageUploadInput.setAttribute("type", "file");
+      // // //imageUploadInput.setAttribute("value", "Change Avatar Picture");
+      // // imageUploadInput.setAttribute("accept", "image/png, image/gif, image/jpeg, image/svg+xml");
+      // // imageUploadInput.setAttribute("name", "image");
+
+      // // let imageFormSubmitButton = profileDOM.window.document.createElement("input");
+      // // imageFormSubmitButton.setAttribute("id", "photo-upload-submit-button");
+      // // imageFormSubmitButton.setAttribute("type", "submit");
+      // // imageFormSubmitButton.setAttribute("value", "Submit");
+
+      // imageUploadForm.insertAdjacentElement("beforeend", imageUploadInput);
+      // imageUploadForm.insertAdjacentElement("beforeend", imageFormSubmitButton);
 
       let avatarImage = profileDOM.window.document.createElement("img");
       avatarImage.setAttribute("src", req.session.avatarUrl);
@@ -130,6 +221,8 @@ app.get("/profile", async (req, res) => {
       let profileInfoElement = profileDOM.window.document.querySelector("#profile-info");
 
       profileInfoElement.insertAdjacentElement("beforeend", avatarImage);
+
+      // profileInfoElement.insertAdjacentElement("beforeend", imageUploadForm);
 
       profileInfoElement.insertAdjacentElement("beforeend", usernameParagraph);
       usernameParagraph.insertAdjacentElement("beforeend", usernameSpan);
