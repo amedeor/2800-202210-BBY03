@@ -16,6 +16,8 @@ const logoutButton = document.querySelector("#logout-button");
 
 const profileButton = document.querySelector("#profile-button");
 
+const saveEditButton = document.querySelector("#save-button");
+
 //Check if the logout icon is null, if it is not, attach an event listener to the link that will fire the /logout get request
 if (logoutIcon != null) {
   logoutIcon.addEventListener("click", async e => {
@@ -34,6 +36,48 @@ if (profileIcon != null) {
   });
 }
 
+if (saveEditButton != null) {
+  saveEditButton.addEventListener("click", async e => {
+
+    e.preventDefault();
+
+    let currentUserNameElement = document.querySelector(".username");
+
+    let userNameElement = document.querySelector("#formUserName");
+    let firstNameElement = document.querySelector("#formFirstName");
+    let lastNameElement = document.querySelector("#formLastName");
+    let emailElement = document.querySelector("#formEmail");
+    let passwordElement = document.querySelector("#formPassword");
+
+      let currentUserName = currentUserNameElement.value;
+      let userName = userNameElement.value;
+      let firstName = firstNameElement.value;
+      let lastName = lastNameElement.value;
+      let email = emailElement.value;
+      let password = passwordElement.value;
+
+      let response = await ("/update-admin-user", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `currentUserName=${currentUserName}userName=${userName}&firstName=${firstName}&lastName=${lastName}&email=${email}&password=${password}`
+      });
+
+      let parsedResponse = await response.json();
+
+      if (parsedResponse.status === "fail") {
+        document.querySelector("#error-message").innerHTML = "";
+        document.querySelector("#error-message").insertAdjacentText("afterbegin", parsedResponse.message);
+      }
+      else {
+        window.location.replace("/profile");
+      }
+    }
+
+
+  )
+}
 
 if (loginButton != null) {
   loginButton.addEventListener("click", async e => {

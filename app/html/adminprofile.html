@@ -25,7 +25,11 @@
 
       <ul id="nav-links">
         <li class="nav-link"><a href="#">Browse</a></li>
-        <li class="nav-link"><a href="#">My Deals</a></li>
+        <li class="nav-link">
+          <form action="/myDeals" method="get">
+              <input id="myDeals-button" class="look-like-button" type="submit" value="My deals">
+          </form>
+        </li>
         <li class="nav-link"><a href="#">Post</a></li>
         <li class="nav-link">
           <form action="/profile" method="get">
@@ -67,11 +71,11 @@
         <br/>
         <p>Password: </p>
         <input type="text" id="formPassword">
-        <form action="/admin-update" method="post">
+        <form action="/update-admin-user" method="post">
           <br/>
-          <input id="save" type="submit" value="Save Changes">
-          <input class="cancel" type="submit" value="Cancel">
+          <input id="save-button" type="submit" value="Save Changes">
         </form>
+          <button class="cancel" value="Cancel">Cancel</button>
       </div>
       <div class="edit-window-footer">
         <small>Copyright 2022, FoodForLess</small>

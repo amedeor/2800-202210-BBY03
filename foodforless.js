@@ -296,29 +296,71 @@ app.get("/users", async (req, res) => {
   }
 });
 
+app.post("/update-user", async (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
 
-app.post("/admin-update", async (req, res) => {
-  if (req.session.loggedIn === true && req.session.usertype === "admin") {
+  let currentUsername = req.body.currentUsername;
 
-    connection.connect();
+  let username = req.body.username;
+  let firstname = req.body.firstname;
+  let lastname = req.body.lastname;
+  let email = req.body.email;
+  let password = req.body.password;
+  let userAvatarUrl = req.body.userAvatarUrl;
 
-    let currentUserName = document.querySelector('.username').innerText;
+  const connection = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "COMP2800",
+    multipleStatements: true
+  });
 
-    const connection = await mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "",
-      database: "COMP2800",
-      multipleStatements: true
+  await connection.connect();
+  let [results, fields] = await connection.query("UPDATE bby03_user SET user_username = ?, user_firstname = ?, user_lastname = ?, user_email = ?, user_password = ?, user_avatar_url = ? WHERE user_username = ?",
+    [username, firstname, lastname, email, password, userAvatarUrl, currentUsername],
+    function (error, results, fields) {
+      if (error) {
+        console.log(error);
+      }
     });
 
-    let [results, fields] = await connection.query("UPDATE bby03_user SET user_username = ?, user_firstname = ?, user_lastname = ?, user_email = ?, user_password = ? WHERE user_id = ?"[formUserName, formFirstName, formLastName, formEmail, formPassword, currentUserName]);
-
-    res.send({ status: "success", message: "Successfully updated user info" })
-
-    connection.end();
-  }
+  res.send({ status: "success", msg: "User successfully updated." });
+  connection.end();
 });
+
+app.post("/update-admin-user", async (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+
+  let currentUserName = req.body.currentUserName;
+  let userName = req.body.userName
+  let firstName = req.body.firstName;
+  let lastName = req.body.lastName;
+  let email = req.body.email;
+  let password = req.body.password;
+  let userAvatarUrl = req.body.userAvatarUrl;
+
+  const connection = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "COMP2800",
+    multipleStatements: true
+  });
+
+  await connection.connect();
+  let [results, fields] = await connection.query("UPDATE bby03_user SET user_username = ?, user_firstname = ?, user_lastname = ?, user_email = ?, user_password = ?, user_avatar_url = ? WHERE user_username = ?",
+    [userName, firstName, lastName, email, password, userAvatarUrl, currentUserName],
+    function (error, results, fields) {
+      if (error) {
+        console.log(error);
+      }
+    });
+
+  res.send({ status: "success", msg: "User successfully updated." });
+  connection.end();
+});
+
 
 
 app.get("/logout", function (req, res) {
