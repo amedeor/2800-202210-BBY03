@@ -296,9 +296,11 @@ app.get("/users", async (req, res) => {
   }
 });
 
-/*
-app.POST("/admin-update", function (req, res) {
+
+app.post("/admin-update", async (req, res) => {
   if (req.session.loggedIn === true && req.session.usertype === "admin") {
+
+    connection.connect();
 
     let currentUserName = document.querySelector('.username').innerText;
 
@@ -308,14 +310,16 @@ app.POST("/admin-update", function (req, res) {
       password: "",
       database: "COMP2800",
       multipleStatements: true
-    });    
-    
-    UPDATE bby03_user SET user_username = ?, user_firstname = ?, user_lastname = ?, user_email = ?, user_password = ? WHERE user_id = ?" [formUserName, formFirstName, formLastName, formEmail, formPassword, currentUserName]);
+    });
+
+    let [results, fields] = await connection.query("UPDATE bby03_user SET user_username = ?, user_firstname = ?, user_lastname = ?, user_email = ?, user_password = ? WHERE user_id = ?"[formUserName, formFirstName, formLastName, formEmail, formPassword, currentUserName]);
 
     res.send({ status: "success", message: "Successfully updated user info" })
+
+    connection.end();
   }
 });
-*/
+
 
 app.get("/logout", function (req, res) {
   if (req.session) {
