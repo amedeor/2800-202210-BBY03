@@ -74,15 +74,20 @@ if (editSubmitButton != null) {
 }
 
 
+/**
+   * Opens a window for editing
+   *  found this code on w3schools.com/howto
+   *
+   * @see https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal2
+   */
 
-//Code for edit window
-// Get the modal
+// edit window
 let modal = document.querySelector("#editWindow");
 
-// Get the button that opens the modal
+// button for opening edit window
 let btn = document.querySelector("#edit-profile-button");
 
-// Get the close button to close the modal
+// making the cancel button to close the window
 let span = document.getElementsByClassName("cancel")[0];
 
 btn.addEventListener("click", e => {
