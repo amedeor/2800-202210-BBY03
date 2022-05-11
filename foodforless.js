@@ -483,5 +483,5 @@ app.get("/logout", function (req, res) {
   }
 });
 
-const port = process.env.PORT || 8000;
+var port = process.env.PORT || 8000;
 app.listen(port);
