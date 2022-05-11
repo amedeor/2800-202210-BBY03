@@ -1,14 +1,18 @@
 "use strict;"
 
-let editSubmitButton = document.querySelector("#edit-user-info-submit-button");
+let editSubmitButton = document.querySelector("#save-changes-button");
 
 if (editSubmitButton != null) {
   editSubmitButton.addEventListener("click", async e => {
-    e.preventDefault();
+    e.preventDefault(); //Removed this because the page needs to refresh to show the new information
 
     console.log("Save Changes button clicked");
 
     let currentUsername = document.querySelector(".username").innerText;
+
+    //get the URL of the user's current profile picture
+    let userAvatarElement = document.querySelector(".avatar-image");
+    let userAvatarUrl = userAvatarElement.getAttribute("src");
 
     let firstName = document.querySelector("#firstname").value;
     let lastName = document.querySelector("#lastname").value;
@@ -28,17 +32,43 @@ if (editSubmitButton != null) {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
-      body: `currentUsername=${currentUsername}&username=${username}&password=${password}&firstname=${firstName}&lastname=${lastName}&email=${email}`
+      body: `currentUsername=${currentUsername}&username=${username}&password=${password}&firstname=${firstName}&lastname=${lastName}&email=${email}&userAvatarUrl=${userAvatarUrl}`
     });
 
     let parsedResponse = await response.json();
 
     console.log(parsedResponse);
 
-    // if (parsedResponse.status === "fail") {
-    //   document.querySelector("#error-message").innerHTML = "";
-    //   document.querySelector("#error-message").insertAdjacentText("afterbegin", parsedResponse.message);
-    // }
+        if (parsedResponse.status === "fail") {
+      document.querySelector("#error-message").innerHTML = "";
+      document.querySelector("#error-message").insertAdjacentText("afterbegin", parsedResponse.message);
+    }
+
+
+    let updatedRecordResponse = await fetch("/get-user");
+
+
+    let parsedUpdatedRecordResponse = await updatedRecordResponse.json();
+
+
+
+    // get the parsed json from the /get-user route and store it in a variable
+    // if the /get-user request was successful, the response will contain the user's row from the database
+    let userRecord = parsedUpdatedRecordResponse.rows[0];
+
+    //Update the HTML on the profile page to reflect the new changes made to the user's profile data in the database
+
+    userAvatarElement.setAttribute("src", userRecord.user_avatar_url);
+    document.querySelector(".username").innerText = userRecord.user_username;
+    document.querySelector(".firstName").innerText = userRecord.user_firstname;
+    document.querySelector(".lastName").innerText = userRecord.user_lastname;
+    document.querySelector(".email").innerText = userRecord.user_email;
+    document.querySelector(".password").innerText = userRecord.user_password;
+
+    //hide the form after the Save Changes button is pressed
+    modal.style.display = "none";
+
+
 
   })
 }

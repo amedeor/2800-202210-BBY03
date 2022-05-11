@@ -57,29 +57,33 @@
         <h2>Edit Information</h2>
       </div>
       <div class="edit-window-body">
-        <p>Username: </p>
-        <input type="text">
-        <br/>
-        <p>First Name: </p>
-        <input type="text">
-        <br/>
-        <p>Last Name: </p>
-        <input type="text">
-        <br/>
-        <p>Email: </p>
-        <input type="text">
-        <br/>
-        <p>Password: </p>
-        <input type="text">
-        <form action="" method="">
-          <br/>
-          <input id="save" type="submit" value="Save Changes">
+
+        <label for="username">Username:</label>
+        <input id="username" type="text" name="username">
+
+        <label for="firstname">First Name:</label>
+        <input id="firstname" type="text" name="firstname">
+
+        <label for="lastname">Last Name:</label>
+        <input id="lastname" type="text" name="lastname">
+
+        <label for="email">Email:</label>
+        <input id="email" type="text" name="email">
+
+        <label for="password">Password:</label>
+        <input id="password" type="text" name="password">
+
+        <form id="edit-user-info-form">
+          <input id="edit-user-info-submit-button" type="submit" value="Save Changes">
           <input class="cancel" type="submit" value="Cancel">
         </form>
+
+        <p id="error-message"></p>
+
       </div>
-      <div class="edit-window-footer">
-        <small>Copyright 2022, FoodForLess</small>
-      </div>
+
+
+
     </div>
   
   </div>

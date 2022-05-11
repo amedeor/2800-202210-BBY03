@@ -27,7 +27,7 @@
         <li class="nav-link"><a href="#">Browse</a></li>
         <li class="nav-link">
           <form action="/myDeals" method="get">
-              <input id="myDeals-button" class="look-like-button" type="submit" value="My Deals">
+            <input id="myDeals-button" class="look-like-button" type="submit" value="My Deals">
           </form>
         </li>
         <li class="nav-link"><a href="#">Post</a></li>
@@ -60,38 +60,35 @@
 
       <div class="edit-window-body">
 
-        <label for="username">Username:</label>
-        <input id="username" type="text" name="username">
+        <label for="username" class="edit-form-label">Username:</label>
+        <input id="username" class="edit-form-input" type="text" name="username">
 
-        <label for="firstname">First Name:</label>
-        <input id="firstname" type="text" name="firstname">
+        <label for="firstname" class="edit-form-label">First Name:</label>
+        <input id="firstname" class="edit-form-input" type="text" name="firstname">
 
-        <label for="lastname">Last Name:</label>
-        <input id="lastname" type="text" name="lastname">
+        <label for="lastname" class="edit-form-label">Last Name:</label>
+        <input id="lastname" class="edit-form-input" type="text" name="lastname">
 
-        <label for="email">Email:</label>
-        <input id="email" type="text" name="email">
+        <label for="email" class="edit-form-label">Email:</label>
+        <input id="email" class="edit-form-input" type="text" name="email">
 
-        <label for="password">Password:</label>
-        <input id="password" type="text" name="password">
+        <label for="password" class="edit-form-label">Password:</label>
+        <input id="password" class="edit-form-input" type="text" name="password">
 
         <form id="edit-user-info-form">
-          <input id="edit-user-info-submit-button" type="submit" value="Save Changes">
-          <input class="cancel" type="submit" value="Cancel">
+          <input id="save-changes-button" type="submit" value="Save Changes">
+          <input id="cancel-button" class="cancel" type="submit" value="Cancel">
         </form>
 
-      </div>
+        <p id="error-message"></p>
 
-      <div class="edit-window-footer">
-        <small>Copyright 2022, FoodForLess</small>
       </div>
-
     </div>
-  
+
   </div>
 
   <div id="profile-abilities">
-    <button id = "edit-profile-button">Edit Information</button>
+    <button id="edit-profile-button">Edit Information</button>
   </div>
 
   <footer id="footer">
@@ -99,7 +96,7 @@
       <small>Copyright 2022, FoodForLess</small>
     </div>
   </footer>
-  
+
   <script src="/js/client.js"></script>
   <script src="/js/profile.js"></script>
 </body>
