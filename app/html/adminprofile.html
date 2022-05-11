@@ -53,34 +53,37 @@
 
     <!-- popup window -->
     <div class="edit-window-content">
+
       <div class="edit-window-header">
         <h2>Edit Information</h2>
       </div>
+
       <div class="edit-window-body">
 
-        <label for="username">Username:</label>
-        <input id="username" type="text" name="username">
+        <label for="username" class="edit-form-label">Username:</label>
+        <input id="username" class="edit-form-input" type="text" name="username">
 
-        <label for="firstname">First Name:</label>
-        <input id="firstname" type="text" name="firstname">
+        <label for="firstname" class="edit-form-label">First Name:</label>
+        <input id="firstname" class="edit-form-input" type="text" name="firstname">
 
-        <label for="lastname">Last Name:</label>
-        <input id="lastname" type="text" name="lastname">
+        <label for="lastname" class="edit-form-label">Last Name:</label>
+        <input id="lastname" class="edit-form-input" type="text" name="lastname">
 
-        <label for="email">Email:</label>
-        <input id="email" type="text" name="email">
+        <label for="email" class="edit-form-label">Email:</label>
+        <input id="email" class="edit-form-input" type="text" name="email">
 
-        <label for="password">Password:</label>
-        <input id="password" type="text" name="password">
+        <label for="password" class="edit-form-label">Password:</label>
+        <input id="password" class="edit-form-input" type="text" name="password">
 
         <form id="edit-user-info-form">
-          <input id="edit-user-info-submit-button" type="submit" value="Save Changes">
-          <input class="cancel" type="submit" value="Cancel">
+          <input id="save-changes-button" type="submit" value="Save Changes">
+          <input id="cancel-button" class="cancel" type="submit" value="Cancel">
         </form>
 
         <p id="error-message"></p>
 
       </div>
+    </div>
 
 
 
