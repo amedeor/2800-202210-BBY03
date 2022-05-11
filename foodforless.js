@@ -237,24 +237,27 @@ app.post("/deleteUser", async (req, res) => {
   });
 
   //Check to see if a user with selected username or email exists.
-  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user WHERE user_username = ? OR user_email = ?", [signupUsername, signupEmail]);
+  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user WHERE user_username = ? OR user_email = ?", [inputUserLName, inputUserEmail]);
 
   if (results.length === 0) {
-
-    await connection.query("SELECT * FROM bb03_user WHERE user_username = ?", [signupUsername]);
-
-    // req.session.loggedIn = true;
-
-    // req.session.username = recordValues[0];
-    // req.session.firstName = recordValues[1];
-    // req.session.lastName = recordValues[2];
-    // req.session.email = recordValues[3];
-    // req.session.usertype = recordValues[5];
-    // req.session.avatarUrl = recordValues[6];
-
-    // res.send({ status: "success", message: "Logged in" });
-  } else {
     res.send({ "status": "fail", "message": "could not delete user." });
+  } else {
+    if (req.session.loggedIn === true && req.session.usertype === "admin") {
+      await connection.query("DELETE FROM bb03_user WHERE user_username = ?", [inputUserLName]);
+
+      // req.session.loggedIn = true;
+
+      // req.session.username = recordValues[0];
+      // req.session.firstName = recordValues[1];
+      // req.session.lastName = recordValues[2];
+      // req.session.email = recordValues[3];
+      // req.session.usertype = recordValues[5];
+      // req.session.avatarUrl = recordValues[6];
+
+      // res.send({ status: "success", message: "Logged in" });
+    } else {
+      res.send({ "status": "fail", "message": "Can only delete normal users." });
+    }
   }
 });
 
