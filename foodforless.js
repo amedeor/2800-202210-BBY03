@@ -456,6 +456,8 @@ app.get("/users", async (req, res) => {
       tdUserAvatarUrl.insertAdjacentHTML("afterbegin", `<img src="${userAvatarUrl}" />`);
       tdDeleteUser.insertAdjacentHTML("afterbegin", `<button id="deleteButton${userUsername}" >Delete</button>`);
 
+      let deleteButton = users.querySelector(`#deleteButton${userUsername}`)
+      
       tbody.insertAdjacentElement("beforeend", tr);
 
       tr.insertAdjacentElement("beforeend", tdUsername);
@@ -465,6 +467,12 @@ app.get("/users", async (req, res) => {
       tr.insertAdjacentElement("beforeend", tdUserType);
       tr.insertAdjacentElement("beforeend", tdUserAvatarUrl);
       tr.insertAdjacentElement("beforeend", tdDeleteUser);
+
+      deleteButton.addEventListener("click", async e => {
+        
+        console.log(`"${userUsername}"`);
+        
+      });
     }
 
     res.send(usersDOM.serialize());
