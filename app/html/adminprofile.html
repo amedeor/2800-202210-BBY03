@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/main-style.css">
+  <link rel="stylesheet" href="/css/profile.css">
   <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
   <title>FoodForLess</title>
 </head>
@@ -24,7 +25,11 @@
 
       <ul id="nav-links">
         <li class="nav-link"><a href="#">Browse</a></li>
-        <li class="nav-link"><a href="#">My Deals</a></li>
+        <li class="nav-link">
+          <form action="/myDeals" method="get">
+              <input id="myDeals-button" class="look-like-button" type="submit" value="My Deals">
+          </form>
+        </li>
         <li class="nav-link"><a href="#">Post</a></li>
         <li class="nav-link">
           <form action="/profile" method="get">
@@ -44,10 +49,47 @@
 
   <div id="profile-info"></div>
 
+  <div id="editWindow">
+
+    <!-- popup window -->
+    <div class="edit-window-content">
+      <div class="edit-window-header">
+        <h2>Edit Information</h2>
+      </div>
+      <div class="edit-window-body">
+        <p>Username: </p>
+        <input type="text">
+        <br/>
+        <p>First Name: </p>
+        <input type="text">
+        <br/>
+        <p>Last Name: </p>
+        <input type="text">
+        <br/>
+        <p>Email: </p>
+        <input type="text">
+        <br/>
+        <p>Password: </p>
+        <input type="text">
+        <form action="" method="">
+          <br/>
+          <input id="save" type="submit" value="Save Changes">
+          <input class="cancel" type="submit" value="Cancel">
+        </form>
+      </div>
+      <div class="edit-window-footer">
+        <small>Copyright 2022, FoodForLess</small>
+      </div>
+    </div>
+  
+  </div>
+
   <div id="profile-abilities">
-    <form action="/users" method="get">
+    <form action="/users" method="get" id = "view-user-account">
       <input id="view-user-account-button" type="submit" value="View User Accounts">
     </form>
+    <br/>
+    <button id = "edit-profile-button">Edit Information</button>
   </div>
 
   <footer id="footer">
@@ -55,7 +97,9 @@
       <small>Copyright 2022, FoodForLess</small>
     </div>
   </footer>
+  
   <script src="/js/client.js"></script>
+  <script src="/js/profile.js"></script>
 </body>
 
 </html>
