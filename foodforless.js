@@ -454,10 +454,8 @@ app.get("/users", async (req, res) => {
       tdEmail.insertAdjacentText("afterbegin", userEmail);
       tdUserType.insertAdjacentText("afterbegin", userType);
       tdUserAvatarUrl.insertAdjacentHTML("afterbegin", `<img src="${userAvatarUrl}" />`);
-      tdDeleteUser.insertAdjacentHTML("afterbegin", `<button id="deleteButton${userUsername}" >Delete</button>`);
+      tdDeleteUser.insertAdjacentHTML("afterbegin", `<input type="button" id="deleteButton${userUsername}" value="Delete" />`);
 
-      let deleteButton = users.querySelector(`#deleteButton${userUsername}`)
-      
       tbody.insertAdjacentElement("beforeend", tr);
 
       tr.insertAdjacentElement("beforeend", tdUsername);
@@ -468,10 +466,15 @@ app.get("/users", async (req, res) => {
       tr.insertAdjacentElement("beforeend", tdUserAvatarUrl);
       tr.insertAdjacentElement("beforeend", tdDeleteUser);
 
+      let deleteButton = usersDOM.window.document.querySelector(`#deleteButton${userUsername}`);
+
+      function deleteRow(r) {
+        var i = r.parentNode.parentNode.rowIndex;
+        usersDOM.window.document.getElementById("myTable").deleteRow(i);
+      }
+
       deleteButton.addEventListener("click", async e => {
-        
-        console.log(`"${userUsername}"`);
-        
+        deleteRow(deleteButton);
       });
     }
 
