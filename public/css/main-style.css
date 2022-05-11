@@ -106,6 +106,10 @@ body {
     justify-self: center;
     padding-bottom: 3em;
     text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   #footer {
@@ -276,6 +280,10 @@ a {
     justify-self: center;
     padding-bottom: 3em;
     text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   li {

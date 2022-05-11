@@ -47,6 +47,11 @@
 
   </nav>
 
+  <!-- <form id="upload-images-form">
+    <input id="image-upload" type="file" value="Upload Image" accept="image/png, image/gif, image/jpeg, image/svg+xml"/>
+    <input id="submit" type="submit" value="Submit"/>
+  </form> -->
+
   <div id="profile-info"></div>
 
   <div id="editWindow">
@@ -87,8 +92,35 @@
 
   </div>
 
+
+  <div id="changeAvatarWindow">
+
+    <!-- popup window -->
+    <div class="change-avatar-window-content">
+
+      <div class="edit-window-header">
+        <h2>Change Avatar Image</h2>
+      </div>
+
+      <div class="edit-window-avatar-body">
+
+        <form id="upload-images-form">
+          <input id="image-upload" type="file" value="Upload Image" accept="image/png, image/gif, image/jpeg, image/svg+xml"/>
+          <input id="submit" type="submit" value="Submit"/>
+          <input id="cancel-avatar-upload" class="cancel-avatar-upload" type="submit" value="Cancel">
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+
+
+
+
   <div id="profile-abilities">
-    <button id="edit-profile-button">Edit Information</button>
+    <button id="edit-profile-button" class="abilities-button">Edit Information</button>
+    <button id="change-avatar-button" class="abilities-button">Change Avatar Image</button>
   </div>
 
   <footer id="footer">
