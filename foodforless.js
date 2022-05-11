@@ -320,6 +320,10 @@ app.get("/users", async (req, res) => {
       let tdUserAvatarUrl = usersDOM.window.document.createElement("td");
       let tdDeleteUser = usersDOM.window.document.createElement("td");
 
+      tr.setAttribute('id', `"TR${userUsername}"`);
+
+      tdUsername.setAttribute('id', `"TD${userUsername}"`);
+
       tdUsername.insertAdjacentText("afterbegin", userUsername);
       tdFirstName.insertAdjacentText("afterbegin", userFirstname);
       tdLastName.insertAdjacentText("afterbegin", userLastname);
