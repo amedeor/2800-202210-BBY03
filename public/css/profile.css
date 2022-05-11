@@ -114,7 +114,6 @@ button{
 #edit-profile-button{
   background-color: white;
   text-align: center;
-  cursor: pointer;
   border-color: green;
   border-radius: 5px;
 }
@@ -122,10 +121,12 @@ button{
   background-color: green;
   color: white;
 }
-#save{
-  background-color: green;
+#edit-user-info-submit-button{
   border-color: green;
   border-radius: 5px;
+}
+input[type="submit"]#edit-user-info-submit-button:hover{
+  background-color: green;
   color: white;
 }
 .cancel{
