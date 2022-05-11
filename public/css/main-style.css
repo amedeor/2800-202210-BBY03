@@ -12,6 +12,7 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 9em auto auto auto auto auto auto;
+    font-size: 10pt;
   }
 
   #nav-icons {
@@ -27,6 +28,7 @@ body {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto auto auto;
     padding-top: 2em;
+
   }
 
   .profile-info-piece {
@@ -38,6 +40,7 @@ body {
   .avatar-image {
     padding-left: 2em;
     padding-right: 2em;
+    max-width: 50%;
   }
 
   .username {
@@ -56,7 +59,9 @@ body {
 
   .nav-icon {
     width: 1.5em;
+    cursor: pointer;
   }
+
 
   h1 {
     padding-top: 1em;
@@ -75,7 +80,10 @@ body {
     list-style: none;
   }
 
-  table, tr, td, th {
+  table,
+  tr,
+  td,
+  th {
     border: solid black 1px;
     border-collapse: collapse;
     font-size: 10pt;
@@ -91,18 +99,34 @@ body {
     justify-self: center;
     margin-bottom: 2em;
   }
+
   #profile-abilities {
     grid-column-start: 1;
     grid-column-end: 4;
     justify-self: center;
     padding-bottom: 3em;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   #footer {
     grid-column-start: 1;
     grid-column-end: 4;
 
+    grid-row-start: 7;
+    grid-row-end: 7;
+
     justify-self: center;
+    text-align: center;
+
+    padding-top: 2em;
+    padding-bottom: 2em;
+
+    background-color: #fcc603;
+    width: 100%;
   }
 
   .look-like-button {
@@ -142,7 +166,10 @@ a {
     font-size: 24pt;
   }
 
-  table, tr, td, th {
+  table,
+  tr,
+  td,
+  th {
     border: solid black 1px;
     border-collapse: collapse;
   }
@@ -195,6 +222,7 @@ a {
   .nav-icon {
     width: 1.5em;
     justify-self: center;
+    cursor: pointer;
   }
 
   #profile-info {
@@ -205,6 +233,12 @@ a {
     grid-template-columns: 20em;
     grid-template-rows: auto auto auto auto auto;
     padding-top: 2em;
+  }
+
+  .profile-info-piece {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    justify-self: center;
   }
 
   .avatar-image {
@@ -245,6 +279,11 @@ a {
     grid-column-end: 5;
     justify-self: center;
     padding-bottom: 3em;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   li {
@@ -278,5 +317,11 @@ a {
     grid-column-start: 1;
     grid-column-end: 5;
     justify-self: center;
+    justify-self: center;
+    text-align: center;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    background-color: #fcc603;
+    width: 100%;
   }
 }

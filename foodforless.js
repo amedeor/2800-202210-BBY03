@@ -7,6 +7,19 @@ const session = require("express-session");
 const { JSDOM } = require("jsdom");
 const mysql = require("mysql2/promise");
 
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, "./public/img");
+  },
+  filename: (req, file, callback) => {
+    callback(null, `${Date.now()}-${file.originalname}`);
+  }
+})
+
+const upload = multer({ storage: storage });
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -31,6 +44,75 @@ app.get("/", (req, res) => {
   }
 });
 
+app.get("/get-user", async (req, res) => {
+
+  let username = req.session.username;
+
+  const connection = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "COMP2800",
+    multipleStatements: true
+  });
+
+  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user WHERE user_username = ?", [username], function (error, results, fields) {
+    if (error) {
+      console.log(error);
+    }
+  });
+
+  res.send({ status: "success", rows: results });
+
+  console.log('Rows returned are: ', results);
+
+  connection.end();
+});
+
+
+
+
+
+//the argument to single is the name of the HTML input that is uploading the file
+app.post("/upload-image", upload.single("file"), async (req, res) => {
+  
+  let savedFileName = `/img/${req.file.filename}`;
+  let username = req.body.username;
+
+  console.log(savedFileName);
+  console.log(username);
+
+  const connection = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "COMP2800",
+    multipleStatements: true
+  });
+
+  await connection.connect();
+  let [results, fields] = await connection.query("UPDATE bby03_user SET user_avatar_url = ? WHERE user_username = ?",
+    [savedFileName, username],
+    function (error, results, fields) {
+      if (error) {
+        console.log(error);
+      }
+    });
+
+  //update session variable with new profile picture URL
+  req.session.avatarUrl = savedFileName;
+
+
+  res.send({"status": "success", "message": "Image uploaded successfully."})
+});
+
+
+
+
+
+
+
+
 app.get("/profile", async (req, res) => {
   if (req.session.loggedIn === true) {
 
@@ -39,40 +121,126 @@ app.get("/profile", async (req, res) => {
 
       let profileDOM = new JSDOM(profile);
 
+      // let imageUploadForm = profileDOM.window.document.createElement("form");
+      // imageUploadForm.setAttribute("id", "image-upload-form");
+
+      // let imageUploadInput = profileDOM.window.document.createElement("input");
+      // imageUploadInput.setAttribute("id", "image-upload-input");
+      // imageUploadInput.setAttribute("type", "file");
+      // imageUploadInput.setAttribute("value", "Change Avatar Picture");
+      // imageUploadInput.setAttribute("accept", "image/png, image/gif, image/jpeg, image/svg+xml");
+      // //imageUploadInput.setAttribute("name", "image");
+
+      // let imageFormSubmitButton = profileDOM.window.document.createElement("input");
+      // imageFormSubmitButton.setAttribute("id", "photo-upload-submit-button");
+      // imageFormSubmitButton.setAttribute("type", "submit");
+      // imageFormSubmitButton.setAttribute("value", "Submit");
+
+
+      // // let imageUploadForm = profileDOM.window.document.createElement("form");
+      // // imageUploadForm.setAttribute("id", "image-upload-form");
+      // // imageUploadForm.setAttribute("method", "post");
+      // // imageUploadForm.setAttribute("action", "/upload-image")
+      // // imageUploadForm.setAttribute("enctype", "/multipart/form-data")
+
+      // // let imageUploadInput = profileDOM.window.document.createElement("input");
+      // // imageUploadInput.setAttribute("id", "image-upload-input");
+      // // imageUploadInput.setAttribute("type", "file");
+      // // //imageUploadInput.setAttribute("value", "Change Avatar Picture");
+      // // imageUploadInput.setAttribute("accept", "image/png, image/gif, image/jpeg, image/svg+xml");
+      // // imageUploadInput.setAttribute("name", "image");
+
+      // // let imageFormSubmitButton = profileDOM.window.document.createElement("input");
+      // // imageFormSubmitButton.setAttribute("id", "photo-upload-submit-button");
+      // // imageFormSubmitButton.setAttribute("type", "submit");
+      // // imageFormSubmitButton.setAttribute("value", "Submit");
+
+      // imageUploadForm.insertAdjacentElement("beforeend", imageUploadInput);
+      // imageUploadForm.insertAdjacentElement("beforeend", imageFormSubmitButton);
+
       let avatarImage = profileDOM.window.document.createElement("img");
       avatarImage.setAttribute("src", req.session.avatarUrl);
       avatarImage.setAttribute("alt", "Avatar image");
       avatarImage.setAttribute("class", "profile-info-piece avatar-image");
 
       let usernameParagraph = profileDOM.window.document.createElement("p");
-      usernameParagraph.setAttribute("class", "profile-info-piece username");
+      usernameParagraph.setAttribute("class", "profile-info-piece");
+
+      let usernameSpan = profileDOM.window.document.createElement("span");
+      usernameSpan.setAttribute("class", "profile-info-piece username");
 
       let firstNameParagraph = profileDOM.window.document.createElement("p");
-      firstNameParagraph.setAttribute("class", "profile-info-piece firstName");
+      firstNameParagraph.setAttribute("class", "profile-info-piece");
+
+      let firstNameSpan = profileDOM.window.document.createElement("span");
+      firstNameSpan.setAttribute("class", "profile-info-piece firstName");
 
       let lastNameParagraph = profileDOM.window.document.createElement("p");
-      lastNameParagraph.setAttribute("class", "profile-info-piece lastName");
+      lastNameParagraph.setAttribute("class", "profile-info-piece");
+
+      let lastNameSpan = profileDOM.window.document.createElement("span");
+      lastNameSpan.setAttribute("class", "profile-info-piece lastName");
 
       let emailParagraph = profileDOM.window.document.createElement("p");
-      emailParagraph.setAttribute("class", "profile-info-piece email");
+      emailParagraph.setAttribute("class", "profile-info-piece");
+
+      let emailSpan = profileDOM.window.document.createElement("span");
+      emailSpan.setAttribute("class", "profile-info-piece email");
+
+      let passwordParagraph = profileDOM.window.document.createElement("p");
+      passwordParagraph.setAttribute("class", "profile-info-piece");
+
+      let passwordSpan = profileDOM.window.document.createElement("span");
+      passwordSpan.setAttribute("class", "profile-info-piece password");
 
       let userTypeParagraph = profileDOM.window.document.createElement("p");
-      userTypeParagraph.setAttribute("class", "profile-info-piece user-type");
+      userTypeParagraph.setAttribute("class", "profile-info-piece");
 
-      usernameParagraph.insertAdjacentText("beforeend", `${req.session.username}`);
-      firstNameParagraph.insertAdjacentText("beforeend", `First Name: ${req.session.firstName}`);
-      lastNameParagraph.insertAdjacentText("beforeend", `Last Name: ${req.session.lastName}`);
-      emailParagraph.insertAdjacentText("beforeend", `Email: ${req.session.email}`);
-      userTypeParagraph.insertAdjacentText("beforeend", `User type: ${req.session.usertype}`);
+      let userTypeSpan = profileDOM.window.document.createElement("span");
+      userTypeSpan.setAttribute("class", "profile-info-piece user-type");
+
+      usernameParagraph.insertAdjacentText("beforeend", "");
+      usernameSpan.insertAdjacentText("beforeend", req.session.username);
+
+      firstNameParagraph.insertAdjacentText("beforeend", `First Name: `);
+      firstNameSpan.insertAdjacentText("beforeend", req.session.firstName);
+
+      lastNameParagraph.insertAdjacentText("beforeend", `Last Name: `);
+      lastNameSpan.insertAdjacentText("beforeend", req.session.lastName);
+
+      emailParagraph.insertAdjacentText("beforeend", `Email: `);
+      emailSpan.insertAdjacentText("beforeend", req.session.email);
+
+      passwordParagraph.insertAdjacentText("beforeend", `Password: `);
+      passwordSpan.insertAdjacentText("beforeend", req.session.password);
+
+      userTypeParagraph.insertAdjacentText("beforeend", `User type: `);
+      userTypeSpan.insertAdjacentText("beforeend", req.session.usertype);
+
 
       let profileInfoElement = profileDOM.window.document.querySelector("#profile-info");
 
       profileInfoElement.insertAdjacentElement("beforeend", avatarImage);
+
+      // profileInfoElement.insertAdjacentElement("beforeend", imageUploadForm);
+
       profileInfoElement.insertAdjacentElement("beforeend", usernameParagraph);
+      usernameParagraph.insertAdjacentElement("beforeend", usernameSpan);
+
       profileInfoElement.insertAdjacentElement("beforeend", firstNameParagraph);
+      firstNameParagraph.insertAdjacentElement("beforeend", firstNameSpan);
+
       profileInfoElement.insertAdjacentElement("beforeend", lastNameParagraph);
+      lastNameParagraph.insertAdjacentElement("beforeend", lastNameSpan);
+
       profileInfoElement.insertAdjacentElement("beforeend", emailParagraph);
+      emailParagraph.insertAdjacentElement("beforeend", emailSpan);
+
+      profileInfoElement.insertAdjacentElement("beforeend", passwordParagraph);
+      passwordParagraph.insertAdjacentElement("beforeend", passwordSpan);
+
       profileInfoElement.insertAdjacentElement("beforeend", userTypeParagraph);
+      userTypeParagraph.insertAdjacentElement("beforeend", userTypeSpan);
 
       res.send(profileDOM.serialize());
 
@@ -87,34 +255,80 @@ app.get("/profile", async (req, res) => {
       avatarImage.setAttribute("class", "profile-info-piece avatar-image");
 
       let usernameParagraph = profileDOM.window.document.createElement("p");
-      usernameParagraph.setAttribute("class", "profile-info-piece username");
+      usernameParagraph.setAttribute("class", "profile-info-piece");
+
+      let usernameSpan = profileDOM.window.document.createElement("span");
+      usernameSpan.setAttribute("class", "profile-info-piece username");
 
       let firstNameParagraph = profileDOM.window.document.createElement("p");
-      firstNameParagraph.setAttribute("class", "profile-info-piece firstName");
+      firstNameParagraph.setAttribute("class", "profile-info-piece");
+
+      let firstNameSpan = profileDOM.window.document.createElement("span");
+      firstNameSpan.setAttribute("class", "profile-info-piece firstName");
 
       let lastNameParagraph = profileDOM.window.document.createElement("p");
-      lastNameParagraph.setAttribute("class", "profile-info-piece lastName");
+      lastNameParagraph.setAttribute("class", "profile-info-piece");
+
+      let lastNameSpan = profileDOM.window.document.createElement("span");
+      lastNameSpan.setAttribute("class", "profile-info-piece lastName");
 
       let emailParagraph = profileDOM.window.document.createElement("p");
-      emailParagraph.setAttribute("class", "profile-info-piece email");
+      emailParagraph.setAttribute("class", "profile-info-piece");
+
+      let emailSpan = profileDOM.window.document.createElement("span");
+      emailSpan.setAttribute("class", "profile-info-piece email");
+
+      let passwordParagraph = profileDOM.window.document.createElement("p");
+      passwordParagraph.setAttribute("class", "profile-info-piece");
+
+      let passwordSpan = profileDOM.window.document.createElement("span");
+      passwordSpan.setAttribute("class", "profile-info-piece password");
 
       let userTypeParagraph = profileDOM.window.document.createElement("p");
-      userTypeParagraph.setAttribute("class", "profile-info-piece user-type");
+      userTypeParagraph.setAttribute("class", "profile-info-piece");
 
-      usernameParagraph.insertAdjacentText("beforeend", `${req.session.username}`);
-      firstNameParagraph.insertAdjacentText("beforeend", `First Name: ${req.session.firstName}`);
-      lastNameParagraph.insertAdjacentText("beforeend", `Last Name: ${req.session.lastName}`);
-      emailParagraph.insertAdjacentText("beforeend", `Email: ${req.session.email}`);
-      userTypeParagraph.insertAdjacentText("beforeend", `User type: ${req.session.usertype}`);
+      let userTypeSpan = profileDOM.window.document.createElement("span");
+      userTypeSpan.setAttribute("class", "profile-info-piece user-type");
+
+      usernameParagraph.insertAdjacentText("beforeend", "");
+      usernameSpan.insertAdjacentText("beforeend", req.session.username);
+
+      firstNameParagraph.insertAdjacentText("beforeend", `First Name: `);
+      firstNameSpan.insertAdjacentText("beforeend", req.session.firstName);
+
+      lastNameParagraph.insertAdjacentText("beforeend", `Last Name: `);
+      lastNameSpan.insertAdjacentText("beforeend", req.session.lastName);
+
+      emailParagraph.insertAdjacentText("beforeend", `Email: `);
+      emailSpan.insertAdjacentText("beforeend", req.session.email);
+
+      passwordParagraph.insertAdjacentText("beforeend", `Password: `);
+      passwordSpan.insertAdjacentText("beforeend", req.session.password);
+
+      userTypeParagraph.insertAdjacentText("beforeend", `User type: `);
+      userTypeSpan.insertAdjacentText("beforeend", req.session.usertype);
 
       let profileInfoElement = profileDOM.window.document.querySelector("#profile-info");
 
       profileInfoElement.insertAdjacentElement("beforeend", avatarImage);
+
       profileInfoElement.insertAdjacentElement("beforeend", usernameParagraph);
+      usernameParagraph.insertAdjacentElement("beforeend", usernameSpan);
+
       profileInfoElement.insertAdjacentElement("beforeend", firstNameParagraph);
+      firstNameParagraph.insertAdjacentElement("beforeend", firstNameSpan);
+
       profileInfoElement.insertAdjacentElement("beforeend", lastNameParagraph);
+      lastNameParagraph.insertAdjacentElement("beforeend", lastNameSpan);
+
       profileInfoElement.insertAdjacentElement("beforeend", emailParagraph);
+      emailParagraph.insertAdjacentElement("beforeend", emailSpan);
+
+      profileInfoElement.insertAdjacentElement("beforeend", passwordParagraph);
+      passwordParagraph.insertAdjacentElement("beforeend", passwordSpan);
+
       profileInfoElement.insertAdjacentElement("beforeend", userTypeParagraph);
+      userTypeParagraph.insertAdjacentElement("beforeend", userTypeSpan);
 
       res.send(profileDOM.serialize());
     }
@@ -144,7 +358,8 @@ app.post("/login", async (req, res) => {
     multipleStatements: true
   });
 
-  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user WHERE user_username = ? AND user_password = ?", [username, password]);
+  //BINARY makes the password query case sensitive
+  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user WHERE user_username = ? AND BINARY user_password = ? ", [username, password]);
 
 
   if (results.length === 0) {
@@ -164,7 +379,9 @@ app.post("/login", async (req, res) => {
 
     req.session.loggedIn = true;
 
+    req.session.userId = retrievedUserId;
     req.session.username = retrievedUsername;
+    req.session.password = retrievedPassword;
     req.session.firstName = retrievedFirstName;
     req.session.lastName = retrievedLastName;
     req.session.email = retrievedEmail;
@@ -296,6 +513,57 @@ app.get("/users", async (req, res) => {
   }
 });
 
+app.post("/update-user", async (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+
+  let currentUsername = req.body.currentUsername;
+
+  let username = req.body.username;
+  let firstname = req.body.firstname;
+  let lastname = req.body.lastname;
+  let email = req.body.email;
+  let password = req.body.password;
+  let userAvatarUrl = req.body.userAvatarUrl;
+
+  console.log(`Current username: ${currentUsername}`);
+  console.log(firstname);
+  console.log(lastname);
+  console.log(email);
+  console.log(password);
+  console.log(username);
+
+  const connection = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "COMP2800",
+    multipleStatements: true
+  });
+
+  await connection.connect();
+  let [results, fields] = await connection.query("UPDATE bby03_user SET user_username = ?, user_firstname = ?, user_lastname = ?, user_email = ?, user_password = ?, user_avatar_url = ? WHERE user_username = ?",
+    [username, firstname, lastname, email, password, userAvatarUrl, currentUsername],
+    function (error, results, fields) {
+      if (error) {
+        console.log(error);
+      }
+    });
+
+  //update session variables with new info from database
+
+  req.session.username = username;
+  req.session.password = password;
+  req.session.firstName = firstname;
+  req.session.lastName = lastname;
+  req.session.email = email;
+  //req.session.usertype = retrievedUserType;
+  req.session.avatarUrl = userAvatarUrl;
+
+
+  res.send({ status: "success", msg: "User successfully updated." });
+  connection.end();
+});
+
 app.get("/logout", function (req, res) {
   if (req.session) {
     req.session.destroy(error => {
@@ -308,5 +576,5 @@ app.get("/logout", function (req, res) {
   }
 });
 
-const port = 8000;
+const port = process.env.PORT || 8000;
 app.listen(port);

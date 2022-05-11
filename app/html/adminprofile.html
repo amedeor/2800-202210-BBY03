@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/main-style.css">
+  <link rel="stylesheet" href="/css/profile.css">
   <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
   <title>FoodForLess</title>
 </head>
@@ -15,16 +16,20 @@
     <h1>FoodForLess</h1>
     <div id="nav-items-container">
       <div id="nav-icons">
-        <img class="nav-icon" src="/img/magnifying-glass-icon.svg" alt="" />
-        <img class="nav-icon" src="/img/list-icon.svg" alt="" />
-        <img class="nav-icon" src="/img/add-icon.svg" alt="" />
-        <img class="nav-icon" src="/img/profile-icon.svg" alt="" />
-        <img class="nav-icon" src="/img/logout-icon.svg" alt="" />
+        <img id="browse-icon" class="nav-icon" src="/img/magnifying-glass-icon.svg" alt="" />
+        <img id="list-icon" class="nav-icon" src="/img/list-icon.svg" alt="" />
+        <img id="post-icon" class="nav-icon" src="/img/add-icon.svg" alt="" />
+        <img id="profile-icon" class="nav-icon" src="/img/profile-icon.svg" alt="" />
+        <img id="logout-icon" class="nav-icon" src="/img/logout-icon.svg" alt="" />
       </div>
 
       <ul id="nav-links">
         <li class="nav-link"><a href="#">Browse</a></li>
-        <li class="nav-link"><a href="#">My Deals</a></li>
+        <li class="nav-link">
+          <form action="/myDeals" method="get">
+              <input id="myDeals-button" class="look-like-button" type="submit" value="My Deals">
+          </form>
+        </li>
         <li class="nav-link"><a href="#">Post</a></li>
         <li class="nav-link">
           <form action="/profile" method="get">
@@ -44,10 +49,75 @@
 
   <div id="profile-info"></div>
 
+  <div id="editWindow">
+
+    <!-- popup window -->
+    <div class="edit-window-content">
+
+      <div class="edit-window-header">
+        <h2>Edit Information</h2>
+      </div>
+
+      <div class="edit-window-body">
+
+        <label for="username" class="edit-form-label">Username:</label>
+        <input id="username" class="edit-form-input" type="text" name="username">
+
+        <label for="firstname" class="edit-form-label">First Name:</label>
+        <input id="firstname" class="edit-form-input" type="text" name="firstname">
+
+        <label for="lastname" class="edit-form-label">Last Name:</label>
+        <input id="lastname" class="edit-form-input" type="text" name="lastname">
+
+        <label for="email" class="edit-form-label">Email:</label>
+        <input id="email" class="edit-form-input" type="text" name="email">
+
+        <label for="password" class="edit-form-label">Password:</label>
+        <input id="password" class="edit-form-input" type="text" name="password">
+
+        <form id="edit-user-info-form">
+          <input id="save-changes-button" type="submit" value="Save Changes">
+          <input id="cancel-button" class="cancel" type="submit" value="Cancel">
+        </form>
+
+        <p id="error-message"></p>
+
+      </div>
+    </div>
+
+
+
+    </div>
+
+    <div id="changeAvatarWindow">
+
+      <!-- popup window -->
+      <div class="change-avatar-window-content">
+  
+        <div class="edit-window-header">
+          <h2>Change Avatar Image</h2>
+        </div>
+  
+        <div class="edit-window-avatar-body">
+  
+          <form id="upload-images-form">
+            <input id="image-upload" type="file" value="Upload Image" accept="image/png, image/gif, image/jpeg, image/svg+xml"/>
+            <input id="submit" type="submit" value="Submit"/>
+            <input id="cancel-avatar-upload" class="cancel-avatar-upload" type="submit" value="Cancel">
+          </form>
+  
+        </div>
+      </div>
+  
+    </div>
+
   <div id="profile-abilities">
-    <form action="/users" method="get">
-      <input id="view-user-account-button" type="submit" value="View User Accounts">
+    <form action="/users" method="get" id = "view-user-account">
+      <input id="view-user-account-button" class="abilities-button" type="submit" value="View User Accounts">
     </form>
+    <br/>
+    <button id="edit-profile-button" class="abilities-button">Edit Information</button>
+    <button id="change-avatar-button" class="abilities-button">Change Avatar Image</button>
   </div>
 
   <footer id="footer">
@@ -55,7 +125,9 @@
       <small>Copyright 2022, FoodForLess</small>
     </div>
   </footer>
+  
   <script src="/js/client.js"></script>
+  <script src="/js/profile.js"></script>
 </body>
 
 </html>
