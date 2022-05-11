@@ -211,6 +211,12 @@ a {
     padding-top: 2em;
   }
 
+  .profile-info-piece {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    justify-self: center;
+  }
+
   .avatar-image {
     justify-self: center;
   }
