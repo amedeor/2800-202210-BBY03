@@ -22,7 +22,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
   margin: auto;
   padding: 0;
   border: 1px solid #888;
-  width: 250px;
+  width: 300px;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
   -webkit-animation-name: animatetop;
   -webkit-animation-duration: 0.4s;
@@ -44,15 +44,50 @@ body {font-family: Arial, Helvetica, sans-serif;}
 .edit-window-header {
   text-align: center;
   padding: 2px 16px;
+  margin-bottom: 1em;
   background-color: #fcc603;
   color: black;
 }
 
 .edit-window-body {
   /* text-align: center; */
+
+  /* grid is used to align the labels and the input boxes */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto auto auto;
+
+
   padding: 2px 16px;
   padding-bottom: 10px;
 }
+
+.edit-form-label {
+  padding-top: .5em;
+}
+
+.edit-form-input {
+  margin-bottom: 1em;
+  padding-bottom: .5em;
+  padding-top: .5em;
+}
+
+#edit-user-info-form {
+  grid-column-start: 1;
+  grid-column-end: 3;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+#save-changes-button {
+  margin-right: .5em;
+}
+
+#cancel-button {
+  margin-left: .5em;
+}
+
 
 .edit-window-footer {
   background-color: #fcc603;
