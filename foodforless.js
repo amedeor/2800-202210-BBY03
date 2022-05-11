@@ -289,7 +289,7 @@ app.get("/users", async (req, res) => {
 
     let userAccountsHeading = usersDOM.window.document.querySelector("#user-accounts-heading");
 
-    let tableHeadings = ["Username", "First Name", "Last Name", "Email", "User Type", "Avatar"];
+    let tableHeadings = ["Username", "First Name", "Last Name", "Email", "User Type", "Avatar", "Delete?"];
 
     for (let heading of tableHeadings) {
       let th = usersDOM.window.document.createElement("th");
@@ -318,6 +318,7 @@ app.get("/users", async (req, res) => {
       let tdEmail = usersDOM.window.document.createElement("td");
       let tdUserType = usersDOM.window.document.createElement("td");
       let tdUserAvatarUrl = usersDOM.window.document.createElement("td");
+      let tdDeleteUser = usersDOM.window.document.createElement("td");
 
       tdUsername.insertAdjacentText("afterbegin", userUsername);
       tdFirstName.insertAdjacentText("afterbegin", userFirstname);
@@ -325,6 +326,7 @@ app.get("/users", async (req, res) => {
       tdEmail.insertAdjacentText("afterbegin", userEmail);
       tdUserType.insertAdjacentText("afterbegin", userType);
       tdUserAvatarUrl.insertAdjacentHTML("afterbegin", `<img src="${userAvatarUrl}" />`);
+      tdDeleteUser.insertAdjacentHTML("afterbegin", `<button id="deleteButton${userUsername}" >Delete</button>`);
 
       tbody.insertAdjacentElement("beforeend", tr);
 
@@ -334,6 +336,7 @@ app.get("/users", async (req, res) => {
       tr.insertAdjacentElement("beforeend", tdEmail);
       tr.insertAdjacentElement("beforeend", tdUserType);
       tr.insertAdjacentElement("beforeend", tdUserAvatarUrl);
+      tr.insertAdjacentElement("beforeend", tdDeleteUser);
     }
 
     res.send(usersDOM.serialize());
