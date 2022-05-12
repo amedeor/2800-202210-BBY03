@@ -10,7 +10,9 @@ async function getUsers() {
 
   if (data.status == "success") {
 
-    let str = `<tr><th class="id_header"><span>ID</span></th><th class="username_header"><span>Username</span></th><th class="firstname_header"><span>First Name</span></th><th class="lastname_header"><span>Last Name</span></th><th class="email_header"><span>Email</span></th><th class="password_header"><span>Password</span></th><th class="usertype_header"><span>User Type</span></th><th class="avatarimage_header"><span>Avatar</span></th></tr>`;
+    // let str = `<tr><th class="id_header"><span>ID</span></th><th class="username_header"><span>Username</span></th><th class="firstname_header"><span>First Name</span></th><th class="lastname_header"><span>Last Name</span></th><th class="email_header"><span>Email</span></th><th class="password_header"><span>Password</span></th><th class="usertype_header"><span>User Type</span></th><th class="avatarimage_header"><span>Avatar</span></th><th class="edit_header"><span>Edit</span></th><th class="delete_header"><span>Delete</span></th></tr>`;
+
+    let str = `<thead><tr><th class="id_header">ID</th><th class="username_header">Username</th><th class="firstname_header">First Name</th><th class="lastname_header">Last Name</th><th class="email_header">Email</th><th class="password_header">Password</th><th class="usertype_header">User Type</th><th class="avatarimage_header">Avatar</th><th class="edit_header">Edit</th><th class="delete_header">Delete</th></tr></thead>`;
 
 
     for (let i = 0; i < data.rows.length; i++) {
@@ -19,7 +21,7 @@ async function getUsers() {
 
       // str += `<tr><td class='id'>${row.user_id}</td><td class='username'><span>${row.user_username}</span></td><td class='firstname'><span>${row.user_firstname}</span></td><td class='lastname'><span>${row.user_lastname}</span></td><td class='email'><span>${row.user_email}</span></td><td class='password'><span>${row.user_password}</span></td><td class='usertype'><span>${row.user_type}</span></td><td class='useravatarurl'><span>${row.user_avatar_url}</span></td><td class='editbutton'><span><button>Edit</button></span></td><td class='deleteButton'><span><button>Delete</button></span></td></tr>`
 
-      str += `<tr><td class='id'>${row.user_id}</td><td class='username'>${row.user_username}</td><td class='firstname'>${row.user_firstname}</td><td class='lastname'>${row.user_lastname}</td><td class='email'>${row.user_email}</td><td class='password'>${row.user_password}</td><td class='usertype'>${row.user_type}</td><td class='useravatarurl'>${row.user_avatar_url}</td><td ><button class='editButton'>Edit</button></sp</td><td><button class='deleteButton'>Delete</button></td></tr>`
+      str += `<tr><td class='id'>${row.user_id}</td><td class='username'>${row.user_username}</td><td class='firstname'>${row.user_firstname}</td><td class='lastname'>${row.user_lastname}</td><td class='email'>${row.user_email}</td><td class='password'>${row.user_password}</td><td class='usertype'>${row.user_type}</td><td class='useravatarurl'>${row.user_avatar_url}</td><td><button class='editButton'>Edit</button></sp</td><td><button class='deleteButton'>Delete</button></td></tr>`
 
     }
 
@@ -203,6 +205,14 @@ async function uploadImage(e, username) {
 }
 
 
+$(document).ready( function () {
+  
+  $('#users').DataTable(
+    {
+
+    }
+  );
+} );
 
 
 
