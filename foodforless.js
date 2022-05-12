@@ -1,5 +1,10 @@
 "use strict;"
 
+const databaseHost = "localhost";
+const databaseUser = "root";
+const databasePassword = "";
+const databaseName = "COMP2800";
+
 const express = require("express");
 const app = express();
 const fs = require("fs");
@@ -49,10 +54,10 @@ app.get("/get-user", async (req, res) => {
   let username = req.session.username;
 
   const connection = await mysql.createConnection({
-    host: "us-cdbr-east-05.cleardb.net",
-    user: "b836f8ec5d5bac",
-    password: "732ab9c0",
-    database: "heroku_024b43865916c4a",
+    host: databaseHost,
+    user: databaseUser,
+    password: databasePassword,
+    database: databaseName,
     multipleStatements: true
   });
 
@@ -84,10 +89,10 @@ app.post("/upload-image", upload.single("file"), async (req, res) => {
     console.log(username);
 
     const connection = await mysql.createConnection({
-      host: "us-cdbr-east-05.cleardb.net",
-      user: "b836f8ec5d5bac",
-      password: "732ab9c0",
-      database: "heroku_024b43865916c4a",
+      host: databaseHost,
+      user: databaseUser,
+      password: databasePassword,
+      database: databaseName,
       multipleStatements: true
     });
 
@@ -354,10 +359,10 @@ app.post("/login", async (req, res) => {
   let password = req.body.password;
 
   const connection = await mysql.createConnection({
-    host: "us-cdbr-east-05.cleardb.net",
-    user: "b836f8ec5d5bac",
-    password: "732ab9c0",
-    database: "heroku_024b43865916c4a",
+    host: databaseHost,
+    user: databaseUser,
+    password: databasePassword,
+    database: databaseName,
     multipleStatements: true
   });
 
@@ -405,10 +410,10 @@ app.post("/createUser", async (req, res) => {
   let signupPassword = req.body.signupPassword;
 
   const connection = await mysql.createConnection({
-    host: "us-cdbr-east-05.cleardb.net",
-    user: "b836f8ec5d5bac",
-    password: "732ab9c0",
-    database: "heroku_024b43865916c4a",
+    host: databaseHost,
+    user: databaseUser,
+    password: databasePassword,
+    database: databaseName,
     multipleStatements: true
   });
 
@@ -448,10 +453,10 @@ app.post("/deleteUsers", async (req, res) => {
     console.log(deleteUsername);
 
     const connection = await mysql.createConnection({
-      host: "us-cdbr-east-05.cleardb.net",
-      user: "b836f8ec5d5bac",
-      password: "732ab9c0",
-      database: "heroku_024b43865916c4a",
+      host: databaseHost,
+      user: databaseUser,
+      password: databasePassword,
+      database: databaseName,
       multipleStatements: true
     });
 
@@ -484,13 +489,13 @@ app.get("/admin-dashboard", async (req, res) => {
 //this is the route to get the users
 app.get("/get-users", async (req, res) => {
   if (req.session.loggedIn === true && req.session.usertype === "admin") {
-  const connection = await mysql.createConnection({
-    host: "us-cdbr-east-05.cleardb.net",
-    user: "b836f8ec5d5bac",
-    password: "732ab9c0",
-    database: "heroku_024b43865916c4a",
-    multipleStatements: true
-  });
+    const connection = await mysql.createConnection({
+      host: databaseHost,
+      user: databaseUser,
+      password: databasePassword,
+      database: databaseName,
+      multipleStatements: true
+    });
   let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user");
     res.send({ status: "success", rows: results, current_username: req.session.username});
   } else {
@@ -520,10 +525,10 @@ app.post("/update-user-id", async (req, res) => {
   console.log(username);
 
   const connection = await mysql.createConnection({
-    host: "us-cdbr-east-05.cleardb.net",
-    user: "b836f8ec5d5bac",
-    password: "732ab9c0",
-    database: "heroku_024b43865916c4a",
+    host: databaseHost,
+    user: databaseUser,
+    password: databasePassword,
+    database: databaseName,
     multipleStatements: true
   });
 
@@ -576,10 +581,10 @@ app.post("/update-user", async (req, res) => {
   console.log(username);
 
   const connection = await mysql.createConnection({
-    host: "us-cdbr-east-05.cleardb.net",
-    user: "b836f8ec5d5bac",
-    password: "732ab9c0",
-    database: "heroku_024b43865916c4a",
+    host: databaseHost,
+    user: databaseUser,
+    password: databasePassword,
+    database: databaseName,
     multipleStatements: true
   });
 
@@ -619,5 +624,5 @@ app.get("/logout", function (req, res) {
   }
 });
 
-const port = process.env.PORT || 8000;
+const port = 8000;
 app.listen(port);
