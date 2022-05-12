@@ -124,11 +124,17 @@ let changeAvatarModalWindow = document.querySelector("#changeAvatarWindow");
 let changeAvatarButton = document.querySelector("#change-avatar-button");
 
 // Get the close button to close the modal
-let cancelAvatarUploadButton = document.getElementsByClassName("cancel-avatar-upload");
+let cancelAvatarUploadButton = document.querySelector("#cancel-avatar-upload");
 
 changeAvatarButton.addEventListener("click", e => {
-  modal.style.display = "block";
+  changeAvatarModalWindow.style.display = "block";
 });
+
+cancelAvatarUploadButton.addEventListener("click", e => {
+  changeAvatarModalWindow.style.display = "none";
+});
+
+
 
 
 
@@ -182,6 +188,6 @@ async function uploadImage(e) {
   userAvatarElement.setAttribute("src", userRecord.user_avatar_url);
 
   //hide the form after the Save Changes button is pressed
-  modal.style.display = "none";
+  changeAvatarModalWindow.style.display = "none";
 
 }

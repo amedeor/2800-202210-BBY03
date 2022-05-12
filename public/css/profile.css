@@ -1,7 +1,26 @@
-body {font-family: Arial, Helvetica, sans-serif;}
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Source+Sans+Pro:wght@400;600;700&display=swap');
+
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+}
 
 /* The Modal (background) */
 #editWindow {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* The Avatar Modal (background) */
+#changeAvatarWindow {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -23,6 +42,22 @@ body {font-family: Arial, Helvetica, sans-serif;}
   padding: 0;
   border: 1px solid #888;
   width: 300px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+/* Avatar Modal Content */
+.change-avatar-window-content {
+  position: relative;
+  background-color: white;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 300px;
+  height: auto;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
   -webkit-animation-name: animatetop;
   -webkit-animation-duration: 0.4s;
@@ -61,6 +96,26 @@ body {font-family: Arial, Helvetica, sans-serif;}
   padding: 2px 16px;
   padding-bottom: 10px;
 }
+
+.edit-window-avatar-body {
+  /* text-align: center; */
+
+  /* grid is used to align the labels and the input boxes */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto auto auto;
+
+  text-align: center;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+
+
+  padding: 2px 16px;
+  padding-bottom: 10px;
+}
+
+
 
 .edit-form-label {
   padding-top: .5em;
@@ -125,13 +180,18 @@ button{
   border-color: green;
   border-radius: 5px;
 }
+
 input[type="submit"]#edit-user-info-submit-button:hover {
   background-color: green;
   color: white;
 }
+
 .cancel{
   border-color: red;
 }
+
+
+
 input[type="submit"].cancel:hover {
   background-color: red;
   color: white;
@@ -141,7 +201,55 @@ input[type="submit"].cancel:hover {
   margin-bottom: 1em;
 }
 
+#upload-images-form {
+  text-align: center;
+  margin: auto;
+}
 
+#file-upload-button {
+  background-color: white;
+  
+}
+
+.cancel-avatar-upload {
+  border-color: red;
+}
+
+input[type="submit"].cancel-avatar-upload:hover {
+  background-color: red;
+  color: white;
+}
+
+input[type="submit"]#submit:hover {
+  background-color: green;
+  color: white;
+}
+
+#image-upload {
+  margin-bottom: 1em;
+}
+
+/*
+input[type="file"] {
+  display: none;
+}
+*/
+
+/*
+.choose-image-button {
+  display: block;
+  padding: 1em;
+  border: 1px solid #fcc603;
+  border-radius: 5em;
+  margin-bottom: 1em;
+}
+
+.choose-image-button:hover {
+  background-color: #fcc603;
+  color: white;
+  cursor: pointer;
+}
+*/
 
 
 

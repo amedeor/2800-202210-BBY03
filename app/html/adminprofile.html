@@ -27,7 +27,7 @@
         <li class="nav-link"><a href="#">Browse</a></li>
         <li class="nav-link">
           <form action="/myDeals" method="get">
-              <input id="myDeals-button" class="look-like-button" type="submit" value="My Deals">
+            <input id="myDeals-button" class="look-like-button" type="submit" value="My Deals">
           </form>
         </li>
         <li class="nav-link"><a href="#">Post</a></li>
@@ -83,11 +83,10 @@
         <p id="error-message"></p>
 
       </div>
-    </div>
-
-
 
     </div>
+
+  </div>
 
     <div id="changeAvatarWindow">
 
@@ -101,18 +100,21 @@
         <div class="edit-window-avatar-body">
   
           <form id="upload-images-form">
-            <input id="image-upload" type="file" value="Upload Image" accept="image/png, image/gif, image/jpeg, image/svg+xml"/>
+            <input id="image-upload" type="file" accept="image/png, image/gif, image/jpeg, image/svg+xml" required/>
             <input id="submit" type="submit" value="Submit"/>
             <input id="cancel-avatar-upload" class="cancel-avatar-upload" type="submit" value="Cancel">
           </form>
   
         </div>
+
       </div>
   
     </div>
 
+  
+
   <div id="profile-abilities">
-    <form action="/users" method="get" id = "view-user-account">
+    <form action="/admin-dashboard" method="get" id = "view-user-account">
       <input id="view-user-account-button" class="abilities-button" type="submit" value="View User Accounts">
     </form>
     <br/>
@@ -125,7 +127,7 @@
       <small>Copyright 2022, FoodForLess</small>
     </div>
   </footer>
-  
+
   <script src="/js/client.js"></script>
   <script src="/js/profile.js"></script>
 </body>

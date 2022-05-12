@@ -1,0 +1,52 @@
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  margin: 0;
+  padding: 0;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto auto auto auto;
+
+  font-size: 12pt;
+}
+
+#user-accounts-heading {
+  grid-column-start: 1;
+  grid-column-end: 5;
+}
+
+#users {
+
+}
+
+#update-record-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto auto auto auto auto auto auto;
+
+  grid-column-start: 1;
+  grid-column-end: 5;
+
+  grid-row-start: 3;
+  grid-row-end: 4;
+}
+
+#image-upload {
+  justify-self: center;
+
+}
+
+table {
+  
+}
+
+#table-container {
+  overflow-x: scroll;
+
+  grid-column-start: 1;
+  grid-column-end: 5;
+  grid-row-start: 2;
+  grid-row-end: 2;
+}
+
+
