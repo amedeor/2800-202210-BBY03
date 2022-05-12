@@ -49,4 +49,54 @@ table {
   grid-row-end: 2;
 }
 
+.update-form-window {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
 
+.edit-user-window-content {
+  position: relative;
+  background-color: white;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 300px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+.edit-window-header {
+  text-align: center;
+  padding: 2px 16px;
+  margin-bottom: 1em;
+  background-color: #fcc603;
+  color: black;
+}
+
+.edit-form-input {
+  margin-bottom: 1em;
+}
+
+#submit-container {
+  grid-area: 9 / 1 / span 1 / span 2;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  display: block;
+  text-align: center;
+}
+
+#avatar-image-upload-container {
+
+}
