@@ -56,7 +56,7 @@ app.get("/get-user", async (req, res) => {
     multipleStatements: true
   });
 
-  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user WHERE user_username = ?", [username], function (error, results, fields) {
+  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ?", [username], function (error, results, fields) {
     if (error) {
       console.log(error);
     }
@@ -92,7 +92,7 @@ app.post("/upload-image", upload.single("file"), async (req, res) => {
     });
 
     await connection.connect();
-    let [results, fields] = await connection.query("UPDATE bby03_user SET user_avatar_url = ? WHERE user_username = ?",
+    let [results, fields] = await connection.query("UPDATE BBY_03_user SET user_avatar_url = ? WHERE user_username = ?",
       [savedFileName, username],
       function (error, results, fields) {
         if (error) {
@@ -362,7 +362,7 @@ app.post("/login", async (req, res) => {
   });
 
   //BINARY makes the password query case sensitive
-  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user WHERE user_username = ? AND BINARY user_password = ? ", [username, password]);
+  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ? AND BINARY user_password = ? ", [username, password]);
 
 
   if (results.length === 0) {
@@ -413,11 +413,11 @@ app.post("/createUser", async (req, res) => {
   });
 
   //Check to see if a user with selected username or email exists.
-  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user WHERE user_username = ? OR user_email = ?", [signupUsername, signupEmail]);
+  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ? OR user_email = ?", [signupUsername, signupEmail]);
 
   if (results.length === 0) {
 
-    let userRecord = "INSERT INTO bby03_user (user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url) values (?)";
+    let userRecord = "INSERT INTO BBY_03_user (user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url) values (?)";
 
     let recordValues = [signupUsername, signupFName, signupLName, signupEmail, signupPassword, "regular", "/img/default-avatar.svg"];
 
@@ -455,13 +455,13 @@ app.post("/deleteUsers", async (req, res) => {
       multipleStatements: true
     });
 
-    let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user WHERE user_id = ? OR user_username = ?", [deleteID, deleteUsername]);
+    let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_id = ? OR user_username = ?", [deleteID, deleteUsername]);
 
     if (results.length === 0) {
       res.send({ "status": "fail", "message": "No User with that id or username found" });
     } else {
       if (deleteUsername != req.session.username) {
-        await connection.query("DELETE FROM bby03_user WHERE user_id = ? AND user_username = ?", [deleteID, deleteUsername]);
+        await connection.query("DELETE FROM BBY_03_user WHERE user_id = ? AND user_username = ?", [deleteID, deleteUsername]);
       } else {
         res.send({ status: "fail", message: "Can't delete your own account!" });
       }
@@ -493,7 +493,7 @@ app.get("/get-users", async (req, res) => {
     multipleStatements: true
   });
 
-  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user");
+  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user");
 
     res.send({ status: "success", rows: results, current_username: req.session.username});
   } else {
@@ -531,7 +531,7 @@ app.post("/update-user-id", async (req, res) => {
   });
 
   await connection.connect();
-  let [results, fields] = await connection.query("UPDATE bby03_user SET user_username = ?, user_firstname = ?, user_lastname = ?, user_email = ?, user_password = ?, user_type = ?, user_avatar_url = ? WHERE user_id = ?",
+  let [results, fields] = await connection.query("UPDATE BBY_03_user SET user_username = ?, user_firstname = ?, user_lastname = ?, user_email = ?, user_password = ?, user_type = ?, user_avatar_url = ? WHERE user_id = ?",
     [username, firstname, lastname, email, password, usertype, userAvatarUrl, userId],
     function (error, results, fields) {
       if (error) {
@@ -587,7 +587,7 @@ app.post("/update-user", async (req, res) => {
   });
 
   await connection.connect();
-  let [results, fields] = await connection.query("UPDATE bby03_user SET user_username = ?, user_firstname = ?, user_lastname = ?, user_email = ?, user_password = ?, user_avatar_url = ? WHERE user_username = ?",
+  let [results, fields] = await connection.query("UPDATE BBY_03_user SET user_username = ?, user_firstname = ?, user_lastname = ?, user_email = ?, user_password = ?, user_avatar_url = ? WHERE user_username = ?",
     [username, firstname, lastname, email, password, userAvatarUrl, currentUsername],
     function (error, results, fields) {
       if (error) {
@@ -622,5 +622,5 @@ app.get("/logout", function (req, res) {
   }
 });
 
-var port = process.env.PORT || 8000;
+var port = 8000;
 app.listen(port);
