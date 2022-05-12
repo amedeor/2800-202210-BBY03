@@ -1,4 +1,8 @@
-body {font-family: Arial, Helvetica, sans-serif;}
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Source+Sans+Pro:wght@400;600;700&display=swap');
+
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+}
 
 /* The Modal (background) */
 #editWindow {

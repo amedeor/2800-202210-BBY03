@@ -76,34 +76,37 @@ app.get("/get-user", async (req, res) => {
 //the argument to single is the name of the HTML input that is uploading the file
 app.post("/upload-image", upload.single("file"), async (req, res) => {
   
-  let savedFileName = `/img/${req.file.filename}`;
-  let username = req.body.username;
-
-  console.log(savedFileName);
-  console.log(username);
-
-  const connection = await mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "COMP2800",
-    multipleStatements: true
-  });
-
-  await connection.connect();
-  let [results, fields] = await connection.query("UPDATE bby03_user SET user_avatar_url = ? WHERE user_username = ?",
-    [savedFileName, username],
-    function (error, results, fields) {
-      if (error) {
-        console.log(error);
-      }
+  if (req.file != undefined) {
+    let savedFileName = `/img/${req.file.filename}`;
+    let username = req.body.username;
+  
+    console.log(savedFileName);
+    console.log(username);
+  
+    const connection = await mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "",
+      database: "COMP2800",
+      multipleStatements: true
     });
-
-  //update session variable with new profile picture URL
-  req.session.avatarUrl = savedFileName;
-
-
-  res.send({"status": "success", "message": "Image uploaded successfully."})
+  
+    await connection.connect();
+    let [results, fields] = await connection.query("UPDATE bby03_user SET user_avatar_url = ? WHERE user_username = ?",
+      [savedFileName, username],
+      function (error, results, fields) {
+        if (error) {
+          console.log(error);
+        }
+      });
+  
+    //update session variable with new profile picture URL
+    req.session.avatarUrl = savedFileName;
+  
+  
+    res.send({"status": "success", "message": "Image uploaded successfully."})
+  }
+  
 });
 
 
@@ -435,50 +438,8 @@ app.post("/createUser", async (req, res) => {
   }
 });
 
-
-app.post("/deleteUser", async (req, res) => {
-  res.setHeader("Content-Type", "application/json");
-
-  let inputUserFName = req.body.inputUserFName;
-  let inputUserLName = req.body.inputUserLName;
-  let inputUserEmail = req.body.inputUserEmail;
-  let inputUserUsername = req.body.inputUserUsername;
-  let inputUserPassword = req.body.inputUserPassword;
-
-  const connection = await mysql.createConnection({
-    host: "127.0.0.1",
-    user: "root",
-    password: "",
-    database: "COMP2800",
-    multipleStatements: true
-  });
-
-  //Check to see if a user with selected username or email exists.
-  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user WHERE user_username = ? OR user_email = ?", [inputUserLName, inputUserEmail]);
-
-  if (results.length === 0) {
-    res.send({ "status": "fail", "message": "could not delete user." });
-  } else {
-    if (req.session.loggedIn === true && req.session.usertype === "admin") {
-      await connection.query("DELETE FROM bb03_user WHERE user_username = ?", [inputUserLName]);
-
-      // req.session.loggedIn = true;
-
-      // req.session.username = recordValues[0];
-      // req.session.firstName = recordValues[1];
-      // req.session.lastName = recordValues[2];
-      // req.session.email = recordValues[3];
-      // req.session.usertype = recordValues[5];
-      // req.session.avatarUrl = recordValues[6];
-
-      // res.send({ status: "success", message: "Logged in" });
-    } else {
-      res.send({ "status": "fail", "message": "Can only delete normal users." });
-    }
-  }
-});
-
-app.get("/users", async (req, res) => {
+//when the view user accounts button is clicked, this is what is loaded
+app.get("/admin-dashboard", async (req, res) => {
   if (req.session.loggedIn === true && req.session.usertype === "admin") {
     let users = fs.readFileSync("./app/html/users.html", "utf-8");
     let usersDOM = new JSDOM(users);
@@ -486,21 +447,80 @@ app.get("/users", async (req, res) => {
   }
 });
 
-app.get("/usersTable", async (req, res) => {
-  if (req.session.loggedIn === true && req.session.usertype === "admin") {
-    let users = fs.readFileSync("./app/html/users.html", "utf-8");
-    let usersDOM = new JSDOM(users);
-    const connection = await mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "",
-      database: "COMP2800",
-      multipleStatements: true
+//this is the route to get the users
+app.get("/get-users", async (req, res) => {
+
+  const connection = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "COMP2800",
+    multipleStatements: true
+  });
+
+  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user");
+  
+  res.send({ status: "success", rows: results });
+})
+
+
+app.post("/update-user-id", async (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+
+
+  let userId = req.body.id;
+  let username = req.body.username;
+  let firstname = req.body.firstname;
+  let lastname = req.body.lastname;
+  let email = req.body.email;
+  let password = req.body.password;
+  let usertype = req.body.usertype;
+  let userAvatarUrl = req.body.userAvatarUrl;
+
+  console.log(userId);
+  console.log(username);
+  console.log(firstname);
+  console.log(lastname);
+  console.log(email);
+  console.log(password);
+  console.log(username);
+
+  const connection = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "COMP2800",
+    multipleStatements: true
+  });
+
+  await connection.connect();
+  let [results, fields] = await connection.query("UPDATE bby03_user SET user_username = ?, user_firstname = ?, user_lastname = ?, user_email = ?, user_password = ?, user_type = ?, user_avatar_url = ? WHERE user_id = ?",
+    [username, firstname, lastname, email, password, usertype, userAvatarUrl, userId],
+    function (error, results, fields) {
+      if (error) {
+        console.log(error);
+      }
     });
-    let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user");
-    res.send({ status: "success", rows: results });
-  }
+
+  //update session variables with new info from database
+
+  // req.session.userId = userId;
+  // req.session.username = username;
+  // req.session.password = password;
+  // req.session.firstName = firstname;
+  // req.session.lastName = lastname;
+  // req.session.email = email;
+  // //req.session.usertype = retrievedUserType;
+  // req.session.avatarUrl = userAvatarUrl;
+
+
+  res.send({ status: "success", message: "Record successfully updated." });
+  connection.end();
 });
+
+
+
+
 
 app.post("/update-user", async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
