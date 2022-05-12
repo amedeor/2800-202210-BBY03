@@ -460,10 +460,12 @@ app.post("/deleteUsers", async (req, res) => {
     if (results.length === 0) {
       res.send({ "status": "fail", "message": "No User with that id or username found" });
     } else {
-
-      await connection.query("DELETE FROM bby03_user WHERE user_id = ? AND user_username = ?", [deleteID, deleteUsername]);
-
-      res.send({ status: "success", message: "Logged in!" });
+      if (deleteUsername != req.session.username) {
+        await connection.query("DELETE FROM bby03_user WHERE user_id = ? AND user_username = ?", [deleteID, deleteUsername]);
+      } else {
+        res.send({ status: "fail", message: "Can't delete your own account!" });
+      }
+      res.send({ status: "success", message: "Account deleted!!" });
     }
   }
 })
@@ -474,6 +476,8 @@ app.get("/admin-dashboard", async (req, res) => {
     let users = fs.readFileSync("./app/html/users.html", "utf-8");
     let usersDOM = new JSDOM(users);
     res.send(usersDOM.serialize());
+  } else {
+    res.redirect("/");
   }
 });
 
@@ -490,7 +494,7 @@ app.get("/get-users", async (req, res) => {
 
     let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user");
 
-    res.send({ status: "success", rows: results });
+    res.send({ status: "success", rows: results, current_username: req.session.username});
   } else {
     res.redirect("/");
   }

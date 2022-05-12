@@ -1,5 +1,7 @@
 "use strict;"
 
+var currentName;
+
 async function getUsers() {
 
   let response = await fetch("/get-users");
@@ -8,6 +10,8 @@ async function getUsers() {
 
   console.log(data);
 
+  currentName = data.current_username;
+  console.log(currentName);
   if (data.status == "success") {
 
     let str = `<tr><th class="id_header"><span>ID</span></th><th class="username_header"><span>Username</span></th><th class="firstname_header"><span>First Name</span></th><th class="lastname_header"><span>Last Name</span></th><th class="email_header"><span>Email</span></th><th class="password_header"><span>Password</span></th><th class="usertype_header"><span>User Type</span></th><th class="avatarimage_header"><span>Avatar</span></th></tr>`;
@@ -47,7 +51,6 @@ async function getUsers() {
 
 function editRow(e) {
 
-  console.log("editRow");
 
   let parentTd = e.target.parentNode;
   let parentTr = parentTd.parentNode;
@@ -65,7 +68,6 @@ function editRow(e) {
     user[i] = col.innerText;
   }
 
-  console.log(user);
 
   document.querySelector("#id").value = user[0];
   document.querySelector("#username").value = user[1];
@@ -80,7 +82,6 @@ function editRow(e) {
 
 async function deleteRow(e) {
 
-  console.log("deleteRow");
 
   let parentTd = e.target.parentNode;
   let parentTr = parentTd.parentNode;
@@ -92,20 +93,21 @@ async function deleteRow(e) {
 
   for (let i = 0, col; col = parentTr.cells[i]; i++) {
     user[i] = col.innerText;
-    console.log(user[i]);
   }
-  parentTr.remove();
-  let response = await fetch("/deleteUsers", {
-    method: "post",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
-    body: `deleteID=${user[0]}&deleteUsername=${user[1]}`
-  });
 
-  let parsedResponse = await response.json();
-  parsedResponse;
+  if (user[1] != currentName) {
+    parentTr.remove();
+    let response = await fetch("/deleteUsers", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: `deleteID=${user[0]}&deleteUsername=${user[1]}`
+    });
 
+    let parsedResponse = await response.json();
+    parsedResponse;
+  }
 }
 
 let submitButton = document.querySelector("#submit");
