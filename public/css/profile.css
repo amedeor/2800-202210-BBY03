@@ -221,10 +221,17 @@ input[type="submit"]#submit:hover {
   color: white;
 }
 
+#image-upload {
+  margin-bottom: 1em;
+}
+
+/*
 input[type="file"] {
   display: none;
 }
+*/
 
+/*
 .choose-image-button {
   display: block;
   padding: 1em;
@@ -238,7 +245,7 @@ input[type="file"] {
   color: white;
   cursor: pointer;
 }
-
+*/
 
 
 

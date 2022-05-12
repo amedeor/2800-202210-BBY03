@@ -86,41 +86,33 @@
 
     </div>
 
-  </div>
+    <div id="changeAvatarWindow">
 
-  <div id="changeAvatarWindow">
-
-    <!-- popup window -->
-    <div class="change-avatar-window-content">
-
-      <div class="edit-window-header">
-        <h2>Change Avatar Image</h2>
+      <!-- popup window -->
+      <div class="change-avatar-window-content">
+  
+        <div class="edit-window-header">
+          <h2>Change Avatar Image</h2>
+        </div>
+  
+        <div class="edit-window-avatar-body">
+  
+          <form id="upload-images-form">
+            <input id="image-upload" type="file" value="Upload Image" accept="image/png, image/gif, image/jpeg, image/svg+xml"/>
+            <input id="submit" type="submit" value="Submit"/>
+            <input id="cancel-avatar-upload" class="cancel-avatar-upload" type="submit" value="Cancel">
+          </form>
+  
+        </div>
       </div>
-
-      <div class="edit-window-avatar-body">
-
-        <form id="upload-images-form">
-          <label class="choose-image-button" for="image-upload">Choose Image</label>
-          <br />
-          <input id="image-upload" type="file" value="Upload Image"
-            accept="image/png, image/gif, image/jpeg, image/svg+xml" />
-          <input id="submit" type="submit" value="Submit" />
-          <input id="cancel-avatar-upload" class="cancel-avatar-upload" type="submit" value="Cancel">
-        </form>
-
-      </div>
-
+  
     </div>
 
-  </div>
-
-
-
   <div id="profile-abilities">
-    <form action="/users" method="get" id="view-user-account">
-      <input id="view-user-account-button" type="submit" value="View User Accounts">
+    <form action="/users" method="get" id = "view-user-account">
+      <input id="view-user-account-button" class="abilities-button" type="submit" value="View User Accounts">
     </form>
-    <br />
+    <br/>
     <button id="edit-profile-button" class="abilities-button">Edit Information</button>
     <button id="change-avatar-button" class="abilities-button">Change Avatar Image</button>
   </div>

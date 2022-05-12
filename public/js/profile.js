@@ -137,6 +137,8 @@ cancelAvatarUploadButton.addEventListener("click", e => {
 
 
 
+
+
 //Get the upload image form element
 const uploadImageForm = document.getElementById("upload-images-form");
 
@@ -186,6 +188,6 @@ async function uploadImage(e) {
   userAvatarElement.setAttribute("src", userRecord.user_avatar_url);
 
   //hide the form after the Save Changes button is pressed
-  modal.style.display = "none";
+  changeAvatarModalWindow.style.display = "none";
 
 }
