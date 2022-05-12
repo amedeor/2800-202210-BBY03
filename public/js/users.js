@@ -219,46 +219,10 @@ async function uploadImage(e, username) {
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  let modalWindow = document.querySelector(".update-form-window");
+  let cancelButton = document.querySelector("#cancel-button");
+  
+  cancelButton.addEventListener("click", e => {
+    e.preventDefault();
+    modalWindow.style.display = "none";
+  })

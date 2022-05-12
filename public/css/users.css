@@ -11,6 +11,8 @@ body {
 }
 
 #user-accounts-heading {
+  grid-row-start: 2;
+  grid-row-end: 3;
   grid-column-start: 1;
   grid-column-end: 5;
 }
@@ -41,12 +43,25 @@ table {
 }
 
 #table-container {
-  overflow-x: scroll;
+  overflow-x: auto;
 
   grid-column-start: 1;
   grid-column-end: 5;
-  grid-row-start: 2;
-  grid-row-end: 2;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1em;
+}
+
+footer {
+  grid-row-start: 4;
+  grid-row-end: 5;
+  grid-column-start: 1;
+  grid-column-end: 5;
+  text-align: center;
+  background-color: #fcc603;
+  padding: 2em;
 }
 
 .update-form-window {
@@ -95,8 +110,4 @@ table {
   margin-bottom: 1em;
   display: block;
   text-align: center;
-}
-
-#avatar-image-upload-container {
-
 }
