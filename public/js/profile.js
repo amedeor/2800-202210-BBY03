@@ -131,6 +131,9 @@ changeAvatarButton.addEventListener("click", e => {
 });
 
 cancelAvatarUploadButton.addEventListener("click", e => {
+  e.preventDefault();
+  const imageUpload = document.querySelector('#image-upload');
+  clearInputFile(imageUpload);
   changeAvatarModalWindow.style.display = "none";
 });
 
@@ -187,7 +190,20 @@ async function uploadImage(e) {
   let userAvatarUrl = userAvatarElement.getAttribute("src");
   userAvatarElement.setAttribute("src", userRecord.user_avatar_url);
 
+  clearInputFile(imageUpload);
+
   //hide the form after the Save Changes button is pressed
   changeAvatarModalWindow.style.display = "none";
 
+}
+
+// Removes the file form the input once the "Submit" button or "Cancel" button is clicked.
+function clearInputFile(f) {
+  if (f.value) {
+    try {
+      f.value = '';
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }

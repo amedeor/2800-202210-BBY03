@@ -139,6 +139,11 @@ body {
   margin-right: .5em;
 }
 
+#save-changes-button:hover {
+  color: white;
+  background-color: green;
+}
+
 #cancel-button {
   margin-left: .5em;
 }
@@ -213,9 +218,11 @@ input[type="submit"].cancel:hover {
 
 .cancel-avatar-upload {
   border-color: red;
+  background-color: white;
+  border-radius: 5px;
 }
 
-input[type="submit"].cancel-avatar-upload:hover {
+.cancel-avatar-upload:hover {
   background-color: red;
   color: white;
 }
@@ -228,6 +235,8 @@ input[type="submit"]#submit:hover {
 #image-upload {
   margin-bottom: 1em;
 }
+
+
 
 /*
 input[type="file"] {
