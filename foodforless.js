@@ -493,6 +493,8 @@ app.get("/get-users", async (req, res) => {
     multipleStatements: true
   });
 
+  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user");
+
     res.send({ status: "success", rows: results, current_username: req.session.username});
   } else {
     res.redirect("/");
