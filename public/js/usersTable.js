@@ -1,39 +1,48 @@
-let data = JSON.parse(this.responseText);
+let importedData;
 
-for (let i; i < data.length; i++) {
+fetch('http://localhost:8000/usersTable')
+    .then(response => {return response.json()})
+    .then(data => {
+        importedData = data;
+        console.log(data);
+    })
+    .catch(err => console.log(err));
 
-    console.log(row[i].user_username);
+console.log(importedData[1]);
+// for (let i; i < data.length; i++) {
 
-    // tr.setAttribute('id', `"TR${row[i].user_username}"`);
+//     console.log(row[i].user_username);
+
+//     // tr.setAttribute('id', `"TR${row[i].user_username}"`);
     
-    // tdUsername.setAttribute('id', `"TD${userUsername}"`);
+//     // tdUsername.setAttribute('id', `"TD${userUsername}"`);
 
-    // tdUsername.insertAdjacentText("afterbegin", userUsername);
-    // tdFirstName.insertAdjacentText("afterbegin", userFirstname);
-    // tdLastName.insertAdjacentText("afterbegin", userLastname);
-    // tdEmail.insertAdjacentText("afterbegin", userEmail);
-    // tdUserType.insertAdjacentText("afterbegin", userType);
-    // tdUserAvatarUrl.insertAdjacentHTML("afterbegin", `<img src="${userAvatarUrl}" />`);
-    // tdDeleteUser.insertAdjacentHTML("afterbegin", `<input type="button" id="deleteButton${userUsername}" value="Delete" />`);
+//     // tdUsername.insertAdjacentText("afterbegin", userUsername);
+//     // tdFirstName.insertAdjacentText("afterbegin", userFirstname);
+//     // tdLastName.insertAdjacentText("afterbegin", userLastname);
+//     // tdEmail.insertAdjacentText("afterbegin", userEmail);
+//     // tdUserType.insertAdjacentText("afterbegin", userType);
+//     // tdUserAvatarUrl.insertAdjacentHTML("afterbegin", `<img src="${userAvatarUrl}" />`);
+//     // tdDeleteUser.insertAdjacentHTML("afterbegin", `<input type="button" id="deleteButton${userUsername}" value="Delete" />`);
 
-    // tbody.insertAdjacentElement("beforeend", tr);
+//     // tbody.insertAdjacentElement("beforeend", tr);
 
-    // tr.insertAdjacentElement("beforeend", tdUsername);
-    // tr.insertAdjacentElement("beforeend", tdFirstName);
-    // tr.insertAdjacentElement("beforeend", tdLastName);
-    // tr.insertAdjacentElement("beforeend", tdEmail);
-    // tr.insertAdjacentElement("beforeend", tdUserType);
-    // tr.insertAdjacentElement("beforeend", tdUserAvatarUrl);
-    // tr.insertAdjacentElement("beforeend", tdDeleteUser);
+//     // tr.insertAdjacentElement("beforeend", tdUsername);
+//     // tr.insertAdjacentElement("beforeend", tdFirstName);
+//     // tr.insertAdjacentElement("beforeend", tdLastName);
+//     // tr.insertAdjacentElement("beforeend", tdEmail);
+//     // tr.insertAdjacentElement("beforeend", tdUserType);
+//     // tr.insertAdjacentElement("beforeend", tdUserAvatarUrl);
+//     // tr.insertAdjacentElement("beforeend", tdDeleteUser);
 
-    // let deleteButton = usersDOM.window.document.querySelector(`#deleteButton${userUsername}`);
+//     // let deleteButton = usersDOM.window.document.querySelector(`#deleteButton${userUsername}`);
 
-    // function deleteRow(r) {
-    //   var i = r.parentNode.parentNode.rowIndex;
-    //   usersDOM.window.document.getElementById("myTable").deleteRow(i);
-    // }
+//     // function deleteRow(r) {
+//     //   var i = r.parentNode.parentNode.rowIndex;
+//     //   usersDOM.window.document.getElementById("myTable").deleteRow(i);
+//     // }
 
-    // deleteButton.addEventListener("click", async e => {
-    //   deleteRow(deleteButton);
-    // });
-  }
+//     // deleteButton.addEventListener("click", async e => {
+//     //   deleteRow(deleteButton);
+//     // });
+//   }

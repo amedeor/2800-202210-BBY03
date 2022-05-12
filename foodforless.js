@@ -478,8 +478,15 @@ app.post("/deleteUser", async (req, res) => {
   }
 });
 
-
 app.get("/users", async (req, res) => {
+  if (req.session.loggedIn === true && req.session.usertype === "admin") {
+    let users = fs.readFileSync("./app/html/users.html", "utf-8");
+    let usersDOM = new JSDOM(users);
+    res.send(usersDOM.serialize());
+  }
+});
+
+app.get("/usersTable", async (req, res) => {
   if (req.session.loggedIn === true && req.session.usertype === "admin") {
     let users = fs.readFileSync("./app/html/users.html", "utf-8");
     let usersDOM = new JSDOM(users);
