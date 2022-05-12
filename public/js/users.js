@@ -33,14 +33,10 @@ async function getUsers() {
       editbuttons[j].addEventListener("click", editRow);
     }
 
-    // let deletebuttons = document.querySelectorAll(".deleteButton");
-    // for (let j = 0; j < editbuttons.length; j++) {
-    //   deletebuttons[j].addEventListener("click", deleteRow);
-    // }
-
-    console.log(editbuttons);
-    // console.log(deletebuttons);
-
+    let deletebuttons = document.querySelectorAll(".deleteButton");
+    for (let j = 0; j < editbuttons.length; j++) {
+      deletebuttons[j].addEventListener("click", deleteRow);
+    }
 
   } else {
     console.log("Error!");
@@ -80,6 +76,36 @@ function editRow(e) {
   document.querySelector("#usertype").value = user[6];
 
   userAvatarUrl = user[7];
+}
+
+async function deleteRow(e) {
+
+  console.log("deleteRow");
+
+  let parentTd = e.target.parentNode;
+  let parentTr = parentTd.parentNode;
+
+  console.log(parentTd);
+  console.log(parentTr);
+
+  let user = [];
+
+  for (let i = 0, col; col = parentTr.cells[i]; i++) {
+    user[i] = col.innerText;
+    console.log(user[i]);
+  }
+  parentTr.remove();
+  let response = await fetch("/deleteUsers", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: `deleteID=${user[0]}&deleteUsername=${user[1]}`
+  });
+
+  let parsedResponse = await response.json();
+  parsedResponse;
+
 }
 
 let submitButton = document.querySelector("#submit");

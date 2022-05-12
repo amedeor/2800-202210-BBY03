@@ -75,14 +75,14 @@ app.get("/get-user", async (req, res) => {
 
 //the argument to single is the name of the HTML input that is uploading the file
 app.post("/upload-image", upload.single("file"), async (req, res) => {
-  
+
   if (req.file != undefined) {
     let savedFileName = `/img/${req.file.filename}`;
     let username = req.body.username;
-  
+
     console.log(savedFileName);
     console.log(username);
-  
+
     const connection = await mysql.createConnection({
       host: "localhost",
       user: "root",
@@ -90,7 +90,7 @@ app.post("/upload-image", upload.single("file"), async (req, res) => {
       database: "COMP2800",
       multipleStatements: true
     });
-  
+
     await connection.connect();
     let [results, fields] = await connection.query("UPDATE bby03_user SET user_avatar_url = ? WHERE user_username = ?",
       [savedFileName, username],
@@ -99,14 +99,14 @@ app.post("/upload-image", upload.single("file"), async (req, res) => {
           console.log(error);
         }
       });
-  
+
     //update session variable with new profile picture URL
     req.session.avatarUrl = savedFileName;
-  
-  
-    res.send({"status": "success", "message": "Image uploaded successfully."})
+
+
+    res.send({ "status": "success", "message": "Image uploaded successfully." })
   }
-  
+
 });
 
 
@@ -438,6 +438,36 @@ app.post("/createUser", async (req, res) => {
   }
 });
 
+
+app.post("/deleteUsers", async (req, res) => {
+  if (req.session.loggedIn && req.session.usertype === "admin") {
+
+    let deleteID = req.body.deleteID;
+    let deleteUsername = req.body.deleteUsername;
+    console.log(deleteID);
+    console.log(deleteUsername);
+
+    const connection = await mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "",
+      database: "COMP2800",
+      multipleStatements: true
+    });
+
+    let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user WHERE user_id = ? OR user_username = ?", [deleteID, deleteUsername]);
+
+    if (results.length === 0) {
+      res.send({ "status": "fail", "message": "No User with that id or username found" });
+    } else {
+
+      await connection.query("DELETE FROM bby03_user WHERE user_id = ? AND user_username = ?", [deleteID, deleteUsername]);
+
+      res.send({ status: "success", message: "Logged in!" });
+    }
+  }
+})
+
 //when the view user accounts button is clicked, this is what is loaded
 app.get("/admin-dashboard", async (req, res) => {
   if (req.session.loggedIn === true && req.session.usertype === "admin") {
@@ -449,20 +479,22 @@ app.get("/admin-dashboard", async (req, res) => {
 
 //this is the route to get the users
 app.get("/get-users", async (req, res) => {
+  if (req.session.loggedIn === true && req.session.usertype === "admin") {
+    const connection = await mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "",
+      database: "COMP2800",
+      multipleStatements: true
+    });
 
-  const connection = await mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "COMP2800",
-    multipleStatements: true
-  });
+    let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user");
 
-  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user");
-  
-  res.send({ status: "success", rows: results });
+    res.send({ status: "success", rows: results });
+  } else {
+    res.redirect("/");
+  }
 })
-
 
 app.post("/update-user-id", async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
