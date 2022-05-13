@@ -56,7 +56,13 @@ if (editSubmitButton != null) {
 
 
 
-//Code for edit window
+/**
+   * JS code for functionalities of edit window
+   * I found this code on www.w3schools.com
+   *
+   * @author www.w3schools.com/howto
+   * @see https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal2
+   */
 // Get the modal
 let modal = document.querySelector("#editWindow");
 
