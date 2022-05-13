@@ -1,6 +1,6 @@
 "use strict;"
 
-const databaseHost = "http://us-cdbr-east-05.cleardb.net/";
+const databaseHost = "us-cdbr-east-05.cleardb.net";
 const databaseUser = "b836f8ec5d5bac";
 const databasePassword = "732ab9c0";
 const databaseName = "heroku_024b43865916c4a";
