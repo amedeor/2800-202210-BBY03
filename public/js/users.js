@@ -134,7 +134,7 @@ submitButton.addEventListener("click", async e => {
   let email = document.querySelector("#email").value;
   let password = document.querySelector("#password").value;
   let usertype = document.querySelector("#usertype").value;
-  
+
   console.log(`This is the avatar url for user #${id}: ${oldAvatarURL}`);
 
   if (fileUploadInput.value != "") {
@@ -173,7 +173,7 @@ submitButton.addEventListener("click", async e => {
   let modalWindow = document.querySelector(".update-form-window");
 
   modalWindow.style.display = "none";
-  
+
 })
 
 getUsers();
@@ -248,10 +248,50 @@ async function uploadImage(e, username) {
 
 }
 
-  let modalWindow = document.querySelector(".update-form-window");
-  let cancelButton = document.querySelector("#cancel-button");
-  
-  cancelButton.addEventListener("click", e => {
-    e.preventDefault();
-    modalWindow.style.display = "none";
-  })
+let modalWindow = document.querySelector(".update-form-window");
+let cancelButton = document.querySelector("#cancel-button");
+
+cancelButton.addEventListener("click", e => {
+  e.preventDefault();
+  modalWindow.style.display = "none";
+})
+
+
+let createUserModalWindow = document.querySelector(".create-form-window");
+let userButton = document.querySelector("#create-user-button");
+let submitUserCreationButton = document.querySelector("#submit-new-user");
+let cancelUserCreationButton = document.querySelector("#cancel-user-creation");
+let createUserAvatar = document.querySelector("#create-image-upload");
+
+// Shows the user creation modal when the "Create User" buton is clicked.
+userButton.addEventListener("click", e => {
+  e.preventDefault();
+  clearInputFile(createUserAvatar);
+  createUserModalWindow.style.display = "block";
+})
+
+// Hides the user creation modal when the "Submit" button is clicked.
+submitUserCreationButton.addEventListener("click", e => {
+  e.preventDefault();
+  clearInputFile(createUserAvatar);
+  createUserModalWindow.style.display = "none";
+})
+
+
+// Hides the user creation modal when the "Cancel" button is clicked.
+cancelUserCreationButton.addEventListener("click", e => {
+  e.preventDefault();
+  clearInputFile(createUserAvatar);
+  createUserModalWindow.style.display = "none";
+})
+
+// Removes the file form the input once the "Submit" button or "Cancel" button is clicked.
+function clearInputFile(f) {
+  if (f.value) {
+    try {
+      f.value = '';
+    } catch (err) {
+      console.log(err);
+    }
+  }
+}

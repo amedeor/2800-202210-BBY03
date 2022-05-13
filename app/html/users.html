@@ -63,6 +63,50 @@
     <table id="users">
 
     </table>
+
+    <button id="create-user-button">Create User</button>
+  </div>
+
+  <div class="create-form-window">
+
+    <div class="create-user-window-content">
+
+      <div class="edit-window-header">
+        <h2>Create User Info</h2>
+      </div>
+
+      <form id="create-record-form">
+
+        <label for="username" class="edit-form-label">Username:</label>
+        <input id="create-username" class="edit-form-input" type="text" name="username" />
+
+        <label for="firstname" class="edit-form-label">First Name:</label>
+        <input id="create-firstname" class="edit-form-input" type="text" name="firstname" />
+
+        <label for="lastname" class="edit-form-label">Last Name:</label>
+        <input id="create-lastname" class="edit-form-input" type="text" name="lastname" />
+
+        <label for="email" class="edit-form-label">Email:</label>
+        <input id="create-email" class="edit-form-input" type="text" name="email" />
+
+        <label for="password" class="edit-form-label">Password:</label>
+        <input id="create-password" class="edit-form-input" type="text" name="password" />
+
+        <label for="usertype" class="edit-form-label">User Type:</label>
+        <input id="usertype" class="edit-form-input" type="text" name="usertype" />
+
+        <label for="image-upload" class="edit-form-label">Avatar Image:</label>
+        <input id="create-image-upload" type="file" accept="image/png, image/gif, image/jpeg, image/svg+xml"/>
+
+        <div id="submit-container">
+          <input id="submit-new-user" type="submit" value="Submit" />
+          <input id="cancel-user-creation" type="submit" value="Cancel">
+        </div>
+        
+      </form>
+
+    </div>
+
   </div>
 
   <div class="update-form-window">
@@ -108,7 +152,6 @@
     </div>
 
   </div>
-
 
 
 
