@@ -68,9 +68,6 @@ app.get("/get-user", async (req, res) => {
   });
 
   res.send({ status: "success", rows: results });
-
-  console.log('Rows returned are: ', results);
-
   connection.end();
 });
 
@@ -84,10 +81,6 @@ app.post("/upload-image", upload.single("file"), async (req, res) => {
   if (req.file != undefined) {
     let savedFileName = `/img/${req.file.filename}`;
     let username = req.body.username;
-
-    console.log(savedFileName);
-    console.log(username);
-
     const connection = await mysql.createConnection({
       host: databaseHost,
       user: databaseUser,
@@ -114,13 +107,6 @@ app.post("/upload-image", upload.single("file"), async (req, res) => {
 
 });
 
-
-
-
-
-
-
-
 app.get("/profile", async (req, res) => {
   if (req.session.loggedIn === true) {
 
@@ -128,43 +114,6 @@ app.get("/profile", async (req, res) => {
       let profile = fs.readFileSync("./app/html/profile.html", "utf-8");
 
       let profileDOM = new JSDOM(profile);
-
-      // let imageUploadForm = profileDOM.window.document.createElement("form");
-      // imageUploadForm.setAttribute("id", "image-upload-form");
-
-      // let imageUploadInput = profileDOM.window.document.createElement("input");
-      // imageUploadInput.setAttribute("id", "image-upload-input");
-      // imageUploadInput.setAttribute("type", "file");
-      // imageUploadInput.setAttribute("value", "Change Avatar Picture");
-      // imageUploadInput.setAttribute("accept", "image/png, image/gif, image/jpeg, image/svg+xml");
-      // //imageUploadInput.setAttribute("name", "image");
-
-      // let imageFormSubmitButton = profileDOM.window.document.createElement("input");
-      // imageFormSubmitButton.setAttribute("id", "photo-upload-submit-button");
-      // imageFormSubmitButton.setAttribute("type", "submit");
-      // imageFormSubmitButton.setAttribute("value", "Submit");
-
-
-      // // let imageUploadForm = profileDOM.window.document.createElement("form");
-      // // imageUploadForm.setAttribute("id", "image-upload-form");
-      // // imageUploadForm.setAttribute("method", "post");
-      // // imageUploadForm.setAttribute("action", "/upload-image")
-      // // imageUploadForm.setAttribute("enctype", "/multipart/form-data")
-
-      // // let imageUploadInput = profileDOM.window.document.createElement("input");
-      // // imageUploadInput.setAttribute("id", "image-upload-input");
-      // // imageUploadInput.setAttribute("type", "file");
-      // // //imageUploadInput.setAttribute("value", "Change Avatar Picture");
-      // // imageUploadInput.setAttribute("accept", "image/png, image/gif, image/jpeg, image/svg+xml");
-      // // imageUploadInput.setAttribute("name", "image");
-
-      // // let imageFormSubmitButton = profileDOM.window.document.createElement("input");
-      // // imageFormSubmitButton.setAttribute("id", "photo-upload-submit-button");
-      // // imageFormSubmitButton.setAttribute("type", "submit");
-      // // imageFormSubmitButton.setAttribute("value", "Submit");
-
-      // imageUploadForm.insertAdjacentElement("beforeend", imageUploadInput);
-      // imageUploadForm.insertAdjacentElement("beforeend", imageFormSubmitButton);
 
       let avatarImage = profileDOM.window.document.createElement("img");
       avatarImage.setAttribute("src", req.session.avatarUrl);
@@ -229,8 +178,6 @@ app.get("/profile", async (req, res) => {
       let profileInfoElement = profileDOM.window.document.querySelector("#profile-info");
 
       profileInfoElement.insertAdjacentElement("beforeend", avatarImage);
-
-      // profileInfoElement.insertAdjacentElement("beforeend", imageUploadForm);
 
       profileInfoElement.insertAdjacentElement("beforeend", usernameParagraph);
       usernameParagraph.insertAdjacentElement("beforeend", usernameSpan);
@@ -449,8 +396,6 @@ app.post("/deleteUsers", async (req, res) => {
 
     let deleteID = req.body.deleteID;
     let deleteUsername = req.body.deleteUsername;
-    console.log(deleteID);
-    console.log(deleteUsername);
 
     const connection = await mysql.createConnection({
       host: databaseHost,
@@ -516,14 +461,6 @@ app.post("/update-user-id", async (req, res) => {
   let usertype = req.body.usertype;
   let userAvatarUrl = req.body.userAvatarUrl;
 
-  console.log(userId);
-  console.log(username);
-  console.log(firstname);
-  console.log(lastname);
-  console.log(email);
-  console.log(password);
-  console.log(username);
-
   const connection = await mysql.createConnection({
     host: databaseHost,
     user: databaseUser,
@@ -572,13 +509,6 @@ app.post("/update-user", async (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
   let userAvatarUrl = req.body.userAvatarUrl;
-
-  console.log(`Current username: ${currentUsername}`);
-  console.log(firstname);
-  console.log(lastname);
-  console.log(email);
-  console.log(password);
-  console.log(username);
 
   const connection = await mysql.createConnection({
     host: databaseHost,
