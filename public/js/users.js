@@ -215,7 +215,7 @@ submitUserCreationButton.addEventListener("click", async e => {
   let createUserAvatarUrl;
 
   let createForm = document.querySelector("#create-record-form");
-  let fileUploadInput = document.querySelector("#create-image-upload");
+  let createFileUploadInput = document.querySelector("#create-image-upload");
 
   let id = document.querySelector("#id").value;
 
@@ -226,8 +226,8 @@ submitUserCreationButton.addEventListener("click", async e => {
   let createPassword = document.querySelector("#create-password").value;
   let createUsertype = document.querySelector("#create-usertype").value;
 
-  if (fileUploadInput.value != "") {
-    createUserAvatarUrl = document.querySelector("#image-upload").value;
+  if (createFileUploadInput.value != "") {
+    createUserAvatarUrl = document.querySelector("#create-image-upload").value;
   } else {
     createUserAvatarUrl = "/img/default-avatar.svg";
   }
@@ -249,7 +249,7 @@ submitUserCreationButton.addEventListener("click", async e => {
     console.log(parsedResponse.status);
   }
 
-  uploadCreateImage(e, createUsername);
+  submitUserCreationButton.addEventListener("click", uploadCreateImage(e, createUsername));
 
   //refresh the table after updating the record.
   getUsers();
@@ -260,7 +260,7 @@ submitUserCreationButton.addEventListener("click", async e => {
   let createUserModalWindow = document.querySelector(".create-form-window");
 
   createUserModalWindow.style.display = "none";
-  
+
 })
 
 
@@ -286,7 +286,7 @@ function clearInputFile(f) {
 async function uploadCreateImage(e, username) {
   e.preventDefault();
 
-  const imageUpload = document.querySelector('#image-upload');
+  const imageUpload = document.querySelector('#create-image-upload');
   const formData = new FormData();
 
   //Use a loop to get the image from the image upload input and store it in a variable called file
@@ -313,12 +313,12 @@ async function uploadCreateImage(e, username) {
 
   let parsedUpdatedRecordResponse = await updatedRecordResponse.json();
   getUsers();
-  
+
 }
 
 // Clears the input fields for user creation and edit.
 function clearInputs(formInputFields) {
-  for(var j in formInputFields) {
+  for (var j in formInputFields) {
     try {
       formInputFields[j].value = "";
     } catch {
