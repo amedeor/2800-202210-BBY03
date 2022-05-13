@@ -243,6 +243,7 @@ a {
 
   .avatar-image {
     justify-self: center;
+    max-width: 50%;
   }
 
   .username {
