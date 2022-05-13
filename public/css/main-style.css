@@ -142,6 +142,16 @@ body {
     font: inherit;
     cursor: pointer;
   }
+
+  #table-container {
+    overflow-x: auto;
+    width: 100%;
+  }
+  
+  table {
+    overflow-x: auto;
+    width: 100%;
+  }
 }
 
 a {
@@ -322,6 +332,16 @@ a {
     padding-top: 2em;
     padding-bottom: 2em;
     background-color: #fcc603;
+    width: 100%;
+  }
+
+  #table-container {
+    overflow-x: auto;
+    width: 100%;
+  }
+  
+  table {
+    overflow-x: auto;
     width: 100%;
   }
 }

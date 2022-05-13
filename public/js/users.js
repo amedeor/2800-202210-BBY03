@@ -11,12 +11,16 @@ async function getUsers() {
   currentName = data.current_username;
   if (data.status == "success") {
 
-    let str = `<tr><th class="id_header"><span>ID</span></th><th class="username_header"><span>Username</span></th><th class="firstname_header"><span>First Name</span></th><th class="lastname_header"><span>Last Name</span></th><th class="email_header"><span>Email</span></th><th class="password_header"><span>Password</span></th><th class="usertype_header"><span>User Type</span></th><th class="avatarimage_header"><span>Avatar</span></th></tr>`;
+    let str = `<thead><tr><th class="id_header">ID</th><th class="username_header">Username</th><th class="firstname_header">First Name</th><th class="lastname_header">Last Name</th><th class="email_header">Email</th><th class="password_header">Password</th><th class="usertype_header">User Type</th><th class="avatarimage_header">Avatar</th><th class="editbutton_header">Edit</th><th class="deletebutton_header">Delete</th></tr></thead>`;
+
+    str += `<tbody>`;
 
     for (let i = 0; i < data.rows.length; i++) {
       let row = data.rows[i];
       str += `<tr><td class='id'>${row.user_id}</td><td class='username'>${row.user_username}</td><td class='firstname'>${row.user_firstname}</td><td class='lastname'>${row.user_lastname}</td><td class='email'>${row.user_email}</td><td class='password'>${row.user_password}</td><td class='usertype'>${row.user_type}</td><td id="user${row.user_id}avatarURL" class='useravatarurl'>${row.user_avatar_url}</td><td ><button class='editButton'>Edit</button></sp</td><td><button class='deleteButton'>Delete</button></td></tr>`
     }
+
+    str += `</tbody>`;
 
     //insert the str that contains the code to populate the table into the table element with id="users"
     document.getElementById("users").innerHTML = str;
@@ -35,6 +39,8 @@ async function getUsers() {
   } else {
     console.log("Error");
   }
+
+  console.log("Inside getUsers");
 }
 
 
@@ -147,7 +153,6 @@ submitButton.addEventListener("click", async e => {
   
 })
 
-getUsers();
 
 //Function to upload a new avatar image on the user's profile page
 async function uploadImage(e, username) {
@@ -183,7 +188,7 @@ async function uploadImage(e, username) {
 
 }
 
-getUsers();
+
 
 //Function to upload a new avatar image on the user's profile page
 async function uploadImage(e, username) {
@@ -216,8 +221,8 @@ async function uploadImage(e, username) {
   let parsedUpdatedRecordResponse = await updatedRecordResponse.json();
   
   getUsers();
-
 }
+
   let modalWindow = document.querySelector(".update-form-window");
   let cancelButton = document.querySelector("#cancel-button");
   
@@ -225,3 +230,18 @@ async function uploadImage(e, username) {
     e.preventDefault();
     modalWindow.style.display = "none";
   })
+
+
+  getUsers();
+
+setTimeout(()=> {
+  $(document).ready( function () {
+    console.log("Inside datatables")
+    $('#users').DataTable({
+      "sScrollX": "100%",
+      "bScrollCollapse": "true"
+    }
+    );
+    console.log("End of datatables")
+} );
+}, 5000)

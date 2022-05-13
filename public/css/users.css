@@ -104,3 +104,13 @@ footer {
   display: block;
   text-align: center;
 }
+
+#table-container {
+  overflow-x: auto;
+  width: 100%;
+}
+
+table {
+  overflow-x: auto;
+  width: 100%;
+}
