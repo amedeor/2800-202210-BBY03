@@ -3,9 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- <link rel="stylesheet" href="/css/main-style.css"> -->
   <link rel="stylesheet" href="/css/navbar.css">
   <link rel="stylesheet" href="/css/users.css">
   <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
@@ -14,34 +12,38 @@
 
 <body>
   <nav id="nav">
+
     <h1>FoodForLess</h1>
+
     <div id="nav-items-container">
+
       <div id="nav-icons">
-        <img class="nav-icon" src="/img/magnifying-glass-icon.svg" alt="" />
-        <img class="nav-icon" src="/img/list-icon.svg" alt="" />
-        <img class="nav-icon" src="/img/add-icon.svg" alt="" />
-        <img class="nav-icon" src="/img/profile-icon.svg" alt="" />
-        <img class="nav-icon" src="/img/logout-icon.svg" alt="" />
+
+        <img id="browser-icon" class="nav-icon" src="/img/magnifying-glass-icon.svg" alt="" />
+        <img id="list-icon" class="nav-icon" src="/img/list-icon.svg" alt="" />
+        <img id="post-icon" class="nav-icon" src="/img/add-icon.svg" alt="" />
+        <img id="profile-icon" class="nav-icon" src="/img/profile-icon.svg" alt="" />
+        <img id="logout-icon" class="nav-icon" src="/img/logout-icon.svg" alt="" />
+
       </div>
 
       <ul id="nav-links">
+
         <li class="nav-link"><a href="#">Browse</a></li>
-        <li class="nav-link">
-          <form action="/myDeals" method="get">
-            <input id="myDeals-button" class="look-like-button" type="submit" value="My Deals">
-          </form>
-        </li>
+        <li class="nav-link"><a href="#">My Deals</a></li>
         <li class="nav-link"><a href="#">Post</a></li>
         <li class="nav-link">
           <form action="/profile" method="get">
             <input id="profile-button" class="look-like-button" type="submit" value="Profile">
           </form>
         </li>
+
         <li class="nav-link">
           <form action="/logout" method="get">
             <input id="logout-button" type="submit" value="Logout" />
           </form>
         </li>
+
       </ul>
 
     </div>
@@ -51,44 +53,104 @@
   <h2 id="user-accounts-heading">User Accounts</h2>
 
   <div id="table-container">
-    <table id="users">
+    <div id="users-container">
+      <table id="users">
 
-    </table>
+      </table>
+    </div>
+
+    <div id="create-user-button-container">
+      <p id="status"></p>
+      <button id="create-user-button">Create User</button>
+    </div>
+
   </div>
 
+  <div class="create-form-window">
 
-  <form id="update-record-form">
-    <label for="id" class="edit-form-label">ID:</label>
-    <input id="id" class="edit-form-input" type="text" name="id" disabled />
+    <div class="create-user-window-content">
 
-    <label for="username" class="edit-form-label">Username:</label>
-    <input id="username" class="edit-form-input" type="text" name="username" />
+      <div class="edit-window-header">
+        <h2>Create User Info</h2>
+      </div>
 
-    <label for="firstname" class="edit-form-label">First Name:</label>
-    <input id="firstname" class="edit-form-input" type="text" name="firstname" />
+      <form id="create-record-form">
 
-    <label for="lastname" class="edit-form-label">Last Name:</label>
-    <input id="lastname" class="edit-form-input" type="text" name="lastname" />
+        <label for="create-username" class="edit-form-label">Username:</label>
+        <input id="create-username" class="edit-form-input" type="text" name="username" />
 
-    <label for="email" class="edit-form-label">Email:</label>
-    <input id="email" class="edit-form-input" type="text" name="email" />
+        <label for="create-firstname" class="edit-form-label">First Name:</label>
+        <input id="create-firstname" class="edit-form-input" type="text" name="firstname" />
 
-    <label for="password" class="edit-form-label">Password:</label>
-    <input id="password" class="edit-form-input" type="text" name="password" />
+        <label for="create-lastname" class="edit-form-label">Last Name:</label>
+        <input id="create-lastname" class="edit-form-input" type="text" name="lastname" />
 
-    <label for="usertype" class="edit-form-label">User Type:</label>
-    <input id="usertype" class="edit-form-input" type="text" name="usertype" />
+        <label for="create-email" class="edit-form-label">Email:</label>
+        <input id="create-email" class="edit-form-input" type="text" name="email" />
 
-    <label for="image-upload" class="edit-form-label">Avatar Image:</label>
-    <input id="image-upload" type="file" accept="image/png, image/gif, image/jpeg, image/svg+xml" required/>
+        <label for="create-password" class="edit-form-label">Password:</label>
+        <input id="create-password" class="edit-form-input" type="text" name="password" />
 
-    <input id="submit" type="submit" value="Submit" />
-  </form>
+        <label for="create-usertype" class="edit-form-label">User Type:</label>
+        <input id="create-usertype" class="edit-form-input" type="text" name="usertype" />
 
+        <label for="create-image-upload" class="edit-form-label">Avatar Image:</label>
+        <input id="create-image-upload" class="edit-form-input" type="file" accept="image/png, image/gif, image/jpeg, image/svg+xml" />
 
-  
-  <p id="status"></p>
+        <div id="submit-container">
+          <input id="submit-new-user" class="submit-button" type="submit" value="Submit" />
+          <input id="cancel-user-creation" class="cancel-button" type="submit" value="Cancel">
+        </div>
 
+      </form>
+
+    </div>
+
+  </div>
+
+  <div class="update-form-window">
+
+    <div class="edit-user-window-content">
+
+      <div class="edit-window-header">
+        <h2>Edit User Info</h2>
+      </div>
+
+      <form id="update-record-form">
+        <label for="id" class="edit-form-label">ID:</label>
+        <input id="id" class="edit-form-input" type="text" name="id" disabled />
+
+        <label for="username" class="edit-form-label">Username:</label>
+        <input id="username" class="edit-form-input" type="text" name="username" />
+
+        <label for="firstname" class="edit-form-label">First Name:</label>
+        <input id="firstname" class="edit-form-input" type="text" name="firstname" />
+
+        <label for="lastname" class="edit-form-label">Last Name:</label>
+        <input id="lastname" class="edit-form-input" type="text" name="lastname" />
+
+        <label for="email" class="edit-form-label">Email:</label>
+        <input id="email" class="edit-form-input" type="text" name="email" />
+
+        <label for="password" class="edit-form-label">Password:</label>
+        <input id="password" class="edit-form-input" type="text" name="password" />
+
+        <label for="usertype" class="edit-form-label">User Type:</label>
+        <input id="usertype" class="edit-form-input" type="text" name="usertype" />
+
+        <label for="image-upload" class="edit-form-label">Avatar Image:</label>
+        <input id="image-upload" class="edit-form-input" type="file" accept="image/png, image/gif, image/jpeg, image/svg+xml" />
+
+        <div id="submit-container">
+          <input id="submit" class="submit-button" type="submit" value="Submit" />
+          <input id="cancel-button" class="cancel-button" type="submit" value="Cancel">
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
   <footer id="footer">
     <div>
       <small>Copyright 2022, FoodForLess</small>

@@ -1,28 +1,23 @@
 "use strict;"
 
+var currentName;
+var str;
+
 async function getUsers() {
 
   let response = await fetch("/get-users");
 
   let data = await response.json();
 
-  console.log(data);
-
+  currentName = data.current_username;
   if (data.status == "success") {
 
     let str = `<tr><th class="id_header"><span>ID</span></th><th class="username_header"><span>Username</span></th><th class="firstname_header"><span>First Name</span></th><th class="lastname_header"><span>Last Name</span></th><th class="email_header"><span>Email</span></th><th class="password_header"><span>Password</span></th><th class="usertype_header"><span>User Type</span></th><th class="avatarimage_header"><span>Avatar</span></th></tr>`;
 
-
     for (let i = 0; i < data.rows.length; i++) {
       let row = data.rows[i];
-      //console.log("row", row);
-
-      // str += `<tr><td class='id'>${row.user_id}</td><td class='username'><span>${row.user_username}</span></td><td class='firstname'><span>${row.user_firstname}</span></td><td class='lastname'><span>${row.user_lastname}</span></td><td class='email'><span>${row.user_email}</span></td><td class='password'><span>${row.user_password}</span></td><td class='usertype'><span>${row.user_type}</span></td><td class='useravatarurl'><span>${row.user_avatar_url}</span></td><td class='editbutton'><span><button>Edit</button></span></td><td class='deleteButton'><span><button>Delete</button></span></td></tr>`
-
-      str += `<tr><td class='id'>${row.user_id}</td><td class='username'>${row.user_username}</td><td class='firstname'>${row.user_firstname}</td><td class='lastname'>${row.user_lastname}</td><td class='email'>${row.user_email}</td><td class='password'>${row.user_password}</td><td class='usertype'>${row.user_type}</td><td class='useravatarurl'>${row.user_avatar_url}</td><td ><button class='editButton'>Edit</button></sp</td><td><button class='deleteButton'>Delete</button></td></tr>`
-
+      str += `<tr><td class='id'>${row.user_id}</td><td class='username'>${row.user_username}</td><td class='firstname'>${row.user_firstname}</td><td class='lastname'>${row.user_lastname}</td><td class='email'>${row.user_email}</td><td class='password'>${row.user_password}</td><td class='usertype'>${row.user_type}</td><td id="user${row.user_id}avatarURL" class='useravatarurl'>${row.user_avatar_url}</td><td ><button class='editButton'>Edit</button></sp</td><td><button class='deleteButton'>Delete</button></td></tr>`
     }
-
 
     //insert the str that contains the code to populate the table into the table element with id="users"
     document.getElementById("users").innerHTML = str;
@@ -33,17 +28,13 @@ async function getUsers() {
       editbuttons[j].addEventListener("click", editRow);
     }
 
-    // let deletebuttons = document.querySelectorAll(".deleteButton");
-    // for (let j = 0; j < editbuttons.length; j++) {
-    //   deletebuttons[j].addEventListener("click", deleteRow);
-    // }
-
-    console.log(editbuttons);
-    // console.log(deletebuttons);
-
+    let deletebuttons = document.querySelectorAll(".deleteButton");
+    for (let j = 0; j < editbuttons.length; j++) {
+      deletebuttons[j].addEventListener("click", deleteRow);
+    }
 
   } else {
-    console.log("Error!");
+    console.log("Error: Cannot load users.");
   }
 }
 
@@ -51,25 +42,18 @@ async function getUsers() {
 
 function editRow(e) {
 
-  console.log("editRow");
+  let modalWindow = document.querySelector(".update-form-window");
+
+  modalWindow.style.display = "block";
 
   let parentTd = e.target.parentNode;
   let parentTr = parentTd.parentNode;
-
-  console.log(parentTd);
-  console.log(parentTr);
-
   let user = [];
-
-
   let userAvatarUrl;
-
 
   for (let i = 0, col; col = parentTr.cells[i]; i++) {
     user[i] = col.innerText;
   }
-
-  console.log(user);
 
   document.querySelector("#id").value = user[0];
   document.querySelector("#username").value = user[1];
@@ -82,15 +66,44 @@ function editRow(e) {
   userAvatarUrl = user[7];
 }
 
+async function deleteRow(e) {
+
+  let parentTd = e.target.parentNode;
+  let parentTr = parentTd.parentNode;
+  let user = [];
+
+  for (let i = 0, col; col = parentTr.cells[i]; i++) {
+    user[i] = col.innerText;
+  }
+
+  if (user[1] != currentName) {
+    parentTr.remove();
+    let response = await fetch("/deleteUsers", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: `deleteID=${user[0]}&deleteUsername=${user[1]}`
+    });
+
+    let parsedResponse = await response.json();
+    parsedResponse;
+  }
+}
+
 let submitButton = document.querySelector("#submit");
 
 submitButton.addEventListener("click", async e => {
   e.preventDefault();
 
+
+
   let form = document.querySelector("#update-record-form");
   let fileUploadInput = document.querySelector("#image-upload");
 
   let id = document.querySelector("#id").value;
+  let oldAvatarURL = document.querySelector(`#user${id}avatarURL`).innerText;
+
   let username = document.querySelector("#username").value;
   let firstname = document.querySelector("#firstname").value;
   let lastname = document.querySelector("#lastname").value;
@@ -100,6 +113,8 @@ submitButton.addEventListener("click", async e => {
 
   if (fileUploadInput.value != "") {
     userAvatarUrl = document.querySelector("#image-upload").value;
+  } else {
+    userAvatarUrl = oldAvatarURL;
   }
 
   let response = await fetch("/update-user-id", {
@@ -111,8 +126,6 @@ submitButton.addEventListener("click", async e => {
   });
 
   let parsedResponse = await response.json();
-
-  console.log(parsedResponse);
 
   if (parsedResponse.status === "success") {
     document.querySelector("#status").innerHTML = "";
@@ -128,6 +141,11 @@ submitButton.addEventListener("click", async e => {
 
   //reset the user data form
   form.reset();
+
+  let modalWindow = document.querySelector(".update-form-window");
+
+  modalWindow.style.display = "none";
+
 })
 
 getUsers();
@@ -155,8 +173,8 @@ async function uploadImage(e, username) {
 
   await fetch("/upload-image", options
   ).then(function (res) {
-    console.log(res);
-  }).catch(function (err) { ("Error:", err) }
+
+  }).catch(function (error) { ("Error:", error) }
   );
 
   let updatedRecordResponse = await fetch("/get-user");
@@ -168,11 +186,107 @@ async function uploadImage(e, username) {
 
 getUsers();
 
-//Function to upload a new avatar image on the user's profile page
-async function uploadImage(e, username) {
+let modalWindow = document.querySelector(".update-form-window");
+let cancelButton = document.querySelector("#cancel-button");
+
+cancelButton.addEventListener("click", e => {
+  e.preventDefault();
+  modalWindow.style.display = "none";
+})
+
+
+let createUserModalWindow = document.querySelector(".create-form-window");
+let creatUserButton = document.querySelector("#create-user-button");
+let submitUserCreationButton = document.querySelector("#submit-new-user");
+let cancelUserCreationButton = document.querySelector("#cancel-user-creation");
+let createUserAvatar = document.querySelector("#create-image-upload");
+
+// Shows the user creation modal when the "Create User" buton is clicked.
+creatUserButton.addEventListener("click", e => {
+  e.preventDefault();
+  clearInputFile(createUserAvatar);
+  createUserModalWindow.style.display = "block";
+})
+
+// Hides the user creation modal when the "Submit" button is clicked.
+submitUserCreationButton.addEventListener("click", async e => {
   e.preventDefault();
 
-  const imageUpload = document.querySelector('#image-upload');
+  let createUserAvatarUrl;
+
+  let createForm = document.querySelector("#create-record-form");
+  let createFileUploadInput = document.querySelector("#create-image-upload");
+
+  let id = document.querySelector("#id").value;
+
+  let createUsername = document.querySelector("#create-username").value;
+  let createFirstname = document.querySelector("#create-firstname").value;
+  let createLastname = document.querySelector("#create-lastname").value;
+  let createEmail = document.querySelector("#create-email").value;
+  let createPassword = document.querySelector("#create-password").value;
+  let createUsertype = document.querySelector("#create-usertype").value;
+
+  if (createFileUploadInput.value != "") {
+    createUserAvatarUrl = document.querySelector("#create-image-upload").value;
+  } else {
+    createUserAvatarUrl = "/img/default-avatar.svg";
+  }
+
+  let response = await fetch("/admin-create-user", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: `createUsername=${createUsername}&createPassword=${createPassword}&createFirstname=${createFirstname}&createLastname=${createLastname}&createEmail=${createEmail}&createUsertype=${createUsertype}&createUserAvatarUrl=${createUserAvatarUrl}`
+  });
+
+  let parsedResponse = await response.json();
+
+  if (parsedResponse.status === "success") {
+    document.querySelector("#status").innerHTML = "";
+    document.querySelector("#status").insertAdjacentText("afterbegin", parsedResponse.message);
+  } else {
+    console.log(parsedResponse.status);
+  }
+
+  submitUserCreationButton.addEventListener("click", uploadCreateImage(e, createUsername));
+
+  //refresh the table after updating the record.
+  getUsers();
+
+  //reset the user data form
+  createForm.reset();
+
+  let createUserModalWindow = document.querySelector(".create-form-window");
+
+  createUserModalWindow.style.display = "none";
+
+})
+
+
+// Hides the user creation modal when the "Cancel" button is clicked.
+cancelUserCreationButton.addEventListener("click", e => {
+  e.preventDefault();
+  clearInputFile(createUserAvatar);
+  createUserModalWindow.style.display = "none";
+})
+
+// Removes the file form the input once the "Submit" button or "Cancel" button is clicked.
+function clearInputFile(f) {
+  if (f.value) {
+    try {
+      f.value = '';
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
+//Function to upload a new avatar image on the user's profile page
+async function uploadCreateImage(e, username) {
+  e.preventDefault();
+
+  const imageUpload = document.querySelector('#create-image-upload');
   const formData = new FormData();
 
   //Use a loop to get the image from the image upload input and store it in a variable called file
@@ -191,7 +305,7 @@ async function uploadImage(e, username) {
 
   await fetch("/upload-image", options
   ).then(function (res) {
-    console.log(res);
+
   }).catch(function (err) { ("Error:", err) }
   );
 
@@ -202,44 +316,13 @@ async function uploadImage(e, username) {
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Clears the input fields for user creation and edit.
+function clearInputs(formInputFields) {
+  for (var j in formInputFields) {
+    try {
+      formInputFields[j].value = "";
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}

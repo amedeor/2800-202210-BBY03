@@ -4,6 +4,7 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 
 @media (max-width: 600px) {
@@ -43,27 +44,31 @@ body {
     max-width: 50%;
   }
 
-  .username {
-    font-size: 16pt;
-    font-weight: bold;
-  }
-
   #nav {
     grid-column-start: 1;
-    grid-column-end: 4;
+    grid-column-end: 5;
     grid-row-start: 1;
     grid-row-end: 2;
     text-align: center;
     background-color: #fcc603;
+    padding-bottom: 1em;
+  }
+
+  #table-container {
+    grid-row-start: 2;
+    grid-row-end: 4;
+    grid-column-start: 1;
+    grid-column-end: 5;
   }
 
   .nav-icon {
-    width: 1.5em;
+    width: 1em;
     cursor: pointer;
   }
 
 
   h1 {
+    font-size: 20px;
     padding-top: 1em;
     padding-bottom: 1em;
     margin: 0;
@@ -114,10 +119,10 @@ body {
 
   #footer {
     grid-column-start: 1;
-    grid-column-end: 4;
+    grid-column-end: 5;
 
-    grid-row-start: 7;
-    grid-row-end: 7;
+    grid-row-start: 4;
+    grid-row-end: 5;
 
     justify-self: center;
     text-align: center;

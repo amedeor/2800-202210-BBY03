@@ -4,9 +4,7 @@ let editSubmitButton = document.querySelector("#save-changes-button");
 
 if (editSubmitButton != null) {
   editSubmitButton.addEventListener("click", async e => {
-    e.preventDefault(); //Removed this because the page needs to refresh to show the new information
-
-    console.log("Save Changes button clicked");
+    e.preventDefault(); 
 
     let currentUsername = document.querySelector(".username").innerText;
 
@@ -20,13 +18,6 @@ if (editSubmitButton != null) {
     let password = document.querySelector("#password").value;
     let username = document.querySelector("#username").value;
 
-    console.log(firstName);
-    console.log(lastName);
-    console.log(email);
-    console.log(password);
-    console.log(username);
-
-
     let response = await fetch("/update-user", {
       method: "post",
       headers: {
@@ -37,20 +28,13 @@ if (editSubmitButton != null) {
 
     let parsedResponse = await response.json();
 
-    console.log(parsedResponse);
-
     if (parsedResponse.status === "fail") {
       document.querySelector("#error-message").innerHTML = "";
       document.querySelector("#error-message").insertAdjacentText("afterbegin", parsedResponse.message);
     }
 
-
     let updatedRecordResponse = await fetch("/get-user");
-
-
     let parsedUpdatedRecordResponse = await updatedRecordResponse.json();
-
-
 
     // get the parsed json from the /get-user route and store it in a variable
     // if the /get-user request was successful, the response will contain the user's row from the database
@@ -67,15 +51,18 @@ if (editSubmitButton != null) {
 
     //hide the form after the Save Changes button is pressed
     modal.style.display = "none";
-
-
-
-  })
+  });
 }
 
 
 
-//Code for edit window
+/**
+   * JS code for functionalities of edit window
+   * I found this code on www.w3schools.com
+   *
+   * @author www.w3schools.com/howto
+   * @see https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal2
+   */
 // Get the modal
 let modal = document.querySelector("#editWindow");
 
@@ -92,7 +79,6 @@ btn.addEventListener("click", e => {
 
   //Get the user's first name from the span element
   let firstName = document.querySelector(".firstName").innerText;
-  console.log(firstName);
 
   let lastName = document.querySelector(".lastName").innerText;
   let username = document.querySelector(".username").innerText;
@@ -106,15 +92,13 @@ btn.addEventListener("click", e => {
   document.querySelector("#password").value = password;
   document.querySelector("#username").value = username;
 
-})
+});
 
 // When the user uses button "cancel"
 span.addEventListener("click", e => {
   e.preventDefault();
   modal.style.display = "none";
-})
-
-
+});
 
 //Code for edit window
 // Get the modal
@@ -131,13 +115,11 @@ changeAvatarButton.addEventListener("click", e => {
 });
 
 cancelAvatarUploadButton.addEventListener("click", e => {
+  e.preventDefault();
+  const imageUpload = document.querySelector('#image-upload');
+  clearInputFile(imageUpload);
   changeAvatarModalWindow.style.display = "none";
 });
-
-
-
-
-
 
 //Get the upload image form element
 const uploadImageForm = document.getElementById("upload-images-form");
@@ -170,7 +152,7 @@ async function uploadImage(e) {
 
   await fetch("/upload-image", options
   ).then(function (res) {
-    console.log(res);
+
   }).catch(function (err) { ("Error:", err) }
   );
 
@@ -187,7 +169,20 @@ async function uploadImage(e) {
   let userAvatarUrl = userAvatarElement.getAttribute("src");
   userAvatarElement.setAttribute("src", userRecord.user_avatar_url);
 
+  clearInputFile(imageUpload);
+
   //hide the form after the Save Changes button is pressed
   changeAvatarModalWindow.style.display = "none";
 
+}
+
+// Removes the file form the input once the "Submit" button or "Cancel" button is clicked.
+function clearInputFile(f) {
+  if (f.value) {
+    try {
+      f.value = '';
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }

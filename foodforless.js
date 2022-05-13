@@ -1,5 +1,10 @@
 "use strict;"
 
+const databaseHost = "us-cdbr-east-05.cleardb.net";
+const databaseUser = "b836f8ec5d5bac";
+const databasePassword = "732ab9c0";
+const databaseName = "heroku_024b43865916c4a";
+
 const express = require("express");
 const app = express();
 const fs = require("fs");
@@ -49,23 +54,20 @@ app.get("/get-user", async (req, res) => {
   let username = req.session.username;
 
   const connection = await mysql.createConnection({
-    host: "us-cdbr-east-05.cleardb.net",
-    user: "b836f8ec5d5bac",
-    password: "732ab9c0",
-    database: "heroku_024b43865916c4a",
+    host: databaseHost,
+    user: databaseUser,
+    password: databasePassword,
+    database: databaseName,
     multipleStatements: true
   });
 
-  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user WHERE user_username = ?", [username], function (error, results, fields) {
+  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ?", [username], function (error, results, fields) {
     if (error) {
       console.log(error);
     }
   });
 
   res.send({ status: "success", rows: results });
-
-  console.log('Rows returned are: ', results);
-
   connection.end();
 });
 
@@ -75,46 +77,35 @@ app.get("/get-user", async (req, res) => {
 
 //the argument to single is the name of the HTML input that is uploading the file
 app.post("/upload-image", upload.single("file"), async (req, res) => {
-  
+
   if (req.file != undefined) {
     let savedFileName = `/img/${req.file.filename}`;
     let username = req.body.username;
-  
-    console.log(savedFileName);
-    console.log(username);
-  
     const connection = await mysql.createConnection({
-      host: "us-cdbr-east-05.cleardb.net",
-      user: "b836f8ec5d5bac",
-      password: "732ab9c0",
-      database: "heroku_024b43865916c4a",
+      host: databaseHost,
+      user: databaseUser,
+      password: databasePassword,
+      database: databaseName,
       multipleStatements: true
     });
-  
+
     await connection.connect();
-    let [results, fields] = await connection.query("UPDATE bby03_user SET user_avatar_url = ? WHERE user_username = ?",
+    let [results, fields] = await connection.query("UPDATE BBY_03_user SET user_avatar_url = ? WHERE user_username = ?",
       [savedFileName, username],
       function (error, results, fields) {
         if (error) {
           console.log(error);
         }
       });
-  
+
     //update session variable with new profile picture URL
     req.session.avatarUrl = savedFileName;
-  
-  
-    res.send({"status": "success", "message": "Image uploaded successfully."})
+
+
+    res.send({ "status": "success", "message": "Image uploaded successfully." })
   }
-  
+
 });
-
-
-
-
-
-
-
 
 app.get("/profile", async (req, res) => {
   if (req.session.loggedIn === true) {
@@ -123,43 +114,6 @@ app.get("/profile", async (req, res) => {
       let profile = fs.readFileSync("./app/html/profile.html", "utf-8");
 
       let profileDOM = new JSDOM(profile);
-
-      // let imageUploadForm = profileDOM.window.document.createElement("form");
-      // imageUploadForm.setAttribute("id", "image-upload-form");
-
-      // let imageUploadInput = profileDOM.window.document.createElement("input");
-      // imageUploadInput.setAttribute("id", "image-upload-input");
-      // imageUploadInput.setAttribute("type", "file");
-      // imageUploadInput.setAttribute("value", "Change Avatar Picture");
-      // imageUploadInput.setAttribute("accept", "image/png, image/gif, image/jpeg, image/svg+xml");
-      // //imageUploadInput.setAttribute("name", "image");
-
-      // let imageFormSubmitButton = profileDOM.window.document.createElement("input");
-      // imageFormSubmitButton.setAttribute("id", "photo-upload-submit-button");
-      // imageFormSubmitButton.setAttribute("type", "submit");
-      // imageFormSubmitButton.setAttribute("value", "Submit");
-
-
-      // // let imageUploadForm = profileDOM.window.document.createElement("form");
-      // // imageUploadForm.setAttribute("id", "image-upload-form");
-      // // imageUploadForm.setAttribute("method", "post");
-      // // imageUploadForm.setAttribute("action", "/upload-image")
-      // // imageUploadForm.setAttribute("enctype", "/multipart/form-data")
-
-      // // let imageUploadInput = profileDOM.window.document.createElement("input");
-      // // imageUploadInput.setAttribute("id", "image-upload-input");
-      // // imageUploadInput.setAttribute("type", "file");
-      // // //imageUploadInput.setAttribute("value", "Change Avatar Picture");
-      // // imageUploadInput.setAttribute("accept", "image/png, image/gif, image/jpeg, image/svg+xml");
-      // // imageUploadInput.setAttribute("name", "image");
-
-      // // let imageFormSubmitButton = profileDOM.window.document.createElement("input");
-      // // imageFormSubmitButton.setAttribute("id", "photo-upload-submit-button");
-      // // imageFormSubmitButton.setAttribute("type", "submit");
-      // // imageFormSubmitButton.setAttribute("value", "Submit");
-
-      // imageUploadForm.insertAdjacentElement("beforeend", imageUploadInput);
-      // imageUploadForm.insertAdjacentElement("beforeend", imageFormSubmitButton);
 
       let avatarImage = profileDOM.window.document.createElement("img");
       avatarImage.setAttribute("src", req.session.avatarUrl);
@@ -224,8 +178,6 @@ app.get("/profile", async (req, res) => {
       let profileInfoElement = profileDOM.window.document.querySelector("#profile-info");
 
       profileInfoElement.insertAdjacentElement("beforeend", avatarImage);
-
-      // profileInfoElement.insertAdjacentElement("beforeend", imageUploadForm);
 
       profileInfoElement.insertAdjacentElement("beforeend", usernameParagraph);
       usernameParagraph.insertAdjacentElement("beforeend", usernameSpan);
@@ -354,15 +306,15 @@ app.post("/login", async (req, res) => {
   let password = req.body.password;
 
   const connection = await mysql.createConnection({
-    host: "us-cdbr-east-05.cleardb.net",
-    user: "b836f8ec5d5bac",
-    password: "732ab9c0",
-    database: "heroku_024b43865916c4a",
+    host: databaseHost,
+    user: databaseUser,
+    password: databasePassword,
+    database: databaseName,
     multipleStatements: true
   });
 
   //BINARY makes the password query case sensitive
-  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user WHERE user_username = ? AND BINARY user_password = ? ", [username, password]);
+  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ? AND BINARY user_password = ? ", [username, password]);
 
 
   if (results.length === 0) {
@@ -405,19 +357,19 @@ app.post("/createUser", async (req, res) => {
   let signupPassword = req.body.signupPassword;
 
   const connection = await mysql.createConnection({
-    host: "us-cdbr-east-05.cleardb.net",
-    user: "b836f8ec5d5bac",
-    password: "732ab9c0",
-    database: "heroku_024b43865916c4a",
+    host: databaseHost,
+    user: databaseUser,
+    password: databasePassword,
+    database: databaseName,
     multipleStatements: true
   });
 
   //Check to see if a user with selected username or email exists.
-  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user WHERE user_username = ? OR user_email = ?", [signupUsername, signupEmail]);
+  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ? OR user_email = ?", [signupUsername, signupEmail]);
 
   if (results.length === 0) {
 
-    let userRecord = "INSERT INTO bby03_user (user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url) values (?)";
+    let userRecord = "INSERT INTO BBY_03_user (user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url) values (?)";
 
     let recordValues = [signupUsername, signupFName, signupLName, signupEmail, signupPassword, "regular", "/img/default-avatar.svg"];
 
@@ -438,32 +390,100 @@ app.post("/createUser", async (req, res) => {
   }
 });
 
+
+app.post("/admin-create-user", async (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  
+  let createFirstname = req.body.createFirstname;
+  let createLastname = req.body.createLastname;
+  let createEmail = req.body.createEmail;
+  let createUsername = req.body.createUsername;
+  let createPassword = req.body.createPassword;
+  let createUsertype = req.body.createUsertype;
+  let createUserAvatarUrl = req.body.createUserAvatarUrl;
+
+  const connection = await mysql.createConnection({
+    host: databaseHost,
+    user: databaseUser,
+    password: databasePassword,
+    database: databaseName,
+    multipleStatements: true
+  });
+
+  //Check to see if a user with selected username or email exists.
+  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ? OR user_email = ?", [createUsername, createEmail]);
+
+  if (results.length === 0) {
+
+    let userRecord = "INSERT INTO BBY_03_user (user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url) values (?)";
+
+    let recordValues = [createUsername, createFirstname, createLastname, createEmail, createPassword, createUsertype, createUserAvatarUrl];
+
+    await connection.query(userRecord, [recordValues]);
+
+    res.send({ "status": "success", "message": "User created!" });
+  } else {
+    res.send({ "status": "fail", "message": "Email or Username is already in use" });
+  }
+});
+
+
+app.post("/deleteUsers", async (req, res) => {
+  if (req.session.loggedIn && req.session.usertype === "admin") {
+
+    let deleteID = req.body.deleteID;
+    let deleteUsername = req.body.deleteUsername;
+
+    const connection = await mysql.createConnection({
+      host: databaseHost,
+      user: databaseUser,
+      password: databasePassword,
+      database: databaseName,
+      multipleStatements: true
+    });
+
+    let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_id = ? OR user_username = ?", [deleteID, deleteUsername]);
+
+    if (results.length === 0) {
+      res.send({ "status": "fail", "message": "No User with that id or username found" });
+    } else {
+      if (deleteUsername != req.session.username) {
+        await connection.query("DELETE FROM BBY_03_user WHERE user_id = ? AND user_username = ?", [deleteID, deleteUsername]);
+      } else {
+        res.send({ status: "fail", message: "Can't delete your own account!" });
+      }
+      res.send({ status: "success", message: "Account deleted!!" });
+    }
+  }
+})
+
 //when the view user accounts button is clicked, this is what is loaded
 app.get("/admin-dashboard", async (req, res) => {
   if (req.session.loggedIn === true && req.session.usertype === "admin") {
-
     let users = fs.readFileSync("./app/html/users.html", "utf-8");
     let usersDOM = new JSDOM(users);
     res.send(usersDOM.serialize());
+  } else {
+    res.redirect("/");
   }
 });
 
 //this is the route to get the users
 app.get("/get-users", async (req, res) => {
-
-  const connection = await mysql.createConnection({
-    host: "us-cdbr-east-05.cleardb.net",
-    user: "b836f8ec5d5bac",
-    password: "732ab9c0",
-    database: "heroku_024b43865916c4a",
-    multipleStatements: true
-  });
-
-  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM bby03_user");
-  
-  res.send({ status: "success", rows: results });
+  if (req.session.loggedIn === true && req.session.usertype === "admin") {
+    const connection = await mysql.createConnection({
+      host: databaseHost,
+      user: databaseUser,
+      password: databasePassword,
+      database: databaseName,
+      multipleStatements: true
+    });
+  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user");
+    res.send({ status: "success", rows: results, current_username: req.session.username});
+  } else {
+    res.redirect("/");
+  }
 })
-
 
 app.post("/update-user-id", async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
@@ -478,42 +498,22 @@ app.post("/update-user-id", async (req, res) => {
   let usertype = req.body.usertype;
   let userAvatarUrl = req.body.userAvatarUrl;
 
-  console.log(userId);
-  console.log(username);
-  console.log(firstname);
-  console.log(lastname);
-  console.log(email);
-  console.log(password);
-  console.log(username);
-
   const connection = await mysql.createConnection({
-    host: "us-cdbr-east-05.cleardb.net",
-    user: "b836f8ec5d5bac",
-    password: "732ab9c0",
-    database: "heroku_024b43865916c4a",
+    host: databaseHost,
+    user: databaseUser,
+    password: databasePassword,
+    database: databaseName,
     multipleStatements: true
   });
 
   await connection.connect();
-  let [results, fields] = await connection.query("UPDATE bby03_user SET user_username = ?, user_firstname = ?, user_lastname = ?, user_email = ?, user_password = ?, user_type = ?, user_avatar_url = ? WHERE user_id = ?",
+  let [results, fields] = await connection.query("UPDATE BBY_03_user SET user_username = ?, user_firstname = ?, user_lastname = ?, user_email = ?, user_password = ?, user_type = ?, user_avatar_url = ? WHERE user_id = ?",
     [username, firstname, lastname, email, password, usertype, userAvatarUrl, userId],
     function (error, results, fields) {
       if (error) {
         console.log(error);
       }
     });
-
-  //update session variables with new info from database
-
-  // req.session.userId = userId;
-  // req.session.username = username;
-  // req.session.password = password;
-  // req.session.firstName = firstname;
-  // req.session.lastName = lastname;
-  // req.session.email = email;
-  // //req.session.usertype = retrievedUserType;
-  // req.session.avatarUrl = userAvatarUrl;
-
 
   res.send({ status: "success", message: "Record successfully updated." });
   connection.end();
@@ -535,23 +535,16 @@ app.post("/update-user", async (req, res) => {
   let password = req.body.password;
   let userAvatarUrl = req.body.userAvatarUrl;
 
-  console.log(`Current username: ${currentUsername}`);
-  console.log(firstname);
-  console.log(lastname);
-  console.log(email);
-  console.log(password);
-  console.log(username);
-
   const connection = await mysql.createConnection({
-    host: "us-cdbr-east-05.cleardb.net",
-    user: "b836f8ec5d5bac",
-    password: "732ab9c0",
-    database: "heroku_024b43865916c4a",
+    host: databaseHost,
+    user: databaseUser,
+    password: databasePassword,
+    database: databaseName,
     multipleStatements: true
   });
 
   await connection.connect();
-  let [results, fields] = await connection.query("UPDATE bby03_user SET user_username = ?, user_firstname = ?, user_lastname = ?, user_email = ?, user_password = ?, user_avatar_url = ? WHERE user_username = ?",
+  let [results, fields] = await connection.query("UPDATE BBY_03_user SET user_username = ?, user_firstname = ?, user_lastname = ?, user_email = ?, user_password = ?, user_avatar_url = ? WHERE user_username = ?",
     [username, firstname, lastname, email, password, userAvatarUrl, currentUsername],
     function (error, results, fields) {
       if (error) {
@@ -586,5 +579,5 @@ app.get("/logout", function (req, res) {
   }
 });
 
-var port = process.env.PORT || 8000;
+const port = process.env.PORT || 8000;
 app.listen(port);
