@@ -391,6 +391,42 @@ app.post("/createUser", async (req, res) => {
 });
 
 
+app.post("/admin-create-user", async (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  
+  let createFirstname = req.body.createFirstname;
+  let createLastname = req.body.createLastname;
+  let createEmail = req.body.createEmail;
+  let createUsername = req.body.createUsername;
+  let createPassword = req.body.createPassword;
+  let createUsertype = req.body.createUsertype;
+  let createUserAvatarUrl = req.body.createUserAvatarUrl;
+
+  const connection = await mysql.createConnection({
+    host: databaseHost,
+    user: databaseUser,
+    password: databasePassword,
+    database: databaseName,
+    multipleStatements: true
+  });
+
+  //Check to see if a user with selected username or email exists.
+  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ? OR user_email = ?", [createUsername, createEmail]);
+
+  if (results.length === 0) {
+
+    let userRecord = "INSERT INTO BBY_03_user (user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url) values (?)";
+
+    let recordValues = [createUsername, createFirstname, createLastname, createEmail, createPassword, createUsertype, createUserAvatarUrl];
+
+    await connection.query(userRecord, [recordValues]);
+
+  } else {
+    res.send({ "status": "fail", "message": "Email or Username is already in use" });
+  }
+});
+
+
 app.post("/deleteUsers", async (req, res) => {
   if (req.session.loggedIn && req.session.usertype === "admin") {
 
