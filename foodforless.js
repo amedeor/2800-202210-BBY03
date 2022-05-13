@@ -421,6 +421,7 @@ app.post("/admin-create-user", async (req, res) => {
 
     await connection.query(userRecord, [recordValues]);
 
+    res.send({ "status": "success", "message": "User created!" });
   } else {
     res.send({ "status": "fail", "message": "Email or Username is already in use" });
   }
