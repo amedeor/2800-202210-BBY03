@@ -110,8 +110,6 @@ submitButton.addEventListener("click", async e => {
   let password = document.querySelector("#password").value;
   let usertype = document.querySelector("#usertype").value;
 
-  console.log(`This is the avatar url for user #${id}: ${oldAvatarURL}`);
-
   if (fileUploadInput.value != "") {
     userAvatarUrl = document.querySelector("#image-upload").value;
   } else {
@@ -221,13 +219,10 @@ async function uploadImage(e, username) {
 
 }
 
-let modalWindow = document.querySelector(".update-form-window");
+let updateUserModalWindow = document.querySelector(".update-form-window");
 let cancelButton = document.querySelector("#cancel-button");
+let updateUserAvatar = document.querySelector("#image-upload");
 
-cancelButton.addEventListener("click", e => {
-  e.preventDefault();
-  modalWindow.style.display = "none";
-})
 
 
 let createUserModalWindow = document.querySelector(".create-form-window");
@@ -235,6 +230,18 @@ let userButton = document.querySelector("#create-user-button");
 let submitUserCreationButton = document.querySelector("#submit-new-user");
 let cancelUserCreationButton = document.querySelector("#cancel-user-creation");
 let createUserAvatar = document.querySelector("#create-image-upload");
+
+cancelButton.addEventListener("click", e => {
+  e.preventDefault();
+  clearInputFile(updateUserAvatar);
+  updateUserModalWindow.style.display = "none";
+})
+
+// An array of all the input fields when editing a user.
+let editUserInputFields = [document.querySelector("#username"), document.querySelector("#firstname"), document.querySelector("#lastname"), document.querySelector("#email"), document.querySelector("#password"), document.querySelector("#usertype")];
+
+// An array of all the input fields when creating a new user.
+let createUserInputFields = [document.querySelector("#create-username"), document.querySelector("#create-firstname"), document.querySelector("#create-lastname"), document.querySelector("#create-email"), document.querySelector("#create-password"), document.querySelector("#create-usertype")];
 
 // Shows the user creation modal when the "Create User" buton is clicked.
 userButton.addEventListener("click", e => {
@@ -255,15 +262,27 @@ submitUserCreationButton.addEventListener("click", e => {
 cancelUserCreationButton.addEventListener("click", e => {
   e.preventDefault();
   clearInputFile(createUserAvatar);
+  clearInputs(createUserInputFields);
   createUserModalWindow.style.display = "none";
 })
 
-// Removes the file form the input once the "Submit" button or "Cancel" button is clicked.
+// Removes the file from the file-input.
 function clearInputFile(f) {
   if (f.value) {
     try {
       f.value = '';
     } catch (err) {
+      console.log(err);
+    }
+  }
+}
+
+// Clears the input fields for user creation and edit.
+function clearInputs(formInputFields) {
+  for(var j in formInputFields) {
+    try {
+      formInputFields[j].value = "";
+    } catch {
       console.log(err);
     }
   }

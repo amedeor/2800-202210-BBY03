@@ -42,12 +42,6 @@ body {
   grid-row-end: 4;
 }
 
-
-#image-upload {
-  justify-self: center;
-
-}
-
 #table-container {
   overflow-x: auto;
 
@@ -146,6 +140,75 @@ footer {
   text-align: center;
 }
 
-tbody {
-  overflow-x: auto;
+#create-user-button-container {
+  margin-top: 1em;
+  display: flex;
+  justify-content: space-between;
+}
+
+#create-user-button {
+  background-color: white;
+  border: 1px solid green;
+  border-radius: 5px;
+}
+
+#create-user-button:hover {
+  background-color: green;
+  color: white;
+  cursor: pointer;
+}
+
+#status {
+  padding: 0;
+  margin: 0;
+}
+
+.editButton {
+  background-color: white;
+  border: 1px solid orange;
+  border-radius: 5px;
+}
+
+.editButton:hover {
+  background-color: orange;
+  color: white;
+  cursor: pointer;
+}
+
+.deleteButton {
+  background-color: white;
+  border: 1px solid red;
+  border-radius: 5px;
+}
+
+.deleteButton:hover {
+  background-color: red;
+  color: white;
+  cursor: pointer;
+}
+
+.submit-button {
+  background-color: white;
+  border: 1px solid green;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.submit-button:hover {
+  background-color: green;
+  color: white;
+  cursor: pointer;
+}
+
+.cancel-button {
+  background-color: white;
+  border: 1px solid red;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.cancel-button:hover {
+  background-color: red;
+  color: white;
+  cursor: pointer;
 }
