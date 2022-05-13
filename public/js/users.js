@@ -111,8 +111,6 @@ submitButton.addEventListener("click", async e => {
   let password = document.querySelector("#password").value;
   let usertype = document.querySelector("#usertype").value;
 
-  console.log(`This is the avatar url for user #${id}: ${oldAvatarURL}`);
-
   if (fileUploadInput.value != "") {
     userAvatarUrl = document.querySelector("#image-upload").value;
   } else {
@@ -316,4 +314,15 @@ async function uploadCreateImage(e, username) {
   let parsedUpdatedRecordResponse = await updatedRecordResponse.json();
   getUsers();
   
+}
+
+// Clears the input fields for user creation and edit.
+function clearInputs(formInputFields) {
+  for(var j in formInputFields) {
+    try {
+      formInputFields[j].value = "";
+    } catch {
+      console.log(err);
+    }
+  }
 }
