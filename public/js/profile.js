@@ -73,7 +73,6 @@ btn.addEventListener("click", e => {
 
   //Get the user's first name from the span element
   let firstName = document.querySelector(".firstName").innerText;
-  console.log(firstName);
 
   let lastName = document.querySelector(".lastName").innerText;
   let username = document.querySelector(".username").innerText;
@@ -147,7 +146,7 @@ async function uploadImage(e) {
 
   await fetch("/upload-image", options
   ).then(function (res) {
-    console.log(res);
+
   }).catch(function (err) { ("Error:", err) }
   );
 

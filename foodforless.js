@@ -515,18 +515,6 @@ app.post("/update-user-id", async (req, res) => {
       }
     });
 
-  //update session variables with new info from database
-
-  // req.session.userId = userId;
-  // req.session.username = username;
-  // req.session.password = password;
-  // req.session.firstName = firstname;
-  // req.session.lastName = lastname;
-  // req.session.email = email;
-  // //req.session.usertype = retrievedUserType;
-  // req.session.avatarUrl = userAvatarUrl;
-
-
   res.send({ status: "success", message: "Record successfully updated." });
   connection.end();
 });

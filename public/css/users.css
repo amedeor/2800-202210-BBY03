@@ -42,6 +42,9 @@ body {
 
   grid-row-start: 3;
   grid-row-end: 4;
+
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
 #table-container {
@@ -140,6 +143,7 @@ footer {
 
 .edit-form-input {
   margin-bottom: 1em;
+  padding-top: 0.5em;
 }
 
 #submit-container {
@@ -228,3 +232,17 @@ footer {
   overflow-x: auto;
   padding: 0 1.5em 0 1.5em;
 }
+
+.edit-form-label {
+  padding-left: 0.5em;
+  padding-top: 0.5em;
+  font-size: 14px;
+}
+
+.edit-form-input {
+  margin-bottom: 1em;
+  margin-right: 0.5em;
+  padding-bottom: .5em;
+  padding-top: .5em;
+}
+

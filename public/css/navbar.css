@@ -51,6 +51,7 @@ body {
     grid-row-end: 2;
     text-align: center;
     background-color: #fcc603;
+    padding-bottom: 1em;
   }
 
   #table-container {

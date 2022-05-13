@@ -34,7 +34,7 @@ async function getUsers() {
     }
 
   } else {
-    console.log("Error");
+    console.log("Error: Cannot load users.");
   }
 }
 
@@ -173,8 +173,8 @@ async function uploadImage(e, username) {
 
   await fetch("/upload-image", options
   ).then(function (res) {
-    console.log(res);
-  }).catch(function (err) { ("Error:", err) }
+
+  }).catch(function (error) { ("Error:", error) }
   );
 
   let updatedRecordResponse = await fetch("/get-user");
@@ -276,8 +276,8 @@ function clearInputFile(f) {
   if (f.value) {
     try {
       f.value = '';
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
     }
   }
 }
@@ -305,7 +305,7 @@ async function uploadCreateImage(e, username) {
 
   await fetch("/upload-image", options
   ).then(function (res) {
-    console.log(res);
+
   }).catch(function (err) { ("Error:", err) }
   );
 
@@ -321,8 +321,8 @@ function clearInputs(formInputFields) {
   for (var j in formInputFields) {
     try {
       formInputFields[j].value = "";
-    } catch {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
     }
   }
 }
