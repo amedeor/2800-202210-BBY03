@@ -17,9 +17,6 @@ body {
   grid-column-end: 5;
 }
 
-#users {
-
-}
 
 #update-record-form {
   display: grid;
@@ -49,10 +46,6 @@ body {
 #image-upload {
   justify-self: center;
 
-}
-
-table {
-  
 }
 
 #table-container {
