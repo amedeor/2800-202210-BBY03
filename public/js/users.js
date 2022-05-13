@@ -109,13 +109,9 @@ submitButton.addEventListener("click", async e => {
   let email = document.querySelector("#email").value;
   let password = document.querySelector("#password").value;
   let usertype = document.querySelector("#usertype").value;
-<<<<<<< HEAD
 
   console.log(`This is the avatar url for user #${id}: ${oldAvatarURL}`);
 
-=======
-  
->>>>>>> 57ecbd6f3a4372b4af644583f30591a28fce8bbb
   if (fileUploadInput.value != "") {
     userAvatarUrl = document.querySelector("#image-upload").value;
   } else {
