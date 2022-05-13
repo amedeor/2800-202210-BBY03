@@ -4,9 +4,7 @@ let editSubmitButton = document.querySelector("#save-changes-button");
 
 if (editSubmitButton != null) {
   editSubmitButton.addEventListener("click", async e => {
-    e.preventDefault(); //Removed this because the page needs to refresh to show the new information
-
-    console.log("Save Changes button clicked");
+    e.preventDefault(); 
 
     let currentUsername = document.querySelector(".username").innerText;
 
@@ -20,13 +18,6 @@ if (editSubmitButton != null) {
     let password = document.querySelector("#password").value;
     let username = document.querySelector("#username").value;
 
-    console.log(firstName);
-    console.log(lastName);
-    console.log(email);
-    console.log(password);
-    console.log(username);
-
-
     let response = await fetch("/update-user", {
       method: "post",
       headers: {
@@ -37,20 +28,13 @@ if (editSubmitButton != null) {
 
     let parsedResponse = await response.json();
 
-    console.log(parsedResponse);
-
     if (parsedResponse.status === "fail") {
       document.querySelector("#error-message").innerHTML = "";
       document.querySelector("#error-message").insertAdjacentText("afterbegin", parsedResponse.message);
     }
 
-
     let updatedRecordResponse = await fetch("/get-user");
-
-
     let parsedUpdatedRecordResponse = await updatedRecordResponse.json();
-
-
 
     // get the parsed json from the /get-user route and store it in a variable
     // if the /get-user request was successful, the response will contain the user's row from the database
@@ -67,10 +51,7 @@ if (editSubmitButton != null) {
 
     //hide the form after the Save Changes button is pressed
     modal.style.display = "none";
-
-
-
-  })
+  });
 }
 
 
@@ -106,15 +87,13 @@ btn.addEventListener("click", e => {
   document.querySelector("#password").value = password;
   document.querySelector("#username").value = username;
 
-})
+});
 
 // When the user uses button "cancel"
 span.addEventListener("click", e => {
   e.preventDefault();
   modal.style.display = "none";
-})
-
-
+});
 
 //Code for edit window
 // Get the modal
@@ -136,11 +115,6 @@ cancelAvatarUploadButton.addEventListener("click", e => {
   clearInputFile(imageUpload);
   changeAvatarModalWindow.style.display = "none";
 });
-
-
-
-
-
 
 //Get the upload image form element
 const uploadImageForm = document.getElementById("upload-images-form");

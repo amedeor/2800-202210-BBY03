@@ -17,9 +17,6 @@ body {
   grid-column-end: 5;
 }
 
-#users {
-
-}
 
 #update-record-form {
   display: grid;
@@ -33,13 +30,22 @@ body {
   grid-row-end: 4;
 }
 
+#create-record-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto auto auto auto auto auto auto;
+
+  grid-column-start: 1;
+  grid-column-end: 5;
+
+  grid-row-start: 3;
+  grid-row-end: 4;
+}
+
+
 #image-upload {
   justify-self: center;
 
-}
-
-table {
-  
 }
 
 #table-container {
@@ -78,7 +84,35 @@ footer {
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
+.create-form-window {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
 .edit-user-window-content {
+  position: relative;
+  background-color: white;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 300px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+.create-user-window-content {
   position: relative;
   background-color: white;
   margin: auto;
@@ -110,4 +144,8 @@ footer {
   margin-bottom: 1em;
   display: block;
   text-align: center;
+}
+
+tbody {
+  overflow-x: auto;
 }
