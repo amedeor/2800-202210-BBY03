@@ -1,9 +1,9 @@
 "use strict;"
 
-const databaseHost = "localhost";
-const databaseUser = "root";
-const databasePassword = "";
-const databaseName = "COMP2800";
+const databaseHost = "http://us-cdbr-east-05.cleardb.net/";
+const databaseUser = "b836f8ec5d5bac";
+const databasePassword = "732ab9c0";
+const databaseName = "heroku_024b43865916c4a";
 
 const express = require("express");
 const app = express();
