@@ -115,8 +115,6 @@ body {
   padding-bottom: 10px;
 }
 
-
-
 .edit-form-label {
   padding-top: .5em;
 }
@@ -194,8 +192,6 @@ input[type="submit"]#edit-user-info-submit-button:hover {
 .cancel{
   border-color: red;
 }
-
-
 
 input[type="submit"].cancel:hover {
   background-color: red;

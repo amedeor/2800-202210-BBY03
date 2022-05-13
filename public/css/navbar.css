@@ -4,6 +4,7 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 
 @media (max-width: 600px) {
@@ -43,11 +44,6 @@ body {
     max-width: 50%;
   }
 
-  .username {
-    font-size: 16pt;
-    font-weight: bold;
-  }
-
   #nav {
     grid-column-start: 1;
     grid-column-end: 5;
@@ -65,12 +61,13 @@ body {
   }
 
   .nav-icon {
-    width: 1.5em;
+    width: 1em;
     cursor: pointer;
   }
 
 
   h1 {
+    font-size: 20px;
     padding-top: 1em;
     padding-bottom: 1em;
     margin: 0;
