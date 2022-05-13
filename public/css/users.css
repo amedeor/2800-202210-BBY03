@@ -49,6 +49,7 @@ body {
   grid-column-end: 5;
   grid-row-start: 3;
   grid-row-end: 4;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 1em;
@@ -216,4 +217,8 @@ footer {
   background-color: red;
   color: white;
   cursor: pointer;
+}
+
+#users-container {
+  overflow-x: auto;
 }
