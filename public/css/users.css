@@ -153,6 +153,14 @@ footer {
   text-align: center;
 }
 
+#create-submit-container {
+  grid-area: 9 / 1 / span 1 / span 2;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  display: block;
+  text-align: center;
+}
+
 #create-user-button-container {
   margin-top: 1em;
   display: flex;
