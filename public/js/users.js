@@ -38,8 +38,6 @@ async function getUsers() {
   }
 }
 
-
-
 function editRow(e) {
 
   let modalWindow = document.querySelector(".update-form-window");
@@ -96,7 +94,7 @@ let submitButton = document.querySelector("#submit");
 submitButton.addEventListener("click", async e => {
   e.preventDefault();
 
-
+  let userAvatarUrl;
 
   let form = document.querySelector("#update-record-form");
   let fileUploadInput = document.querySelector("#image-upload");
