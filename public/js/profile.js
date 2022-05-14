@@ -54,8 +54,6 @@ if (editSubmitButton != null) {
   });
 }
 
-
-
 /**
    * JS code for functionalities of edit window
    * I found this code on www.w3schools.com
