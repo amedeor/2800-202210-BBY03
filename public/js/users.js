@@ -1,4 +1,4 @@
-"use strict;"
+"use strict";
 
 var currentName;
 var str;
@@ -29,9 +29,24 @@ async function getUsers() {
     }
 
     let deletebuttons = document.querySelectorAll(".deleteButton");
-    for (let j = 0; j < editbuttons.length; j++) {
-      deletebuttons[j].addEventListener("click", deleteRow);
+    for (let j = 0; j < deletebuttons.length; j++) {
+      let currentParentTd = deletebuttons[j].parentNode;
+      let currentParentTr = currentParentTd.parentNode;
+      let users = [];
+
+      //Goes through all the rows, adds them to the users array, checks to see if the user's username matches the current user, 
+      //and if it does it will remove the deleteButton class from the delete button and disable it.
+      for (let i = 0, col; col = currentParentTr.cells[i]; i++) {
+        users[i] = col.innerText;
+      }
+      if (users[1] != currentName) {
+        deletebuttons[j].addEventListener("click", deleteRow);
+      } else {
+        deletebuttons[j].classList.remove('deleteButton');
+        deletebuttons[j].disabled = true;
+      }
     }
+
 
   } else {
     console.log("Error: Cannot load users.");
@@ -96,7 +111,7 @@ let submitButton = document.querySelector("#submit");
 submitButton.addEventListener("click", async e => {
   e.preventDefault();
 
-
+  let userAvatarUrl;
 
   let form = document.querySelector("#update-record-form");
   let fileUploadInput = document.querySelector("#image-upload");
