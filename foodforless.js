@@ -13,6 +13,7 @@ const { JSDOM } = require("jsdom");
 const mysql = require("mysql2/promise");
 
 const multer = require("multer");
+const res = require("express/lib/response");
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
@@ -71,7 +72,21 @@ app.get("/get-user", async (req, res) => {
   connection.end();
 });
 
+app.get("/post-deal", (req, res) => {
 
+  let postDealPage = fs.readFileSync("./app/html/postdeal.html", "utf-8");
+
+  console.log(req.session.loggedIn);
+  console.log(req.session.username);
+
+  console.log("post-deal");
+
+  if (req.session.loggedIn === true) {
+    res.send(postDealPage);
+  } else {
+    res.redirect("/");
+  }
+});
 
 
 

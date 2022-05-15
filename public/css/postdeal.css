@@ -1,0 +1,33 @@
+body {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto auto auto auto auto;
+}
+
+#post-deal-title {
+  grid-column-start: 1;
+  grid-column-end: 5;
+  justify-self: center;
+}
+
+#deal-form {
+  grid-column-start: 1;
+  grid-column-end: 5;
+  justify-self: center;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.deal-form-label {
+  padding-bottom: .5em;
+}
+
+.deal-form-input {
+  margin-bottom: .5em;
+}
+
+#deal-submit-button {
+  margin-top: 2em;
+}
+

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
+  <title>FoodForLess</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/css/postdeal.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+</head>
+
+<body>
+  <nav id="nav">
+    <h1>FoodForLess</h1>
+    <div id="nav-items-container">
+      <div id="nav-icons">
+        <img id="browse-icon" class="nav-icon" src="/img/magnifying-glass-icon.svg" alt="" />
+        <img id="list-icon" class="nav-icon" src="/img/list-icon.svg" alt="" />
+        <img id="post-icon" class="nav-icon" src="/img/add-icon.svg" alt="" />
+        <img id="profile-icon" class="nav-icon" src="/img/profile-icon.svg" alt="" />
+        <img id="logout-icon" class="nav-icon" src="/img/logout-icon.svg" alt="" />
+      </div>
+
+      <ul id="nav-links">
+        <li class="nav-link"><a href="#">Browse</a></li>
+        <li class="nav-link"><a href="#">My Deals</a></li>
+        <li class="nav-link">
+          <form action="/post-deal" method="get">
+            <input id="post-button" class="look-like-button" type="submit" value="Post" />
+          </form>
+        </li>
+        <li class="nav-link">
+          <form action="/profile" method="get">
+            <input id="profile-button" class="look-like-button" type="submit" value="Profile" />
+          </form>
+        </li>
+        <li class="nav-link">
+          <form action="/logout" method="get">
+            <input id="logout-button" type="submit" value="Logout" />
+          </form>
+        </li>
+      </ul>
+
+    </div>
+
+  </nav>
+
+  <h2 id="post-deal-title">Post a Deal</h2>
+
+  <form id="deal-form">
+
+    <label for="dealname" class="deal-form-label">Name:</label>
+    <input id="dealname" class="deal-form-input" type="text" name="dealname" />
+
+    <label for="dealprice" class="deal-form-label">Price:</label>
+    <input id="dealprice" class="deal-form-input" type="text" name="dealprice" />
+
+    <label for="dealdescription" class="deal-form-label">Description:</label>
+    <input id="dealdescription" class="deal-form-input" type="text" name="password" />
+
+    <label for="dealexpirydate" class="deal-form-label">Deal Expiry Date:</label>
+    <input id="dealexpirydate" class="deal-form-input" type="date" name="dealexpirydate" />
+
+    <label for="dealphotos" class="deal-form-label">Photos:</label>
+    <input id="dealphotos" type="file" name="dealphotos" class="deal-form-input">
+
+    <input id="deal-submit-button" type="submit" value="Submit">
+  </form>
+
+  <footer id="footer">
+    <div>
+      <small>Copyright 2022, FoodForLess</small>
+    </div>
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  <script src="/js/client.js"></script>
+  <script src="/js/postdeal.js"></script>
+</body>
+
+</html>

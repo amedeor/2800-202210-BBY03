@@ -25,7 +25,11 @@
       <ul id="nav-links">
         <li class="nav-link"><a href="#">Browse</a></li>
         <li class="nav-link"><a href="#">My Deals</a></li>
-        <li class="nav-link"><a href="#">Post</a></li>
+        <li class="nav-link">
+          <form action="/post-deal" method="get">
+            <input id="post-button" class="look-like-button" type="submit" value="Post" />
+          </form>
+        </li>
         <li class="nav-link">
           <form action="/profile" method="get">
             <input id="profile-button" class="look-like-button" type="submit" value="Profile" />
