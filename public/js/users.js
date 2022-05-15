@@ -53,8 +53,6 @@ async function getUsers() {
   }
 }
 
-
-
 function editRow(e) {
 
   let modalWindow = document.querySelector(".update-form-window");
