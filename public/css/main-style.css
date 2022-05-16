@@ -15,12 +15,6 @@ body {
     font-size: 10pt;
   }
 
-  #nav-icons {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-  }
-
   #profile-info {
     grid-column-start: 1;
     grid-column-end: 4;
@@ -48,36 +42,10 @@ body {
     font-weight: bold;
   }
 
-  #nav {
-    grid-column-start: 1;
-    grid-column-end: 4;
-    grid-row-start: 1;
-    grid-row-end: 2;
-    text-align: center;
-    background-color: #fcc603;
-  }
-
-  .nav-icon {
-    width: 1.5em;
-    cursor: pointer;
-  }
-
-
   h1 {
     padding-top: 1em;
     padding-bottom: 1em;
     margin: 0;
-  }
-
-  ul {
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  }
-
-  li {
-    list-style: none;
   }
 
   table,
@@ -128,20 +96,6 @@ body {
     background-color: #fcc603;
     width: 100%;
   }
-
-  .look-like-button {
-    background: none;
-    border: none;
-    font: inherit;
-    cursor: pointer;
-  }
-
-  #logout-button {
-    background: none;
-    border: none;
-    font: inherit;
-    cursor: pointer;
-  }
 }
 
 a {
@@ -183,46 +137,6 @@ a {
     grid-column-end: 5;
     justify-self: center;
     margin-bottom: 2em;
-  }
-
-  #nav-icons {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto;
-    justify-content: center;
-  }
-
-  #nav-links {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto;
-    justify-items: center;
-    margin: 0;
-    padding: 0;
-  }
-
-  #nav-items-container {
-    width: 60%;
-  }
-
-  #nav {
-    grid-column-start: 1;
-    grid-column-end: 5;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #fcc603;
-    padding-left: 1em;
-    padding-right: 1em;
-    padding-top: 1em;
-    padding-bottom: 1em;
-  }
-
-  .nav-icon {
-    width: 1.5em;
-    justify-self: center;
-    cursor: pointer;
   }
 
   #profile-info {
@@ -285,27 +199,6 @@ a {
     display: flex;
     flex-direction: column;
     justify-content: center;
-  }
-
-  li {
-    list-style: none;
-    text-align: center;
-  }
-
-  .look-like-button {
-    background: none;
-    border: none;
-    font: inherit;
-    cursor: pointer;
-  }
-
-  #logout-button {
-    background: none;
-    border: none;
-    font: inherit;
-    cursor: pointer;
-    padding: 0;
-    margin: 0;
   }
 
   #user-accounts-heading {

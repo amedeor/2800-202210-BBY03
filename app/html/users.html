@@ -42,7 +42,7 @@
 
         <li class="nav-link">
           <form action="/logout" method="get">
-            <input id="logout-button" type="submit" value="Logout" />
+            <input id="logout-button" class="look-like-button" type="submit" value="Logout" />
           </form>
         </li>
 
@@ -68,31 +68,34 @@
 
   </div>
 
-      <form id="create-record-form">
-        <label for="create-username" class="edit-form-label">Username:</label>
-        <input id="create-username" class="edit-form-input" type="text" name="username" />
+  <div id="create-record-form-container">
+    <form id="create-record-form">
+      <label for="create-username" class="edit-form-label">Username:</label>
+      <input id="create-username" class="edit-form-input" type="text" name="username" />
 
-        <label for="create-firstname" class="edit-form-label">First Name:</label>
-        <input id="create-firstname" class="edit-form-input" type="text" name="firstname" />
+      <label for="create-firstname" class="edit-form-label">First Name:</label>
+      <input id="create-firstname" class="edit-form-input" type="text" name="firstname" />
 
-        <label for="create-lastname" class="edit-form-label">Last Name:</label>
-        <input id="create-lastname" class="edit-form-input" type="text" name="lastname" />
+      <label for="create-lastname" class="edit-form-label">Last Name:</label>
+      <input id="create-lastname" class="edit-form-input" type="text" name="lastname" />
 
-        <label for="create-email" class="edit-form-label">Email:</label>
-        <input id="create-email" class="edit-form-input" type="text" name="email" />
+      <label for="create-email" class="edit-form-label">Email:</label>
+      <input id="create-email" class="edit-form-input" type="text" name="email" />
 
-        <label for="create-password" class="edit-form-label">Password:</label>
-        <input id="create-password" class="edit-form-input" type="text" name="password" />
+      <label for="create-password" class="edit-form-label">Password:</label>
+      <input id="create-password" class="edit-form-input" type="text" name="password" />
 
-        <label for="create-usertype" class="edit-form-label">User Type:</label>
-        <input id="create-usertype" class="edit-form-input" type="text" name="usertype" />
+      <label for="create-usertype" class="edit-form-label">User Type:</label>
+      <input id="create-usertype" class="edit-form-input" type="text" name="usertype" />
 
-        <label for="create-image-upload" class="edit-form-label">Avatar Image:</label>
-        <input id="create-image-upload" class="edit-form-input" type="file"
-          accept="image/png, image/gif, image/jpeg, image/svg+xml" />
-      </form>
+      <label for="create-image-upload" class="edit-form-label">Avatar Image:</label>
+      <input id="create-image-upload" class="edit-form-input" type="file"
+        accept="image/png, image/gif, image/jpeg, image/svg+xml" />
+    </form>
+  </div>
 
 
+      <div id="update-record-form-container">
       <form id="update-record-form">
         <label for="id" class="edit-form-label">ID:</label>
         <input id="id" class="edit-form-input" type="text" name="id" disabled />
@@ -118,6 +121,7 @@
         <label for="image-upload" class="edit-form-label">Avatar Image:</label>
         <input id="image-upload" class="edit-form-input" type="file" accept="image/png, image/gif, image/jpeg, image/svg+xml" required/>
       </form>
+      </div>
 
   <footer id="footer">
     <div>

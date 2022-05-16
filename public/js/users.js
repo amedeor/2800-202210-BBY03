@@ -73,7 +73,7 @@ function editRow(e) {
   userAvatarUrl = user[7];
 
   //open the jQuery modal window when the edit button is clicked
-  $("#update-record-form").dialog("open");
+  $("#update-record-form-container").dialog("open");
 }
 
 async function deleteRow(e) {
@@ -140,8 +140,6 @@ async function updateUser() {
     console.log(parsedResponse.status);
   }
 
-  //submitButton.addEventListener("click", uploadImage(e, username));
-
   uploadImage(username);
 
   //refresh the table after updating the record.
@@ -188,22 +186,6 @@ async function uploadImage(username) {
 
 }
 
-// let createUserModalWindow = document.querySelector(".create-form-window");
-// let creatUserButton = document.querySelector("#create-user-button");
-// let submitUserCreationButton = document.querySelector("#submit-new-user");
-// let cancelUserCreationButton = document.querySelector("#cancel-user-creation");
-// let createUserAvatar = document.querySelector("#create-image-upload");
-
-// // Shows the user creation modal when the "Create User" buton is clicked.
-// creatUserButton.addEventListener("click", e => {
-//   e.preventDefault();
-//   clearInputFile(createUserAvatar);
-//   createUserModalWindow.style.display = "block";
-// })
-
-//Hides the user creation modal when the "Submit" button is clicked.
-
-
 async function createUser() {
   // e.preventDefault();
 
@@ -244,7 +226,6 @@ async function createUser() {
     console.log(parsedResponse.status);
   }
 
-  // submitUserCreationButton.addEventListener("click", uploadCreateImage(e, createUsername));
 
   uploadCreateImage(createUsername);
 
@@ -254,90 +235,7 @@ async function createUser() {
   // //reset the user data form
    createForm.reset();
 
-  // let createUserModalWindow = document.querySelector(".create-form-window");
-
-  // createUserModalWindow.style.display = "none";
 }
-
-
-
-
-
-
-
-
-// submitUserCreationButton.addEventListener("click", async e => {
-//   e.preventDefault();
-
-//   let createUserAvatarUrl;
-
-//   let createForm = document.querySelector("#create-record-form");
-//   let createFileUploadInput = document.querySelector("#create-image-upload");
-
-//   let id = document.querySelector("#id").value;
-
-//   let createUsername = document.querySelector("#create-username").value;
-//   let createFirstname = document.querySelector("#create-firstname").value;
-//   let createLastname = document.querySelector("#create-lastname").value;
-//   let createEmail = document.querySelector("#create-email").value;
-//   let createPassword = document.querySelector("#create-password").value;
-//   let createUsertype = document.querySelector("#create-usertype").value;
-
-//   if (createFileUploadInput.value != "") {
-//     createUserAvatarUrl = document.querySelector("#create-image-upload").value;
-//   } else {
-//     createUserAvatarUrl = "/img/default-avatar.svg";
-//   }
-
-//   let response = await fetch("/admin-create-user", {
-//     method: "post",
-//     headers: {
-//       "Content-Type": "application/x-www-form-urlencoded"
-//     },
-//     body: `createUsername=${createUsername}&createPassword=${createPassword}&createFirstname=${createFirstname}&createLastname=${createLastname}&createEmail=${createEmail}&createUsertype=${createUsertype}&createUserAvatarUrl=${createUserAvatarUrl}`
-//   });
-
-//   let parsedResponse = await response.json();
-
-//   if (parsedResponse.status === "success") {
-//     document.querySelector("#status").innerHTML = "";
-//     document.querySelector("#status").insertAdjacentText("afterbegin", parsedResponse.message);
-//   } else {
-//     console.log(parsedResponse.status);
-//   }
-
-//   submitUserCreationButton.addEventListener("click", uploadCreateImage(e, createUsername));
-
-//   //refresh the table after updating the record.
-//   getUsers();
-
-//   //reset the user data form
-//   createForm.reset();
-
-//   let createUserModalWindow = document.querySelector(".create-form-window");
-
-//   createUserModalWindow.style.display = "none";
-
-// })
-
-
-// // Hides the user creation modal when the "Cancel" button is clicked.
-// cancelUserCreationButton.addEventListener("click", e => {
-//   e.preventDefault();
-//   clearInputFile(createUserAvatar);
-//   createUserModalWindow.style.display = "none";
-// })
-
-// // Removes the file form the input once the "Submit" button or "Cancel" button is clicked.
-// function clearInputFile(f) {
-//   if (f.value) {
-//     try {
-//       f.value = '';
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   }
-// }
 
 //Function to upload a new avatar image on the user's profile page
 
@@ -375,7 +273,7 @@ async function uploadCreateImage(username) {
 
 }
 
-$("#update-record-form").dialog({
+$("#update-record-form-container").dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
   autoOpen: false,
@@ -404,11 +302,11 @@ $("#update-record-form").dialog({
 let createUserButton = document.querySelector("#create-user-button");
 
 createUserButton.addEventListener("click", e => {
-  $("#create-record-form").dialog("open");
+  $("#create-record-form-container").dialog("open");
 });
 
 
-$("#create-record-form").dialog({
+$("#create-record-form-container").dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
   autoOpen: false,
@@ -434,7 +332,5 @@ $("#create-record-form").dialog({
     }
   ]
 });
-
-
 
 getUsers();
