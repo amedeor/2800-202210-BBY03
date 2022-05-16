@@ -46,8 +46,6 @@ async function getUsers() {
         deletebuttons[j].disabled = true;
       }
     }
-
-
   } else {
     console.log("Error: Cannot load users.");
   }
