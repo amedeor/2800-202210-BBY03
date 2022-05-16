@@ -1,9 +1,14 @@
 "use strict;"
 
-const databaseHost = "us-cdbr-east-05.cleardb.net";
-const databaseUser = "b836f8ec5d5bac";
-const databasePassword = "732ab9c0";
-const databaseName = "heroku_024b43865916c4a";
+// const databaseHost = "us-cdbr-east-05.cleardb.net";
+// const databaseUser = "b836f8ec5d5bac";
+// const databasePassword = "732ab9c0";
+// const databaseName = "heroku_024b43865916c4a";
+
+const databaseHost = "localhost";
+const databaseUser = "root";
+const databasePassword = "";
+const databaseName = "COMP2800";
 
 const express = require("express");
 const app = express();
@@ -594,5 +599,5 @@ app.get("/logout", function (req, res) {
   }
 });
 
-const port = process.env.PORT || 8000;
+const port = 8000;
 app.listen(port);

@@ -83,3 +83,17 @@ footer {
 #image-upload {
   width: 15em;
 }
+
+#create-user-button-container {
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+#create-user-button {
+  grid-column-start: 4;
+  grid-column-end: 5;
+  width: 8em;
+  justify-self: end;
+}

@@ -286,6 +286,7 @@ $("#update-record-form-container").dialog({
       text: "Submit",
       click: function () {
         updateUser();
+        clearStatusMessage();
         $(this).dialog("close");
       }
     },
@@ -305,6 +306,13 @@ createUserButton.addEventListener("click", e => {
   $("#create-record-form-container").dialog("open");
 });
 
+function clearStatusMessage() {
+  let statusMessage = document.querySelector("#status");
+  setTimeout(() => {
+    statusMessage.innerText = "";
+  }, 3000)
+}
+
 
 $("#create-record-form-container").dialog({
   modal: true,
@@ -320,6 +328,7 @@ $("#create-record-form-container").dialog({
       click: function () {
         createUser();
         uploadCreateImage(username); //username is a global variable
+        clearStatusMessage();
         $(this).dialog("close");
       }
     },
