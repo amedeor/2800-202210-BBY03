@@ -137,6 +137,7 @@ editProfileButton.addEventListener("click", e => {
 $("#edit-user-info-form").dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
+  resizable: false,
   autoOpen: false,
   draggable: false,
   title: "Edit Profile Info",
@@ -171,6 +172,7 @@ changeAvatarButton.addEventListener("click", e => {
 $("#upload-images-form").dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
+  resizable: false,
   autoOpen: false,
   draggable: false,
   title: "Change Avatar",

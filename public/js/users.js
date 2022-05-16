@@ -276,6 +276,7 @@ async function uploadCreateImage(username) {
 $("#update-record-form-container").dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
+  resizable: false,
   autoOpen: false,
   draggable: false,
   title: "Edit User Info",
@@ -317,6 +318,7 @@ function clearStatusMessage() {
 $("#create-record-form-container").dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
+  resizable: false,
   autoOpen: false,
   draggable: false,
   title: "Create New User",
