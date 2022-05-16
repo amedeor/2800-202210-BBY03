@@ -1,4 +1,6 @@
-let postDealLink = document.querySelector("#post-deal-link")
+"use strict";
+
+let postDealLink = document.querySelector("#post-deal-link");
 
 postDealLink.addEventListener("click", e => {
   $("#post-deal-link").dialog("open");
@@ -9,6 +11,7 @@ postDealLink.addEventListener("click", e => {
 $("#post-deal-container").dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
+  resizable: false,
   autoOpen: false,
   draggable: false,
   title: "Create New User",
