@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
   <link rel="stylesheet" href="/css/navbar.css">
   <link rel="stylesheet" href="/css/users.css">
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
   <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
   <title>FoodForLess</title>
 </head>
@@ -67,16 +68,7 @@
 
   </div>
 
-  <div class="create-form-window">
-
-    <div class="create-user-window-content">
-
-      <div class="edit-window-header">
-        <h2>Create User Info</h2>
-      </div>
-
       <form id="create-record-form">
-
         <label for="create-username" class="edit-form-label">Username:</label>
         <input id="create-username" class="edit-form-input" type="text" name="username" />
 
@@ -98,25 +90,8 @@
         <label for="create-image-upload" class="edit-form-label">Avatar Image:</label>
         <input id="create-image-upload" class="edit-form-input" type="file"
           accept="image/png, image/gif, image/jpeg, image/svg+xml" />
-
-        <div id="create-submit-container">
-          <input id="submit-new-user" class="submit-button" type="submit" value="Submit" />
-          <input id="cancel-user-creation" class="cancel-button" type="submit" value="Cancel">
-        </div>
-
       </form>
 
-    </div>
-
-  </div>
-
-  <div class="update-form-window">
-
-    <div class="edit-user-window-content">
-
-      <div class="edit-window-header">
-        <h2>Edit User Info</h2>
-      </div>
 
       <form id="update-record-form">
         <label for="id" class="edit-form-label">ID:</label>
@@ -141,19 +116,9 @@
         <input id="usertype" class="edit-form-input" type="text" name="usertype" />
 
         <label for="image-upload" class="edit-form-label">Avatar Image:</label>
-        <input id="image-upload" class="edit-form-input" type="file"
-          accept="image/png, image/gif, image/jpeg, image/svg+xml" />
-
-        <div id="submit-container">
-          <input id="submit" class="submit-button" type="submit" value="Submit" />
-          <input id="cancel-button" class="cancel-button" type="submit" value="Cancel">
-        </div>
-
+        <input id="image-upload" class="edit-form-input" type="file" accept="image/png, image/gif, image/jpeg, image/svg+xml" required/>
       </form>
 
-    </div>
-
-  </div>
   <footer id="footer">
     <div>
       <small>Copyright 2022, FoodForLess</small>

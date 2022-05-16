@@ -110,7 +110,6 @@ async function uploadImage(e) {
   } else {
     //
   }
-
 }
 
 

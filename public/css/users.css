@@ -2,13 +2,10 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
   margin: 0;
   padding: 0;
-
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: auto auto auto auto;
-
   font-size: 12pt;
-
 }
 
 #user-accounts-heading {
@@ -18,20 +15,13 @@ body {
   grid-column-end: 5;
 }
 
-
-#update-record-form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto auto auto auto auto auto auto auto;
-
-  grid-column-start: 1;
-  grid-column-end: 5;
-
-  grid-row-start: 3;
-  grid-row-end: 4;
+input {
+  margin-top: .5em;
+  margin-bottom: .5em;
 }
 
-#create-record-form {
+
+/* #create-record-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto auto auto auto auto auto auto auto;
@@ -44,7 +34,7 @@ body {
 
   padding-left: 2px;
   padding-right: 2px;
-}
+} */
 
 #table-container {
   overflow-x: auto;
@@ -76,163 +66,13 @@ footer {
   padding-bottom: 2em;
 }
 
-.update-form-window {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-.create-form-window {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-.edit-user-window-content {
-  position: relative;
-  background-color: white;
-  margin: auto;
-  padding: 0;
-  border: 1px solid #888;
-  width: 300px;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-  -webkit-animation-name: animatetop;
-  -webkit-animation-duration: 0.4s;
-  animation-name: animatetop;
-  animation-duration: 0.4s
-}
-
-.create-user-window-content {
-  position: relative;
-  background-color: white;
-  margin: auto;
-  padding: 0;
-  border: 1px solid #888;
-  width: 300px;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-  -webkit-animation-name: animatetop;
-  -webkit-animation-duration: 0.4s;
-  animation-name: animatetop;
-  animation-duration: 0.4s
-}
-
-.edit-window-header {
-  text-align: center;
-  padding: 2px 16px;
-  margin-bottom: 1em;
-  background-color: #fcc603;
-  color: black;
-}
-
 .edit-form-input {
   margin-bottom: 1em;
-  padding-top: 0.5em;
-}
-
-#submit-container {
-  grid-area: 9 / 1 / span 1 / span 2;
-  margin-top: 1em;
-  margin-bottom: 1em;
-  display: block;
-  text-align: center;
-}
-
-#create-submit-container {
-  grid-area: 9 / 1 / span 1 / span 2;
-  margin-top: 1em;
-  margin-bottom: 1em;
-  display: block;
-  text-align: center;
-}
-
-#create-user-button-container {
-  margin-top: 1em;
-  display: flex;
-  justify-content: space-between;
-}
-
-#create-user-button {
-  background-color: white;
-  border: 1px solid green;
-  border-radius: 5px;
-  margin-right: 1.5em;
-}
-
-#create-user-button:hover {
-  background-color: green;
-  color: white;
-  cursor: pointer;
 }
 
 #status {
   padding: 0;
   margin: 0;
-}
-
-.editButton {
-  background-color: white;
-  border: 1px solid orange;
-  border-radius: 5px;
-}
-
-.editButton:hover {
-  background-color: orange;
-  color: white;
-  cursor: pointer;
-}
-
-.deleteButton {
-  background-color: white;
-  border: 1px solid red;
-  border-radius: 5px;
-}
-
-.deleteButton:hover {
-  background-color: red;
-  color: white;
-  cursor: pointer;
-}
-
-.submit-button {
-  background-color: white;
-  border: 1px solid green;
-  border-radius: 5px;
-  padding: 5px;
-}
-
-.submit-button:hover {
-  background-color: green;
-  color: white;
-  cursor: pointer;
-}
-
-.cancel-button {
-  background-color: white;
-  border: 1px solid red;
-  border-radius: 5px;
-  padding: 5px;
-}
-
-.cancel-button:hover {
-  background-color: red;
-  color: white;
-  cursor: pointer;
 }
 
 #users-container {
@@ -241,15 +81,15 @@ footer {
 }
 
 .edit-form-label {
-  padding-left: 0.5em;
-  padding-top: 0.5em;
-  font-size: 14px;
+  padding-top: .5em;
+  padding-bottom: .5em;
+  font-weight: bold;
 }
 
 .edit-form-input {
   margin-bottom: 1em;
-  margin-right: 0.5em;
-  padding-bottom: .5em;
-  padding-top: .5em;
 }
 
+#image-upload {
+  width: 15em;
+}
