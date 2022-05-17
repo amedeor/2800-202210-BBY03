@@ -6,9 +6,6 @@ postDealLink.addEventListener("click", e => {
   $("#post-deal-container").dialog("open");
 })
 
-
-
-
 //Function to upload a new avatar image on the user's profile page
 async function uploadImages() {
 
@@ -25,22 +22,27 @@ async function uploadImages() {
       formData.append("files", imageUploadElement.files[i]);
     }
 
-    console.log(formData.files);
+    console.log(`Value of the files that are uploaded: ${formData.files}`);
 
     //append the other deal data from the form to formData
 
-    formData.append("dealName", document.querySelector("#dealname"));
-    formData.append("dealPrice", document.querySelector("#dealprice"));
-    formData.append("dealLocation", document.querySelector("#deallocation"));
-    formData.append("dealDescription", document.querySelector("dealdescription"));
-    formData.append("dealExpiryDate", document.querySelector("#dealexpirydate"));
-
-
-
+    let dealName = document.querySelector("#dealname").value;
+    let dealPrice = document.querySelector("#dealprice").value;
+    let dealDescription = document.querySelector("#dealdescription").value;
+    let dealLocation = document.querySelector("#deallocation").value;
+    let dealExpiryDate = document.querySelector("#dealexpirydate").value;
   
-    //append the user's username to the formData that will be sent to the server
-    //this allows us to update the avatar URL for the correct user in the database
-    // formData.append("username", document.querySelector(".username").innerText);
+    console.log(dealName);
+    console.log(dealPrice);
+    console.log(dealDescription);
+    console.log(dealLocation);
+    console.log(dealExpiryDate);
+
+    formData.append("dealName", dealName);
+    formData.append("dealPrice", dealPrice);
+    formData.append("dealDescription", dealDescription);
+    formData.append("dealLocation", dealLocation);
+    formData.append("dealExpiryDate", dealExpiryDate);
   
     const options = {
       method: 'POST',
@@ -53,7 +55,6 @@ async function uploadImages() {
     }).catch(function (err) { ("Error:", err) }
     );
 }
-
 
 $("#post-deal-container").dialog({
   modal: true,
@@ -69,6 +70,7 @@ $("#post-deal-container").dialog({
       text: "Submit",
       click: function () {
         uploadImages();
+        $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
         $(this).dialog("close");
       }
     },
@@ -76,8 +78,9 @@ $("#post-deal-container").dialog({
       text: "Cancel",
       click: function () {
         //select this dialog and close it when cancel is pressed
+        $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
         $(this).dialog("close");
-      }
+      },
     }
   ]
 });
