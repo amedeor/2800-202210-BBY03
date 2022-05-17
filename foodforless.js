@@ -80,66 +80,71 @@ app.get("/get-user", async (req, res) => {
 //the argument to upload.array is the name of the variable in formData
 app.post("/post-deal", upload.array("files"), async (req, res) => {
 
-  let photos = [];
+  if (req.session.loggedIn === true) {
+    res.setHeader("Content-Type", "application/json");
 
-  console.log(`req.files: ${req.files}`);
+    let photos = [];
 
-  //if req.files is undefined, it means no photos were uploaded when the deal form was submitted
-  if (req.files != undefined) {
-    console.log(`Number of files uploaded: ${req.files.length}`);
-    for (let i = 0; i < req.files.length; i++) {
-      console.log("inside for loop");
-      //add photos to array
-      photos.push(`/img/${req.files[i].filename}`);
+    console.log(`req.files: ${req.files}`);
+
+    //if req.files is undefined, it means no photos were uploaded when the deal form was submitted
+    if (req.files != undefined) {
+      console.log(`Number of files uploaded: ${req.files.length}`);
+      for (let i = 0; i < req.files.length; i++) {
+        console.log("inside for loop");
+        //add photos to array
+        photos.push(`/img/${req.files[i].filename}`);
+      }
     }
-  }
 
-  //get the currently logged in user's user ID
-  let currentUserId = req.session.userId;
+    //get the currently logged in user's user ID
+    let currentUserId = req.session.userId;
 
-  console.log(`Current user ID: ${currentUserId}`);
+    console.log(`Current user ID: ${currentUserId}`);
 
-  console.log(req.body.dealExpiryDate);
+    console.log(req.body.dealExpiryDate);
 
-  let dealName = req.body.dealName;
-  let dealPrice = req.body.dealPrice;
-  let dealDescription = req.body.dealDescription;
-  let dealLocation = req.body.dealLocation;
-  let dealExpiryDate = req.body.dealExpiryDate;
+    let dealName = req.body.dealName;
+    let dealPrice = req.body.dealPrice;
+    let dealDescription = req.body.dealDescription;
+    let dealLocation = req.body.dealLocation;
+    let dealExpiryDate = req.body.dealExpiryDate;
 
-  console.log(`Deal name: ${dealName}`);
-  console.log(`Deal price: ${dealPrice}`);
-  console.log(`Deal description: ${dealDescription}`);
-  console.log(`Deal location: ${dealLocation}`);
-  console.log(`Deal expiry date: ${dealExpiryDate}`);
+    console.log(`Deal name: ${dealName}`);
+    console.log(`Deal price: ${dealPrice}`);
+    console.log(`Deal description: ${dealDescription}`);
+    console.log(`Deal location: ${dealLocation}`);
+    console.log(`Deal expiry date: ${dealExpiryDate}`);
 
-  const connection = await mysql.createConnection({
-    host: databaseHost,
-    user: databaseUser,
-    password: databasePassword,
-    database: databaseName,
-    multipleStatements: true
-  });
+    const connection = await mysql.createConnection({
+      host: databaseHost,
+      user: databaseUser,
+      password: databasePassword,
+      database: databaseName,
+      multipleStatements: true
+    });
 
-  let dealRecord = "INSERT INTO BBY_03_deal (deal_name, deal_price, deal_description, deal_store_location, deal_expiry_date, user_id) values (?)";
-  let dealRecordValues = [dealName, dealPrice, dealDescription, dealLocation, dealExpiryDate, currentUserId];
-  await connection.query(dealRecord, [dealRecordValues]);
+    let dealRecord = "INSERT INTO BBY_03_deal (deal_name, deal_price, deal_description, deal_store_location, deal_expiry_date, user_id) values (?)";
+    let dealRecordValues = [dealName, dealPrice, dealDescription, dealLocation, dealExpiryDate, currentUserId];
+    await connection.query(dealRecord, [dealRecordValues]);
 
-  //Get the deal_id of the last inserted deal into BBY_03_deal
-  let lastInsertIdObject = await connection.query("SELECT LAST_INSERT_ID()");
-  let lastInsertIdArray = lastInsertIdObject[0];
-  let insertObject = lastInsertIdArray[0];
-  let lastInsertedId = insertObject["LAST_INSERT_ID()"]; //This is the deal_id of the deal that was just inserted into the database
+    //Get the deal_id of the last inserted deal into BBY_03_deal
+    let lastInsertIdObject = await connection.query("SELECT LAST_INSERT_ID()");
+    let lastInsertIdArray = lastInsertIdObject[0];
+    let insertObject = lastInsertIdArray[0];
+    let lastInsertedId = insertObject["LAST_INSERT_ID()"]; //This is the deal_id of the deal that was just inserted into the database
 
-  console.log(`lastInsertedId: ${lastInsertedId}`);
+    console.log(`lastInsertedId: ${lastInsertedId}`);
 
-  if (req.files != undefined) {
-    console.log("Going to insert photo record into bby_03_photo");
-    for (let photo of photos) {
-      let photoRecord = "INSERT INTO BBY_03_photo (deal_id, photo_url) values (?)";
-      let photoRecordValues = [lastInsertedId, photo];
-      await connection.query(photoRecord, [photoRecordValues]);
+    if (req.files != undefined) {
+      console.log("Going to insert photo record into bby_03_photo");
+      for (let photo of photos) {
+        let photoRecord = "INSERT INTO BBY_03_photo (deal_id, photo_url) values (?)";
+        let photoRecordValues = [lastInsertedId, photo];
+        await connection.query(photoRecord, [photoRecordValues]);
+      }
     }
+    res.send({ "status": "success", "message": "Post created successfully." });
   }
 });
 
@@ -357,8 +362,7 @@ app.get("/profile", async (req, res) => {
   } else {
     res.redirect("/");
   }
-}
-);
+});
 
 app.get("/signup", async (req, res) => {
   let signup = fs.readFileSync("./app/html/signup.html", "utf-8");
@@ -522,7 +526,7 @@ app.post("/deleteUsers", async (req, res) => {
       res.send({ status: "success", message: "Account deleted!!" });
     }
   }
-})
+});
 
 //when the view user accounts button is clicked, this is what is loaded
 app.get("/admin-dashboard", async (req, res) => {
@@ -550,7 +554,7 @@ app.get("/get-users", async (req, res) => {
   } else {
     res.redirect("/");
   }
-})
+});
 
 app.post("/update-user-id", async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
