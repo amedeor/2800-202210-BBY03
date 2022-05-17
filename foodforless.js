@@ -77,63 +77,73 @@ app.get("/get-user", async (req, res) => {
   connection.end();
 });
 
-app.get("/post-deal", (req, res) => {
+//the argument to upload.array is the name of the variable in formData
+app.post("/post-deal", upload.array("files"), async (req, res) => {
 
-  let postDealPage = fs.readFileSync("./app/html/postdeal.html", "utf-8");
+  let photos = [];
 
-  console.log(req.session.loggedIn);
-  console.log(req.session.username);
+  console.log(`req.files: ${req.files}`);
 
-  console.log("post-deal");
-
-  if (req.session.loggedIn === true) {
-    res.send(postDealPage);
-  } else {
-    res.redirect("/");
+  //if req.files is undefined, it means no photos were uploaded when the deal form was submitted
+  if (req.files != undefined) {
+    console.log(`Number of files uploaded: ${req.files.length}`);
+    for (let i = 0; i < req.files.length; i++) {
+      console.log("inside for loop");
+      //add photos to array
+      photos.push(`/img/${req.files[i].filename}`);
+    }
   }
-});
 
-app.post("/create-post", async (req, res) => {
-  if (req.session.loggedIn === true) {
-    res.setHeader("Content-Type", "application/json");
-    console.log("creating post!!!");
+  //get the currently logged in user's user ID
+  let currentUserId = req.session.userId;
 
-    let createPostname = req.body.createPostname;
-    let createDealPrice = req.body.createDealPrice;
-    let createDealDesc = req.body.createDealDesc;
-    let createDealExpireDate = req.body.createDealExpireDate;
+  console.log(`Current user ID: ${currentUserId}`);
 
-    const connection = await mysql.createConnection({
-      host: databaseHost,
-      user: databaseUser,
-      password: databasePassword,
-      database: databaseName,
-      multipleStatements: true
-    });
+  console.log(req.body.dealExpiryDate);
 
-    //Check to see if a user with selected username or email exists.
-    // let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ? OR user_email = ?", [createUsername, createEmail]);
+  let dealName = req.body.dealName;
+  let dealPrice = req.body.dealPrice;
+  let dealDescription = req.body.dealDescription;
+  let dealLocation = req.body.dealLocation;
+  let dealExpiryDate = req.body.dealExpiryDate;
 
-    // if (results.length === 0) {
+  console.log(`Deal name: ${dealName}`);
+  console.log(`Deal price: ${dealPrice}`);
+  console.log(`Deal description: ${dealDescription}`);
+  console.log(`Deal location: ${dealLocation}`);
+  console.log(`Deal expiry date: ${dealExpiryDate}`);
 
-    // let postRecord = "INSERT INTO BBY_03_user (user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url) values (?)";
+  const connection = await mysql.createConnection({
+    host: databaseHost,
+    user: databaseUser,
+    password: databasePassword,
+    database: databaseName,
+    multipleStatements: true
+  });
 
-    let recordValues = [createPostname, createDealPrice, createDealDesc, createDealExpireDate];
+  let dealRecord = "INSERT INTO BBY_03_deal (deal_name, deal_price, deal_description, deal_store_location, deal_expiry_date, user_id) values (?)";
+  let dealRecordValues = [dealName, dealPrice, dealDescription, dealLocation, dealExpiryDate, currentUserId];
+  await connection.query(dealRecord, [dealRecordValues]);
 
-    console.log("data passed: " + createPostname + " " + createDealPrice + " " + createDealDesc + " " + createDealExpireDate);
+  //Get the deal_id of the last inserted deal into BBY_03_deal
+  let lastInsertIdObject = await connection.query("SELECT LAST_INSERT_ID()");
+  let lastInsertIdArray = lastInsertIdObject[0];
+  let insertObject = lastInsertIdArray[0];
+  let lastInsertedId = insertObject["LAST_INSERT_ID()"]; //This is the deal_id of the deal that was just inserted into the database
 
-    // await connection.query(userRecord, [recordValues]);
+  console.log(`lastInsertedId: ${lastInsertedId}`);
 
-    res.send({ "status": "success", "message": "Post created!" });
-    // } else {
-    // }
-  } else {
-    res.send({ "status": "fail", "message": "not logged in!" });
-    res.redirect("/");
+  if (req.files != undefined) {
+    console.log("Going to insert photo record into bby_03_photo");
+    for (let photo of photos) {
+      let photoRecord = "INSERT INTO BBY_03_photo (deal_id, photo_url) values (?)";
+      let photoRecordValues = [lastInsertedId, photo];
+      await connection.query(photoRecord, [photoRecordValues]);
+    }
   }
-})
 
-//the argument to single is the name of the HTML input that is uploading the file
+
+//the argument to single is the name of the HTML input element that is uploading the file
 app.post("/upload-image", upload.single("file"), async (req, res) => {
 
   if (req.file != undefined) {
@@ -158,7 +168,6 @@ app.post("/upload-image", upload.single("file"), async (req, res) => {
 
     //update session variable with new profile picture URL
     req.session.avatarUrl = savedFileName;
-
 
     res.send({ "status": "success", "message": "Image uploaded successfully." })
   }
