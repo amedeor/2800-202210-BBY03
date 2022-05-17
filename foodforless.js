@@ -141,7 +141,7 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
       await connection.query(photoRecord, [photoRecordValues]);
     }
   }
-
+});
 
 //the argument to single is the name of the HTML input element that is uploading the file
 app.post("/upload-image", upload.single("file"), async (req, res) => {
