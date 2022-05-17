@@ -77,7 +77,9 @@ app.get("/get-user", async (req, res) => {
   connection.end();
 });
 
-app.get("/get-deals", async (req, resp) => {
+
+
+app.get("/get-deals", async (req, res) => {
 
   res.setHeader("Content-Type", "application/json");
 
@@ -89,34 +91,18 @@ app.get("/get-deals", async (req, resp) => {
     multipleStatements: true
   });
 
-  let loggedInUserID = req.session.userId;
+  let currentUserId = req.session.userId;
+
+  console.log(`Current user id: ${currentUserId}`);
 
 
-  let [results, fields] = await connection.query("SELECT deal_id, user_id, deal_name, deal_price, deal_description, deal_store_location, deal_post_date, deal_expiry_date FROM BBY_03_deal WHERE user_id = (?)", [loggedInUserID]);
+  let [results, fields] = await connection.query("SELECT deal_id, user_id, deal_name, deal_price, deal_description, deal_store_location, deal_post_date, deal_expiry_date FROM BBY_03_deal WHERE user_id = (?)", [currentUserId]);
 
   console.log(results);
 
-  res.send({"results": "results" });
+  res.send({"results": results});
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
