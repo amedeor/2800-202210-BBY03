@@ -95,13 +95,32 @@ app.get("/get-deals", async (req, res) => {
 
   console.log(`Current user id: ${currentUserId}`);
 
+  let [dealResults, dealFields] = await connection.query("SELECT deal_id FROM BBY_03_deal WHERE user_id = (?)", [currentUserId]);
 
-  let [results, fields] = await connection.query("SELECT deal_id, user_id, deal_name, deal_price, deal_description, deal_store_location, deal_post_date, deal_expiry_date FROM BBY_03_deal WHERE user_id = (?)", [currentUserId]);
+  let dealIds = dealResults;
+
+  // let [results, fields] = await connection.query("SELECT deal_id, user_id, deal_name, deal_price, deal_description, deal_store_location, deal_post_date, deal_expiry_date FROM BBY_03_deal WHERE user_id = (?) INNER JOIN BBY_03_photo ON deal_id = ? ", [currentUserId, dealId]);
+
+
+  let objects = [];
+
+  for (let dealId of dealIds) {
+    let [results, fields] = await connection.query("SELECT photo_url FROM BBY_03_photo WHERE deal_id = (?) INNER JOIN BBY_03_photo ON deal_id = ? ", [currentUserId, dealId]);
+  }
+
+  
+
+
+
+
+
+  // let [photoResults, photoFields] = await connection.query("SELECT deal_id, user_id, deal_name, deal_price, deal_description, deal_store_location, deal_post_date, deal_expiry_date FROM BBY_03_deal WHERE user_id = (?)", [currentUserId]);
+
+
 
   console.log(results);
 
   res.send({"results": results});
-
 });
 
 
