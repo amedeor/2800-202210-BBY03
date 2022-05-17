@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="/css/main-style.css">
   <link rel="stylesheet" href="/css/profile.css">
   <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/postdeal.css">
   <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
   <title>FoodForLess</title>
 </head>
@@ -43,6 +44,28 @@
     <input id="image-upload" type="file" accept="image/png, image/gif, image/jpeg, image/svg+xml" required />
   </form>
 
+  <div id="post-deal-container">
+    <form id="deal-form">
+      <label for="dealname" class="deal-form-label">Name:</label>
+      <input id="dealname" class="deal-form-input" type="text" name="dealname" />
+  
+      <label for="dealprice" class="deal-form-label">Price:</label>
+      <input id="dealprice" class="deal-form-input" type="text" name="dealprice" />
+
+      <label for="deallocation" class="deal-form-label">Store Location Details:</label>
+      <input id="deallocation" class="deal-form-input" type="text" name="deallocation" />
+  
+      <label for="dealdescription" class="deal-form-label">Description:</label>
+      <input id="dealdescription" class="deal-form-input" type="text" name="dealdescription" />
+  
+      <label for="dealexpirydate" class="deal-form-label">Deal Expiry Date:</label>
+      <input id="dealexpirydate" class="deal-form-input" type="date" name="dealexpirydate" />
+  
+      <label for="dealphotos" class="deal-form-label">Photos:</label>
+      <input id="dealphotos" type="file" name="dealphotos" class="deal-form-input">
+    </form>
+  </div>
+
 
   <div id="profile-abilities">
     <form action="/admin-dashboard" method="get" id="view-user-account">
@@ -60,7 +83,7 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
+  
   <script src="/js/client.js"></script>
   <script src="/js/profile.js"></script>
   <script src="/js/skeleton.js"></script>
