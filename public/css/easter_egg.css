@@ -1,5 +1,8 @@
 body{
     background-color: gold;
+    --angle: 0deg;
+	border: 5px solid;
+	border-image: conic-gradient(from var(--angle), red, yellow, lime, aqua, blue, magenta, red) 1;
 }
 button{
     background-color:green;
@@ -9,6 +12,7 @@ button{
 #nav{
     background-color: green;
 }
+
 #footer{
     background-color: green;
     color: white;
@@ -28,3 +32,5 @@ button{
         transform: rotate(360deg);
     }
 }
+
+
