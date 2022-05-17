@@ -1,6 +1,11 @@
 "use strict";
 
 let postDealLink = document.querySelector("#post-deal-link");
+var postIcon = document.querySelector("#post-icon");
+
+postIcon.addEventListener("click", e => {
+  $("#post-deal-container").dialog("open");
+})
 
 postDealLink.addEventListener("click", e => {
   $("#post-deal-container").dialog("open");
