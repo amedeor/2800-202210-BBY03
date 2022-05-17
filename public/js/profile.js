@@ -161,6 +161,13 @@ $("#edit-user-info-form").dialog({
   ]
 });
 
+//This block of code to center the jQuery UI modal popup when the window is resized is from
+//https://stackoverflow.com/questions/3060146/how-to-auto-center-jquery-ui-dialog-when-resizing-browser
+//with adaptatations made to apply to my modal window
+$(window).resize(function(){
+  $("#edit-user-info-form").dialog( "option", "position", { my: "center", at: "center", of: window } );
+});
+
 
 
 let changeAvatarButton = document.querySelector("#change-avatar-button");
@@ -196,3 +203,9 @@ $("#upload-images-form").dialog({
   ]
 });
 
+//This block of code to center the jQuery UI modal popup when the window is resized is from
+//https://stackoverflow.com/questions/3060146/how-to-auto-center-jquery-ui-dialog-when-resizing-browser
+//with adaptatations made to apply to my modal window
+$(window).resize(function(){
+  $("#upload-images-form").dialog( "option", "position", { my: "center", at: "center", of: window } );
+});

@@ -301,6 +301,13 @@ $("#update-record-form-container").dialog({
   ]
 });
 
+//This block of code to center the jQuery UI modal popup when the window is resized is from
+//https://stackoverflow.com/questions/3060146/how-to-auto-center-jquery-ui-dialog-when-resizing-browser
+//with adaptatations made to apply to my modal window
+$(window).resize(function(){
+  $("#update-record-form-container").dialog( "option", "position", { my: "center", at: "center", of: window } );
+});
+
 let createUserButton = document.querySelector("#create-user-button");
 
 createUserButton.addEventListener("click", e => {
@@ -342,6 +349,13 @@ $("#create-record-form-container").dialog({
       }
     }
   ]
+});
+
+//This block of code to center the jQuery UI modal popup when the window is resized is from
+//https://stackoverflow.com/questions/3060146/how-to-auto-center-jquery-ui-dialog-when-resizing-browser
+//with adaptatations made to apply to my modal window
+$(window).resize(function(){
+  $("#create-record-form-container").dialog( "option", "position", { my: "center", at: "center", of: window } );
 });
 
 getUsers();

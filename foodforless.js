@@ -1,4 +1,4 @@
-"use strict;"
+"use strict";
 
 // const databaseHost = "us-cdbr-east-05.cleardb.net";
 // const databaseUser = "b836f8ec5d5bac";
@@ -77,25 +77,85 @@ app.get("/get-user", async (req, res) => {
   connection.end();
 });
 
-app.get("/post-deal", (req, res) => {
+// app.get("/post-deal", (req, res) => {
 
-  let postDealPage = fs.readFileSync("./app/html/postdeal.html", "utf-8");
+//   let postDealPage = fs.readFileSync("./app/html/postdeal.html", "utf-8");
 
-  console.log(req.session.loggedIn);
-  console.log(req.session.username);
+//   console.log(req.session.loggedIn);
+//   console.log(req.session.username);
 
-  console.log("post-deal");
+//   console.log("post-deal");
 
-  if (req.session.loggedIn === true) {
-    res.send(postDealPage);
-  } else {
-    res.redirect("/");
+//   if (req.session.loggedIn === true) {
+//     res.send(postDealPage);
+//   } else {
+//     res.redirect("/");
+//   }
+// });
+
+//the argument to upload.array is the name of the variable in formData
+app.post("/post-deal", upload.array("files"), async (req, res) => {
+
+  let photos = [];
+
+  if (req.dealphotos !== undefined) {
+    console.log(`Number of files uploaded: ${req.files.length}`);
+    //set a max number of file uploads
+    for (let i = 0; i < req.files.length; i++) {
+      console.log("inside for loop");
+      //add photos to array
+       photos.push(`/img/${req.files[i].filename}`);
+      console.log(savedFilename);
+    }
   }
+
+  //get the currently logged in user's user ID
+  let currentUser = req.session.userId;
+
+  console.log(`Current user ID: ${currentUser}`)
+
+
+  "INSERT INTO BBY_03_user (user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url) values (?)";
+
+
+
+
+
+
+
+    // let savedFileName = `/img/${req.file.filename}`;
+    // let username = req.body.username;
+    // const connection = await mysql.createConnection({
+    //   host: databaseHost,
+    //   user: databaseUser,
+    //   password: databasePassword,
+    //   database: databaseName,
+    //   multipleStatements: true
+    // });
+
+    // await connection.connect();
+    // let [results, fields] = await connection.query("UPDATE BBY_03_user SET user_avatar_url = ? WHERE user_username = ?",
+    //   [savedFileName, username],
+    //   function (error, results, fields) {
+    //     if (error) {
+    //       console.log(error);
+    //     }
+    //   });
+
+    // //update session variable with new profile picture URL
+    // req.session.avatarUrl = savedFileName;
+
+
+    
+
+
+  res.send({ "status": "success", "message": "Image uploaded successfully." });
+
 });
 
 
 
-//the argument to single is the name of the HTML input that is uploading the file
+//the argument to single is the name of the HTML input element that is uploading the file
 app.post("/upload-image", upload.single("file"), async (req, res) => {
 
   if (req.file != undefined) {
@@ -126,6 +186,9 @@ app.post("/upload-image", upload.single("file"), async (req, res) => {
   }
 
 });
+
+
+
 
 app.get("/profile", async (req, res) => {
   if (req.session.loggedIn === true) {
