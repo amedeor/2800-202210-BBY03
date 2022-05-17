@@ -1,4 +1,4 @@
-"use strict;"
+"use strict";
 
 async function editProfileInfo() {
   // let editSubmitButton = document.querySelector("#save-changes-button");

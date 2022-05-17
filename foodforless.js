@@ -1,4 +1,4 @@
-"use strict;"
+"use strict";
 
 // const databaseHost = "us-cdbr-east-05.cleardb.net";
 // const databaseUser = "b836f8ec5d5bac";
@@ -93,7 +93,10 @@ app.get("/post-deal", (req, res) => {
   }
 });
 
-
+app.post("/create-post", async (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  
+})
 
 //the argument to single is the name of the HTML input that is uploading the file
 app.post("/upload-image", upload.single("file"), async (req, res) => {

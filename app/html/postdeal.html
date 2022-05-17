@@ -39,7 +39,7 @@
         </li>
         <li class="nav-link">
           <form action="/logout" method="get">
-            <input id="logout-button" type="submit" value="Logout" />
+            <input id="logout-button" class="look-like-button" type="submit" value="Logout" />
           </form>
         </li>
       </ul>
@@ -53,21 +53,21 @@
   <form id="deal-form">
 
     <label for="dealname" class="deal-form-label">Name:</label>
-    <input id="dealname" class="deal-form-input" type="text" name="dealname" />
+    <input id="createdealname" class="deal-form-input" type="text" name="dealname" />
 
     <label for="dealprice" class="deal-form-label">Price:</label>
-    <input id="dealprice" class="deal-form-input" type="text" name="dealprice" />
+    <input id="createdealprice" class="deal-form-input" type="text" name="dealprice" />
 
     <label for="dealdescription" class="deal-form-label">Description:</label>
-    <input id="dealdescription" class="deal-form-input" type="text" name="password" />
+    <input id="createdealdescription" class="deal-form-input" type="text" name="password" />
 
     <label for="dealexpirydate" class="deal-form-label">Deal Expiry Date:</label>
-    <input id="dealexpirydate" class="deal-form-input" type="date" name="dealexpirydate" />
+    <input id="createdealexpirydate" class="deal-form-input" type="date" name="dealexpirydate" />
 
     <label for="dealphotos" class="deal-form-label">Photos:</label>
-    <input id="dealphotos" type="file" name="dealphotos" class="deal-form-input">
+    <input id="createdealphotos" type="file" name="dealphotos" class="deal-form-input">
 
-    <input id="deal-submit-button" type="submit" value="Submit">
+    <input id="createdeal-submit-button" type="submit" value="Submit">
   </form>
 
   <footer id="footer">
