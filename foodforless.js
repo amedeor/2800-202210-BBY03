@@ -5,7 +5,7 @@
 // const databasePassword = "732ab9c0";
 // const databaseName = "heroku_024b43865916c4a";
 
-const databaseHost = "localhost";
+const databaseHost = "127.0.0.1";
 const databaseUser = "root";
 const databasePassword = "";
 const databaseName = "COMP2800";
@@ -93,7 +93,45 @@ app.get("/post-deal", (req, res) => {
   }
 });
 
+app.post("/create-post", async (req, res) => {
+  if (req.session.loggedIn === true) {
+    res.setHeader("Content-Type", "application/json");
+    console.log("creating post!!!");
 
+    let createPostname = req.body.createPostname;
+    let createDealPrice = req.body.createDealPrice;
+    let createDealDesc = req.body.createDealDesc;
+    let createDealExpireDate = req.body.createDealExpireDate;
+
+    const connection = await mysql.createConnection({
+      host: databaseHost,
+      user: databaseUser,
+      password: databasePassword,
+      database: databaseName,
+      multipleStatements: true
+    });
+
+    //Check to see if a user with selected username or email exists.
+    // let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ? OR user_email = ?", [createUsername, createEmail]);
+
+    // if (results.length === 0) {
+
+    // let postRecord = "INSERT INTO BBY_03_user (user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url) values (?)";
+
+    let recordValues = [createPostname, createDealPrice, createDealDesc, createDealExpireDate];
+
+    console.log("data passed: " + createPostname + " " + createDealPrice + " " + createDealDesc + " " + createDealExpireDate);
+
+    // await connection.query(userRecord, [recordValues]);
+
+    res.send({ "status": "success", "message": "Post created!" });
+    // } else {
+    // }
+  } else {
+    res.send({ "status": "fail", "message": "not logged in!" });
+    res.redirect("/");
+  }
+})
 
 //the argument to single is the name of the HTML input that is uploading the file
 app.post("/upload-image", upload.single("file"), async (req, res) => {
@@ -413,7 +451,7 @@ app.post("/createUser", async (req, res) => {
 
 app.post("/admin-create-user", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
-  
+
   let createFirstname = req.body.createFirstname;
   let createLastname = req.body.createLastname;
   let createEmail = req.body.createEmail;
@@ -498,8 +536,8 @@ app.get("/get-users", async (req, res) => {
       database: databaseName,
       multipleStatements: true
     });
-  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user");
-    res.send({ status: "success", rows: results, current_username: req.session.username});
+    let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user");
+    res.send({ status: "success", rows: results, current_username: req.session.username });
   } else {
     res.redirect("/");
   }
