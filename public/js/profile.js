@@ -209,3 +209,6 @@ $("#upload-images-form").dialog({
 $(window).resize(function(){
   $("#upload-images-form").dialog( "option", "position", { my: "center", at: "center", of: window } );
 });
+tinymce.init({
+  selector: 'textarea#default-editor'
+});
