@@ -1,4 +1,4 @@
-"use strict;"
+"use strict";
 
 // const databaseHost = "us-cdbr-east-05.cleardb.net";
 // const databaseUser = "b836f8ec5d5bac";
