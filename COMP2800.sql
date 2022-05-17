@@ -49,12 +49,20 @@ INSERT INTO BBY_03_user (user_id, user_username, user_firstname, user_lastname, 
 
 CREATE TABLE IF NOT EXISTS BBY_03_deal(
     deal_id int NOT NULL AUTO_INCREMENT,
-    PRIMARY KEY (user_id),
-    deal_name VARCHAR(50) NOT NULL ,
+    PRIMARY KEY (deal_id),
+    user_id int NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES BBY_03_user(user_id),
+    deal_name VARCHAR(50) NOT NULL,
     deal_price VARCHAR(50) NOT NULL ,
     deal_description VARCHAR(200) NOT NULL,
-    deal_expiry_date DATE NOT NULL,
-    user_password VARCHAR(50) NOT NULL,
-    user_type VARCHAR(50) NOT NULL,
-    user_avatar_url VARCHAR(80) NOT NULL
+    deal_store_location VARCHAR(100) NOT NULL,
+    deal_post_date DATE NOT NULL,
+    deal_expiry_date DATE NOT NULL
+);
+CREATE TABLE IF NOT EXISTS BBY_03_photo(
+    photo_id int NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY(photo_id),
+    deal_id VARCHAR(50),
+    FOREIGN KEY (deal_id) REFERENCES BBY_03_deal(deal_id),
+    photo_url VARCHAR(80) NOT NULL
 );
