@@ -111,7 +111,7 @@ app.get("/get-deals", async (req, res) => {
       photoUrls.push({ "photo_id": result.photo_id, "photo_url": result.photo_url });
     }
     //Create an object that contains all of a user's specific deal information with an array of the photos associated with that deal
-    deals.push({ "deal_id": deal.deal_id, "user_id": deal.user_id, "deal_price": deal.deal_price, "deal_description": deal.deal_description, "deal_store_location": deal.deal_store_location, "deal_post_date_time": deal.deal_post_date_time, "deal_expiry_date": deal.deal_expiry_date, "photos": photoUrls });
+    deals.push({ "deal_id": deal.deal_id, "user_id": deal.user_id, "deal_name": deal.deal_name, "deal_price": deal.deal_price, "deal_description": deal.deal_description, "deal_store_location": deal.deal_store_location, "deal_post_date_time": deal.deal_post_date_time, "deal_expiry_date": deal.deal_expiry_date, "photos": photoUrls });
   }
 
   console.log(deals);
@@ -189,6 +189,37 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
     }
     res.send({ "status": "success", "message": "Post created successfully." });
   }
+});
+
+app.post("/update-deal", async (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+
+
+  let dealName = req.body.dealName;
+  let dealPrice = req.body.dealPrice;
+  let dealDescription = req.body.dealDescription;
+  let dealLocation = req.body.dealLocation;
+  let dealExpiryDate = req.body.dealExpiryDate;
+
+  const connection = await mysql.createConnection({
+    host: databaseHost,
+    user: databaseUser,
+    password: databasePassword,
+    database: databaseName,
+    multipleStatements: true
+  });
+
+  await connection.connect();
+  let [results, fields] = await connection.query("UPDATE BBY_03_deal SET deal_name = ?, deal_price = ?, deal_description = ?, deal_store_location = ?, deal_expiry_date = ?, user_id = ? WHERE deal_id = ?",
+    [dealName, dealPrice, dealDescription, dealLocation, dealExpiryDate, usertype, userId],
+    function (error, results, fields) {
+      if (error) {
+        console.log(error);
+      }
+    });
+
+  res.send({ status: "success", message: "Record successfully updated." });
+  connection.end();
 });
 
 //the argument to single is the name of the HTML input element that is uploading the file
