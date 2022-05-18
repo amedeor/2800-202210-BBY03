@@ -281,6 +281,10 @@ async function getDeals() {
     let localDateTime = new Date(dateTimeFromSQL);
     localDateTime.setMinutes(localDateTime.getMinutes() - localDateTime.getTimezoneOffset());
 
+    let slicedDealPostDate = deal.deal_post_date_time.slice(0, 10);
+    let dealPostTimeLocalFormat = localDateTime.toLocaleTimeString();
+    let slicedDealExpiryDate = deal.deal_expiry_date.slice(0, 10);
+
     dealIdParagraph.insertAdjacentText("beforeend", "Deal ID: ");
     dealIdSpan.insertAdjacentText("beforeend", deal.deal_id);
 
@@ -294,10 +298,10 @@ async function getDeals() {
     dealPriceSpan.insertAdjacentText("beforeend", deal.deal_price);
 
     dealPostDateParagraph.insertAdjacentText("beforeend", "Post Date: ");
-    dealPostSpan.insertAdjacentText("beforeend", localDateTime.toLocaleString());
+    dealPostSpan.insertAdjacentText("beforeend", `${slicedDealPostDate} at ${dealPostTimeLocalFormat}`);
 
     dealExpiryDateParagraph.insertAdjacentText("beforeend", "Deal Expiry Date: ");
-    dealExpiryDateSpan.insertAdjacentText("beforeend", new Date(deal.deal_expiry_date).toLocaleDateString());
+    dealExpiryDateSpan.insertAdjacentText("beforeend", slicedDealExpiryDate);
 
     dealDescriptionParagraph.insertAdjacentText("beforeend", "Description: ");
     dealDescriptionSpan.insertAdjacentText("beforeend", deal.deal_description);
