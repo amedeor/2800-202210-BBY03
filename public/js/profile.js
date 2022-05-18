@@ -250,6 +250,10 @@ async function getDeals() {
     let dealExpiryDateParagraph = document.createElement("p");
     let dealDescriptionParagraph = document.createElement("p");
     let dealStoreLocationParagraph = document.createElement("p");
+    let editDealButton = document.createElement("input");
+    editDealButton.setAttribute("class", "edit-deal-button");
+    editDealButton.setAttribute("type", "submit");
+    editDealButton.setAttribute("value", "edit");
     
     dealIdParagraph.insertAdjacentText("beforeend", `Deal ID: ${deal.deal_id}`);
     userIdParagraph.insertAdjacentText("beforeend", `User ID: ${deal.user_id}`);
@@ -258,7 +262,6 @@ async function getDeals() {
     dealPostDateParagraph.insertAdjacentText("beforeend", `Post Date: ${deal.deal_post_date}`);
     dealExpiryDateParagraph.insertAdjacentText("beforeend", `Deal Expiry Date: ${deal.deal_expiry_date}`);
     dealDescriptionParagraph.insertAdjacentText("beforeend", `Description: ${deal.deal_description}`);
-    dealStoreLocationParagraph.insertAdjacentText("beforeend", `Store Location: ${deal.deal_store_location}`);
 
     dealContainer.insertAdjacentElement("beforeend", dealIdParagraph);
     dealContainer.insertAdjacentElement("beforeend", userIdParagraph);
@@ -268,6 +271,7 @@ async function getDeals() {
     dealContainer.insertAdjacentElement("beforeend", dealExpiryDateParagraph);
     dealContainer.insertAdjacentElement("beforeend", dealDescriptionParagraph);
     dealContainer.insertAdjacentElement("beforeend", dealStoreLocationParagraph);
+  
 
     console.log(deal.deal_id);
     console.log(deal.user_id);
@@ -284,8 +288,91 @@ async function getDeals() {
       console.log(photo.photo_url);
     }
 
+    dealStoreLocationParagraph.insertAdjacentText("beforeend", `Store Location: ${deal.deal_store_location}`);
+
+    dealContainer.insertAdjacentElement("beforeend", editDealButton);
     dealsContainer.insertAdjacentElement("beforeend", dealContainer);
   }
+
+  var editButtons = document.querySelectorAll(".edit-deal-button");
+
+  for (let j = 0; j < editButtons.length; j++) {
+    editButtons[j].addEventListener("click", editPost);
+  }
+
 }
 
 getDeals();
+
+async function updateDeals() {
+
+  let response = await fetch("/update-deal", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: `currentUsername=${currentUsername}&username=${username}&password=${password}&firstname=${firstName}&lastname=${lastName}&email=${email}&userAvatarUrl=${userAvatarUrl}`
+  });
+
+  let parsedResponse = await response.json();
+
+  if (parsedResponse.status === "fail") {
+    document.querySelector("#error-message").innerHTML = "";
+    document.querySelector("#error-message").insertAdjacentText("afterbegin", parsedResponse.message);
+  }
+
+  let updatedRecordResponse = await fetch("/get-deals");
+  let parsedUpdatedRecordResponse = await updatedRecordResponse.json();
+}
+
+function editPost(e) {
+
+  let parentTd = e.target.parentNode;
+  let children = parentTd.children;
+  let deal = [];
+
+  for (let i = 0; children[i]; i++) {
+    deal[i] = children[i].innerText;
+    console.log(deal[i]);
+  }
+
+  document.querySelector("#updatedealname").value = deal[2];
+  document.querySelector("#updatedealprice").value = deal[3];
+  document.querySelector("#updatedeallocation").value = deal[7];
+  document.querySelector("#updatedealdescription").value = deal[6];
+  document.querySelector("#updatedealexpirydate").value = deal[5];
+
+
+  //open the jQuery modal window when the edit button is clicked
+  $("#update-deal-container").dialog("open");
+}
+
+$("#update-deal-container").dialog({
+  modal: true,
+  fuild: true, //prevent horizontal scroll bars on mobile layout
+  resizable: false,
+  autoOpen: false,
+  draggable: false,
+  title: "Post a Deal",
+  Width: 50,
+  height: 500,
+  buttons: [
+    {
+      text: "Submit",
+      click: function () {
+        uploadImages();
+        $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
+        getDeals();
+        $(this).dialog("close");
+      }
+    },
+    {
+      text: "Cancel",
+      click: function () {
+        //select this dialog and close it when cancel is pressed
+        $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
+        $(this).dialog("close");
+      },
+    }
+  ]
+});

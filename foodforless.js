@@ -191,6 +191,37 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
   }
 });
 
+app.post("/update-deal", async (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+
+
+  let dealName = req.body.dealName;
+  let dealPrice = req.body.dealPrice;
+  let dealDescription = req.body.dealDescription;
+  let dealLocation = req.body.dealLocation;
+  let dealExpiryDate = req.body.dealExpiryDate;
+
+  const connection = await mysql.createConnection({
+    host: databaseHost,
+    user: databaseUser,
+    password: databasePassword,
+    database: databaseName,
+    multipleStatements: true
+  });
+
+  await connection.connect();
+  let [results, fields] = await connection.query("UPDATE BBY_03_deal SET deal_name = ?, deal_price = ?, deal_description = ?, deal_store_location = ?, deal_expiry_date = ?, user_id = ? WHERE deal_id = ?",
+    [dealName, dealPrice, dealDescription, dealLocation, dealExpiryDate, usertype, userId],
+    function (error, results, fields) {
+      if (error) {
+        console.log(error);
+      }
+    });
+
+  res.send({ status: "success", message: "Record successfully updated." });
+  connection.end();
+});
+
 //the argument to single is the name of the HTML input element that is uploading the file
 app.post("/upload-image", upload.single("file"), async (req, res) => {
 
