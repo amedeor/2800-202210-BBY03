@@ -48,7 +48,7 @@ button {
   width: 15em;
 }
 
-form input{
+form input[type=submit] {
   padding: .4em;
   color: white;
   background-color: green;
