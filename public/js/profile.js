@@ -245,13 +245,29 @@ async function getDeals() {
     dealContainer.setAttribute("class", "deal-container");
 
     let dealIdParagraph = document.createElement("p");
+    let dealIdSpan = document.createElement("span");
+
     let userIdParagraph = document.createElement("p");
+    let userIdSpan = document.createElement("span");
+
     let dealNameParagraph = document.createElement("p");
+    let dealNameSpan = document.createElement("span");
+
     let dealPriceParagraph = document.createElement("p");
+    let dealPriceSpan = document.createElement("span");
+
     let dealPostDateParagraph = document.createElement("p");
+    let dealPostSpan = document.createElement("span");
+
     let dealExpiryDateParagraph = document.createElement("p");
+    let dealExpiryDateSpan = document.createElement("span");
+
     let dealDescriptionParagraph = document.createElement("p");
+    let dealDescriptionSpan = document.createElement("span");
+
     let dealStoreLocationParagraph = document.createElement("p");
+    let dealStoreLocationSpan = document.createElement("span");
+
     let editDealButton = document.createElement("input");
     editDealButton.setAttribute("class", "edit-deal-button");
     editDealButton.setAttribute("type", "submit");
@@ -265,23 +281,53 @@ async function getDeals() {
     let localDateTime = new Date(dateTimeFromSQL);
     localDateTime.setMinutes(localDateTime.getMinutes() - localDateTime.getTimezoneOffset());
 
-    dealIdParagraph.insertAdjacentText("beforeend", `Deal ID: ${deal.deal_id}`);
-    userIdParagraph.insertAdjacentText("beforeend", `User ID: ${deal.user_id}`);
-    dealNameParagraph.insertAdjacentText("beforeend", `Deal Name: ${deal.deal_name}`);
-    dealPriceParagraph.insertAdjacentText("beforeend", `Price: ${deal.deal_price}`);
-    dealPostDateParagraph.insertAdjacentText("beforeend", `Post Date: ${localDateTime.toLocaleString()}`);
-    dealExpiryDateParagraph.insertAdjacentText("beforeend", `Deal Expiry Date: ${new Date(deal.deal_expiry_date).toLocaleDateString()}`);
-    dealDescriptionParagraph.insertAdjacentText("beforeend", `Description: ${deal.deal_description}`);
+    dealIdParagraph.insertAdjacentText("beforeend", "Deal ID:" );
+    dealIdSpan.insertAdjacentText("beforeend", deal.deal_id);
+
+    userIdParagraph.insertAdjacentText("beforeend", "User ID: ");
+    userIdSpan.insertAdjacentText("beforeend", deal.user_id);
+
+    dealNameParagraph.insertAdjacentText("beforeend", "Deal Name: ");
+    dealNameSpan.insertAdjacentText("beforeend", deal.deal_name);
+
+    dealPriceParagraph.insertAdjacentText("beforeend", "Price: ");
+    dealPriceSpan.insertAdjacentText("beforeend", deal.deal_price);
+
+    dealPostDateParagraph.insertAdjacentText("beforeend", "Post Date: ");
+    dealPostSpan.insertAdjacentText("beforeend", localDateTime.toLocaleString());
+
+    dealExpiryDateParagraph.insertAdjacentText("beforeend", "Deal Expiry Date: ");
+    dealExpiryDateSpan.insertAdjacentText("beforeend", new Date(deal.deal_expiry_date).toLocaleDateString());
+
+    dealDescriptionParagraph.insertAdjacentText("beforeend", "Description: ");
+    dealDescriptionSpan.insertAdjacentText("beforeend", deal.deal_description);
+
+    dealStoreLocationParagraph.insertAdjacentText("beforeend", "Store Location: ")
+    dealStoreLocationSpan.insertAdjacentText("beforeend", deal.deal_store_location);
 
     dealContainer.insertAdjacentElement("beforeend", dealIdParagraph);
+    dealIdParagraph.insertAdjacentElement("beforeend", dealIdSpan);
+
     dealContainer.insertAdjacentElement("beforeend", userIdParagraph);
+    userIdParagraph.insertAdjacentElement("beforeend", userIdSpan);
+
     dealContainer.insertAdjacentElement("beforeend", dealNameParagraph);
+    dealNameParagraph.insertAdjacentElement("beforeend", dealNameSpan);
+
     dealContainer.insertAdjacentElement("beforeend", dealPriceParagraph);
+    dealPriceParagraph.insertAdjacentElement("beforeend", dealPriceSpan);
+
     dealContainer.insertAdjacentElement("beforeend", dealPostDateParagraph);
+    dealPostDateParagraph.insertAdjacentElement("beforeend", dealPostSpan);
+
     dealContainer.insertAdjacentElement("beforeend", dealExpiryDateParagraph);
+    dealExpiryDateParagraph.insertAdjacentElement("beforeend", dealExpiryDateSpan);
+
     dealContainer.insertAdjacentElement("beforeend", dealDescriptionParagraph);
+    dealDescriptionParagraph.insertAdjacentElement("beforeend", dealDescriptionSpan);
+
     dealContainer.insertAdjacentElement("beforeend", dealStoreLocationParagraph);
-  
+    dealStoreLocationParagraph.insertAdjacentElement("beforeend", dealStoreLocationSpan);
 
     console.log(deal.deal_id);
     console.log(deal.user_id);
@@ -297,8 +343,6 @@ async function getDeals() {
       console.log(photo.photo_id);
       console.log(photo.photo_url);
     }
-
-    dealStoreLocationParagraph.insertAdjacentText("beforeend", `Store Location: ${deal.deal_store_location}`);
 
     dealContainer.insertAdjacentElement("beforeend", editDealButton);
     dealsContainer.insertAdjacentElement("beforeend", dealContainer);
