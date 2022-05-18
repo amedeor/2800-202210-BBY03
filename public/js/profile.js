@@ -271,7 +271,7 @@ async function getDeals() {
     let editDealButton = document.createElement("input");
     editDealButton.setAttribute("class", "edit-deal-button");
     editDealButton.setAttribute("type", "submit");
-    editDealButton.setAttribute("value", "edit");
+    editDealButton.setAttribute("value", "edit deal");
     
 
     //This block of code to calculate the local time using the built in JavaScript getTimezoneOffset() function is from 
@@ -358,14 +358,19 @@ async function getDeals() {
 
 getDeals();
 
-async function updateDeals() {
+async function updateDeals(dealID) {
 
+  let updatedName = document.querySelector("#updatedealname").value;
+  let updatedPrice = document.querySelector("#updatedealprice").value;
+  let updatedLocation = document.querySelector("#updatedeallocation").value;
+  let updatedDescription = document.querySelector("#updatedealdescription").value;
+  let updatedExpireDate = document.querySelector("#updatedealexpirydate").value;
   let response = await fetch("/update-deal", {
     method: "post",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded"
     },
-    body: `currentUsername=${currentUsername}&username=${username}&password=${password}&firstname=${firstName}&lastname=${lastName}&email=${email}&userAvatarUrl=${userAvatarUrl}`
+    body: `currentId=${dealID}&updatedName=${updatedName}&updatedPrice=${updatedPrice}&updatedLocation=${updatedLocation}&updatedDescription=${updatedDescription}&updatedExpireDate=${updatedExpireDate}`
   });
 
   let parsedResponse = await response.json();
@@ -379,6 +384,8 @@ async function updateDeals() {
   let parsedUpdatedRecordResponse = await updatedRecordResponse.json();
 }
 
+var dealID;
+
 function editPost(e) {
 
   let parentTd = e.target.parentNode;
@@ -390,6 +397,8 @@ function editPost(e) {
     console.log(deal[i]);
   }
 
+  dealID = deal[0];
+
   document.querySelector("#updatedealname").value = deal[2];
   document.querySelector("#updatedealprice").value = deal[3];
   document.querySelector("#updatedeallocation").value = deal[7];
@@ -398,10 +407,15 @@ function editPost(e) {
 
 
   //open the jQuery modal window when the edit button is clicked
-  $("#update-deal-container").dialog("open");
+  $("#update-deal-container").data("dealID", dealID).dialog("open");
 }
-
-$("#update-deal-container").dialog({
+// function clickUpdateDeal(dealID) {
+//   // uploadImages();
+//   $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
+//   updateDeals(dealID);
+//   $(this).dialog("close");
+// }
+$("#update-deal-container").data("dealID", dealID).dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
   resizable: false,
@@ -416,7 +430,7 @@ $("#update-deal-container").dialog({
       click: function () {
         uploadImages();
         $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
-        getDeals();
+        getDeals(dealID);
         $(this).dialog("close");
       }
     },

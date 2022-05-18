@@ -194,7 +194,11 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
 app.post("/update-deal", async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
-
+  let updatedName = req.body.updatedName;
+  let updatedPrice = req.body.updatedPrice;
+  let updatedLocation = req.body.updatedLocation;
+  let updatedDescription = req.body.updatedDescription;
+  let updatedExpireDate = req.body.updatedExpireDate;
   let dealName = req.body.dealName;
   let dealPrice = req.body.dealPrice;
   let dealDescription = req.body.dealDescription;
