@@ -272,7 +272,7 @@ async function getDeals() {
     editDealButton.setAttribute("class", "edit-deal-button");
     editDealButton.setAttribute("type", "submit");
     editDealButton.setAttribute("value", "edit");
-    
+
 
     //This block of code to calculate the local time using the built in JavaScript getTimezoneOffset() function is from 
     //https://stackoverflow.com/questions/7403486/add-or-subtract-timezone-difference-to-javascript-date
@@ -281,7 +281,7 @@ async function getDeals() {
     let localDateTime = new Date(dateTimeFromSQL);
     localDateTime.setMinutes(localDateTime.getMinutes() - localDateTime.getTimezoneOffset());
 
-    dealIdParagraph.insertAdjacentText("beforeend", "Deal ID: " );
+    dealIdParagraph.insertAdjacentText("beforeend", "Deal ID: ");
     dealIdSpan.insertAdjacentText("beforeend", deal.deal_id);
 
     userIdParagraph.insertAdjacentText("beforeend", "User ID: ");
@@ -384,25 +384,19 @@ function editPost(e) {
   console.log(`parentTd: ${e.target.parentNode}`);
 
   let parentTd = e.target.parentNode;
-  let childrenParagraphs = parentTd.children;
-
-  console.log(childrenParagraphs);
+  let childrenElements = parentTd.children;
 
   let deal = [];
 
-  for (let i = 0; childrenParagraphs[i]; i++) {
-    let span = childrenParagraphs[i].childNodes[i];
-    if (span != undefined) {
-      if (span.innerText != undefined) {
-        deal.push(span.innerText);
-      }
+  for (let i = 0; childrenElements[i]; i++) {
+    console.log(childrenElements[i]);
+    console.log(childrenElements[i].tagName);
+    if (childrenElements[i].tagName == "P") {
+      deal.push(childrenElements[i].childNodes[1].innerText);
     }
   }
 
-  // for (let i = 0; spanChildren[i]; i++) {
-  //   deal[i] = spanChildren[i].innerText;
-  //   console.log(deal[i]);
-  // }
+  console.log(deal);
 
   document.querySelector("#updatedealname").value = deal[2];
   document.querySelector("#updatedealprice").value = deal[3];
