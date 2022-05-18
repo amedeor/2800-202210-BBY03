@@ -103,6 +103,11 @@ async function getDeals() {
 
   console.log(parsedResponse);
 
+  let dealsContainer = document.querySelector("#deals");
+
+  //clear the existing posts inside of dealsContainer before refreshing 
+  dealsContainer.innerText = "";
+
   for (let deal of parsedResponse.usersDeals) {
 
     let dealContainer = document.createElement("div");
@@ -152,9 +157,7 @@ async function getDeals() {
       console.log(photo.photo_id);
       console.log(photo.photo_url);
     }
-
-    let dealsContainer = document.querySelector("#deals");
-
+    
     dealsContainer.insertAdjacentElement("beforeend", dealContainer);
   }
 }
