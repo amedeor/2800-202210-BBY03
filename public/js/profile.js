@@ -209,6 +209,19 @@ $("#upload-images-form").dialog({
 $(window).resize(function(){
   $("#upload-images-form").dialog( "option", "position", { my: "center", at: "center", of: window } );
 });
+<<<<<<< HEAD
+var easter_count = 0;
+function easter_egg(){
+  easter_count++;
+  if (easter_count >= 3){
+  document.getElementById("easter_egg").innerHTML = "FoodForLe$$";
+  var link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = "/css/easter_egg.css";
+  document.getElementsByTagName('HEAD')[0].appendChild(link); 
+  }
+}
+=======
 
 
 async function getDeals() {
@@ -278,3 +291,4 @@ async function getDeals() {
 }
 
 getDeals();
+>>>>>>> a16e248670409143d87519b25da30c31870773cd
