@@ -209,3 +209,16 @@ $("#upload-images-form").dialog({
 $(window).resize(function(){
   $("#upload-images-form").dialog( "option", "position", { my: "center", at: "center", of: window } );
 });
+
+
+async function getDeals() {
+
+  let response = await fetch("/get-deals");
+
+  let parsedResponse = await response.json();
+
+  console.log(parsedResponse);
+
+}
+
+getDeals();
