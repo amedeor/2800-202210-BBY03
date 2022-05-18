@@ -281,7 +281,7 @@ async function getDeals() {
     let localDateTime = new Date(dateTimeFromSQL);
     localDateTime.setMinutes(localDateTime.getMinutes() - localDateTime.getTimezoneOffset());
 
-    dealIdParagraph.insertAdjacentText("beforeend", "Deal ID:" );
+    dealIdParagraph.insertAdjacentText("beforeend", "Deal ID: " );
     dealIdSpan.insertAdjacentText("beforeend", deal.deal_id);
 
     userIdParagraph.insertAdjacentText("beforeend", "User ID: ");
@@ -381,14 +381,28 @@ async function updateDeals() {
 
 function editPost(e) {
 
+  console.log(`parentTd: ${e.target.parentNode}`);
+
   let parentTd = e.target.parentNode;
-  let children = parentTd.children;
+  let childrenParagraphs = parentTd.children;
+
+  console.log(childrenParagraphs);
+
   let deal = [];
 
-  for (let i = 0; children[i]; i++) {
-    deal[i] = children[i].innerText;
-    console.log(deal[i]);
+  for (let i = 0; childrenParagraphs[i]; i++) {
+    let span = childrenParagraphs[i].childNodes[i];
+    if (span != undefined) {
+      if (span.innerText != undefined) {
+        deal.push(span.innerText);
+      }
+    }
   }
+
+  // for (let i = 0; spanChildren[i]; i++) {
+  //   deal[i] = spanChildren[i].innerText;
+  //   console.log(deal[i]);
+  // }
 
   document.querySelector("#updatedealname").value = deal[2];
   document.querySelector("#updatedealprice").value = deal[3];
