@@ -91,143 +91,73 @@ app.get("/get-deals", async (req, res) => {
     multipleStatements: true
   });
 
-
-
-
   let currentUserId = req.session.userId;
 
-  console.log(`Current user id: ${currentUserId}`);
+//   console.log(`Current user id: ${currentUserId}`);
 
-  let [dealResults, dealFields] = await connection.query("SELECT deal_id, user_id, deal_name, deal_price, deal_description, deal_store_location, deal_post_date, deal_expiry_date FROM BBY_03_deal WHERE user_id = (?)", [currentUserId]);
+//   let [dealResults, dealFields] = await connection.query("SELECT deal_id, user_id, deal_name, deal_price, deal_description, deal_store_location, deal_post_date, deal_expiry_date FROM BBY_03_deal WHERE user_id = (?)", [currentUserId]);
 
-  console.log(dealResults);
+//   console.log(dealResults);
 
-  //an array to hold just the current user's deal ids
-  let deals = [];
+//   //deals holds all of the parsed deal and photo information
+//   //each object stored in deals contains all of a user's deal information with an array called "photos" that holds the URLs to the images associated with the deal
+//   let deals = [];
 
-  for (let deal of dealResults) {
-    let [results, fields] = await connection.query("SELECT photo_url FROM BBY_03_photo WHERE fk_photo_deal_id = ?", [deal.deal_id])
-    let photoUrls = [];
-    for (let result of results){
-      photoUrls.push(result.photo_url)
-    }
-    deals.push({"deal_id": deal.deal_id, "user_id": deal.user_id, "deal_price": deal.deal_price, "deal_description": deal.deal_description, "deal_store_location": deal.deal_store_location, "deal_post_date": deal.deal_post_date, "deal_expiry_date": deal.deal_expiry_date, "photos": photoUrls });
+//   for (let deal of dealResults) {
+//     //get all the photo URLs associated with a specific deal_id
+//     let [results, fields] = await connection.query("SELECT photo_url FROM BBY_03_photo WHERE fk_photo_deal_id = ?", [deal.deal_id])
+//     //create an array that will hold the URLs of the specific deal's photos
+//     let photoUrls = [];
+//     for (let result of results){
+//       //loop through the results of the database query on the photos table retrieve just the URLs and then save them to photoUrls
+//       photoUrls.push(result.photo_url)
+//     }
+//     //Create an object that contains all of a user's specific deal information with an array of the photos associated with that deal
+//     deals.push({"deal_id": deal.deal_id, "user_id": deal.user_id, "deal_price": deal.deal_price, "deal_description": deal.deal_description, "deal_store_location": deal.deal_store_location, "deal_post_date": deal.deal_post_date, "deal_expiry_date": deal.deal_expiry_date, "photos": photoUrls });
+//   }
+
+//   console.log(deals);
+
+//   res.send({"usersDeals": deals});
+// });
+
+
+
+
+
+
+
+let [dealResults, dealFields] = await connection.query("SELECT deal_id, user_id, deal_name, deal_price, deal_description, deal_store_location, deal_post_date, deal_expiry_date FROM BBY_03_deal WHERE user_id = (?)", [currentUserId]);
+
+console.log(dealResults);
+
+//deals holds all of the parsed deal and photo information
+//each object stored in deals contains all of a user's deal information with an array called "photos" that holds the URLs to the images associated with the deal
+let deals = [];
+
+for (let deal of dealResults) {
+  //get all the photo URLs associated with a specific deal_id
+  let [results, fields] = await connection.query("SELECT photo_url, photo_id FROM BBY_03_photo WHERE fk_photo_deal_id = ?", [deal.deal_id])
+  //create an array that will hold the URLs of the specific deal's photos
+  let photoUrls = [];
+  for (let result of results){
+    //loop through the results of the database query on the photos table retrieve just the URLs and then save them to photoUrls
+    photoUrls.push({"photo_id": result.photo_id, "photo_url": result.photo_url});
   }
+  //Create an object that contains all of a user's specific deal information with an array of the photos associated with that deal
+  deals.push({"deal_id": deal.deal_id, "user_id": deal.user_id, "deal_price": deal.deal_price, "deal_description": deal.deal_description, "deal_store_location": deal.deal_store_location, "deal_post_date": deal.deal_post_date, "deal_expiry_date": deal.deal_expiry_date, "photos": photoUrls });
+}
 
-  console.log(deals);
+console.log(deals);
 
-  res.send({"usersDeals": deals});
-
-
-
-  //console.log(dealIds);
-
-
-  // let dealAndPhoto = []; //this holds 
-  // for (let deal of dealIds) {
-  //   let [results, fields] = await connection.query("SELECT photo_url FROM BBY_03_photo WHERE fk_photo_deal_id = ?", [deal])
-  //   dealAndPhoto.push({ "deal": deal, "photo": results });
-  // }
-
-  // console.log(`dealAndPhoto: ${dealAndPhoto}`);
-
-
-  // console.log("looping through dealAndPhoto");
-  // for (let i of dealAndPhoto) {
-  //   console.log(i.deal);
-  //   console.log(i.photo);
-  // }
-
-
-
-//WORKING CODE BEGIN
-
-  // let currentUserId = req.session.userId;
-
-  // console.log(`Current user id: ${currentUserId}`);
-
-  // let [dealResults, dealFields] = await connection.query("SELECT deal_id FROM BBY_03_deal WHERE user_id = (?)", [currentUserId]);
-
-  // //an array to hold just the current user's deal ids
-  // let dealIds = [];
-
-  // for (let dealId of dealResults) {
-  //   dealIds.push(dealId.deal_id);
-  // }
-
-  // //console.log(dealIds);
-
-
-  // let dealAndPhoto = []; //this holds 
-  // for (let deal of dealIds) {
-  //   let [results, fields] = await connection.query("SELECT photo_url FROM BBY_03_photo WHERE fk_photo_deal_id = ?", [deal])
-  //   dealAndPhoto.push({ "deal": deal, "photo": results });
-  // }
-
-  // console.log(`dealAndPhoto: ${dealAndPhoto}`);
-
-
-  // console.log("looping through dealAndPhoto");
-  // for (let i of dealAndPhoto) {
-  //   console.log(i.deal);
-  //   console.log(i.photo);
-  // }
-
-//WORKING CODE END
-
-
-
-  //console.log(dealAndPhoto);
-
-  // let [photoResults, photoFields] = await connection.query("SELECT photo_url FROM BBY_03_photo WHERE fk_photo_deal_id = ?", [deal]);
-
-
-
-
-
-
-
-
-
-
-
-
-  // let [results, fields] = await connection.query("SELECT deal_id, user_id, deal_name, deal_price, deal_description, deal_store_location, deal_post_date, deal_expiry_date FROM BBY_03_deal WHERE user_id = (?) INNER JOIN BBY_03_photo ON deal_id = ? ", [currentUserId, dealId]);
-
-
-  // let objects = [];
-
-
-
-
-
-
-
-
-  // let [results, fields] = await connection.query("SELECT photo_url, photo_id from BBY_03_photo INNER JOIN BBY_03_deal on fk_photo_deal_id", [1]);
-
-
-
-  // for (let dealId of dealIds) {
-  //   objects.push(await connection.query("SELECT photo_url, photo_id from BBY_03_photo INNER JOIN BBY_03_deal on fk_photo_deal_id", [dealId]));
-  // }
-
-  //console.log(objects);
-
-
-
-
-
-
-
-
-
-  // let [photoResults, photoFields] = await connection.query("SELECT deal_id, user_id, deal_name, deal_price, deal_description, deal_store_location, deal_post_date, deal_expiry_date FROM BBY_03_deal WHERE user_id = (?)", [currentUserId]);
-
-
-
-  // res.send({"results": results});
+res.send({"usersDeals": deals});
 });
+
+
+
+
+
+
 
 
 
