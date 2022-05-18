@@ -96,18 +96,38 @@ body {
     background-color: #fcc603;
     width: 100%;
   }
+
+  /* Rules for the div that holds the deals */
+  #deals {
+    grid-column-start: 1;
+    grid-column-end: 4;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .deal-container {
+    background-color: lightblue;
+  }
+
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
+  #user-accounts-heading {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    justify-self: center;
+  }
+
 }
 
-a {
-  text-decoration: none;
-  color: black;
-}
 
-#user-accounts-heading {
-  grid-column-start: 1;
-  grid-column-end: 5;
-  justify-self: center;
-}
+
+
 
 @media (min-width: 601px) {
   body {
@@ -205,6 +225,21 @@ a {
     grid-column-start: 1;
     grid-column-end: 5;
     justify-self: center;
+  }
+
+
+  /* Rules for the div that holds the deals */
+  #deals {
+    grid-column-start: 1;
+    grid-column-end: 5;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .deal-container {
+    background-color: lightblue;
   }
 
   #footer {
