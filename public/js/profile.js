@@ -374,7 +374,7 @@ async function updateDeals(dealID) {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded"
     },
-    body: `currentId=${dealID}&updatedName=${updatedName}&updatedPrice=${updatedPrice}&updatedLocation=${updatedLocation}&updatedDescription=${updatedDescription}&updatedExpireDate=${updatedExpireDate}`
+    body: `dealID=${dealID}&updatedName=${updatedName}&updatedPrice=${updatedPrice}&updatedLocation=${updatedLocation}&updatedDescription=${updatedDescription}&updatedExpireDate=${updatedExpireDate}`
   });
 
   let parsedResponse = await response.json();
@@ -383,9 +383,6 @@ async function updateDeals(dealID) {
     document.querySelector("#error-message").innerHTML = "";
     document.querySelector("#error-message").insertAdjacentText("afterbegin", parsedResponse.message);
   }
-
-  let updatedRecordResponse = await fetch("/get-deals");
-  let parsedUpdatedRecordResponse = await updatedRecordResponse.json();
 }
 
 var dealID;
@@ -419,12 +416,8 @@ function editPost(e) {
   //open the jQuery modal window when the edit button is clicked
   $("#update-deal-container").data("dealID", dealID).dialog("open");
 }
-// function clickUpdateDeal(dealID) {
-//   // uploadImages();
-//   $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
-//   updateDeals(dealID);
-//   $(this).dialog("close");
-// }
+
+
 $("#update-deal-container").data("dealID", dealID).dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
@@ -438,7 +431,6 @@ $("#update-deal-container").data("dealID", dealID).dialog({
     {
       text: "Submit",
       click: function () {
-        uploadImages();
         $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
         updateDeals(dealID);
         $(this).dialog("close");

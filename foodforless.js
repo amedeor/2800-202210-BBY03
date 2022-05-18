@@ -166,7 +166,7 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
       database: databaseName,
       multipleStatements: true
     });
-
+    await connection.connect();
     let dealRecord = "INSERT INTO BBY_03_deal (deal_name, deal_price, deal_description, deal_store_location, deal_expiry_date, user_id) values (?)";
     let dealRecordValues = [dealName, dealPrice, dealDescription, dealLocation, dealExpiryDate, currentUserId];
     await connection.query(dealRecord, [dealRecordValues]);
@@ -189,6 +189,7 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
     }
     res.send({ "status": "success", "message": "Post created successfully." });
   }
+  connection.end();
 });
 
 app.post("/update-deal", async (req, res) => {
@@ -199,11 +200,8 @@ app.post("/update-deal", async (req, res) => {
   let updatedLocation = req.body.updatedLocation;
   let updatedDescription = req.body.updatedDescription;
   let updatedExpireDate = req.body.updatedExpireDate;
-  let dealName = req.body.dealName;
-  let dealPrice = req.body.dealPrice;
-  let dealDescription = req.body.dealDescription;
-  let dealLocation = req.body.dealLocation;
-  let dealExpiryDate = req.body.dealExpiryDate;
+  let dealID = req.body.dealID;
+
 
   const connection = await mysql.createConnection({
     host: databaseHost,
@@ -214,11 +212,12 @@ app.post("/update-deal", async (req, res) => {
   });
 
   await connection.connect();
-  let [results, fields] = await connection.query("UPDATE BBY_03_deal SET deal_name = ?, deal_price = ?, deal_description = ?, deal_store_location = ?, deal_expiry_date = ?, user_id = ? WHERE deal_id = ?",
-    [dealName, dealPrice, dealDescription, dealLocation, dealExpiryDate, usertype, userId],
+  let [results, fields] = await connection.query("UPDATE BBY_03_deal SET deal_name = ?, deal_price = ?, deal_description = ?, deal_store_location = ?, deal_expiry_date = ? WHERE deal_id = ?",
+    [updatedName, updatedPrice, updatedLocation, updatedDescription, updatedExpireDate, dealID],
     function (error, results, fields) {
       if (error) {
         console.log(error);
+        res.send({ "status": "fail", "message": "error" });
       }
     });
 
