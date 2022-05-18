@@ -2,6 +2,7 @@
 
 let postDealLink = document.querySelector("#post-deal-link");
 
+
 postDealLink.addEventListener("click", e => {
   $("#post-deal-container").dialog("open");
 })
@@ -31,6 +32,8 @@ async function uploadImages() {
     let dealDescription = document.querySelector("#dealdescription").value;
     let dealLocation = document.querySelector("#deallocation").value;
     let dealExpiryDate = document.querySelector("#dealexpirydate").value;
+
+    console.log(formData);
   
     console.log(dealName);
     console.log(dealPrice);
