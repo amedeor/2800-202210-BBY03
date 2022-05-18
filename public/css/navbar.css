@@ -72,6 +72,7 @@ body {
     padding-top: 1em;
     padding-bottom: 1em;
     margin: 0;
+    color: black;
   }
 
   ul {
@@ -91,20 +92,7 @@ body {
   tr,
   td,
   th {
-    border: solid black 1px;
-    border-collapse: collapse;
     font-size: 10pt;
-  }
-
-  td {
-    padding: .2em;
-  }
-
-  #users-table {
-    grid-column-start: 1;
-    grid-column-end: 4;
-    justify-self: center;
-    margin-bottom: 2em;
   }
 
   #profile-abilities {
@@ -129,11 +117,13 @@ body {
     justify-self: center;
     text-align: center;
 
-    padding-top: 2em;
-    padding-bottom: 2em;
+    padding-top: 1em;
+    padding-bottom: 1em;
 
     background-color: #fcc603;
     width: 100%;
+
+    font-weight: bold;
   }
 
   .look-like-button {
@@ -168,26 +158,9 @@ a {
 
   h1 {
     font-size: 24pt;
+    color: black;
   }
 
-  table,
-  tr,
-  td,
-  th {
-    border: solid black 1px;
-    border-collapse: collapse;
-  }
-
-  td {
-    padding: .2em;
-  }
-
-  #users-table {
-    grid-column-start: 1;
-    grid-column-end: 5;
-    justify-self: center;
-    margin-bottom: 2em;
-  }
 
   #nav-icons {
     display: grid;
@@ -227,6 +200,7 @@ a {
     width: 1.5em;
     justify-self: center;
     cursor: pointer;
+    opacity: 1;
   }
 
   ul {
