@@ -107,24 +107,7 @@ body {
     justify-content: center;
   }
 
-  #footer {
-    grid-column-start: 1;
-    grid-column-end: 5;
-
-    grid-row-start: 4;
-    grid-row-end: 5;
-
-    justify-self: center;
-    text-align: center;
-
-    padding-top: 1em;
-    padding-bottom: 1em;
-
-    background-color: #fcc603;
-    width: 100%;
-
-    font-weight: bold;
-  }
+  
 
   .look-like-button {
     background: none;

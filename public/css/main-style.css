@@ -246,18 +246,20 @@ body {
   .deal-container {
     background-color: lightblue;
   }
+}
+#footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 
-  #footer {
-    grid-column-start: 1;
-    grid-column-end: 5;
-    justify-self: center;
-    justify-self: center;
-    text-align: center;
-    padding-top: 1em;
-    padding-bottom: 1em;
-    background-color: #fcc603;
-    width: 100%;
-    color: black;
-    font-weight: bold;
-  }
+  justify-self: center;
+  text-align: center;
+
+  padding-top: 1em;
+  padding-bottom: 1em;
+
+  background-color: #fcc603;
+  width: 100%;
+
+  font-weight: bold;
 }
