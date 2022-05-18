@@ -209,6 +209,7 @@ $("#upload-images-form").dialog({
 $(window).resize(function(){
   $("#upload-images-form").dialog( "option", "position", { my: "center", at: "center", of: window } );
 });
+<<<<<<< HEAD
 var easter_count = 0;
 function easter_egg(){
   easter_count++;
@@ -220,3 +221,72 @@ function easter_egg(){
   document.getElementsByTagName('HEAD')[0].appendChild(link); 
   }
 }
+=======
+
+
+async function getDeals() {
+
+  let response = await fetch("/get-deals");
+
+  let parsedResponse = await response.json();
+
+  console.log(parsedResponse);
+
+  for (let deal of parsedResponse.usersDeals) {
+
+    let dealContainer = document.createElement("div");
+
+    //set the id of the deal container to the id of the specific deal
+    dealContainer.setAttribute("id", deal.deal_id);
+    dealContainer.setAttribute("class", "deal-container");
+
+    let dealIdParagraph = document.createElement("p");
+    let userIdParagraph = document.createElement("p");
+    let dealNameParagraph = document.createElement("p");
+    let dealPriceParagraph = document.createElement("p");
+    let dealPostDateParagraph = document.createElement("p");
+    let dealExpiryDateParagraph = document.createElement("p");
+    let dealDescriptionParagraph = document.createElement("p");
+    let dealStoreLocationParagraph = document.createElement("p");
+    
+    dealIdParagraph.insertAdjacentText("beforeend", `Deal ID: ${deal.deal_id}`);
+    userIdParagraph.insertAdjacentText("beforeend", `User ID: ${deal.user_id}`);
+    dealNameParagraph.insertAdjacentText("beforeend", `Deal Name: ${deal.deal_name}`);
+    dealPriceParagraph.insertAdjacentText("beforeend", `Price: ${deal.deal_price}`);
+    dealPostDateParagraph.insertAdjacentText("beforeend", `Post Date: ${deal.deal_post_date}`);
+    dealExpiryDateParagraph.insertAdjacentText("beforeend", `Deal Expiry Date: ${deal.deal_expiry_date}`);
+    dealDescriptionParagraph.insertAdjacentText("beforeend", `Description: ${deal.deal_description}`);
+    dealStoreLocationParagraph.insertAdjacentText("beforeend", `Store Location: ${deal.deal_store_location}`);
+
+    dealContainer.insertAdjacentElement("beforeend", dealIdParagraph);
+    dealContainer.insertAdjacentElement("beforeend", userIdParagraph);
+    dealContainer.insertAdjacentElement("beforeend", dealNameParagraph);
+    dealContainer.insertAdjacentElement("beforeend", dealPriceParagraph);
+    dealContainer.insertAdjacentElement("beforeend", dealPostDateParagraph);
+    dealContainer.insertAdjacentElement("beforeend", dealExpiryDateParagraph);
+    dealContainer.insertAdjacentElement("beforeend", dealDescriptionParagraph);
+    dealContainer.insertAdjacentElement("beforeend", dealStoreLocationParagraph);
+
+    console.log(deal.deal_id);
+    console.log(deal.user_id);
+    console.log(deal.deal_price);
+    console.log(deal.deal_description);
+    console.log(deal.deal_store_location);
+    
+    for (let photo of deal.photos) {
+      let photoElement = document.createElement("img");
+      photoElement.setAttribute("src", photo.photo_url);
+      photoElement.setAttribute("class", photo.photo_id);
+      dealContainer.insertAdjacentElement("beforeend", photoElement);
+      console.log(photo.photo_id);
+      console.log(photo.photo_url);
+    }
+
+    let dealsContainer = document.querySelector("#deals");
+
+    dealsContainer.insertAdjacentElement("beforeend", dealContainer);
+  }
+}
+
+getDeals();
+>>>>>>> a16e248670409143d87519b25da30c31870773cd
