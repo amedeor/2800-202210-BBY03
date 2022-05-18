@@ -255,7 +255,7 @@ async function getDeals() {
     userIdParagraph.insertAdjacentText("beforeend", `User ID: ${deal.user_id}`);
     dealNameParagraph.insertAdjacentText("beforeend", `Deal Name: ${deal.deal_name}`);
     dealPriceParagraph.insertAdjacentText("beforeend", `Price: ${deal.deal_price}`);
-    dealPostDateParagraph.insertAdjacentText("beforeend", `Post Date: ${deal.deal_post_date}`);
+    dealPostDateParagraph.insertAdjacentText("beforeend", `Post Date: ${deal.deal_post_date_time}`);
     dealExpiryDateParagraph.insertAdjacentText("beforeend", `Deal Expiry Date: ${deal.deal_expiry_date}`);
     dealDescriptionParagraph.insertAdjacentText("beforeend", `Description: ${deal.deal_description}`);
     dealStoreLocationParagraph.insertAdjacentText("beforeend", `Store Location: ${deal.deal_store_location}`);

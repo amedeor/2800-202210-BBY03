@@ -93,7 +93,7 @@ app.get("/get-deals", async (req, res) => {
 
   let currentUserId = req.session.userId;
   
-  let [dealResults, dealFields] = await connection.query("SELECT deal_id, user_id, deal_name, deal_price, deal_description, deal_store_location, deal_post_date, deal_expiry_date FROM BBY_03_deal WHERE user_id = (?)", [currentUserId]);
+  let [dealResults, dealFields] = await connection.query("SELECT deal_id, user_id, deal_name, deal_price, deal_description, deal_store_location, deal_post_date_time, deal_expiry_date FROM BBY_03_deal WHERE user_id = (?)", [currentUserId]);
 
   console.log(dealResults);
 
@@ -111,7 +111,7 @@ app.get("/get-deals", async (req, res) => {
       photoUrls.push({ "photo_id": result.photo_id, "photo_url": result.photo_url });
     }
     //Create an object that contains all of a user's specific deal information with an array of the photos associated with that deal
-    deals.push({ "deal_id": deal.deal_id, "user_id": deal.user_id, "deal_price": deal.deal_price, "deal_description": deal.deal_description, "deal_store_location": deal.deal_store_location, "deal_post_date": deal.deal_post_date, "deal_expiry_date": deal.deal_expiry_date, "photos": photoUrls });
+    deals.push({ "deal_id": deal.deal_id, "user_id": deal.user_id, "deal_price": deal.deal_price, "deal_description": deal.deal_description, "deal_store_location": deal.deal_store_location, "deal_post_date_time": deal.deal_post_date_time, "deal_expiry_date": deal.deal_expiry_date, "photos": photoUrls });
   }
 
   console.log(deals);
