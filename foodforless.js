@@ -94,6 +94,8 @@ app.get("/get-deals", async (req, res) => {
 
   let currentUserId = req.session.userId;
 
+  console.log(`This is the currentUserId: ${currentUserId}`);
+
 //   console.log(`Current user id: ${currentUserId}`);
 
 //   let [dealResults, dealFields] = await connection.query("SELECT deal_id, user_id, deal_name, deal_price, deal_description, deal_store_location, deal_post_date, deal_expiry_date FROM BBY_03_deal WHERE user_id = (?)", [currentUserId]);
@@ -132,6 +134,11 @@ let [dealResults, dealFields] = await connection.query("SELECT deal_id, user_id,
 
 console.log(dealResults);
 
+const [userResults, userFields] = await connection.query("SELECT user_username FROM BBY_03_user WHERE user_id = ?", [currentUserId]);
+
+console.log(userResults);
+console.log(currentUserId);
+
 //deals holds all of the parsed deal and photo information
 //each object stored in deals contains all of a user's deal information with an array called "photos" that holds the URLs to the images associated with the deal
 let deals = [];
@@ -146,10 +153,12 @@ for (let deal of dealResults) {
     photoUrls.push({"photo_id": result.photo_id, "photo_url": result.photo_url});
   }
   //Create an object that contains all of a user's specific deal information with an array of the photos associated with that deal
-  deals.push({"deal_id": deal.deal_id, "user_id": deal.user_id, "deal_name": deal.deal_name, "deal_price": deal.deal_price, "deal_description": deal.deal_description, "deal_store_location": deal.deal_store_location, "deal_post_date": deal.deal_post_date, "deal_expiry_date": deal.deal_expiry_date, "photos": photoUrls });
+  deals.push({"deal_id": deal.deal_id, "user_id": deal.user_id, "user_username": userResults[0].user_username, "deal_name": deal.deal_name, "deal_price": deal.deal_price, "deal_description": deal.deal_description, "deal_store_location": deal.deal_store_location, "deal_post_date": deal.deal_post_date, "deal_expiry_date": deal.deal_expiry_date, "photos": photoUrls });
 }
 
 console.log(deals);
+console.log(userResults[0].user_username);
+console.log(currentUserId);
 
 res.send({"usersDeals": deals});
 });

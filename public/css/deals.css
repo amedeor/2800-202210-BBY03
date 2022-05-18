@@ -1,0 +1,14 @@
+#deals {
+    border-top: 1px solid black;
+}
+
+.postImage {
+    max-width: 100%;
+}
+
+#dealHeader {
+    background-color: orange;
+    display: flex;
+    flex-direction: row;
+    align-items: space-between;
+}

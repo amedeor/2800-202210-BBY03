@@ -7,9 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
   <link rel="stylesheet" href="/css/main-style.css">
-  <link rel="stylesheet" href="/css/profile.css">
   <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/profile.css">
   <link rel="stylesheet" href="/css/postdeal.css">
+  <link rel="stylesheet" href="/css/deals.css">
   <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
   <title>FoodForLess</title>
 </head>
@@ -20,66 +21,69 @@
 
   </nav>
 
-  <div id="profile-info"></div>
 
-  <form id="edit-user-info-form">
-    <label for="username" class="edit-form-label">Username:</label>
-    <input id="username" class="edit-form-input" type="text" name="username" />
+    <div id="profile-info"></div>
 
-    <label for="firstname" class="edit-form-label">First Name:</label>
-    <input id="firstname" class="edit-form-input" type="text" name="firstname" />
+    <form id="edit-user-info-form">
+      <label for="username" class="edit-form-label">Username:</label>
+      <input id="username" class="edit-form-input" type="text" name="username" />
 
-    <label for="lastname" class="edit-form-label">Last Name:</label>
-    <input id="lastname" class="edit-form-input" type="text" name="lastname" />
+      <label for="firstname" class="edit-form-label">First Name:</label>
+      <input id="firstname" class="edit-form-input" type="text" name="firstname" />
 
-    <label for="email" class="edit-form-label">Email:</label>
-    <input id="email" class="edit-form-input" type="text" name="email" />
+      <label for="lastname" class="edit-form-label">Last Name:</label>
+      <input id="lastname" class="edit-form-input" type="text" name="lastname" />
 
-    <label for="password" class="edit-form-label">Password:</label>
-    <input id="password" class="edit-form-input" type="text" name="password" />
-  </form>
+      <label for="email" class="edit-form-label">Email:</label>
+      <input id="email" class="edit-form-input" type="text" name="email" />
 
-  <p id="error-message"></p>
-
-  <form id="upload-images-form">
-    <input id="image-upload" type="file" accept="image/png, image/gif, image/jpeg, image/svg+xml" required />
-  </form>
-
-  <div id="post-deal-container">
-    <form id="deal-form">
-      <label for="dealname" class="deal-form-label">Name:</label>
-      <input id="dealname" class="deal-form-input" type="text" name="dealname" />
-
-      <label for="dealprice" class="deal-form-label">Price:</label>
-      <input id="dealprice" class="deal-form-input" type="text" name="dealprice" />
-
-      <label for="deallocation" class="deal-form-label">Store Location Details:</label>
-      <input id="deallocation" class="deal-form-input" type="text" name="deallocation" />
-
-      <label for="dealdescription" class="deal-form-label">Description:</label>
-      <input id="dealdescription" class="deal-form-input" type="text" name="dealdescription" />
-
-      <label for="dealexpirydate" class="deal-form-label">Deal Expiry Date:</label>
-      <input id="dealexpirydate" class="deal-form-input" type="date" name="dealexpirydate" />
-
-      <label for="dealphotos" class="deal-form-label">Photos:</label>
-      <input id="dealphotos" type="file" multiple="multiple" name="files" class="deal-form-input">
+      <label for="password" class="edit-form-label">Password:</label>
+      <input id="password" class="edit-form-input" type="text" name="password" />
     </form>
-  </div>
 
+    <p id="error-message"></p>
 
-  <div id="profile-abilities">
-    <button id="post-deal-link" class="abilities-button">Post Deal</button>
-    <form action="/admin-dashboard" method="get" id="view-user-account">
-      <input id="admin-dashboard-button" class="abilities-button" type="submit" value="Admin Dashboard">
+    <form id="upload-images-form">
+      <input id="image-upload" type="file" accept="image/png, image/gif, image/jpeg, image/svg+xml" required />
     </form>
-    <button id="edit-profile-button" class="abilities-button">Edit Information</button>
-    <button id="change-avatar-button" class="abilities-button">Change Avatar Image</button>
-  </div>
 
-  <div id="deals">
+    <div id="post-deal-container">
+      <form id="deal-form">
+        <label for="dealname" class="deal-form-label">Name:</label>
+        <input id="dealname" class="deal-form-input" type="text" name="dealname" />
 
-  </div>
+        <label for="dealprice" class="deal-form-label">Price:</label>
+        <input id="dealprice" class="deal-form-input" type="text" name="dealprice" />
+
+        <label for="deallocation" class="deal-form-label">Store Location Details:</label>
+        <input id="deallocation" class="deal-form-input" type="text" name="deallocation" />
+
+        <label for="dealdescription" class="deal-form-label">Description:</label>
+        <input id="dealdescription" class="deal-form-input" type="text" name="dealdescription" />
+
+        <label for="dealexpirydate" class="deal-form-label">Deal Expiry Date:</label>
+        <input id="dealexpirydate" class="deal-form-input" type="date" name="dealexpirydate" />
+
+        <label for="dealphotos" class="deal-form-label">Photos:</label>
+        <input id="dealphotos" type="file" multiple="multiple" name="files" class="deal-form-input">
+      </form>
+
+    </div>
+
+
+    <div id="profile-abilities">
+      <button id="post-deal-link" class="abilities-button">Post Deal</button>
+      <form action="/admin-dashboard" method="get" id="view-user-account">
+        <input id="admin-dashboard-button" class="abilities-button" type="submit" value="Admin Dashboard">
+      </form>
+      <button id="edit-profile-button" class="abilities-button">Edit Information</button>
+      <button id="change-avatar-button" class="abilities-button">Change Avatar Image</button>
+    </div>
+
+    <div id="deals">
+
+    </div>
+
 
 
   <footer id="footer">
@@ -92,7 +96,7 @@
   <script src="/js/client.js"></script>
   <script src="/js/profile.js"></script>
   <script src="/js/postdeal.js"></script>
-  
+
 </body>
 
 </html>
