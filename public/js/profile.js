@@ -209,7 +209,6 @@ $("#upload-images-form").dialog({
 $(window).resize(function(){
   $("#upload-images-form").dialog( "option", "position", { my: "center", at: "center", of: window } );
 });
-<<<<<<< HEAD
 var easter_count = 0;
 function easter_egg(){
   easter_count++;
@@ -221,7 +220,6 @@ function easter_egg(){
   document.getElementsByTagName('HEAD')[0].appendChild(link); 
   }
 }
-=======
 
 
 async function getDeals() {
@@ -289,4 +287,3 @@ async function getDeals() {
 }
 
 getDeals();
->>>>>>> a16e248670409143d87519b25da30c31870773cd
