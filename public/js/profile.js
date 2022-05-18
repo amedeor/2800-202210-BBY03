@@ -209,7 +209,6 @@ $("#upload-images-form").dialog({
 $(window).resize(function(){
   $("#upload-images-form").dialog( "option", "position", { my: "center", at: "center", of: window } );
 });
-
 var easter_count = 0;
 function easter_egg(){
   easter_count++;
@@ -230,6 +229,10 @@ async function getDeals() {
   let parsedResponse = await response.json();
 
   console.log(parsedResponse);
+
+  let dealsContainer = document.querySelector("#deals");
+
+  dealsContainer.innerText = "";
 
   for (let deal of parsedResponse.usersDeals) {
 
@@ -280,8 +283,6 @@ async function getDeals() {
       console.log(photo.photo_id);
       console.log(photo.photo_url);
     }
-
-    let dealsContainer = document.querySelector("#deals");
 
     dealsContainer.insertAdjacentElement("beforeend", dealContainer);
   }
