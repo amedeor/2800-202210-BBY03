@@ -209,3 +209,14 @@ $("#upload-images-form").dialog({
 $(window).resize(function(){
   $("#upload-images-form").dialog( "option", "position", { my: "center", at: "center", of: window } );
 });
+var easter_count = 0;
+function easter_egg(){
+  easter_count++;
+  if (easter_count >= 3){
+  document.getElementById("easter_egg").innerHTML = "FoodForLe$$";
+  var link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = "/css/easter_egg.css";
+  document.getElementsByTagName('HEAD')[0].appendChild(link); 
+  }
+}
