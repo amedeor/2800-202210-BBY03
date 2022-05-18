@@ -2,6 +2,7 @@
 
 let postDealLink = document.querySelector("#post-deal-link");
 
+
 postDealLink.addEventListener("click", e => {
   $("#post-deal-container").dialog("open");
 })
