@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS BBY_03_deal(
 CREATE TABLE IF NOT EXISTS BBY_03_photo(
     photo_id int NOT NULL AUTO_INCREMENT,
     PRIMARY KEY(photo_id),
-    deal_id int NOT NULL,
-    FOREIGN KEY (deal_id) REFERENCES BBY_03_deal(deal_id),
+    fk_photo_deal_id int NOT NULL,
+    FOREIGN KEY (fk_photo_deal_id) REFERENCES BBY_03_deal(deal_id),
     photo_url VARCHAR(80) NOT NULL
 );

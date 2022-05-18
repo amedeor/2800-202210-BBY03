@@ -97,16 +97,33 @@ app.get("/get-deals", async (req, res) => {
 
   let [dealResults, dealFields] = await connection.query("SELECT deal_id FROM BBY_03_deal WHERE user_id = (?)", [currentUserId]);
 
-  let dealIds = dealResults;
+  //an array to hold just the current user's deal ids
+  let dealIds = [];
+
+  for (let dealId of dealResults) {
+    dealIds.push(dealId.deal_id);
+  }
+
+  console.log(dealIds);
 
   // let [results, fields] = await connection.query("SELECT deal_id, user_id, deal_name, deal_price, deal_description, deal_store_location, deal_post_date, deal_expiry_date FROM BBY_03_deal WHERE user_id = (?) INNER JOIN BBY_03_photo ON deal_id = ? ", [currentUserId, dealId]);
 
 
   let objects = [];
 
+  
+
+  let [results, fields] = await connection.query("SELECT photo_url, photo_id from BBY_03_photo INNER JOIN BBY_03_deal on fk_photo_deal_id", [1]);
+
+
+
   for (let dealId of dealIds) {
-    let [results, fields] = await connection.query("SELECT photo_url FROM BBY_03_photo WHERE deal_id = (?) INNER JOIN BBY_03_photo ON deal_id = ? ", [currentUserId, dealId]);
+    objects.push(await connection.query("SELECT photo_url, photo_id from BBY_03_photo INNER JOIN BBY_03_deal on fk_photo_deal_id", [dealId]));
   }
+
+  console.log(objects);
+
+
 
   
 
@@ -118,9 +135,7 @@ app.get("/get-deals", async (req, res) => {
 
 
 
-  console.log(results);
-
-  res.send({"results": results});
+  // res.send({"results": results});
 });
 
 
@@ -188,7 +203,7 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
     if (req.files != undefined) {
       console.log("Going to insert photo record into bby_03_photo");
       for (let photo of photos) {
-        let photoRecord = "INSERT INTO BBY_03_photo (deal_id, photo_url) values (?)";
+        let photoRecord = "INSERT INTO BBY_03_photo (fk_photo_deal_id, photo_url) values (?)";
         let photoRecordValues = [lastInsertedId, photo];
         await connection.query(photoRecord, [photoRecordValues]);
       }
