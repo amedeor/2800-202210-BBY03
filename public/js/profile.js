@@ -281,7 +281,11 @@ async function getDeals() {
     let localDateTime = new Date(dateTimeFromSQL);
     localDateTime.setMinutes(localDateTime.getMinutes() - localDateTime.getTimezoneOffset());
 
-    dealIdParagraph.insertAdjacentText("beforeend", "Deal ID:" );
+    let slicedDealPostDate = deal.deal_post_date_time.slice(0, 10);
+    let dealPostTimeLocalFormat = localDateTime.toLocaleTimeString();
+    let slicedDealExpiryDate = deal.deal_expiry_date.slice(0, 10);
+
+    dealIdParagraph.insertAdjacentText("beforeend", "Deal ID: ");
     dealIdSpan.insertAdjacentText("beforeend", deal.deal_id);
 
     userIdParagraph.insertAdjacentText("beforeend", "User ID: ");
@@ -294,10 +298,10 @@ async function getDeals() {
     dealPriceSpan.insertAdjacentText("beforeend", deal.deal_price);
 
     dealPostDateParagraph.insertAdjacentText("beforeend", "Post Date: ");
-    dealPostSpan.insertAdjacentText("beforeend", localDateTime.toLocaleString());
+    dealPostSpan.insertAdjacentText("beforeend", `${slicedDealPostDate} at ${dealPostTimeLocalFormat}`);
 
     dealExpiryDateParagraph.insertAdjacentText("beforeend", "Deal Expiry Date: ");
-    dealExpiryDateSpan.insertAdjacentText("beforeend", new Date(deal.deal_expiry_date).toLocaleDateString());
+    dealExpiryDateSpan.insertAdjacentText("beforeend", slicedDealExpiryDate);
 
     dealDescriptionParagraph.insertAdjacentText("beforeend", "Description: ");
     dealDescriptionSpan.insertAdjacentText("beforeend", deal.deal_description);
@@ -388,13 +392,19 @@ var dealID;
 
 function editPost(e) {
 
+  console.log(`parentTd: ${e.target.parentNode}`);
+
   let parentTd = e.target.parentNode;
-  let children = parentTd.children;
+  let childrenElements = parentTd.children;
+
   let deal = [];
 
-  for (let i = 0; children[i]; i++) {
-    deal[i] = children[i].innerText;
-    console.log(deal[i]);
+  for (let i = 0; childrenElements[i]; i++) {
+    console.log(childrenElements[i]);
+    console.log(childrenElements[i].tagName);
+    if (childrenElements[i].tagName == "P") {
+      deal.push(childrenElements[i].childNodes[1].innerText);
+    }
   }
 
   dealID = deal[0];
@@ -430,7 +440,7 @@ $("#update-deal-container").data("dealID", dealID).dialog({
       click: function () {
         uploadImages();
         $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
-        getDeals(dealID);
+        updateDeals(dealID);
         $(this).dialog("close");
       }
     },
