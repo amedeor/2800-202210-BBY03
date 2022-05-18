@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS BBY_03_deal(
     deal_price VARCHAR(50) NOT NULL ,
     deal_description VARCHAR(200) NOT NULL,
     deal_store_location VARCHAR(100) NOT NULL,
-    deal_post_date_time TIMESTAMP NOT NULL DEFAULT (CURRENT_TIMESTAMP),
+    deal_post_date_time TIMESTAMP NOT NULL DEFAULT (UTC_TIMESTAMP),
     deal_expiry_date DATE NOT NULL
 );
 
