@@ -597,5 +597,5 @@ async function editPhoto(photoId) {
   }
 }
 tinymce.init({
-  selector: 'textarea'
+  selector: 'textarea',
 });
