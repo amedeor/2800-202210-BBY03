@@ -78,65 +78,67 @@ app.get("/get-user", async (req, res) => {
 });
 
 app.post("/delete-photo", async (req, res) => {
-  res.setHeader("Content-Type", "application/json");
+  if (req.session.loggedIn === true) {
+    res.setHeader("Content-Type", "application/json");
 
-  let photoId = req.body.photoId;
+    let photoId = req.body.photoId;
 
-  const connection = await mysql.createConnection({
-    host: databaseHost,
-    user: databaseUser,
-    password: databasePassword,
-    database: databaseName,
-    multipleStatements: true
-  });
-  await connection.connect();
-  await connection.query("DELETE FROM BBY_03_photo WHERE photo_id = ?", [photoId]);
-  connection.end();
+    const connection = await mysql.createConnection({
+      host: databaseHost,
+      user: databaseUser,
+      password: databasePassword,
+      database: databaseName,
+      multipleStatements: true
+    });
+    await connection.connect();
+    await connection.query("DELETE FROM BBY_03_photo WHERE photo_id = ?", [photoId]);
+    connection.end();
+  }
 });
 
 
 
 app.get("/get-deals", async (req, res) => {
+  if (req.session.loggedIn === true) {
+    res.setHeader("Content-Type", "application/json");
 
-  res.setHeader("Content-Type", "application/json");
+    const connection = await mysql.createConnection({
+      host: databaseHost,
+      user: databaseUser,
+      password: databasePassword,
+      database: databaseName,
+      multipleStatements: true
+    });
+    await connection.connect();
+    let currentUserId = req.session.userId;
 
-  const connection = await mysql.createConnection({
-    host: databaseHost,
-    user: databaseUser,
-    password: databasePassword,
-    database: databaseName,
-    multipleStatements: true
-  });
-  await connection.connect();
-  let currentUserId = req.session.userId;
+    let [dealResults, dealFields] = await connection.query("SELECT deal_id, user_id, deal_name, deal_price, deal_description, deal_store_location, deal_post_date_time, deal_expiry_date FROM BBY_03_deal WHERE user_id = (?)", [currentUserId]);
 
-  let [dealResults, dealFields] = await connection.query("SELECT deal_id, user_id, deal_name, deal_price, deal_description, deal_store_location, deal_post_date_time, deal_expiry_date FROM BBY_03_deal WHERE user_id = (?)", [currentUserId]);
+    //deals holds all of the parsed deal and photo information
+    //each object stored in deals contains all of a user's deal information with an array called "photos" that holds the URLs to the images associated with the deal
+    let deals = [];
 
-  //deals holds all of the parsed deal and photo information
-  //each object stored in deals contains all of a user's deal information with an array called "photos" that holds the URLs to the images associated with the deal
-  let deals = [];
-
-  for (let deal of dealResults) {
-    //get all the photo URLs associated with a specific deal_id
-    let [results, fields] = await connection.query("SELECT photo_url, photo_id FROM BBY_03_photo WHERE fk_photo_deal_id = ?", [deal.deal_id])
-    //create an array that will hold the URLs of the specific deal's photos
-    let photoUrls = [];
-    for (let result of results) {
-      //loop through the results of the database query on the photos table retrieve just the URLs and then save them to photoUrls
-      photoUrls.push({ "photo_id": result.photo_id, "photo_url": result.photo_url });
+    for (let deal of dealResults) {
+      //get all the photo URLs associated with a specific deal_id
+      let [results, fields] = await connection.query("SELECT photo_url, photo_id FROM BBY_03_photo WHERE fk_photo_deal_id = ?", [deal.deal_id])
+      //create an array that will hold the URLs of the specific deal's photos
+      let photoUrls = [];
+      for (let result of results) {
+        //loop through the results of the database query on the photos table retrieve just the URLs and then save them to photoUrls
+        photoUrls.push({ "photo_id": result.photo_id, "photo_url": result.photo_url });
+      }
+      //Create an object that contains all of a user's specific deal information with an array of the photos associated with that deal
+      deals.push({ "deal_id": deal.deal_id, "user_id": deal.user_id, "deal_name": deal.deal_name, "deal_price": deal.deal_price, "deal_description": deal.deal_description, "deal_store_location": deal.deal_store_location, "deal_post_date_time": deal.deal_post_date_time, "deal_expiry_date": deal.deal_expiry_date, "photos": photoUrls });
     }
-    //Create an object that contains all of a user's specific deal information with an array of the photos associated with that deal
-    deals.push({ "deal_id": deal.deal_id, "user_id": deal.user_id, "deal_name": deal.deal_name, "deal_price": deal.deal_price, "deal_description": deal.deal_description, "deal_store_location": deal.deal_store_location, "deal_post_date_time": deal.deal_post_date_time, "deal_expiry_date": deal.deal_expiry_date, "photos": photoUrls });
-  }
 
-  res.send({ "usersDeals": deals });
-  connection.end();
+    res.send({ "usersDeals": deals });
+    connection.end();
+  }
 });
 
 
 //the argument to upload.array is the name of the variable in formData
 app.post("/post-deal", upload.array("files"), async (req, res) => {
-
   if (req.session.loggedIn === true) {
     res.setHeader("Content-Type", "application/json");
 
@@ -190,145 +192,152 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
 });
 
 app.post("/update-deal", upload.array("files"), async (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
+  if (req.session.loggedIn === true) {
+    res.setHeader('Content-Type', 'application/json');
 
-  console.log("inside update-deal");
+    console.log("inside update-deal");
 
-  let updatedName = req.body.updatedName;
-  let updatedPrice = req.body.updatedPrice;
-  let updatedLocation = req.body.updatedLocation;
-  let updatedDescription = req.body.updatedDescription;
-  let updatedExpireDate = req.body.updatedExpireDate;
-  let dealID = req.body.dealID;
+    let updatedName = req.body.updatedName;
+    let updatedPrice = req.body.updatedPrice;
+    let updatedLocation = req.body.updatedLocation;
+    let updatedDescription = req.body.updatedDescription;
+    let updatedExpireDate = req.body.updatedExpireDate;
+    let dealID = req.body.dealID;
 
-  const connection = await mysql.createConnection({
-    host: databaseHost,
-    user: databaseUser,
-    password: databasePassword,
-    database: databaseName,
-    multipleStatements: true
-  });
-
-  await connection.connect();
-  let [results, fields] = await connection.query("UPDATE BBY_03_deal SET deal_name = ?, deal_price = ?, deal_description = ?, deal_store_location = ?, deal_expiry_date = ? WHERE deal_id = ?",
-    [updatedName, updatedPrice, updatedLocation, updatedDescription, updatedExpireDate, dealID],
-    function (error, results, fields) {
-      if (error) {
-        console.log(error);
-        res.send({ "status": "fail", "message": "error" });
-      }
+    const connection = await mysql.createConnection({
+      host: databaseHost,
+      user: databaseUser,
+      password: databasePassword,
+      database: databaseName,
+      multipleStatements: true
     });
 
-  let photos = [];
+    await connection.connect();
+    let [results, fields] = await connection.query("UPDATE BBY_03_deal SET deal_name = ?, deal_price = ?, deal_description = ?, deal_store_location = ?, deal_expiry_date = ? WHERE deal_id = ?",
+      [updatedName, updatedPrice, updatedLocation, updatedDescription, updatedExpireDate, dealID],
+      function (error, results, fields) {
+        if (error) {
+          console.log(error);
+          res.send({ "status": "fail", "message": "error" });
+        }
+      });
 
-  //if req.files is undefined, it means no photos were uploaded when the deal form was submitted
-  if (req.files != undefined) {
-    for (let i = 0; i < req.files.length; i++) {
-      //add photos to array
-      photos.push(`/img/${req.files[i].filename}`);
+    let photos = [];
+
+    //if req.files is undefined, it means no photos were uploaded when the deal form was submitted
+    if (req.files != undefined) {
+      for (let i = 0; i < req.files.length; i++) {
+        //add photos to array
+        photos.push(`/img/${req.files[i].filename}`);
+      }
     }
-  }
 
-  console.log(req.files)
+    console.log(req.files)
 
-  if (req.files != undefined) {
-    for (let photo of photos) {
-      let photoRecord = "INSERT INTO BBY_03_photo (fk_photo_deal_id, photo_url) values (?)";
-      let photoRecordValues = [dealID, photo];
-      await connection.query(photoRecord, [photoRecordValues]);
+    if (req.files != undefined) {
+      for (let photo of photos) {
+        let photoRecord = "INSERT INTO BBY_03_photo (fk_photo_deal_id, photo_url) values (?)";
+        let photoRecordValues = [dealID, photo];
+        await connection.query(photoRecord, [photoRecordValues]);
+      }
     }
-  }
 
-  res.send({ status: "success", message: "Record successfully updated." });
-  connection.end();
+    res.send({ status: "success", message: "Record successfully updated." });
+    connection.end();
+  }
 });
 
 
 app.post("/remove-deal", async (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
+  if (req.session.loggedIn === true) {
+    res.setHeader('Content-Type', 'application/json');
 
-  let dealID = req.body.dealID;
+    let dealID = req.body.dealID;
 
 
-  const connection = await mysql.createConnection({
-    host: databaseHost,
-    user: databaseUser,
-    password: databasePassword,
-    database: databaseName,
-    multipleStatements: true
-  });
-
-  await connection.connect();
-  let [photoResults, photoFields] = await connection.query("DELETE FROM BBY_03_photo WHERE fk_photo_deal_id = ?",
-    [dealID],
-    function (error, photoResults, photoFields) {
-      if (error) {
-        console.log(error);
-        res.send({ "status": "fail", "message": "error" });
-      }
-    });
-  let [results, fields] = await connection.query("DELETE FROM BBY_03_deal WHERE deal_id = ?",
-    [dealID],
-    function (error, results, fields) {
-      if (error) {
-        console.log(error);
-        res.send({ "status": "fail", "message": "error" });
-      }
+    const connection = await mysql.createConnection({
+      host: databaseHost,
+      user: databaseUser,
+      password: databasePassword,
+      database: databaseName,
+      multipleStatements: true
     });
 
-  res.send({ status: "success", message: "Record successfully updated." });
-  connection.end();
+    await connection.connect();
+    let [photoResults, photoFields] = await connection.query("DELETE FROM BBY_03_photo WHERE fk_photo_deal_id = ?",
+      [dealID],
+      function (error, photoResults, photoFields) {
+        if (error) {
+          console.log(error);
+          res.send({ "status": "fail", "message": "error" });
+        }
+      });
+    let [results, fields] = await connection.query("DELETE FROM BBY_03_deal WHERE deal_id = ?",
+      [dealID],
+      function (error, results, fields) {
+        if (error) {
+          console.log(error);
+          res.send({ "status": "fail", "message": "error" });
+        }
+      });
+
+    res.send({ status: "success", message: "Record successfully updated." });
+    connection.end();
+  }
 });
 
 
 //the argument to single is the name of the HTML input element that is uploading the file
 app.post("/upload-image", upload.single("file"), async (req, res) => {
-
-  if (req.file != undefined) {
-    let savedFileName = `/img/${req.file.filename}`;
-    let username = req.body.username;
-    const connection = await mysql.createConnection({
-      host: databaseHost,
-      user: databaseUser,
-      password: databasePassword,
-      database: databaseName,
-      multipleStatements: true
-    });
-
-    await connection.connect();
-    let [results, fields] = await connection.query("UPDATE BBY_03_user SET user_avatar_url = ? WHERE user_username = ?",
-      [savedFileName, username],
-      function (error, results, fields) {
-        if (error) {
-          console.log(error);
-        }
+  if (req.session.loggedIn === true) {
+    if (req.file != undefined) {
+      let savedFileName = `/img/${req.file.filename}`;
+      let username = req.body.username;
+      const connection = await mysql.createConnection({
+        host: databaseHost,
+        user: databaseUser,
+        password: databasePassword,
+        database: databaseName,
+        multipleStatements: true
       });
 
-    //update session variable with new profile picture URL
-    req.session.avatarUrl = savedFileName;
+      await connection.connect();
+      let [results, fields] = await connection.query("UPDATE BBY_03_user SET user_avatar_url = ? WHERE user_username = ?",
+        [savedFileName, username],
+        function (error, results, fields) {
+          if (error) {
+            console.log(error);
+          }
+        });
 
-    res.send({ status: "success", message: "Image uploaded successfully." })
-    connection.end();
+      //update session variable with new profile picture URL
+      req.session.avatarUrl = savedFileName;
+
+      res.send({ status: "success", message: "Image uploaded successfully." })
+      connection.end();
+    }
   }
 });
 
 app.post("/edit-image", upload.single("file"), async (req, res) => {
-  if (req.file != undefined) {
-    let savedFileName = `/img/${req.file.filename}`;
-    const connection = await mysql.createConnection({
-      host: databaseHost,
-      user: databaseUser,
-      password: databasePassword,
-      database: databaseName,
-      multipleStatements: true
-    });
+  if (req.session.loggedIn === true) {
+    if (req.file != undefined) {
+      let savedFileName = `/img/${req.file.filename}`;
+      const connection = await mysql.createConnection({
+        host: databaseHost,
+        user: databaseUser,
+        password: databasePassword,
+        database: databaseName,
+        multipleStatements: true
+      });
 
-    await connection.connect();
+      await connection.connect();
 
-    await connection.query("UPDATE BBY_03_photo SET photo_url = ? WHERE photo_id = ?", [savedFileName, req.body.photoId]);
+      await connection.query("UPDATE BBY_03_photo SET photo_url = ? WHERE photo_id = ?", [savedFileName, req.body.photoId]);
 
-    res.send({ "status": "success", "message": "Image uploaded successfully." })
-    connection.end();
+      res.send({ "status": "success", "message": "Image uploaded successfully." })
+      connection.end();
+    }
   }
 })
 
