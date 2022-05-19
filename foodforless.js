@@ -66,7 +66,7 @@ app.get("/get-user", async (req, res) => {
     database: databaseName,
     multipleStatements: true
   });
-
+  await connection.connect();
   let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ?", [username], function (error, results, fields) {
     if (error) {
       console.log(error);
@@ -139,6 +139,7 @@ app.get("/get-deals", async (req, res) => {
   connection.end();
 
   res.send({ "usersDeals": deals });
+  connection.end();
 });
 
 
@@ -197,6 +198,7 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
     connection.end();
 
     res.send({ "status": "success", "message": "Post created successfully." });
+    connection.end();
   }
 });
 
@@ -342,6 +344,7 @@ app.post("/edit-image", upload.single("file"), async (req, res) => {
     connection.end();
 
     res.send({ "status": "success", "message": "Image uploaded successfully." })
+    connection.end();
   }
 })
 
@@ -549,7 +552,7 @@ app.post("/login", async (req, res) => {
     database: databaseName,
     multipleStatements: true
   });
-
+  await connection.connect();
   //BINARY makes the password query case sensitive
   let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ? AND BINARY user_password = ? ", [username, password]);
 
@@ -582,6 +585,7 @@ app.post("/login", async (req, res) => {
 
     res.send({ status: "success", message: "Logged in" });
   }
+  connection.end();
 });
 
 app.post("/createUser", async (req, res) => {
@@ -600,7 +604,7 @@ app.post("/createUser", async (req, res) => {
     database: databaseName,
     multipleStatements: true
   });
-
+  await connection.connect();
   //Check to see if a user with selected username or email exists.
   let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ? OR user_email = ?", [signupUsername, signupEmail]);
 
@@ -625,6 +629,7 @@ app.post("/createUser", async (req, res) => {
   } else {
     res.send({ "status": "fail", "message": "Email or Username is already in use" });
   }
+  connection.end();
 });
 
 
@@ -646,7 +651,7 @@ app.post("/admin-create-user", async (req, res) => {
     database: databaseName,
     multipleStatements: true
   });
-
+  await connection.connect();
   //Check to see if a user with selected username or email exists.
   let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ? OR user_email = ?", [createUsername, createEmail]);
 
@@ -662,6 +667,7 @@ app.post("/admin-create-user", async (req, res) => {
   } else {
     res.send({ "status": "fail", "message": "Email or Username is already in use" });
   }
+  connection.end();
 });
 
 
@@ -678,7 +684,7 @@ app.post("/deleteUsers", async (req, res) => {
       database: databaseName,
       multipleStatements: true
     });
-
+    await connection.connect();
     let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_id = ? OR user_username = ?", [deleteID, deleteUsername]);
 
     if (results.length === 0) {
@@ -691,6 +697,7 @@ app.post("/deleteUsers", async (req, res) => {
       }
       res.send({ status: "success", message: "Account deleted!!" });
     }
+    connection.end();
   }
 });
 
@@ -715,8 +722,10 @@ app.get("/get-users", async (req, res) => {
       database: databaseName,
       multipleStatements: true
     });
+    await connection.connect();
     let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user");
     res.send({ status: "success", rows: results, current_username: req.session.username });
+    connection.end();
   } else {
     res.redirect("/");
   }

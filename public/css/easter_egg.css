@@ -1,8 +1,8 @@
 body{
     background-color: gold;
     --angle: 0deg;
-	border: 5px solid;
-	border-image: conic-gradient(from var(--angle), red, yellow, lime, aqua, blue, magenta, red) 1;
+	border: 15px solid;
+	border-image: conic-gradient(from var(--angle), red, magenta, blue, aqua, lime, yellow, red) 1;
 }
 button{
     background-color:green;
