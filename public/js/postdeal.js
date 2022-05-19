@@ -8,13 +8,13 @@ postDealLink.addEventListener("click", e => {
 })
 
 //Function to upload a new avatar image on the user's profile page
-async function uploadImages() {
+async function postDeal() {
 
   const imageUploadElement = document.querySelector('#dealphotos');
 
   console.log(imageUploadElement.files);
-  ;
-  console.log("UploadImages called");
+  
+  console.log("postDeal called");
 
   const formData = new FormData();
 

@@ -73,8 +73,10 @@ app.get("/get-user", async (req, res) => {
     }
   });
 
-  res.send({ status: "success", rows: results });
   connection.end();
+  
+  res.send({ status: "success", rows: results });
+  
 });
 
 app.post("/delete-photo", async (req, res) => {
@@ -132,8 +134,10 @@ app.get("/get-deals", async (req, res) => {
       deals.push({ "deal_id": deal.deal_id, "user_id": deal.user_id, "deal_name": deal.deal_name, "deal_price": deal.deal_price, "deal_description": deal.deal_description, "deal_store_location": deal.deal_store_location, "deal_post_date_time": deal.deal_post_date_time, "deal_expiry_date": deal.deal_expiry_date, "photos": photoUrls });
     }
 
-    res.send({ "usersDeals": deals });
     connection.end();
+
+    res.send({ "usersDeals": deals });
+    
   }
 });
 
@@ -192,7 +196,6 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
     connection.end();
 
     res.send({ "status": "success", "message": "Post created successfully." });
-    connection.end();
   }
 });
 
@@ -247,8 +250,10 @@ app.post("/update-deal", upload.array("files"), async (req, res) => {
       }
     }
 
-    res.send({ status: "success", message: "Record successfully updated." });
     connection.end();
+
+    res.send({ status: "success", message: "Record successfully updated." });
+
   }
 });
 
@@ -286,8 +291,10 @@ app.post("/remove-deal", async (req, res) => {
         }
       });
 
+      connection.end();
+
     res.send({ status: "success", message: "Record successfully updated." });
-    connection.end();
+    
   }
 });
 
@@ -318,8 +325,9 @@ app.post("/upload-image", upload.single("file"), async (req, res) => {
       //update session variable with new profile picture URL
       req.session.avatarUrl = savedFileName;
 
-      res.send({ status: "success", message: "Image uploaded successfully." })
       connection.end();
+
+      res.send({ status: "success", message: "Image uploaded successfully." })
     }
   }
 });
@@ -340,8 +348,10 @@ app.post("/edit-image", upload.single("file"), async (req, res) => {
 
       await connection.query("UPDATE BBY_03_photo SET photo_url = ? WHERE photo_id = ?", [savedFileName, req.body.photoId]);
 
-      res.send({ "status": "success", "message": "Image uploaded successfully." })
       connection.end();
+
+      res.send({ "status": "success", "message": "Image uploaded successfully." })
+      
     }
   }
 })
@@ -581,9 +591,11 @@ app.post("/login", async (req, res) => {
     req.session.usertype = retrievedUserType;
     req.session.avatarUrl = retrievedAvatarUrl;
 
+    connection.end();
+
     res.send({ status: "success", message: "Logged in" });
   }
-  connection.end();
+  
 });
 
 app.post("/createUser", async (req, res) => {
@@ -623,11 +635,12 @@ app.post("/createUser", async (req, res) => {
     req.session.usertype = recordValues[5];
     req.session.avatarUrl = recordValues[6];
 
+    connection.end();
+
     res.send({ status: "success", message: "Logged in" });
   } else {
     res.send({ "status": "fail", "message": "Email or Username is already in use" });
   }
-  connection.end();
 });
 
 
@@ -661,11 +674,12 @@ app.post("/admin-create-user", async (req, res) => {
 
     await connection.query(userRecord, [recordValues]);
 
+    connection.end();
+
     res.send({ "status": "success", "message": "User created!" });
   } else {
     res.send({ "status": "fail", "message": "Email or Username is already in use" });
   }
-  connection.end();
 });
 
 
@@ -690,12 +704,13 @@ app.post("/deleteUsers", async (req, res) => {
     } else {
       if (deleteUsername != req.session.username) {
         await connection.query("DELETE FROM BBY_03_user WHERE user_id = ? AND user_username = ?", [deleteID, deleteUsername]);
+      
+        connection.end();
       } else {
         res.send({ status: "fail", message: "Can't delete your own account!" });
       }
       res.send({ status: "success", message: "Account deleted!!" });
     }
-    connection.end();
   }
 });
 
@@ -759,8 +774,9 @@ app.post("/update-user-id", async (req, res) => {
       }
     });
 
+    connection.end();
   res.send({ status: "success", message: "Record successfully updated." });
-  connection.end();
+  
 });
 
 
@@ -806,9 +822,10 @@ app.post("/update-user", async (req, res) => {
   //req.session.usertype = retrievedUserType;
   req.session.avatarUrl = userAvatarUrl;
 
+  connection.end();
 
   res.send({ status: "success", msg: "User successfully updated." });
-  connection.end();
+  
 });
 
 app.get("/logout", function (req, res) {

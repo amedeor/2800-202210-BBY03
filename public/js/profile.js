@@ -364,8 +364,6 @@ async function updateDeals(dealID) {
 
   console.log(imageUploadElement.files);
 
-  console.log("UploadImages called");
-
   const formData = new FormData();
 
   //Use a loop to get the image from the image upload input and store it in a variable called file
