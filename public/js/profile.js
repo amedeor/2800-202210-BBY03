@@ -538,6 +538,16 @@ $("#update-deal-container").data("dealID", dealID).dialog({
         //select this dialog and close it when cancel is pressed
         $("#update-deal-form").trigger("reset"); //clear the form when the cancel button is clicked
         $(this).dialog("close");
+        let dealexpirelabel = document.getElementById("updatedealexpirelabel");
+        dealexpirelabel.classList.remove("error");
+        let dealdescriptionlabel = document.getElementById("updatedealdescriptionlabel");
+        dealdescriptionlabel.classList.remove("error");
+        let deallocationlabel = document.getElementById("updatedeallocationlabel");
+        deallocationlabel.classList.remove("error");
+        let dealpricelabel = document.getElementById("updatedealpricelabel");
+        dealpricelabel.classList.remove("error");
+        let dealnamelabel = document.getElementById("updatedealnamelabel");
+        dealnamelabel.classList.remove("error");
       },
     }
   ],
