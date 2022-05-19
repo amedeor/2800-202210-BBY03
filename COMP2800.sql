@@ -35,14 +35,14 @@ CREATE TABLE IF NOT EXISTS BBY_03_deal(
     deal_price VARCHAR(50) NOT NULL ,
     deal_description VARCHAR(200) NOT NULL,
     deal_store_location VARCHAR(100) NOT NULL,
-    deal_post_date DATE NOT NULL DEFAULT (CURRENT_DATE),
+    deal_post_date_time TIMESTAMP NOT NULL DEFAULT (UTC_TIMESTAMP),
     deal_expiry_date DATE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS BBY_03_photo(
     photo_id int NOT NULL AUTO_INCREMENT,
     PRIMARY KEY(photo_id),
-    deal_id int NOT NULL,
-    FOREIGN KEY (deal_id) REFERENCES BBY_03_deal(deal_id),
+    fk_photo_deal_id int NOT NULL,
+    FOREIGN KEY (fk_photo_deal_id) REFERENCES BBY_03_deal(deal_id),
     photo_url VARCHAR(80) NOT NULL
 );

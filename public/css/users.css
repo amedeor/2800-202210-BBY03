@@ -45,17 +45,6 @@ table {
   margin-bottom: 1em;
 }
 
-footer {
-  grid-row-start: 4;
-  grid-row-end: 5;
-  grid-column-start: 1;
-  grid-column-end: 5;
-  text-align: center;
-  background-color: #fcc603;
-  padding-top: 2em;
-  padding-bottom: 2em;
-}
-
 .edit-form-input {
   margin-bottom: 1em;
 }
@@ -96,4 +85,59 @@ footer {
   grid-column-end: 5;
   width: 8em;
   justify-self: end;
+}
+
+table,
+tr,
+td,
+th {
+  border: solid black 1px;
+  border-collapse: collapse;
+}
+
+td {
+  padding: .2em;
+}
+
+#users-table {
+  grid-column-start: 1;
+  grid-column-end: 5;
+  justify-self: center;
+  margin-bottom: 2em;
+}
+.deleteButton{
+  background-color: red;
+  color: white;
+  border-width: 1px;
+  border-color: black;
+  border-radius: 0.5em;
+}
+.editButton{
+  background-color: #fcc603;
+  border-width: 1px;
+  border-color: black;
+  border-radius: 0.5em;
+}
+#create-user-button{
+  background-color:green;
+  color: white;
+  border-width: 1px;
+  border-color: black;
+  border-radius: 0.5em;
+}
+#footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+
+  justify-self: center;
+  text-align: center;
+
+  padding-top: 1em;
+  padding-bottom: 1em;
+
+  background-color: #fcc603;
+  width: 100%;
+
+  font-weight: bold;
 }
