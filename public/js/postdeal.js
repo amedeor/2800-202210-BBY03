@@ -81,7 +81,7 @@ $("#post-deal-container").dialog({
             if (document.querySelector("#deallocation").value != "") {
               if (document.querySelector("#dealdescription").value != "") {
                 if (document.querySelector("#dealexpirydate").value != "") {
-                  uploadImages();
+                  postDeal();
                   $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
                   $(this).dialog("close");
                 }
