@@ -482,9 +482,56 @@ $("#update-deal-container").data("dealID", dealID).dialog({
     {
       text: "Submit",
       click: function () {
-        updateDeals(dealID);
-        $("#update-deal-form").trigger("reset"); //clear the form when the cancel button is clicked
-        $(this).dialog("close");
+                //Checks if the input fields are filled or not, if not it will make the area not filled red
+        //and doesn't close the popup 
+        if (document.querySelector("#updatedealname").value != "") {
+          if (document.querySelector("#updatedealprice").value != "") {
+            if (document.querySelector("#updatedeallocation").value != "") {
+              if (document.querySelector("#updatedealdescription").value != "") {
+                if (document.querySelector("#updatedealexpirydate").value != "") {
+                  updateDeals(dealID);
+                  $("#update-deal-form").trigger("reset"); //clear the form when the cancel button is clicked
+                  $(this).dialog("close");
+                }
+              }
+            }
+          }
+        }
+        if (document.querySelector("#updatedealname").value == "") {
+          let errorContainer = document.getElementById("updatedealnamelabel");
+          errorContainer.classList.add("error");
+        } else {
+          let errorContainer = document.getElementById("updatedealnamelabel");
+          errorContainer.classList.remove("error");
+        }
+        if (document.querySelector("#updatedealprice").value == "") {
+          let errorContainer = document.getElementById("updatedealpricelabel");
+          errorContainer.classList.add("error");
+        } else {
+          let errorContainer = document.getElementById("updatedealpricelabel");
+          errorContainer.classList.remove("error");
+        }
+        if (document.querySelector("#updatedeallocation").value == "") {
+          let errorContainer = document.getElementById("updatedeallocationlabel");
+          errorContainer.classList.add("error");
+        } else {
+          let errorContainer = document.getElementById("updatedeallocationlabel");
+          errorContainer.classList.remove("error");
+        }
+        if (document.querySelector("#updatedealdescription").value == "") {
+          let errorContainer = document.getElementById("updatedealdescriptionlabel");
+          errorContainer.classList.add("error");
+        } else {
+          let errorContainer = document.getElementById("updatedealdescriptionlabel");
+          errorContainer.classList.remove("error");
+        }
+        if (document.querySelector("#updatedealexpirydate").value == "") {
+          let errorContainer = document.getElementById("updatedealexpirelabel");
+          errorContainer.classList.add("error");
+        } else {
+          let errorContainer = document.getElementById("updatedealexpirelabel");
+          errorContainer.classList.remove("error");
+        }
       }
     },
     {

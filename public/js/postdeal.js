@@ -74,10 +74,56 @@ $("#post-deal-container").dialog({
     {
       text: "Submit",
       click: function () {
-        uploadImages();
-        $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
-        // getDeals();
-        $(this).dialog("close");
+        //Checks if the input fields are filled or not, if not it will make the area not filled red
+        //and doesn't close the popup 
+        if (document.querySelector("#dealname").value != "") {
+          if (document.querySelector("#dealprice").value != "") {
+            if (document.querySelector("#deallocation").value != "") {
+              if (document.querySelector("#dealdescription").value != "") {
+                if (document.querySelector("#dealexpirydate").value != "") {
+                  uploadImages();
+                  $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
+                  $(this).dialog("close");
+                }
+              }
+            }
+          }
+        }
+        if (document.querySelector("#dealname").value == "") {
+          let errorContainer = document.getElementById("dealnamelabel");
+          errorContainer.classList.add("error");
+        } else {
+          let errorContainer = document.getElementById("dealnamelabel");
+          errorContainer.classList.remove("error");
+        }
+        if (document.querySelector("#dealprice").value == "") {
+          let errorContainer = document.getElementById("dealpricelabel");
+          errorContainer.classList.add("error");
+        } else {
+          let errorContainer = document.getElementById("dealpricelabel");
+          errorContainer.classList.remove("error");
+        }
+        if (document.querySelector("#deallocation").value == "") {
+          let errorContainer = document.getElementById("deallocationlabel");
+          errorContainer.classList.add("error");
+        } else {
+          let errorContainer = document.getElementById("deallocationlabel");
+          errorContainer.classList.remove("error");
+        }
+        if (document.querySelector("#dealdescription").value == "") {
+          let errorContainer = document.getElementById("dealdescriptionlabel");
+          errorContainer.classList.add("error");
+        } else {
+          let errorContainer = document.getElementById("dealdescriptionlabel");
+          errorContainer.classList.remove("error");
+        }
+        if (document.querySelector("#dealexpirydate").value == "") {
+          let errorContainer = document.getElementById("dealexpirelabel");
+          errorContainer.classList.add("error");
+        } else {
+          let errorContainer = document.getElementById("dealexpirelabel");
+          errorContainer.classList.remove("error");
+        }
       }
     },
     {
