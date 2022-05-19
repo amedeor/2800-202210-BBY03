@@ -181,20 +181,20 @@ a {
 @media (min-width: 601px) {
 
   nav {
-    display: grid;
-    grid-template: auto / auto auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    background-color: #fcc603;
+    padding: 1em;
   }
 
   h1 {
-    grid-area: 1 / 1 / span 1 / span 1;
     font-size: 2em;
   }
 
   #nav-items-container {
     width: 60%;
-    grid-area: 1 / 2 / span 1 / span 1;
-    display: grid;
-    grid-template: auto auto / auto;
   }
 
   #nav-icons {
@@ -205,7 +205,7 @@ a {
 
   .nav-icon {
     justify-self: center;
-    width: 2.5em;
+    width: 1.5em;
   }
 
   #browse-icon {
@@ -225,14 +225,17 @@ a {
   }
 
   #nav-links {
-    grid-area: 2 / 1 / span 1 / span 1;
     display: grid;
     grid-template: auto / 1fr 1fr 1fr 1fr;
+    justify-items: center;
   }
 
   .nav-link {
     justify-self: center;
+    margin: 0;
+    padding: 0;
     width: 5em;
+    text-align: center;
   }
 
   #browser-link {
