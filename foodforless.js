@@ -67,7 +67,7 @@ app.get("/get-user", async (req, res) => {
     database: databaseName,
     multipleStatements: true
   });
-
+  await connection.connect();
   let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ?", [username], function (error, results, fields) {
     if (error) {
       console.log(error);
@@ -91,8 +91,13 @@ app.post("/delete-photo", async (req, res) => {
     multipleStatements: true
   });
 
+  await connection.connect();
+
   await connection.query("DELETE FROM BBY_03_photo WHERE photo_id = ?", [photoId]);
 
+  connection.end();
+
+  res.send({ status: "success" });
 });
 
 
@@ -108,6 +113,8 @@ app.get("/get-deals", async (req, res) => {
     database: databaseName,
     multipleStatements: true
   });
+
+  await connection.connect();
 
   let currentUserId = req.session.userId;
 
@@ -135,8 +142,10 @@ app.get("/get-deals", async (req, res) => {
   console.log(deals);
 
   console.log(userResults[0].user_username);
+  connection.end();
 
   res.send({ "usersDeals": deals });
+  connection.end();
 });
 
 
@@ -172,6 +181,7 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
       database: databaseName,
       multipleStatements: true
     });
+
     await connection.connect();
     let dealRecord = "INSERT INTO BBY_03_deal (deal_name, deal_price, deal_description, deal_store_location, deal_expiry_date, user_id) values (?)";
     let dealRecordValues = [dealName, dealPrice, dealDescription, dealLocation, dealExpiryDate, currentUserId];
@@ -190,7 +200,11 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
         await connection.query(photoRecord, [photoRecordValues]);
       }
     }
+
+    connection.end();
+
     res.send({ "status": "success", "message": "Post created successfully." });
+    connection.end();
   }
 });
 
@@ -233,6 +247,8 @@ app.post("/update-deal", upload.array("files"), async (req, res) => {
       photos.push(`/img/${req.files[i].filename}`);
     }
   }
+
+  console.log(req.files)
 
   if (req.files != undefined) {
     for (let photo of photos) {
@@ -310,22 +326,14 @@ app.post("/upload-image", upload.single("file"), async (req, res) => {
     //update session variable with new profile picture URL
     req.session.avatarUrl = savedFileName;
 
+    connection.end();
+
     res.send({ "status": "success", "message": "Image uploaded successfully." })
   }
 });
 
 app.post("/edit-image", upload.single("file"), async (req, res) => {
-
-  console.log(req.body);
-
-  console.log("In edit-image");
-
-  console.log(`req.file: ${req.file}`);
-
-  console.log(`req.body.photoId: ${req.body.photoId}`);
-
   if (req.file != undefined) {
-    console.log("inside function I'm testing");
     let savedFileName = `/img/${req.file.filename}`;
     const connection = await mysql.createConnection({
       host: databaseHost,
@@ -339,7 +347,10 @@ app.post("/edit-image", upload.single("file"), async (req, res) => {
 
     await connection.query("UPDATE BBY_03_photo SET photo_url = ? WHERE photo_id = ?", [savedFileName, req.body.photoId]);
 
+    connection.end();
+
     res.send({ "status": "success", "message": "Image uploaded successfully." })
+    connection.end();
   }
 })
 
@@ -547,7 +558,7 @@ app.post("/login", async (req, res) => {
     database: databaseName,
     multipleStatements: true
   });
-
+  await connection.connect();
   //BINARY makes the password query case sensitive
   let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ? AND BINARY user_password = ? ", [username, password]);
 
@@ -580,6 +591,7 @@ app.post("/login", async (req, res) => {
 
     res.send({ status: "success", message: "Logged in" });
   }
+  connection.end();
 });
 
 app.post("/createUser", async (req, res) => {
@@ -598,7 +610,7 @@ app.post("/createUser", async (req, res) => {
     database: databaseName,
     multipleStatements: true
   });
-
+  await connection.connect();
   //Check to see if a user with selected username or email exists.
   let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ? OR user_email = ?", [signupUsername, signupEmail]);
 
@@ -623,6 +635,7 @@ app.post("/createUser", async (req, res) => {
   } else {
     res.send({ "status": "fail", "message": "Email or Username is already in use" });
   }
+  connection.end();
 });
 
 
@@ -644,7 +657,7 @@ app.post("/admin-create-user", async (req, res) => {
     database: databaseName,
     multipleStatements: true
   });
-
+  await connection.connect();
   //Check to see if a user with selected username or email exists.
   let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ? OR user_email = ?", [createUsername, createEmail]);
 
@@ -660,6 +673,7 @@ app.post("/admin-create-user", async (req, res) => {
   } else {
     res.send({ "status": "fail", "message": "Email or Username is already in use" });
   }
+  connection.end();
 });
 
 
@@ -676,7 +690,7 @@ app.post("/deleteUsers", async (req, res) => {
       database: databaseName,
       multipleStatements: true
     });
-
+    await connection.connect();
     let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_id = ? OR user_username = ?", [deleteID, deleteUsername]);
 
     if (results.length === 0) {
@@ -689,6 +703,7 @@ app.post("/deleteUsers", async (req, res) => {
       }
       res.send({ status: "success", message: "Account deleted!!" });
     }
+    connection.end();
   }
 });
 
@@ -713,8 +728,10 @@ app.get("/get-users", async (req, res) => {
       database: databaseName,
       multipleStatements: true
     });
+    await connection.connect();
     let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user");
     res.send({ status: "success", rows: results, current_username: req.session.username });
+    connection.end();
   } else {
     res.redirect("/");
   }

@@ -206,7 +206,6 @@ function easter_egg() {
   }
 }
 
-
 async function getDeals() {
 
   let response = await fetch("/get-deals");
@@ -361,29 +360,33 @@ async function updateDeals(dealID) {
 
   //append the other deal data from the form to formData
 
-  let updatedName = document.querySelector("#updatedealname").value;
-  let updatedPrice = document.querySelector("#updatedealprice").value;
-  let updatedLocation = document.querySelector("#updatedeallocation").value;
-  let updatedDescription = document.querySelector("#updatedealdescription").value;
-  let updatedExpireDate = document.querySelector("#updatedealexpirydate").value;
+  let updatedName = document.querySelector("#updatedealname");
+  let updatedPrice = document.querySelector("#updatedealprice");
+  let updatedLocation = document.querySelector("#updatedeallocation");
+  let updatedDescription = document.querySelector("#updatedealdescription");
+  let updatedExpireDate = document.querySelector("#updatedealexpirydate");
 
-  formData.append("dealID", dealID);
-  formData.append("updatedName", updatedName);
-  formData.append("updatedPrice", updatedPrice);
-  formData.append("updatedLocation", updatedLocation);
-  formData.append("updatedDescription", updatedDescription);
-  formData.append("updatedExpireDate", updatedExpireDate);
+  if (updatedName.checkValidity() !== false && updatedPrice.checkValidity() !== false && updatedLocation.checkValidity() !== false &&
+    updatedDescription.checkValidity() != false && updatedExpireDate.checkValidity() != false) {
 
-  const options = {
-    method: 'POST',
-    body: formData,
-  };
+    formData.append("dealID", dealID);
+    formData.append("updatedName", updatedName.value);
+    formData.append("updatedPrice", updatedPrice.value);
+    formData.append("updatedLocation", updatedLocation.value);
+    formData.append("updatedDescription", updatedDescription.value);
+    formData.append("updatedExpireDate", updatedExpireDate.value);
 
-  await fetch("/update-deal", options
-  ).then(function (res) {
-    getDeals();
-  }).catch(function (err) { ("Error:", err) }
-  );
+    const options = {
+      method: 'POST',
+      body: formData,
+    };
+
+    await fetch("/update-deal", options
+    ).then(function (res) {
+      getDeals();
+    }).catch(function (err) { ("Error:", err) }
+    );
+  }
 }
 
 var dealID;
@@ -449,7 +452,6 @@ async function deletePost(e) {
   parentTd.remove();
 }
 
-
 $("#update-deal-container").data("dealID", dealID).dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
@@ -463,8 +465,8 @@ $("#update-deal-container").data("dealID", dealID).dialog({
     {
       text: "Submit",
       click: function () {
-        $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
         updateDeals(dealID);
+        $("#update-deal-form").trigger("reset"); //clear the form when the cancel button is clicked
         $(this).dialog("close");
       }
     },
@@ -472,7 +474,7 @@ $("#update-deal-container").data("dealID", dealID).dialog({
       text: "Cancel",
       click: function () {
         //select this dialog and close it when cancel is pressed
-        $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
+        $("#update-deal-form").trigger("reset"); //clear the form when the cancel button is clicked
         $(this).dialog("close");
       },
     }
@@ -481,8 +483,6 @@ $("#update-deal-container").data("dealID", dealID).dialog({
     getDeals();
   }
 });
-
-
 
 $("#edit-photo-container").dialog({
   modal: true,
@@ -512,9 +512,9 @@ $("#edit-photo-container").dialog({
     },
     {
       text: "Delete Photo",
-      click: function () {
+      click: async function () {
         deletePhoto($("#edit-photo-container").data("photoId"));
-        $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
+        $("#edit-image-form").trigger("reset"); //clear the form when the cancel button is clicked
         $(this).dialog("close");
       }
     }
@@ -531,7 +531,10 @@ async function deletePhoto(photoId) {
       "Content-Type": "application/x-www-form-urlencoded"
     },
     body: `photoId=${photoId}`
-  });
+  }).then(function (res) {
+    getDeals();
+  }).catch(function (err) { ("Error:", err) }
+  );
 }
 
 async function editPhoto(photoId) {
