@@ -227,6 +227,8 @@ app.post("/update-deal", upload.array("files"), async (req, res) => {
     }
   }
 
+  console.log(req.files)
+
   if (req.files != undefined) {
     for (let photo of photos) {
       let photoRecord = "INSERT INTO BBY_03_photo (fk_photo_deal_id, photo_url) values (?)";
@@ -308,17 +310,7 @@ app.post("/upload-image", upload.single("file"), async (req, res) => {
 });
 
 app.post("/edit-image", upload.single("file"), async (req, res) => {
-
-  console.log(req.body);
-
-  console.log("In edit-image");
-
-  console.log(`req.file: ${req.file}`);
-
-  console.log(`req.body.photoId: ${req.body.photoId}`);
-
   if (req.file != undefined) {
-    console.log("inside function I'm testing");
     let savedFileName = `/img/${req.file.filename}`;
     const connection = await mysql.createConnection({
       host: databaseHost,
