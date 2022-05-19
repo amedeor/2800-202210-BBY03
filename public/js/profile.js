@@ -257,12 +257,12 @@ async function getDeals() {
     let editDealButton = document.createElement("input");
     editDealButton.setAttribute("class", "edit-deal-button");
     editDealButton.setAttribute("type", "submit");
-    editDealButton.setAttribute("value", "edit deal");
+    editDealButton.setAttribute("value", "Edit Deal");
 
     let deleteDealButton = document.createElement("input");
     deleteDealButton.setAttribute("class", "delete-deal-button");
     deleteDealButton.setAttribute("type", "submit");
-    deleteDealButton.setAttribute("value", "delete deal");
+    deleteDealButton.setAttribute("value", "Delete Deal");
 
 
     //This block of code to calculate the local time using the built in JavaScript getTimezoneOffset() function is from 
@@ -298,28 +298,9 @@ async function getDeals() {
 
     for (let photo of deal.photos) {
       let photoElement = document.createElement("img");
-      photoElement.setAttribute("src", photo.photo_url);
-      photoElement.setAttribute("id", photo.photo_id);
-      photoElement.setAttribute("class", "dealImage");
-      dealContainer.insertAdjacentElement("beforeend", photoElement);
-      console.log(photo.photo_id);
-      console.log(photo.photo_url);
-    }
-
-    dealContainer.insertAdjacentElement("beforeend", dealDetailsParagraph);
-
-    console.log(deal.deal_id);
-    console.log(deal.user_id);
-    console.log(deal.deal_price);
-    console.log(deal.deal_description);
-    console.log(deal.deal_store_location);
-
-
-    for (let photo of deal.photos) {
-      let photoElement = document.createElement("img");
       photoElement.setAttribute("id", photo.photo_id);
       photoElement.setAttribute("src", photo.photo_url);
-      photoElement.setAttribute("class", `dealphoto ${photo.photo_id}`);
+      photoElement.setAttribute("class", `dealPhoto ${photo.photo_id}`);
       dealContainer.insertAdjacentElement("beforeend", photoElement);
 
       photoElement.addEventListener("click", e => {
@@ -333,6 +314,14 @@ async function getDeals() {
       console.log(photo.photo_id);
       console.log(photo.photo_url);
     }
+
+    dealContainer.insertAdjacentElement("beforeend", dealDetailsParagraph);
+
+    console.log(deal.deal_id);
+    console.log(deal.user_id);
+    console.log(deal.deal_price);
+    console.log(deal.deal_description);
+    console.log(deal.deal_store_location);
 
     dealContainer.insertAdjacentElement("beforeend", editDealButton);
     dealContainer.insertAdjacentElement("beforeend", deleteDealButton);
@@ -358,7 +347,7 @@ async function updateDeals(dealID) {
   const imageUploadElement = document.querySelector('#updatedealphotos');
 
   console.log(imageUploadElement.files);
-  
+
   console.log("UploadImages called");
 
   const formData = new FormData();
@@ -488,7 +477,7 @@ $("#update-deal-container").data("dealID", dealID).dialog({
       },
     }
   ],
-  close: function() {
+  close: function () {
     getDeals();
   }
 });
@@ -530,7 +519,7 @@ $("#edit-photo-container").dialog({
       }
     }
   ],
-  close: function() {
+  close: function () {
     getDeals();
   }
 });
