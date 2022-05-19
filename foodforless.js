@@ -90,8 +90,13 @@ app.post("/delete-photo", async (req, res) => {
     multipleStatements: true
   });
 
+  await connection.connect();
+
   await connection.query("DELETE FROM BBY_03_photo WHERE photo_id = ?", [photoId]);
 
+  connection.end();
+
+  res.send({ status: "success" });
 });
 
 
@@ -107,6 +112,8 @@ app.get("/get-deals", async (req, res) => {
     database: databaseName,
     multipleStatements: true
   });
+
+  await connection.connect();
 
   let currentUserId = req.session.userId;
 
@@ -128,6 +135,8 @@ app.get("/get-deals", async (req, res) => {
     //Create an object that contains all of a user's specific deal information with an array of the photos associated with that deal
     deals.push({ "deal_id": deal.deal_id, "user_id": deal.user_id, "deal_name": deal.deal_name, "deal_price": deal.deal_price, "deal_description": deal.deal_description, "deal_store_location": deal.deal_store_location, "deal_post_date_time": deal.deal_post_date_time, "deal_expiry_date": deal.deal_expiry_date, "photos": photoUrls });
   }
+
+  connection.end();
 
   res.send({ "usersDeals": deals });
 });
@@ -165,6 +174,7 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
       database: databaseName,
       multipleStatements: true
     });
+
     await connection.connect();
     let dealRecord = "INSERT INTO BBY_03_deal (deal_name, deal_price, deal_description, deal_store_location, deal_expiry_date, user_id) values (?)";
     let dealRecordValues = [dealName, dealPrice, dealDescription, dealLocation, dealExpiryDate, currentUserId];
@@ -183,6 +193,9 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
         await connection.query(photoRecord, [photoRecordValues]);
       }
     }
+
+    connection.end();
+
     res.send({ "status": "success", "message": "Post created successfully." });
   }
 });
@@ -305,6 +318,8 @@ app.post("/upload-image", upload.single("file"), async (req, res) => {
     //update session variable with new profile picture URL
     req.session.avatarUrl = savedFileName;
 
+    connection.end();
+
     res.send({ "status": "success", "message": "Image uploaded successfully." })
   }
 });
@@ -323,6 +338,8 @@ app.post("/edit-image", upload.single("file"), async (req, res) => {
     await connection.connect();
 
     await connection.query("UPDATE BBY_03_photo SET photo_url = ? WHERE photo_id = ?", [savedFileName, req.body.photoId]);
+
+    connection.end();
 
     res.send({ "status": "success", "message": "Image uploaded successfully." })
   }
