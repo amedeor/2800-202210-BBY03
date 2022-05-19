@@ -8,13 +8,13 @@ postDealLink.addEventListener("click", e => {
 })
 
 //Function to upload a new avatar image on the user's profile page
-async function uploadImages() {
+async function postDeal() {
 
   const imageUploadElement = document.querySelector('#dealphotos');
 
   console.log(imageUploadElement.files);
-  ;
-  console.log("UploadImages called");
+  
+  console.log("postDeal called");
 
   const formData = new FormData();
 
@@ -74,7 +74,7 @@ $("#post-deal-container").dialog({
     {
       text: "Submit",
       click: function () {
-        uploadImages();
+        postDeal();
         $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
         // getDeals();
         $(this).dialog("close");
