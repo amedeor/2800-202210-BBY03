@@ -1,5 +1,7 @@
 "use strict";
 
+getDeals();
+
 async function editProfileInfo() {
   // let editSubmitButton = document.querySelector("#save-changes-button");
 
@@ -277,7 +279,7 @@ async function getDeals() {
     deleteDealButton.setAttribute("class", "delete-deal-button");
     deleteDealButton.setAttribute("type", "submit");
     deleteDealButton.setAttribute("value", "delete deal");
-    
+
 
     //This block of code to calculate the local time using the built in JavaScript getTimezoneOffset() function is from 
     //https://stackoverflow.com/questions/7403486/add-or-subtract-timezone-difference-to-javascript-date
@@ -382,29 +384,48 @@ async function getDeals() {
 
 }
 
-getDeals();
-
 async function updateDeals(dealID) {
+
+  const imageUploadElement = document.querySelector('#updatedealphotos');
+
+  console.log(imageUploadElement.files);
+  
+  console.log("UploadImages called");
+
+  const formData = new FormData();
+
+  //Use a loop to get the image from the image upload input and store it in a variable called file
+  for (let i = 0; i < imageUploadElement.files.length; i++) {
+    formData.append("files", imageUploadElement.files[i]);
+  }
+
+  console.log(`Value of the files that are uploaded: ${formData.files}`);
+
+  //append the other deal data from the form to formData
 
   let updatedName = document.querySelector("#updatedealname").value;
   let updatedPrice = document.querySelector("#updatedealprice").value;
   let updatedLocation = document.querySelector("#updatedeallocation").value;
   let updatedDescription = document.querySelector("#updatedealdescription").value;
   let updatedExpireDate = document.querySelector("#updatedealexpirydate").value;
-  let response = await fetch("/update-deal", {
-    method: "post",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
-    body: `dealID=${dealID}&updatedName=${updatedName}&updatedPrice=${updatedPrice}&updatedLocation=${updatedLocation}&updatedDescription=${updatedDescription}&updatedExpireDate=${updatedExpireDate}`
-  });
 
-  let parsedResponse = await response.json();
+  formData.append("dealID", dealID);
+  formData.append("updatedName", updatedName);
+  formData.append("updatedPrice", updatedPrice);
+  formData.append("updatedLocation", updatedLocation);
+  formData.append("updatedDescription", updatedDescription);
+  formData.append("updatedExpireDate", updatedExpireDate);
 
-  if (parsedResponse.status === "fail") {
-    document.querySelector("#error-message").innerHTML = "";
-    document.querySelector("#error-message").insertAdjacentText("afterbegin", parsedResponse.message);
-  }
+  const options = {
+    method: 'POST',
+    body: formData,
+  };
+
+  await fetch("/update-deal", options
+  ).then(function (res) {
+
+  }).catch(function (err) { ("Error:", err) }
+  );
 }
 
 var dealID;
@@ -477,7 +498,7 @@ $("#update-deal-container").data("dealID", dealID).dialog({
   resizable: false,
   autoOpen: false,
   draggable: false,
-  title: "Post a Deal",
+  title: "Edit Deal",
   Width: 50,
   height: 500,
   buttons: [
@@ -607,6 +628,7 @@ async function editPhoto(photoId) {
   } else {
     //
   }
+
 
 
 

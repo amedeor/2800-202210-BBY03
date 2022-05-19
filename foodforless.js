@@ -109,7 +109,7 @@ app.get("/get-deals", async (req, res) => {
   });
 
   let currentUserId = req.session.userId;
-  
+
   let [dealResults, dealFields] = await connection.query("SELECT deal_id, user_id, deal_name, deal_price, deal_description, deal_store_location, deal_post_date_time, deal_expiry_date FROM BBY_03_deal WHERE user_id = (?)", [currentUserId]);
 
   //deals holds all of the parsed deal and photo information
@@ -187,8 +187,10 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
   }
 });
 
-app.post("/update-deal", async (req, res) => {
+app.post("/update-deal", upload.array("files"), async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
+
+  console.log("inside update-deal");
 
   let updatedName = req.body.updatedName;
   let updatedPrice = req.body.updatedPrice;
@@ -196,7 +198,6 @@ app.post("/update-deal", async (req, res) => {
   let updatedDescription = req.body.updatedDescription;
   let updatedExpireDate = req.body.updatedExpireDate;
   let dealID = req.body.dealID;
-
 
   const connection = await mysql.createConnection({
     host: databaseHost,
@@ -215,6 +216,24 @@ app.post("/update-deal", async (req, res) => {
         res.send({ "status": "fail", "message": "error" });
       }
     });
+
+  let photos = [];
+
+  //if req.files is undefined, it means no photos were uploaded when the deal form was submitted
+  if (req.files != undefined) {
+    for (let i = 0; i < req.files.length; i++) {
+      //add photos to array
+      photos.push(`/img/${req.files[i].filename}`);
+    }
+  }
+
+  if (req.files != undefined) {
+    for (let photo of photos) {
+      let photoRecord = "INSERT INTO BBY_03_photo (fk_photo_deal_id, photo_url) values (?)";
+      let photoRecordValues = [dealID, photo];
+      await connection.query(photoRecord, [photoRecordValues]);
+    }
+  }
 
   res.send({ status: "success", message: "Record successfully updated." });
   connection.end();
@@ -237,13 +256,13 @@ app.post("/remove-deal", async (req, res) => {
 
   await connection.connect();
   let [photoResults, photoFields] = await connection.query("DELETE FROM BBY_03_photo WHERE fk_photo_deal_id = ?",
-  [dealID],
-  function (error, photoResults, photoFields) {
-    if (error) {
-      console.log(error);
-      res.send({ "status": "fail", "message": "error" });
-    }
-  });
+    [dealID],
+    function (error, photoResults, photoFields) {
+      if (error) {
+        console.log(error);
+        res.send({ "status": "fail", "message": "error" });
+      }
+    });
   let [results, fields] = await connection.query("DELETE FROM BBY_03_deal WHERE deal_id = ?",
     [dealID],
     function (error, results, fields) {
@@ -298,7 +317,7 @@ app.post("/edit-image", upload.single("file"), async (req, res) => {
 
   console.log(`req.body.photoId: ${req.body.photoId}`);
 
-  if (req.file != undefined ) {
+  if (req.file != undefined) {
     console.log("inside function I'm testing");
     let savedFileName = `/img/${req.file.filename}`;
     const connection = await mysql.createConnection({
@@ -313,7 +332,7 @@ app.post("/edit-image", upload.single("file"), async (req, res) => {
 
     await connection.query("UPDATE BBY_03_photo SET photo_url = ? WHERE photo_id = ?", [savedFileName, req.body.photoId]);
 
-      res.send({ "status": "success", "message": "Image uploaded successfully." })
+    res.send({ "status": "success", "message": "Image uploaded successfully." })
   }
 })
 
