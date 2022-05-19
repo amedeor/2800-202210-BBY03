@@ -247,8 +247,11 @@ body {
     background-color: lightblue;
   }
 }
+
 #footer {
-  position: fixed;
+  grid-column-start: 1;
+  grid-column-end: 5;
+
   bottom: 0;
   width: 100%;
 
