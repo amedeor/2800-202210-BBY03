@@ -139,11 +139,6 @@ app.get("/get-deals", async (req, res) => {
     deals.push({ "deal_id": deal.deal_id, "user_id": deal.user_id, "user_username": userResults[0].user_username, "deal_name": deal.deal_name, "deal_price": deal.deal_price, "deal_description": deal.deal_description, "deal_store_location": deal.deal_store_location, "deal_post_date_time": deal.deal_post_date_time, "deal_expiry_date": deal.deal_expiry_date, "photos": photoUrls });
   }
 
-  console.log(deals);
-
-  console.log(userResults[0].user_username);
-  connection.end();
-
   res.send({ "usersDeals": deals });
   connection.end();
 });
@@ -151,6 +146,7 @@ app.get("/get-deals", async (req, res) => {
 
 //the argument to upload.array is the name of the variable in formData
 app.post("/post-deal", upload.array("files"), async (req, res) => {
+  console.log("Inside post deal~~~");
 
   if (req.session.loggedIn === true) {
     res.setHeader("Content-Type", "application/json");
@@ -173,6 +169,12 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
     let dealDescription = req.body.dealDescription;
     let dealLocation = req.body.dealLocation;
     let dealExpiryDate = req.body.dealExpiryDate;
+
+    console.log(req.body.dealName);
+    console.log(req.body.dealPrice);
+    console.log(req.body.dealDescription);
+    console.log(req.body.dealLocation);
+    console.log(req.body.dealExpiryDate);
 
     const connection = await mysql.createConnection({
       host: databaseHost,
@@ -204,7 +206,6 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
     connection.end();
 
     res.send({ "status": "success", "message": "Post created successfully." });
-    connection.end();
   }
 });
 
@@ -258,8 +259,9 @@ app.post("/update-deal", upload.array("files"), async (req, res) => {
     }
   }
 
-  res.send({ status: "success", message: "Record successfully updated." });
   connection.end();
+  res.send({ status: "success", message: "Record successfully updated." });
+  
 });
 
 
@@ -295,8 +297,9 @@ app.post("/remove-deal", async (req, res) => {
       }
     });
 
-  res.send({ status: "success", message: "Record successfully updated." });
   connection.end();
+  res.send({ status: "success", message: "Record successfully updated." });
+  
 });
 
 
@@ -350,7 +353,6 @@ app.post("/edit-image", upload.single("file"), async (req, res) => {
     connection.end();
 
     res.send({ "status": "success", "message": "Image uploaded successfully." })
-    connection.end();
   }
 })
 

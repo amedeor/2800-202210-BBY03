@@ -285,7 +285,7 @@ async function getDeals() {
     dealDescriptionSpan.insertAdjacentText("beforeend", `Deal Description: ${deal.deal_description}`);
     dealStoreLocationSpan.insertAdjacentText("beforeend", `Deal Store Location: ${deal.deal_store_location}`);
     dealPostDateTimeSpan.insertAdjacentText("beforeend", `${slicedDealPostDate} at ${dealPostTimeLocalFormat}`);
-    dealExpiryDateSpan.insertAdjacentText("beforeend", `Deal Price: ${deal.deal_expiry_date}`);
+    dealExpiryDateSpan.insertAdjacentText("beforeend", `Deal Expiry Date: ${slicedDealExpiryDate}`);
 
     dealDetailsParagraph.insertAdjacentElement("beforeend", dealPriceSpan);
     dealDetailsParagraph.insertAdjacentElement("beforeend", dealDescriptionSpan);

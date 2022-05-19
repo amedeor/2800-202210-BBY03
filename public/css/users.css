@@ -65,6 +65,24 @@ th {
   border-radius: 0.5em;
 }
 
+#update-record-form {
+  display: flex;
+  flex-direction: column;
+}
+
+#create-record-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-form-label {
+  padding-bottom: 0.5em;
+}
+
+.edit-form-input {
+  margin-bottom: 0.5em;
+}
+
 @media (max-width: 600px) {
   table,
   tr,

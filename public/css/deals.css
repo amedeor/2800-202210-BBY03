@@ -9,6 +9,10 @@
 }
 
 .dealContainer {
+    border: solid 1px black;
+    border-radius: 10px;
+    padding: 2em;
+    background-color: #fcc603ee;
     display: flex;
     flex-direction: column;
 }

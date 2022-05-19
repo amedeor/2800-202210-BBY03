@@ -8,7 +8,7 @@ postDealLink.addEventListener("click", e => {
 })
 
 //Function to upload a new avatar image on the user's profile page
-async function uploadImages() {
+async function postDeal() {
 
   const imageUploadElement = document.querySelector('#dealphotos');
 
@@ -37,19 +37,19 @@ async function uploadImages() {
   if (dealName.checkValidity() !== false && dealPrice.checkValidity() !== false && dealDescription.checkValidity() !== false &&
     dealLocation.checkValidity() != false && dealExpiryDate.checkValidity() != false) {
 
-    let dealName = document.querySelector("#dealname").value;
-    let dealPrice = document.querySelector("#dealprice").value;
-    let dealDescription = document.querySelector("#dealdescription").value;
-    let dealLocation = document.querySelector("#deallocation").value;
-    let dealExpiryDate = document.querySelector("#dealexpirydate").value;
+    let dealName = document.querySelector("#dealname");
+    let dealPrice = document.querySelector("#dealprice");
+    let dealDescription = document.querySelector("#dealdescription");
+    let dealLocation = document.querySelector("#deallocation");
+    let dealExpiryDate = document.querySelector("#dealexpirydate");
 
     console.log(formData);
   
-    // console.log(dealName);
-    // console.log(dealPrice);
-    // console.log(dealDescription);
-    // console.log(dealLocation);
-    // console.log(dealExpiryDate);
+     console.log(dealName);
+     console.log(dealPrice);
+     console.log(dealDescription);
+     console.log(dealLocation);
+     console.log(dealExpiryDate);
 
     formData.append("dealName", dealName.value);
     formData.append("dealPrice", dealPrice.value);
@@ -83,7 +83,7 @@ $("#post-deal-container").dialog({
     {
       text: "Submit",
       click: function () {
-        uploadImages();
+        postDeal();
         $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
         // getDeals();
         $(this).dialog("close");
