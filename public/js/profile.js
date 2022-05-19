@@ -206,7 +206,6 @@ function easter_egg() {
   }
 }
 
-
 async function getDeals() {
 
   let response = await fetch("/get-deals");
@@ -385,7 +384,7 @@ async function updateDeals(dealID) {
   let updatedExpireDate = document.querySelector("#updatedealexpirydate");
 
   if (updatedName.checkValidity() !== false && updatedPrice.checkValidity() !== false && updatedLocation.checkValidity() !== false &&
-  updatedDescription.checkValidity() != false && updatedExpireDate.checkValidity() != false) {
+    updatedDescription.checkValidity() != false && updatedExpireDate.checkValidity() != false) {
 
     formData.append("dealID", dealID);
     formData.append("updatedName", updatedName.value);
@@ -470,8 +469,6 @@ async function deletePost(e) {
   parentTd.remove();
 }
 
-
-
 $("#update-deal-container").data("dealID", dealID).dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
@@ -504,8 +501,6 @@ $("#update-deal-container").data("dealID", dealID).dialog({
   }
 });
 
-
-
 $("#edit-photo-container").dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
@@ -536,6 +531,7 @@ $("#edit-photo-container").dialog({
       text: "Delete Photo",
       click: function () {
         deletePhoto($("#edit-photo-container").data("photoId"));
+        getDeals();
         $("#edit-image-form").trigger("reset"); //clear the form when the cancel button is clicked
         $(this).dialog("close");
       }
@@ -553,7 +549,10 @@ async function deletePhoto(photoId) {
       "Content-Type": "application/x-www-form-urlencoded"
     },
     body: `photoId=${photoId}`
-  });
+  }).then(function (res) {
+    getDeals();
+  }).catch(function (err) { ("Error:", err) }
+  );
 }
 
 async function editPhoto(photoId) {
