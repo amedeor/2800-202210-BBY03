@@ -3,12 +3,6 @@
 getDeals();
 
 async function editProfileInfo() {
-  // let editSubmitButton = document.querySelector("#save-changes-button");
-
-  // if (editSubmitButton != null) {
-  //   editSubmitButton.addEventListener("click", async e => {
-  //     e.preventDefault(); 
-
   let currentUsername = document.querySelector(".username").innerText;
 
   //get the URL of the user's current profile picture
@@ -51,18 +45,7 @@ async function editProfileInfo() {
   document.querySelector(".lastName").innerText = userRecord.user_lastname;
   document.querySelector(".email").innerText = userRecord.user_email;
   document.querySelector(".password").innerText = userRecord.user_password;
-
-  // });
-  // }
 }
-
-// //Get the upload image form element
-// const uploadImageForm = document.getElementById("upload-images-form");
-
-// //Attach an event listener to the upload image form's submit eventhandler
-// //The uploadImage function will fire when the uploadImageForm's submit event is triggered
-// uploadImageForm.addEventListener("submit", uploadImage);
-
 
 //Function to upload a new avatar image on the user's profile page
 async function uploadImage(e) {
@@ -170,8 +153,6 @@ $(window).resize(function () {
   $("#edit-user-info-form").dialog("option", "position", { my: "center", at: "center", of: window });
 });
 
-
-
 let changeAvatarButton = document.querySelector("#change-avatar-button");
 
 changeAvatarButton.addEventListener("click", e => {
@@ -236,7 +217,7 @@ async function getDeals() {
 
   let dealsContainer = document.querySelector("#deals");
 
-  dealsContainer.innerText = "";
+  dealsContainer.innerHTML = "";
 
   for (let deal of parsedResponse.usersDeals) {
 
@@ -340,12 +321,6 @@ async function getDeals() {
     dealContainer.insertAdjacentElement("beforeend", dealStoreLocationParagraph);
     dealStoreLocationParagraph.insertAdjacentElement("beforeend", dealStoreLocationSpan);
 
-    // console.log(deal.deal_id);
-    // console.log(deal.user_id);
-    // console.log(deal.deal_price);
-    // console.log(deal.deal_description);
-    // console.log(deal.deal_store_location);
-
     for (let photo of deal.photos) {
       let photoElement = document.createElement("img");
       photoElement.setAttribute("id", photo.photo_id);
@@ -423,7 +398,7 @@ async function updateDeals(dealID) {
 
   await fetch("/update-deal", options
   ).then(function (res) {
-
+    getDeals();
   }).catch(function (err) { ("Error:", err) }
   );
 }
@@ -518,7 +493,10 @@ $("#update-deal-container").data("dealID", dealID).dialog({
         $(this).dialog("close");
       },
     }
-  ]
+  ],
+  close: function() {
+    getDeals();
+  }
 });
 
 
@@ -538,8 +516,7 @@ $("#edit-photo-container").dialog({
       click: function () {
         editPhoto($("#edit-photo-container").data("photoId"));
         $("#edit-image-form").trigger("reset"); //clear the form after submitting
-        getDeals();
-        //$(this).dialog("close");
+        $(this).dialog("close");
       }
     },
     {
@@ -558,8 +535,10 @@ $("#edit-photo-container").dialog({
         $(this).dialog("close");
       }
     }
-
-  ]
+  ],
+  close: function() {
+    getDeals();
+  }
 });
 
 async function deletePhoto(photoId) {
@@ -605,70 +584,12 @@ async function editPhoto(photoId) {
 
     await fetch("/edit-image", options
     ).then(function (res) {
-
+      getDeals();
     }).catch(function (err) { ("Error:", err) }
     );
 
-    // let updatedRecordResponse = await fetch("/get-user");
-
-    // let parsedUpdatedRecordResponse = await updatedRecordResponse.json();
-
-    // // get the parsed json from the /get-user route and store it in a variable
-    // // if the /get-user request was successful, the response will contain the user's row from the database
-    // let userRecord = parsedUpdatedRecordResponse.rows[0];
-
-    // //Update the HTML on the profile page to reflect the new changes made to the user's profile data in the database
-    // let userAvatarElement = document.querySelector(".avatar-image");
-    // let userAvatarUrl = userAvatarElement.getAttribute("src");
-    // userAvatarElement.setAttribute("src", userRecord.user_avatar_url);
-
-    // //clear the HTML file input after the image has been uploaded
-    // //required attribute must be set on HTML file input to prevent empty photos from being uploaded
     iupload.value = "";
   } else {
-    //
+
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // let response = await fetch("/upload-image", {
-  //   method: "post",
-  //   headers: {
-  //     "Content-Type": "application/x-www-form-urlencoded"
-  //   },
-  //   body: `photoId=${photoId}`
-  // });
 }
