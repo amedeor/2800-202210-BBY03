@@ -185,7 +185,6 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
     }
     res.send({ "status": "success", "message": "Post created successfully." });
   }
-  connection.end();
 });
 
 app.post("/update-deal", async (req, res) => {
