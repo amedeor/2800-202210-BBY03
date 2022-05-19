@@ -78,6 +78,23 @@ app.get("/get-user", async (req, res) => {
   connection.end();
 });
 
+app.post("/delete-photo", async (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+
+  let photoId = req.body.photoId;
+
+  const connection = await mysql.createConnection({
+    host: databaseHost,
+    user: databaseUser,
+    password: databasePassword,
+    database: databaseName,
+    multipleStatements: true
+  });
+
+  await connection.query("DELETE FROM BBY_03_photo WHERE photo_id = ?", [photoId]);
+
+});
+
 
 
 app.get("/get-deals", async (req, res) => {
@@ -93,10 +110,8 @@ app.get("/get-deals", async (req, res) => {
   });
 
   let currentUserId = req.session.userId;
-  
-  let [dealResults, dealFields] = await connection.query("SELECT deal_id, user_id, deal_name, deal_price, deal_description, deal_store_location, deal_post_date_time, deal_expiry_date FROM BBY_03_deal WHERE user_id = (?)", [currentUserId]);
 
-  console.log(dealResults);
+  let [dealResults, dealFields] = await connection.query("SELECT deal_id, user_id, deal_name, deal_price, deal_description, deal_store_location, deal_post_date_time, deal_expiry_date FROM BBY_03_deal WHERE user_id = (?)", [currentUserId]);
 
   const [userResults, userFields] = await connection.query("SELECT user_username FROM BBY_03_user WHERE user_id = ?", [currentUserId]);
 
@@ -133,13 +148,9 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
 
     let photos = [];
 
-    console.log(`req.files: ${req.files}`);
-
     //if req.files is undefined, it means no photos were uploaded when the deal form was submitted
     if (req.files != undefined) {
-      console.log(`Number of files uploaded: ${req.files.length}`);
       for (let i = 0; i < req.files.length; i++) {
-        console.log("inside for loop");
         //add photos to array
         photos.push(`/img/${req.files[i].filename}`);
       }
@@ -148,21 +159,11 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
     //get the currently logged in user's user ID
     let currentUserId = req.session.userId;
 
-    console.log(`Current user ID: ${currentUserId}`);
-
-    console.log(req.body.dealExpiryDate);
-
     let dealName = req.body.dealName;
     let dealPrice = req.body.dealPrice;
     let dealDescription = req.body.dealDescription;
     let dealLocation = req.body.dealLocation;
     let dealExpiryDate = req.body.dealExpiryDate;
-
-    console.log(`Deal name: ${dealName}`);
-    console.log(`Deal price: ${dealPrice}`);
-    console.log(`Deal description: ${dealDescription}`);
-    console.log(`Deal location: ${dealLocation}`);
-    console.log(`Deal expiry date: ${dealExpiryDate}`);
 
     const connection = await mysql.createConnection({
       host: databaseHost,
@@ -171,7 +172,7 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
       database: databaseName,
       multipleStatements: true
     });
-
+    await connection.connect();
     let dealRecord = "INSERT INTO BBY_03_deal (deal_name, deal_price, deal_description, deal_store_location, deal_expiry_date, user_id) values (?)";
     let dealRecordValues = [dealName, dealPrice, dealDescription, dealLocation, dealExpiryDate, currentUserId];
     await connection.query(dealRecord, [dealRecordValues]);
@@ -182,10 +183,7 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
     let insertObject = lastInsertIdArray[0];
     let lastInsertedId = insertObject["LAST_INSERT_ID()"]; //This is the deal_id of the deal that was just inserted into the database
 
-    console.log(`lastInsertedId: ${lastInsertedId}`);
-
     if (req.files != undefined) {
-      console.log("Going to insert photo record into bby_03_photo");
       for (let photo of photos) {
         let photoRecord = "INSERT INTO BBY_03_photo (fk_photo_deal_id, photo_url) values (?)";
         let photoRecordValues = [lastInsertedId, photo];
@@ -196,15 +194,17 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
   }
 });
 
-app.post("/update-deal", async (req, res) => {
+app.post("/update-deal", upload.array("files"), async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
+  console.log("inside update-deal");
 
-  let dealName = req.body.dealName;
-  let dealPrice = req.body.dealPrice;
-  let dealDescription = req.body.dealDescription;
-  let dealLocation = req.body.dealLocation;
-  let dealExpiryDate = req.body.dealExpiryDate;
+  let updatedName = req.body.updatedName;
+  let updatedPrice = req.body.updatedPrice;
+  let updatedLocation = req.body.updatedLocation;
+  let updatedDescription = req.body.updatedDescription;
+  let updatedExpireDate = req.body.updatedExpireDate;
+  let dealID = req.body.dealID;
 
   const connection = await mysql.createConnection({
     host: databaseHost,
@@ -215,17 +215,74 @@ app.post("/update-deal", async (req, res) => {
   });
 
   await connection.connect();
-  let [results, fields] = await connection.query("UPDATE BBY_03_deal SET deal_name = ?, deal_price = ?, deal_description = ?, deal_store_location = ?, deal_expiry_date = ?, user_id = ? WHERE deal_id = ?",
-    [dealName, dealPrice, dealDescription, dealLocation, dealExpiryDate, usertype, userId],
+  let [results, fields] = await connection.query("UPDATE BBY_03_deal SET deal_name = ?, deal_price = ?, deal_description = ?, deal_store_location = ?, deal_expiry_date = ? WHERE deal_id = ?",
+    [updatedName, updatedPrice, updatedLocation, updatedDescription, updatedExpireDate, dealID],
     function (error, results, fields) {
       if (error) {
         console.log(error);
+        res.send({ "status": "fail", "message": "error" });
+      }
+    });
+
+  let photos = [];
+
+  //if req.files is undefined, it means no photos were uploaded when the deal form was submitted
+  if (req.files != undefined) {
+    for (let i = 0; i < req.files.length; i++) {
+      //add photos to array
+      photos.push(`/img/${req.files[i].filename}`);
+    }
+  }
+
+  if (req.files != undefined) {
+    for (let photo of photos) {
+      let photoRecord = "INSERT INTO BBY_03_photo (fk_photo_deal_id, photo_url) values (?)";
+      let photoRecordValues = [dealID, photo];
+      await connection.query(photoRecord, [photoRecordValues]);
+    }
+  }
+
+  res.send({ status: "success", message: "Record successfully updated." });
+  connection.end();
+});
+
+
+app.post("/remove-deal", async (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+
+  let dealID = req.body.dealID;
+
+
+  const connection = await mysql.createConnection({
+    host: databaseHost,
+    user: databaseUser,
+    password: databasePassword,
+    database: databaseName,
+    multipleStatements: true
+  });
+
+  await connection.connect();
+  let [photoResults, photoFields] = await connection.query("DELETE FROM BBY_03_photo WHERE fk_photo_deal_id = ?",
+    [dealID],
+    function (error, photoResults, photoFields) {
+      if (error) {
+        console.log(error);
+        res.send({ "status": "fail", "message": "error" });
+      }
+    });
+  let [results, fields] = await connection.query("DELETE FROM BBY_03_deal WHERE deal_id = ?",
+    [dealID],
+    function (error, results, fields) {
+      if (error) {
+        console.log(error);
+        res.send({ "status": "fail", "message": "error" });
       }
     });
 
   res.send({ status: "success", message: "Record successfully updated." });
   connection.end();
 });
+
 
 //the argument to single is the name of the HTML input element that is uploading the file
 app.post("/upload-image", upload.single("file"), async (req, res) => {
@@ -255,8 +312,36 @@ app.post("/upload-image", upload.single("file"), async (req, res) => {
 
     res.send({ "status": "success", "message": "Image uploaded successfully." })
   }
-
 });
+
+app.post("/edit-image", upload.single("file"), async (req, res) => {
+
+  console.log(req.body);
+
+  console.log("In edit-image");
+
+  console.log(`req.file: ${req.file}`);
+
+  console.log(`req.body.photoId: ${req.body.photoId}`);
+
+  if (req.file != undefined) {
+    console.log("inside function I'm testing");
+    let savedFileName = `/img/${req.file.filename}`;
+    const connection = await mysql.createConnection({
+      host: databaseHost,
+      user: databaseUser,
+      password: databasePassword,
+      database: databaseName,
+      multipleStatements: true
+    });
+
+    await connection.connect();
+
+    await connection.query("UPDATE BBY_03_photo SET photo_url = ? WHERE photo_id = ?", [savedFileName, req.body.photoId]);
+
+    res.send({ "status": "success", "message": "Image uploaded successfully." })
+  }
+})
 
 app.get("/profile", async (req, res) => {
   if (req.session.loggedIn === true) {
