@@ -529,9 +529,8 @@ $("#edit-photo-container").dialog({
     },
     {
       text: "Delete Photo",
-      click: function () {
+      click: async function () {
         deletePhoto($("#edit-photo-container").data("photoId"));
-        getDeals();
         $("#edit-image-form").trigger("reset"); //clear the form when the cancel button is clicked
         $(this).dialog("close");
       }

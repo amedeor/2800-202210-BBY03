@@ -93,6 +93,7 @@ app.post("/delete-photo", async (req, res) => {
     await connection.connect();
     await connection.query("DELETE FROM BBY_03_photo WHERE photo_id = ?", [photoId]);
     connection.end();
+    res.send({ status: "success" });
   }
 });
 
@@ -168,6 +169,7 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
       database: databaseName,
       multipleStatements: true
     });
+
     await connection.connect();
     let dealRecord = "INSERT INTO BBY_03_deal (deal_name, deal_price, deal_description, deal_store_location, deal_expiry_date, user_id) values (?)";
     let dealRecordValues = [dealName, dealPrice, dealDescription, dealLocation, dealExpiryDate, currentUserId];
@@ -186,6 +188,9 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
         await connection.query(photoRecord, [photoRecordValues]);
       }
     }
+
+    connection.end();
+
     res.send({ "status": "success", "message": "Post created successfully." });
     connection.end();
   }
