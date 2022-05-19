@@ -46,6 +46,7 @@ body {
     padding-top: 1em;
     padding-bottom: 1em;
     margin: 0;
+    color: black;
   }
 
   table,
@@ -90,11 +91,14 @@ body {
     justify-self: center;
     text-align: center;
 
-    padding-top: 2em;
-    padding-bottom: 2em;
+    padding-top: 1em;
+    padding-bottom: 1em;
 
     background-color: #fcc603;
     width: 100%;
+
+    color: black;
+    font-weight: bold;
   }
 
   /* Rules for the div that holds the deals */
@@ -137,6 +141,7 @@ body {
   }
 
   h1 {
+    color: black;
     font-size: 24pt;
   }
 
@@ -241,16 +246,23 @@ body {
   .deal-container {
     background-color: lightblue;
   }
+}
 
-  #footer {
-    grid-column-start: 1;
-    grid-column-end: 5;
-    justify-self: center;
-    justify-self: center;
-    text-align: center;
-    padding-top: 2em;
-    padding-bottom: 2em;
-    background-color: #fcc603;
-    width: 100%;
-  }
+#footer {
+  grid-column-start: 1;
+  grid-column-end: 5;
+
+  bottom: 0;
+  width: 100%;
+
+  justify-self: center;
+  text-align: center;
+
+  padding-top: 1em;
+  padding-bottom: 1em;
+
+  background-color: #fcc603;
+  width: 100%;
+
+  font-weight: bold;
 }

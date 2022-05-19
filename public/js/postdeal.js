@@ -33,11 +33,11 @@ async function uploadImages() {
     let dealLocation = document.querySelector("#deallocation").value;
     let dealExpiryDate = document.querySelector("#dealexpirydate").value;
   
-    console.log(dealName);
-    console.log(dealPrice);
-    console.log(dealDescription);
-    console.log(dealLocation);
-    console.log(dealExpiryDate);
+    // console.log(dealName);
+    // console.log(dealPrice);
+    // console.log(dealDescription);
+    // console.log(dealLocation);
+    // console.log(dealExpiryDate);
 
     formData.append("dealName", dealName);
     formData.append("dealPrice", dealPrice);
@@ -143,11 +143,11 @@ async function getDeals() {
     dealContainer.insertAdjacentElement("beforeend", dealDescriptionParagraph);
     dealContainer.insertAdjacentElement("beforeend", dealStoreLocationParagraph);
 
-    console.log(deal.deal_id);
-    console.log(deal.user_id);
-    console.log(deal.deal_price);
-    console.log(deal.deal_description);
-    console.log(deal.deal_store_location);
+    // console.log(deal.deal_id);
+    // console.log(deal.user_id);
+    // console.log(deal.deal_price);
+    // console.log(deal.deal_description);
+    // console.log(deal.deal_store_location);
     
     for (let photo of deal.photos) {
       let photoElement = document.createElement("img");

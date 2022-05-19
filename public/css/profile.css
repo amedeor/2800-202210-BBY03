@@ -21,6 +21,12 @@ body {
 
 button {
   cursor: pointer;
+  padding: .3em;
+  color: white;
+  background-color: green;
+  border-width: 1px;
+  border-color: black;
+  border-radius: 0.5em;
 }
 
 #admin-dashboard-button {
@@ -41,3 +47,16 @@ button {
 #image-upload {
   width: 15em;
 }
+
+#admin-dashboard-button {
+  padding: .4em;
+  color: white;
+  background-color: green;
+  border-width: 1px;
+  border-color: black;
+  border-radius: 0.5em;
+}
+#profile-icon{
+  opacity: 0.5;
+}
+

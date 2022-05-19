@@ -230,7 +230,7 @@ async function getDeals() {
 
   let parsedResponse = await response.json();
 
-  console.log(parsedResponse);
+  // console.log(parsedResponse);
 
   let dealsContainer = document.querySelector("#deals");
 
@@ -338,17 +338,27 @@ async function getDeals() {
     dealContainer.insertAdjacentElement("beforeend", dealStoreLocationParagraph);
     dealStoreLocationParagraph.insertAdjacentElement("beforeend", dealStoreLocationSpan);
 
-    console.log(deal.deal_id);
-    console.log(deal.user_id);
-    console.log(deal.deal_price);
-    console.log(deal.deal_description);
-    console.log(deal.deal_store_location);
+    // console.log(deal.deal_id);
+    // console.log(deal.user_id);
+    // console.log(deal.deal_price);
+    // console.log(deal.deal_description);
+    // console.log(deal.deal_store_location);
 
     for (let photo of deal.photos) {
       let photoElement = document.createElement("img");
+      photoElement.setAttribute("id", photo.photo_id);
       photoElement.setAttribute("src", photo.photo_url);
-      photoElement.setAttribute("class", photo.photo_id);
+      photoElement.setAttribute("class", `dealphoto ${photo.photo_id}`);
       dealContainer.insertAdjacentElement("beforeend", photoElement);
+
+      photoElement.addEventListener("click", e => {
+        $("#edit-photo-container").data("photoId", e.target.getAttribute("id")).dialog("open");
+        console.log(e.target.getAttribute("id"));
+        let imageUrl = e.target.getAttribute("src");
+        document.querySelector("#edit-image").setAttribute("src", imageUrl);
+      })
+
+
       console.log(photo.photo_id);
       console.log(photo.photo_url);
     }
@@ -489,3 +499,154 @@ $("#update-deal-container").data("dealID", dealID).dialog({
     }
   ]
 });
+
+
+
+$("#edit-photo-container").dialog({
+  modal: true,
+  fuild: true, //prevent horizontal scroll bars on mobile layout
+  resizable: false,
+  autoOpen: false,
+  draggable: false,
+  title: "Edit Photo",
+  Width: 50,
+  height: 500,
+  buttons: [
+    {
+      text: "Submit",
+      click: function () {
+        editPhoto($("#edit-photo-container").data("photoId"));
+        $("#edit-image-form").trigger("reset"); //clear the form after submitting
+        getDeals();
+        //$(this).dialog("close");
+      }
+    },
+    {
+      text: "Cancel",
+      click: function () {
+        //select this dialog and close it when cancel is pressed
+        $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
+        $(this).dialog("close");
+      }
+    },
+    {
+      text: "Delete Photo",
+      click: function () {
+        deletePhoto($("#edit-photo-container").data("photoId"));
+        $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
+        $(this).dialog("close");
+      }
+    }
+
+  ]
+});
+
+async function deletePhoto(photoId) {
+  let response = await fetch("/delete-photo", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: `photoId=${photoId}`
+  });
+}
+
+async function editPhoto(photoId) {
+  // e.preventDefault();
+
+  const iupload = document.querySelector('#iupload');
+
+  console.log(photoId);
+
+  console.log(iupload);
+
+  if (iupload.checkValidity() !== false) {
+    const formData = new FormData();
+
+    //Use a loop to get the image from the image upload input and store it in a variable called file
+    for (let i = 0; i < iupload.files.length; i++) {
+      formData.append("file", iupload.files[i]);
+    }
+
+    for (var pair of formData.entries()) {
+      console.log(pair[0]);
+    }
+
+    //append the user's username to the formData that will be sent to the server
+    //this allows us to update the avatar URL for the correct user in the database
+    formData.append("photoId", photoId);
+    console.log(photoId);
+
+    const options = {
+      method: 'POST',
+      body: formData,
+    };
+
+    await fetch("/edit-image", options
+    ).then(function (res) {
+
+    }).catch(function (err) { ("Error:", err) }
+    );
+
+    // let updatedRecordResponse = await fetch("/get-user");
+
+    // let parsedUpdatedRecordResponse = await updatedRecordResponse.json();
+
+    // // get the parsed json from the /get-user route and store it in a variable
+    // // if the /get-user request was successful, the response will contain the user's row from the database
+    // let userRecord = parsedUpdatedRecordResponse.rows[0];
+
+    // //Update the HTML on the profile page to reflect the new changes made to the user's profile data in the database
+    // let userAvatarElement = document.querySelector(".avatar-image");
+    // let userAvatarUrl = userAvatarElement.getAttribute("src");
+    // userAvatarElement.setAttribute("src", userRecord.user_avatar_url);
+
+    // //clear the HTML file input after the image has been uploaded
+    // //required attribute must be set on HTML file input to prevent empty photos from being uploaded
+    iupload.value = "";
+  } else {
+    //
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // let response = await fetch("/upload-image", {
+  //   method: "post",
+  //   headers: {
+  //     "Content-Type": "application/x-www-form-urlencoded"
+  //   },
+  //   body: `photoId=${photoId}`
+  // });
+}
