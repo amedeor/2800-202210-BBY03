@@ -225,6 +225,44 @@ app.post("/update-deal", async (req, res) => {
   connection.end();
 });
 
+
+app.post("/remove-deal", async (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+
+  let dealID = req.body.dealID;
+
+
+  const connection = await mysql.createConnection({
+    host: databaseHost,
+    user: databaseUser,
+    password: databasePassword,
+    database: databaseName,
+    multipleStatements: true
+  });
+
+  await connection.connect();
+  let [photoResults, photoFields] = await connection.query("DELETE FROM BBY_03_photo WHERE fk_photo_deal_id = ?",
+  [dealID],
+  function (error, photoResults, photoFields) {
+    if (error) {
+      console.log(error);
+      res.send({ "status": "fail", "message": "error" });
+    }
+  });
+  let [results, fields] = await connection.query("DELETE FROM BBY_03_deal WHERE deal_id = ?",
+    [dealID],
+    function (error, results, fields) {
+      if (error) {
+        console.log(error);
+        res.send({ "status": "fail", "message": "error" });
+      }
+    });
+
+  res.send({ status: "success", message: "Record successfully updated." });
+  connection.end();
+});
+
+
 //the argument to single is the name of the HTML input element that is uploading the file
 app.post("/upload-image", upload.single("file"), async (req, res) => {
 

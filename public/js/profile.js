@@ -272,6 +272,11 @@ async function getDeals() {
     editDealButton.setAttribute("class", "edit-deal-button");
     editDealButton.setAttribute("type", "submit");
     editDealButton.setAttribute("value", "edit deal");
+
+    let deleteDealButton = document.createElement("input");
+    deleteDealButton.setAttribute("class", "delete-deal-button");
+    deleteDealButton.setAttribute("type", "submit");
+    deleteDealButton.setAttribute("value", "delete deal");
     
 
     //This block of code to calculate the local time using the built in JavaScript getTimezoneOffset() function is from 
@@ -349,10 +354,17 @@ async function getDeals() {
     }
 
     dealContainer.insertAdjacentElement("beforeend", editDealButton);
+    dealContainer.insertAdjacentElement("beforeend", deleteDealButton);
     dealsContainer.insertAdjacentElement("beforeend", dealContainer);
   }
 
   var editButtons = document.querySelectorAll(".edit-deal-button");
+
+  var deleteButtons = document.querySelectorAll(".delete-deal-button");
+
+  for (let j = 0; j < deleteButtons.length; j++) {
+    deleteButtons[j].addEventListener("click", deletePost);
+  }
 
   for (let j = 0; j < editButtons.length; j++) {
     editButtons[j].addEventListener("click", editPost);
@@ -415,6 +427,37 @@ function editPost(e) {
 
   //open the jQuery modal window when the edit button is clicked
   $("#update-deal-container").data("dealID", dealID).dialog("open");
+}
+
+async function deletePost(e) {
+
+  console.log(`parentTd: ${e.target.parentNode}`);
+
+  let parentTd = e.target.parentNode;
+  let childrenElements = parentTd.children;
+
+  let deal = [];
+
+  for (let i = 0; childrenElements[i]; i++) {
+    console.log(childrenElements[i]);
+    console.log(childrenElements[i].tagName);
+    if (childrenElements[i].tagName == "P") {
+      deal.push(childrenElements[i].childNodes[1].innerText);
+    }
+  }
+
+  dealID = deal[0];
+  let response = await fetch("/remove-deal", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: `dealID=${dealID}`
+  });
+
+  let parsedResponse = await response.json();
+  parsedResponse;
+  parentTd.remove();
 }
 
 
