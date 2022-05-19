@@ -2,13 +2,22 @@
     border-top: 1px solid black;
 }
 
-.postImage {
+.dealImage {
     max-width: 100%;
 }
 
-#dealHeader {
-    background-color: orange;
+.dealContainer {
     display: flex;
-    flex-direction: row;
-    align-items: space-between;
+    flex-direction: column;
+}
+
+.dealHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.dealDeatils {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

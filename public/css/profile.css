@@ -1,38 +1,74 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Source+Sans+Pro:wght@400;600;700&display=swap');
 
-body {
-  font-family: 'Source Sans Pro', sans-serif;
+#profile-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2em;
 }
 
-.edit-form-label {
-  padding-top: .5em;
-  padding-bottom: .5em;
+.avatar-image {
+  padding: 0 2em;
+  max-width: 50%;
+  max-height: 50vw;
+  justify-self: center;
+}
+
+.username {
+  font-size: 1.5em;
   font-weight: bold;
 }
 
-.edit-form-input {
+#profile-abilities {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-bottom: 1em;
 }
 
-#edit-user-info-form {
- display: flex;
- flex-direction: column;
+.abilities-button {
+  font-family: 'Source Sans Pro', sans-serif;
+
+  border: solid 1px black;
+  border-radius: 0.5em;
+
+  margin-top: 1em;
+  padding: 0.3em;
+
+  background-color: green;
+  color: white;
+  width: 12em;
+
+  cursor: pointer;
+
 }
 
-button {
-  cursor: pointer;
-  padding: .3em;
-  color: white;
-  background-color: green;
-  border-width: 1px;
-  border-color: black;
-  border-radius: 0.5em;
+#edit-user-info-form {
+  display: flex;
+  flex-direction: column;
 }
+
+.edit-form-label {
+  padding-bottom: 0.5em;
+}
+
+.edit-form-input {
+  margin-bottom: 0.5em;
+}
+
+/*
+
+
+
+
+
+
 
 #admin-dashboard-button {
   margin-bottom: 1em;
   width: 12em;
 }
+
 
 #post-deal-link {
   margin-bottom: 1em;
@@ -60,3 +96,4 @@ button {
   opacity: 0.5;
 }
 
+*/

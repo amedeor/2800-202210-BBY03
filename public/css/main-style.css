@@ -1,11 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Source+Sans+Pro:wght@400;600;700&display=swap');
 
 body {
+  display: grid;
+  grid-template: auto auto auto / 100vw;
+
   font-family: 'Source Sans Pro', sans-serif;
   margin: 0;
   padding: 0;
 }
 
+nav {
+  grid-area: 1 / 1 / span 1 / span 1;
+}
+
+main {
+  grid-area: 2 / 1 / span 1 / span 1;
+}
+
+footer {
+  grid-area: 3 / 1 / span 1 / span 1;
+}
+
+/*
 @media (max-width: 600px) {
 
   body {
@@ -22,7 +38,6 @@ body {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto auto auto;
     padding-top: 2em;
-
   }
 
   .profile-info-piece {
@@ -100,8 +115,10 @@ body {
     color: black;
     font-weight: bold;
   }
+  */
 
   /* Rules for the div that holds the deals */
+  /*
   #deals {
     grid-column-start: 1;
     grid-column-end: 4;
@@ -231,9 +248,10 @@ body {
     grid-column-end: 5;
     justify-self: center;
   }
-
+*/
 
   /* Rules for the div that holds the deals */
+  /*
   #deals {
     grid-column-start: 1;
     grid-column-end: 5;
@@ -248,7 +266,11 @@ body {
   }
 }
 #footer {
-  position: fixed;
+  position: sticky;
+
+  grid-column-start: 1;
+  grid-column-end: 5;
+
   bottom: 0;
   width: 100%;
 
@@ -263,3 +285,4 @@ body {
 
   font-weight: bold;
 }
+*/

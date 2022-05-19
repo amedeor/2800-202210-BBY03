@@ -1,0 +1,15 @@
+footer {
+    position: sticky;
+
+    justify-self: center;
+    text-align: center;
+
+    padding-top: 1em;
+    padding-bottom: 1em;
+
+    background-color: #fcc603;
+    width: 100%;
+
+    color: black;
+    font-weight: bold;
+}

@@ -98,6 +98,8 @@ app.get("/get-deals", async (req, res) => {
 
   console.log(dealResults);
 
+  const [userResults, userFields] = await connection.query("SELECT user_username FROM BBY_03_user WHERE user_id = ?", [currentUserId]);
+
   //deals holds all of the parsed deal and photo information
   //each object stored in deals contains all of a user's deal information with an array called "photos" that holds the URLs to the images associated with the deal
   let deals = [];
@@ -112,10 +114,12 @@ app.get("/get-deals", async (req, res) => {
       photoUrls.push({ "photo_id": result.photo_id, "photo_url": result.photo_url });
     }
     //Create an object that contains all of a user's specific deal information with an array of the photos associated with that deal
-    deals.push({ "deal_id": deal.deal_id, "user_id": deal.user_id, "deal_name": deal.deal_name, "deal_price": deal.deal_price, "deal_description": deal.deal_description, "deal_store_location": deal.deal_store_location, "deal_post_date_time": deal.deal_post_date_time, "deal_expiry_date": deal.deal_expiry_date, "photos": photoUrls });
+    deals.push({ "deal_id": deal.deal_id, "user_id": deal.user_id, "user_username": userResults[0].user_username, "deal_name": deal.deal_name, "deal_price": deal.deal_price, "deal_description": deal.deal_description, "deal_store_location": deal.deal_store_location, "deal_post_date_time": deal.deal_post_date_time, "deal_expiry_date": deal.deal_expiry_date, "photos": photoUrls });
   }
 
   console.log(deals);
+
+  console.log(userResults[0].user_username);
 
   res.send({ "usersDeals": deals });
 });

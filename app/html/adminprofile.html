@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
   <link rel="stylesheet" href="/css/main-style.css">
   <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/footer.css">
   <link rel="stylesheet" href="/css/profile.css">
   <link rel="stylesheet" href="/css/postdeal.css">
   <link rel="stylesheet" href="/css/deals.css">
@@ -18,37 +19,11 @@
 <body>
 
   <nav id="nav">
-<<<<<<< HEAD
-=======
-    <h1 id = "easter_egg">FoodForLe<a onclick="easter_egg()">ss</a></h1>
-    <div id="nav-items-container">
-      <div id="nav-icons">
-        <img id="browse-icon" class="nav-icon" src="/img/magnifying-glass-icon.svg" alt="" />
-        <img id="list-icon" class="nav-icon" src="/img/list-icon.svg" alt="" />
-        <img id="profile-icon" class="nav-icon" src="/img/profile-icon.svg" alt="" />
-        <img id="logout-icon" class="nav-icon" src="/img/logout-icon.svg" alt="" />
-      </div>
-
-      <ul id="nav-links">
-        <li class="nav-link"><a href="#">Browse</a></li>
-        <li class="nav-link"><a href="#">My Deals</a></li>
-        <li class="nav-link">
-          <form action="/profile" method="get">
-            <input id="profile-button" class="look-like-button" type="submit" value="Profile" />
-          </form>
-        </li>
-        <li class="nav-link">
-          <form action="/logout" method="get">
-            <input id="logout-button" class="look-like-button" type="submit" value="Logout" />
-          </form>
-        </li>
-      </ul>
-
-    </div>
->>>>>>> dev
 
   </nav>
 
+  
+  <main>
 
     <div id="profile-info"></div>
 
@@ -69,27 +44,30 @@
       <input id="password" class="edit-form-input" type="text" name="password" />
     </form>
 
-  <div id="update-deal-container">
-    <form id="update-deal-form">
-      <label for="updatedealname" class="deal-form-label">Name:</label>
-      <input id="updatedealname" class="deal-form-input" type="text" name="dealname" />
+    <div id="update-deal-container">
 
-      <label for="updatedealprice" class="deal-form-label">Price:</label>
-      <input id="updatedealprice" class="deal-form-input" type="text" name="dealprice" />
+      <form id="update-deal-form">
+        <label for="updatedealname" class="deal-form-label">Name:</label>
+        <input id="updatedealname" class="deal-form-input" type="text" name="dealname" />
 
-      <label for="updatedeallocation" class="deal-form-label">Store Location Details:</label>
-      <input id="updatedeallocation" class="deal-form-input" type="text" name="deallocation" />
+        <label for="updatedealprice" class="deal-form-label">Price:</label>
+        <input id="updatedealprice" class="deal-form-input" type="text" name="dealprice" />
 
-      <label for="updatedealdescription" class="deal-form-label">Description:</label>
-      <input id="updatedealdescription" class="deal-form-input" type="text" name="dealdescription" />
+        <label for="updatedeallocation" class="deal-form-label">Store Location Details:</label>
+        <input id="updatedeallocation" class="deal-form-input" type="text" name="deallocation" />
 
-      <label for="updatedealexpirydate" class="deal-form-label">Deal Expiry Date:</label>
-      <input id="updatedealexpirydate" class="deal-form-input" type="date" name="dealexpirydate" />
+        <label for="updatedealdescription" class="deal-form-label">Description:</label>
+        <input id="updatedealdescription" class="deal-form-input" type="text" name="dealdescription" />
 
-      <label for="updatedealphotos" class="deal-form-label">Photos:</label>
-      <input id="updatedealphotos" type="file" multiple="multiple" name="files" class="deal-form-input">
-    </form>
-  </div>
+        <label for="updatedealexpirydate" class="deal-form-label">Deal Expiry Date:</label>
+        <input id="updatedealexpirydate" class="deal-form-input" type="date" name="dealexpirydate" />
+
+        <label for="updatedealphotos" class="deal-form-label">Photos:</label>
+        <input id="updatedealphotos" type="file" multiple="multiple" name="files" class="deal-form-input">
+      </form>
+
+    </div>
+
 
 
     <form id="upload-images-form">
@@ -97,6 +75,7 @@
     </form>
 
     <div id="post-deal-container">
+
       <form id="deal-form">
         <label for="dealname" class="deal-form-label">Name:</label>
         <input id="dealname" class="deal-form-input" type="text" name="dealname" />
@@ -121,18 +100,22 @@
 
 
     <div id="profile-abilities">
-      <button id="post-deal-link" class="abilities-button">Post Deal</button>
+
       <form action="/admin-dashboard" method="get" id="view-user-account">
         <input id="admin-dashboard-button" class="abilities-button" type="submit" value="Admin Dashboard">
       </form>
+
       <button id="edit-profile-button" class="abilities-button">Edit Information</button>
       <button id="change-avatar-button" class="abilities-button">Change Avatar Image</button>
+      <button id="post-deal-link" class="abilities-button">Post Deal</button>
+
     </div>
 
     <div id="deals">
 
     </div>
 
+  </main>
 
 
   <footer id="footer">

@@ -1,14 +1,72 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Source+Sans+Pro:wght@400;600;700&display=swap');
 
+/*
 body {
   font-family: 'Source Sans Pro', sans-serif;
   margin: 0;
   padding: 0;
   height: 100%;
 }
+*/
+
+nav {
+  background-color: #fcc603
+}
+
+.look-like-button {
+  background: none;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  margin: 0;
+  color: black;
+}
 
 @media (max-width: 600px) {
 
+  nav {
+    padding-bottom: 1em;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  #nav-items-container {
+    grid-area: 1 / 2 / span 1 /span 1;
+  }
+
+  #nav-icons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    justify-content: center;
+  }
+
+  .nav-icon {
+    justify-self: center;
+    width: 1.5em;
+  }
+
+  #nav-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    justify-items: center;
+    margin: 0;
+    padding: 0;
+  }
+  
+  #nav-links {
+    display: grid;
+    grid-template: auto / 1fr 1fr 1fr 1fr;
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+  /*
   body {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -117,6 +175,7 @@ body {
     margin: 0;
     color: black;
   }
+  */
 }
 
 a {
@@ -129,8 +188,6 @@ a {
   grid-column-end: 5;
   justify-self: center;
 }
-
-
 
 @media (min-width: 601px) {
   body {

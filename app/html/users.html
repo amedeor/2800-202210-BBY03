@@ -5,7 +5,9 @@
   <meta charset="UTF-8">
   <!-- maximum-scale=1 to prevent zooming in on input fields -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <link rel="stylesheet" href="/css/main-style.css">
   <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/footer.css">
   <link rel="stylesheet" href="/css/users.css">
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
   <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
@@ -14,6 +16,7 @@
 
 <body>
   <nav id="nav">
+
     <h1>FoodForLess</h1>
     <div id="nav-items-container">
       <div id="nav-icons">
@@ -42,50 +45,54 @@
 
   </nav>
 
-  <h2 id="user-accounts-heading">User Accounts</h2>
+  <main>
 
-  <div id="table-container">
-    <div id="users-container">
-      <table id="users">
+    <h2 id="user-accounts-heading">User Accounts</h2>
 
-      </table>
+    <div id="table-container">
+      <div id="users-container">
+        <table id="users">
+
+        </table>
+      </div>
+
+      <div id="create-user-button-container">
+        <p id="status"></p>
+        <button id="create-user-button">Create User</button>
+      </div>
+
     </div>
 
-    <div id="create-user-button-container">
-      <p id="status"></p>
-      <button id="create-user-button">Create User</button>
+    <div id="create-record-form-container">
+      <form id="create-record-form">
+        <label for="create-username" class="edit-form-label">Username:</label>
+        <input id="create-username" class="edit-form-input" type="text" name="username" />
+
+        <label for="create-firstname" class="edit-form-label">First Name:</label>
+        <input id="create-firstname" class="edit-form-input" type="text" name="firstname" />
+
+        <label for="create-lastname" class="edit-form-label">Last Name:</label>
+        <input id="create-lastname" class="edit-form-input" type="text" name="lastname" />
+
+        <label for="create-email" class="edit-form-label">Email:</label>
+        <input id="create-email" class="edit-form-input" type="text" name="email" />
+
+        <label for="create-password" class="edit-form-label">Password:</label>
+        <input id="create-password" class="edit-form-input" type="text" name="password" />
+
+        <label for="create-usertype" class="edit-form-label">User Type:</label>
+        <input id="create-usertype" class="edit-form-input" type="text" name="usertype" />
+
+        <label for="create-image-upload" class="edit-form-label">Avatar Image:</label>
+        <input id="create-image-upload" class="edit-form-input" type="file"
+          accept="image/png, image/gif, image/jpeg, image/svg+xml" />
+      </form>
+
     </div>
 
-  </div>
 
-  <div id="create-record-form-container">
-    <form id="create-record-form">
-      <label for="create-username" class="edit-form-label">Username:</label>
-      <input id="create-username" class="edit-form-input" type="text" name="username" />
+    <div id="update-record-form-container">
 
-      <label for="create-firstname" class="edit-form-label">First Name:</label>
-      <input id="create-firstname" class="edit-form-input" type="text" name="firstname" />
-
-      <label for="create-lastname" class="edit-form-label">Last Name:</label>
-      <input id="create-lastname" class="edit-form-input" type="text" name="lastname" />
-
-      <label for="create-email" class="edit-form-label">Email:</label>
-      <input id="create-email" class="edit-form-input" type="text" name="email" />
-
-      <label for="create-password" class="edit-form-label">Password:</label>
-      <input id="create-password" class="edit-form-input" type="text" name="password" />
-
-      <label for="create-usertype" class="edit-form-label">User Type:</label>
-      <input id="create-usertype" class="edit-form-input" type="text" name="usertype" />
-
-      <label for="create-image-upload" class="edit-form-label">Avatar Image:</label>
-      <input id="create-image-upload" class="edit-form-input" type="file"
-        accept="image/png, image/gif, image/jpeg, image/svg+xml" />
-    </form>
-  </div>
-
-
-      <div id="update-record-form-container">
       <form id="update-record-form">
         <label for="id" class="edit-form-label">ID:</label>
         <input id="id" class="edit-form-input" type="text" name="id" disabled />
@@ -109,14 +116,20 @@
         <input id="usertype" class="edit-form-input" type="text" name="usertype" />
 
         <label for="image-upload" class="edit-form-label">Avatar Image:</label>
-        <input id="image-upload" class="edit-form-input" type="file" accept="image/png, image/gif, image/jpeg, image/svg+xml" required/>
+        <input id="image-upload" class="edit-form-input" type="file"
+          accept="image/png, image/gif, image/jpeg, image/svg+xml" required />
       </form>
-      </div>
+
+    </div>
+
+  </main>
+
+
 
   <footer id="footer">
 
   </footer>
-  
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
