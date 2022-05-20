@@ -495,7 +495,9 @@ async function deletePost(e) {
     console.log(childrenElements[i]);
     console.log(childrenElements[i].tagName);
     if (childrenElements[i].tagName == "P") {
-      deal.push(childrenElements[i].childNodes[1].innerText);
+      if (childrenElements[i].childNodes[1] !== undefined) {
+        deal.push(childrenElements[i].childNodes[1].innerText);
+      }
     }
   }
 
@@ -687,3 +689,6 @@ async function editPhoto(photoId) {
 
   }
 }
+
+
+new FroalaEditor('textarea');
