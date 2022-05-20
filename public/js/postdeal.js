@@ -132,6 +132,16 @@ $("#post-deal-container").dialog({
         //select this dialog and close it when cancel is pressed
         $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
         $(this).dialog("close");
+        let dealexpirelabel = document.getElementById("dealexpirelabel");
+        dealexpirelabel.classList.remove("error");
+        let dealdescriptionlabel = document.getElementById("dealdescriptionlabel");
+        dealdescriptionlabel.classList.remove("error");
+        let deallocationlabel = document.getElementById("deallocationlabel");
+        deallocationlabel.classList.remove("error");
+        let dealpricelabel = document.getElementById("dealpricelabel");
+        dealpricelabel.classList.remove("error");
+        let dealnamelabel = document.getElementById("dealnamelabel");
+        dealnamelabel.classList.remove("error");
       },
     }
   ],
