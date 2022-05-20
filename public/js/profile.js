@@ -663,5 +663,5 @@ async function editPhoto(photoId) {
 }
 
 new FroalaEditor('textarea', {
-  pluginsEnabled: ["align", "charCounter", "colors", "fontFamily"]
+  pluginsEnabled: ["align", "charCounter", "colors", "fontFamily"],
 });
