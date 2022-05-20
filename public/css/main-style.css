@@ -248,9 +248,8 @@ body {
     background-color: lightblue;
   }
 }
-#footer {
-  position: sticky;
 
+#footer {
   grid-column-start: 1;
   grid-column-end: 5;
 

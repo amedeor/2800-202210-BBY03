@@ -1,12 +1,8 @@
 "use strict";
 
+getDeals();
+
 async function editProfileInfo() {
-  // let editSubmitButton = document.querySelector("#save-changes-button");
-
-  // if (editSubmitButton != null) {
-  //   editSubmitButton.addEventListener("click", async e => {
-  //     e.preventDefault(); 
-
   let currentUsername = document.querySelector(".username").innerText;
 
   //get the URL of the user's current profile picture
@@ -49,18 +45,7 @@ async function editProfileInfo() {
   document.querySelector(".lastName").innerText = userRecord.user_lastname;
   document.querySelector(".email").innerText = userRecord.user_email;
   document.querySelector(".password").innerText = userRecord.user_password;
-
-  // });
-  // }
 }
-
-// //Get the upload image form element
-// const uploadImageForm = document.getElementById("upload-images-form");
-
-// //Attach an event listener to the upload image form's submit eventhandler
-// //The uploadImage function will fire when the uploadImageForm's submit event is triggered
-// uploadImageForm.addEventListener("submit", uploadImage);
-
 
 //Function to upload a new avatar image on the user's profile page
 async function uploadImage(e) {
@@ -141,7 +126,7 @@ $("#edit-user-info-form").dialog({
   autoOpen: false,
   draggable: false,
   title: "Edit Profile Info",
-  Width: 50,
+  Width: 80,
   height: 450,
   buttons: [
     {
@@ -167,8 +152,6 @@ $("#edit-user-info-form").dialog({
 $(window).resize(function () {
   $("#edit-user-info-form").dialog("option", "position", { my: "center", at: "center", of: window });
 });
-
-
 
 let changeAvatarButton = document.querySelector("#change-avatar-button");
 
@@ -223,18 +206,17 @@ function easter_egg() {
   }
 }
 
-
 async function getDeals() {
 
   let response = await fetch("/get-deals");
 
   let parsedResponse = await response.json();
 
-  console.log(parsedResponse);
+  // console.log(parsedResponse);
 
   let dealsContainer = document.querySelector("#deals");
 
-  dealsContainer.innerText = "";
+  dealsContainer.innerHTML = "";
 
   for (let deal of parsedResponse.usersDeals) {
 
@@ -271,7 +253,12 @@ async function getDeals() {
     let editDealButton = document.createElement("input");
     editDealButton.setAttribute("class", "edit-deal-button");
     editDealButton.setAttribute("type", "submit");
-    editDealButton.setAttribute("value", "edit");
+    editDealButton.setAttribute("value", "edit deal");
+
+    let deleteDealButton = document.createElement("input");
+    deleteDealButton.setAttribute("class", "delete-deal-button");
+    deleteDealButton.setAttribute("type", "submit");
+    deleteDealButton.setAttribute("value", "delete deal");
 
 
     //This block of code to calculate the local time using the built in JavaScript getTimezoneOffset() function is from 
@@ -333,26 +320,37 @@ async function getDeals() {
     dealContainer.insertAdjacentElement("beforeend", dealStoreLocationParagraph);
     dealStoreLocationParagraph.insertAdjacentElement("beforeend", dealStoreLocationSpan);
 
-    console.log(deal.deal_id);
-    console.log(deal.user_id);
-    console.log(deal.deal_price);
-    console.log(deal.deal_description);
-    console.log(deal.deal_store_location);
-
     for (let photo of deal.photos) {
       let photoElement = document.createElement("img");
+      photoElement.setAttribute("id", photo.photo_id);
       photoElement.setAttribute("src", photo.photo_url);
-      photoElement.setAttribute("class", photo.photo_id);
+      photoElement.setAttribute("class", `dealphoto ${photo.photo_id}`);
       dealContainer.insertAdjacentElement("beforeend", photoElement);
+
+      photoElement.addEventListener("click", e => {
+        $("#edit-photo-container").data("photoId", e.target.getAttribute("id")).dialog("open");
+        console.log(e.target.getAttribute("id"));
+        let imageUrl = e.target.getAttribute("src");
+        document.querySelector("#edit-image").setAttribute("src", imageUrl);
+      })
+
+
       console.log(photo.photo_id);
       console.log(photo.photo_url);
     }
 
     dealContainer.insertAdjacentElement("beforeend", editDealButton);
+    dealContainer.insertAdjacentElement("beforeend", deleteDealButton);
     dealsContainer.insertAdjacentElement("beforeend", dealContainer);
   }
 
   var editButtons = document.querySelectorAll(".edit-deal-button");
+
+  var deleteButtons = document.querySelectorAll(".delete-deal-button");
+
+  for (let j = 0; j < deleteButtons.length; j++) {
+    deleteButtons[j].addEventListener("click", deletePost);
+  }
 
   for (let j = 0; j < editButtons.length; j++) {
     editButtons[j].addEventListener("click", editPost);
@@ -360,28 +358,55 @@ async function getDeals() {
 
 }
 
-getDeals();
+async function updateDeals(dealID) {
 
-async function updateDeals() {
+  const imageUploadElement = document.querySelector('#updatedealphotos');
 
-  let response = await fetch("/update-deal", {
-    method: "post",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
-    body: `currentUsername=${currentUsername}&username=${username}&password=${password}&firstname=${firstName}&lastname=${lastName}&email=${email}&userAvatarUrl=${userAvatarUrl}`
-  });
+  console.log(imageUploadElement.files);
 
-  let parsedResponse = await response.json();
+  console.log("UploadImages called");
 
-  if (parsedResponse.status === "fail") {
-    document.querySelector("#error-message").innerHTML = "";
-    document.querySelector("#error-message").insertAdjacentText("afterbegin", parsedResponse.message);
+  const formData = new FormData();
+
+  //Use a loop to get the image from the image upload input and store it in a variable called file
+  for (let i = 0; i < imageUploadElement.files.length; i++) {
+    formData.append("files", imageUploadElement.files[i]);
   }
 
-  let updatedRecordResponse = await fetch("/get-deals");
-  let parsedUpdatedRecordResponse = await updatedRecordResponse.json();
+  console.log(`Value of the files that are uploaded: ${formData.files}`);
+
+  //append the other deal data from the form to formData
+
+  let updatedName = document.querySelector("#updatedealname");
+  let updatedPrice = document.querySelector("#updatedealprice");
+  let updatedLocation = document.querySelector("#updatedeallocation");
+  let updatedDescription = document.querySelector("#updatedealdescription");
+  let updatedExpireDate = document.querySelector("#updatedealexpirydate");
+
+  if (updatedName.checkValidity() !== false && updatedPrice.checkValidity() !== false && updatedLocation.checkValidity() !== false &&
+    updatedDescription.checkValidity() != false && updatedExpireDate.checkValidity() != false) {
+
+    formData.append("dealID", dealID);
+    formData.append("updatedName", updatedName.value);
+    formData.append("updatedPrice", updatedPrice.value);
+    formData.append("updatedLocation", updatedLocation.value);
+    formData.append("updatedDescription", updatedDescription.value);
+    formData.append("updatedExpireDate", updatedExpireDate.value);
+
+    const options = {
+      method: 'POST',
+      body: formData,
+    };
+
+    await fetch("/update-deal", options
+    ).then(function (res) {
+      getDeals();
+    }).catch(function (err) { ("Error:", err) }
+    );
+  }
 }
+
+var dealID;
 
 function editPost(e) {
 
@@ -400,7 +425,7 @@ function editPost(e) {
     }
   }
 
-  console.log(deal);
+  dealID = deal[0];
 
   document.querySelector("#updatedealname").value = deal[2];
   document.querySelector("#updatedealprice").value = deal[3];
@@ -410,25 +435,87 @@ function editPost(e) {
 
 
   //open the jQuery modal window when the edit button is clicked
-  $("#update-deal-container").dialog("open");
+  $("#update-deal-container").data("dealID", dealID).dialog("open");
 }
 
-$("#update-deal-container").dialog({
+async function deletePost(e) {
+
+  console.log(`parentTd: ${e.target.parentNode}`);
+
+  let parentTd = e.target.parentNode;
+  let childrenElements = parentTd.children;
+
+  let deal = [];
+
+  for (let i = 0; childrenElements[i]; i++) {
+    console.log(childrenElements[i]);
+    console.log(childrenElements[i].tagName);
+    if (childrenElements[i].tagName == "P") {
+      deal.push(childrenElements[i].childNodes[1].innerText);
+    }
+  }
+
+  dealID = deal[0];
+  let response = await fetch("/remove-deal", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: `dealID=${dealID}`
+  });
+
+  let parsedResponse = await response.json();
+  parsedResponse;
+  parentTd.remove();
+}
+
+$("#update-deal-container").data("dealID", dealID).dialog({
+  modal: true,
+  fuild: true, //prevent horizontal scroll bars on mobile layout
+  resizable: true,
+  autoOpen: false,
+  draggable: false,
+  title: "Edit Deal",
+  Width: 100,
+  height: 600,
+  buttons: [
+    {
+      text: "Submit",
+      click: function () {
+        updateDeals(dealID);
+        $("#update-deal-form").trigger("reset"); //clear the form when the cancel button is clicked
+        $(this).dialog("close");
+      }
+    },
+    {
+      text: "Cancel",
+      click: function () {
+        //select this dialog and close it when cancel is pressed
+        $("#update-deal-form").trigger("reset"); //clear the form when the cancel button is clicked
+        $(this).dialog("close");
+      },
+    }
+  ],
+  close: function () {
+    getDeals();
+  }
+});
+
+$("#edit-photo-container").dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
   resizable: false,
   autoOpen: false,
   draggable: false,
-  title: "Post a Deal",
-  Width: 50,
-  height: 500,
+  title: "Edit Photo",
+  Width: 80,
+  height: 600,
   buttons: [
     {
       text: "Submit",
       click: function () {
-        uploadImages();
-        $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
-        getDeals();
+        editPhoto($("#edit-photo-container").data("photoId"));
+        $("#edit-image-form").trigger("reset"); //clear the form after submitting
         $(this).dialog("close");
       }
     },
@@ -438,7 +525,15 @@ $("#update-deal-container").dialog({
         //select this dialog and close it when cancel is pressed
         $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
         $(this).dialog("close");
-      },
+      }
+    },
+    {
+      text: "Delete Photo",
+      click: async function () {
+        deletePhoto($("#edit-photo-container").data("photoId"));
+        $("#edit-image-form").trigger("reset"); //clear the form when the cancel button is clicked
+        $(this).dialog("close");
+      }
     }
   ]
 });
@@ -467,3 +562,63 @@ tinymce.init({
   'removeformat | help',
   content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
 });
+
+async function deletePhoto(photoId) {
+  let response = await fetch("/delete-photo", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: `photoId=${photoId}`
+  }).then(function (res) {
+    getDeals();
+  }).catch(function (err) { ("Error:", err) }
+  );
+}
+
+async function editPhoto(photoId) {
+  // e.preventDefault();
+
+  const iupload = document.querySelector('#iupload');
+
+  console.log(photoId);
+
+  console.log(iupload);
+
+  if (iupload.checkValidity() !== false) {
+    const formData = new FormData();
+
+    //Use a loop to get the image from the image upload input and store it in a variable called file
+    for (let i = 0; i < iupload.files.length; i++) {
+      formData.append("file", iupload.files[i]);
+    }
+
+    for (var pair of formData.entries()) {
+      console.log(pair[0]);
+    }
+
+    //append the user's username to the formData that will be sent to the server
+    //this allows us to update the avatar URL for the correct user in the database
+    formData.append("photoId", photoId);
+    console.log(photoId);
+
+    const options = {
+      method: 'POST',
+      body: formData,
+    };
+
+    await fetch("/edit-image", options
+    ).then(function (res) {
+      getDeals();
+    }).catch(function (err) { ("Error:", err) }
+    );
+
+    iupload.value = "";
+  } else {
+
+  }
+}
+new FroalaEditor('textarea');
+// tinymce.init({
+//   selector: 'textarea',
+// });

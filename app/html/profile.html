@@ -71,11 +71,23 @@
 
   <div id="post-deal-container">
     <form id="deal-form">
-      <label for="dealname" class="deal-form-label">Name:</label>
-      <input id="dealname" class="deal-form-input" type="text" name="dealname" />
-  
-      <label for="dealprice" class="deal-form-label">Price:</label>
-      <input id="dealprice" class="deal-form-input" type="text" name="dealprice" />
+      <p>Required fields are marked with an asterisk *</p>
+
+      <label for="dealname" class="deal-form-label">Name*:</label>
+      <input id="dealname" class="deal-form-input" type="text" name="dealname" required/>
+
+      <label for="dealprice" class="deal-form-label">Price*:</label>
+      <input id="dealprice" class="deal-form-input" type="text" name="dealprice" required/>
+
+      <label for="deallocation" class="deal-form-label">Store Location Details*:</label>
+      <input id="deallocation" class="deal-form-input" type="text" name="deallocation" required/>
+
+      <label for="dealdescription" class="deal-form-label">Description*:</label>
+      <!-- <input id="dealdescription" class="deal-form-input" type="text" name="dealdescription" required/> -->
+      <textarea name="dealdescription" id="dealdescription" class="deal-form-input"></textarea>
+
+      <label for="dealexpirydate" class="deal-form-label">Deal Expiry Date*:</label>
+      <input id="dealexpirydate" class="deal-form-input" type="date" name="dealexpirydate" required/>
 
       <label for="deallocation" class="deal-form-label">Store Location Details:</label>
       <input id="deallocation" class="deal-form-input" type="text" name="deallocation" />
@@ -88,6 +100,38 @@
   
       <label for="dealphotos" class="deal-form-label">Photos:</label>
       <input id="dealphotos" type="file" multiple="multiple" name="files" class="deal-form-input">
+    </form>
+  </div>
+
+  <div id="update-deal-container">
+    <form id="update-deal-form">
+      <p>Required fields are marked with an asterisk *</p>
+
+      <label for="updatedealname" class="deal-form-label">Name*:</label>
+      <input id="updatedealname" class="deal-form-input" type="text" name="dealname" required/>
+
+      <label for="updatedealprice" class="deal-form-label">Price*:</label>
+      <input id="updatedealprice" class="deal-form-input" type="text" name="dealprice" required/>
+
+      <label for="updatedeallocation" class="deal-form-label">Store Location Details*:</label>
+      <input id="updatedeallocation" class="deal-form-input" type="text" name="deallocation" required/>
+
+      <label for="updatedealdescription" class="deal-form-label">Description*:</label>
+      <!-- <input id="updatedealdescription" class="deal-form-input" type="text" name="dealdescription" required/> -->
+      <textarea name="dealdescription" id="updatedealdescription" class="deal-form-input"></textarea>
+
+      <label for="updatedealexpirydate" class="deal-form-label">Deal Expiry Date*:</label>
+      <input id="updatedealexpirydate" class="deal-form-input" type="date" name="dealexpirydate" required/>
+
+      <label for="updatedealphotos" class="deal-form-label">Photos:</label>
+      <input id="updatedealphotos" type="file" multiple="multiple" name="files" class="deal-form-input">
+    </form>
+  </div>
+
+  <div id="edit-photo-container">
+    <form id="edit-image-form">
+      <img id="edit-image" src=" " alt="">
+      <input id="iupload" type="file" name="file" accept="image/png, image/gif, image/jpeg, image/svg+xml" required/>
     </form>
   </div>
 
@@ -111,6 +155,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src="https://cdn.tiny.cloud/1/xdb11zt8p1cvq7nhxt77xea9sg907djndzi0vuzi54l2gt3k/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
+  <script src="/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
   <script src="/js/client.js"></script>
   <script src="/js/profile.js"></script>
   <script src="/js/postdeal.js"></script>

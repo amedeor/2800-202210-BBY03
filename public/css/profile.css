@@ -3,7 +3,9 @@
 body {
   font-family: 'Source Sans Pro', sans-serif;
 }
-
+textarea{
+  background-color: aqua;
+}
 .edit-form-label {
   padding-top: .5em;
   padding-bottom: .5em;
@@ -55,8 +57,5 @@ button {
   border-width: 1px;
   border-color: black;
   border-radius: 0.5em;
-}
-#profile-icon{
-  opacity: 0.5;
 }
 

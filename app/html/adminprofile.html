@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="/css/navbar.css">
   <link rel="stylesheet" href="/css/postdeal.css">
   <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
+  <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
   <title>FoodForLess</title>
 </head>
 
@@ -71,20 +72,28 @@
 
   <div id="post-deal-container">
     <form id="deal-form">
-      <label for="dealname" class="deal-form-label">Name:</label>
-      <input id="dealname" class="deal-form-input" type="text" name="dealname" />
+      <p>Required fields are marked with an asterisk *</p>
 
-      <label for="dealprice" class="deal-form-label">Price:</label>
-      <input id="dealprice" class="deal-form-input" type="text" name="dealprice" />
+      <label for="dealname" class="deal-form-label">Name*:</label>
+      <input id="dealname" class="deal-form-input" type="text" name="dealname" required/>
 
-      <label for="deallocation" class="deal-form-label">Store Location Details:</label>
-      <input id="deallocation" class="deal-form-input" type="text" name="deallocation" />
+      <label for="dealprice" class="deal-form-label">Price*:</label>
+      <input id="dealprice" class="deal-form-input" type="text" name="dealprice" required/>
 
+<<<<<<< HEAD
       <label for="dealdescription" class="deal-form-label">Description:</label>
       <textarea name="dealdescription" id="dealdescription" class="deal-form-input"></textarea>
+=======
+      <label for="deallocation" class="deal-form-label">Store Location Details*:</label>
+      <input id="deallocation" class="deal-form-input" type="text" name="deallocation" required/>
+>>>>>>> e54d86b0e964d9eb1e1eb077fded4f730c7bd675
 
-      <label for="dealexpirydate" class="deal-form-label">Deal Expiry Date:</label>
-      <input id="dealexpirydate" class="deal-form-input" type="date" name="dealexpirydate" />
+      <label for="dealdescription" class="deal-form-label">Description*:</label>
+      <!-- <input id="dealdescription" class="deal-form-input" type="text" name="dealdescription" required/> -->
+      <textarea name="dealdescription" id="dealdescription" class="deal-form-input"></textarea>
+
+      <label for="dealexpirydate" class="deal-form-label">Deal Expiry Date*:</label>
+      <input id="dealexpirydate" class="deal-form-input" type="date" name="dealexpirydate" required/>
 
       <label for="dealphotos" class="deal-form-label">Photos:</label>
       <input id="dealphotos" type="file" multiple="multiple" name="files" class="deal-form-input">
@@ -93,28 +102,43 @@
 
   <div id="update-deal-container">
     <form id="update-deal-form">
-      <label for="updatedealname" class="deal-form-label">Name:</label>
-      <input id="updatedealname" class="deal-form-input" type="text" name="dealname" />
+      <p>Required fields are marked with an asterisk *</p>
 
-      <label for="updatedealprice" class="deal-form-label">Price:</label>
-      <input id="updatedealprice" class="deal-form-input" type="text" name="dealprice" />
+      <label for="updatedealname" class="deal-form-label">Name*:</label>
+      <input id="updatedealname" class="deal-form-input" type="text" name="dealname" required/>
 
-      <label for="updatedeallocation" class="deal-form-label">Store Location Details:</label>
-      <input id="updatedeallocation" class="deal-form-input" type="text" name="deallocation" />
+      <label for="updatedealprice" class="deal-form-label">Price*:</label>
+      <input id="updatedealprice" class="deal-form-input" type="text" name="dealprice" required/>
 
+<<<<<<< HEAD
       <label for="updatedealdescription" class="deal-form-label">Description:</label>
       <textarea name="dealdescription" id="updatedealdescription" class="deal-form-input"></textarea>
+=======
+      <label for="updatedeallocation" class="deal-form-label">Store Location Details*:</label>
+      <input id="updatedeallocation" class="deal-form-input" type="text" name="deallocation" required/>
+>>>>>>> e54d86b0e964d9eb1e1eb077fded4f730c7bd675
 
-      <label for="updatedealexpirydate" class="deal-form-label">Deal Expiry Date:</label>
-      <input id="updatedealexpirydate" class="deal-form-input" type="date" name="dealexpirydate" />
+      <label for="updatedealdescription" class="deal-form-label">Description*:</label>
+      <!-- <input id="updatedealdescription" class="deal-form-input" type="text" name="dealdescription" required/> -->
+      <textarea name="dealdescription" id="updatedealdescription" class="deal-form-input"></textarea>
+
+      <label for="updatedealexpirydate" class="deal-form-label">Deal Expiry Date*:</label>
+      <input id="updatedealexpirydate" class="deal-form-input" type="date" name="dealexpirydate" required/>
 
       <label for="updatedealphotos" class="deal-form-label">Photos:</label>
       <input id="updatedealphotos" type="file" multiple="multiple" name="files" class="deal-form-input">
     </form>
   </div>
 
+  <div id="edit-photo-container">
+    <form id="edit-image-form">
+      <img id="edit-image" src=" " alt="">
+      <input id="iupload" type="file" name="file" accept="image/png, image/gif, image/jpeg, image/svg+xml" required/>
+    </form>
+  </div>
 
   <div id="profile-abilities">
+    
     <button id="post-deal-link" class="abilities-button">Post Deal</button>
     <form action="/admin-dashboard" method="get" id="view-user-account">
       <input id="admin-dashboard-button" class="abilities-button" type="submit" value="Admin Dashboard">
@@ -138,7 +162,12 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   
 
+<<<<<<< HEAD
   <script src = "../../node_modules/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+=======
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
+  <script src="/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+>>>>>>> e54d86b0e964d9eb1e1eb077fded4f730c7bd675
   <script src="/js/client.js"></script>
   <script src="/js/profile.js"></script>
   <script src="/js/postdeal.js"></script>
