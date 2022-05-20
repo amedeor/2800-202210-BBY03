@@ -1,10 +1,5 @@
 "use strict";
 
-// const databaseHost = "us-cdbr-east-05.cleardb.net";
-// const databaseUser = "b836f8ec5d5bac";
-// const databasePassword = "732ab9c0";
-// const databaseName = "heroku_024b43865916c4a";
-
 const databaseHost = "127.0.0.1";
 const databaseUser = "root";
 const databasePassword = "";
@@ -175,10 +170,8 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
     });
 
     await connection.connect();
-    var today = new Date();
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    let dealRecord = "INSERT INTO BBY_03_deal (deal_name, deal_price, deal_description, deal_store_location, deal_post_date_time, deal_expiry_date, user_id) values (?)";
-    let dealRecordValues = [dealName, dealPrice, dealDescription, dealLocation, date, dealExpiryDate, currentUserId];
+    let dealRecord = "INSERT INTO BBY_03_deal (deal_name, deal_price, deal_description, deal_store_location, deal_expiry_date, user_id) values (?)";
+    let dealRecordValues = [dealName, dealPrice, dealDescription, dealLocation, dealExpiryDate, currentUserId];
     await connection.query(dealRecord, [dealRecordValues]);
 
     //Get the deal_id of the last inserted deal into BBY_03_deal
