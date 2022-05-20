@@ -81,6 +81,13 @@ body {
     justify-content: center;
   }
 
+  #deal-heading {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    justify-self: center;
+    text-decoration: underline;
+  }
+
   #footer {
     grid-column-start: 1;
     grid-column-end: 4;
@@ -188,8 +195,6 @@ body {
       justify-self: center;
     }
   
-  
-  
     #dealidparagraph {
       display: none;
     }
@@ -248,10 +253,6 @@ body {
       justify-self: center;
       width: 10em;
     }
-
-
-
-
 }
 
 
@@ -349,6 +350,13 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+
+  #deal-heading {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    justify-self: center;
+    text-decoration: underline;
   }
 
   #user-accounts-heading {
