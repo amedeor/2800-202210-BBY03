@@ -687,3 +687,6 @@ async function editPhoto(photoId) {
 
   }
 }
+
+
+new FroalaEditor('textarea');
