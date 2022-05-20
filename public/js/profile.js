@@ -305,8 +305,8 @@ async function getDeals() {
     dealExpiryDateParagraph.insertAdjacentText("beforeend", "Deal Expiry Date: ");
     dealExpiryDateSpan.insertAdjacentText("beforeend", slicedDealExpiryDate);
 
-    dealDescriptionParagraph.insertAdjacentText("beforeend", "Description: ");
-    dealDescriptionSpan.insertAdjacentText("beforeend", deal.deal_description);
+    dealDescriptionParagraph.insertAdjacentText("beforeend", "Description: "); 
+    dealDescriptionSpan.insertAdjacentHTML("beforeend", deal.deal_description);
 
     dealStoreLocationParagraph.insertAdjacentText("beforeend", "Store Location: ")
     dealStoreLocationSpan.insertAdjacentText("beforeend", deal.deal_store_location);
@@ -421,6 +421,14 @@ async function updateDeals(dealID) {
     formData.append("updatedLocation", updatedLocation.value);
     formData.append("updatedDescription", updatedDescription.value);
     formData.append("updatedExpireDate", updatedExpireDate.value);
+
+
+    console.log(dealID.value);
+    console.log(updatedName.value);
+    console.log(updatedPrice.value);
+    console.log(updatedLocation.value);
+    console.log(updatedDescription.value);
+    console.log(updatedExpireDate.value);
 
     const options = {
       method: 'POST',

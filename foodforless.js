@@ -222,7 +222,7 @@ app.post("/update-deal", upload.array("files"), async (req, res) => {
 
     await connection.connect();
     let [results, fields] = await connection.query("UPDATE BBY_03_deal SET deal_name = ?, deal_price = ?, deal_description = ?, deal_store_location = ?, deal_expiry_date = ? WHERE deal_id = ?",
-      [updatedName, updatedPrice, updatedLocation, updatedDescription, updatedExpireDate, dealID],
+      [updatedName, updatedPrice, updatedDescription, updatedLocation, updatedExpireDate, dealID],
       function (error, results, fields) {
         if (error) {
           console.log(error);
