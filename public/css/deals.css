@@ -1,0 +1,40 @@
+#deals {
+    border-top: 1px solid black;
+}
+
+.dealPhoto {
+    align-self: center;
+    height: 50vh;
+    width: 50vh;
+}
+
+.deal-container {
+    width: 100%;
+    border: solid 5px black;
+    border-radius: 10px;
+    padding: 2em;
+    background-color: #fcc603ee;
+    margin: auto;
+}
+
+.dealHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.dealId {
+    display: none;
+}
+
+.dealName {
+    font-weight: bold;
+}
+
+.dealUserName {
+    font-style: italic;
+}
+
+.dealDetails {
+    display: flex;
+    flex-direction: column;
+}
