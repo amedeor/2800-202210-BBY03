@@ -175,8 +175,10 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
     });
 
     await connection.connect();
-    let dealRecord = "INSERT INTO BBY_03_deal (deal_name, deal_price, deal_description, deal_store_location, deal_expiry_date, user_id) values (?)";
-    let dealRecordValues = [dealName, dealPrice, dealDescription, dealLocation, dealExpiryDate, currentUserId];
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    let dealRecord = "INSERT INTO BBY_03_deal (deal_name, deal_price, deal_description, deal_store_location, deal_post_date_time, deal_expiry_date, user_id) values (?)";
+    let dealRecordValues = [dealName, dealPrice, dealDescription, dealLocation, date, dealExpiryDate, currentUserId];
     await connection.query(dealRecord, [dealRecordValues]);
 
     //Get the deal_id of the last inserted deal into BBY_03_deal
