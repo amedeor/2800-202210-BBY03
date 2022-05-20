@@ -227,38 +227,53 @@ async function getDeals() {
     dealContainer.setAttribute("class", "deal-container");
 
     let dealIdParagraph = document.createElement("p");
+    dealIdParagraph.setAttribute("id", "dealidparagraph");
     let dealIdSpan = document.createElement("span");
 
     let userIdParagraph = document.createElement("p");
+    userIdParagraph.setAttribute("id", "useridparagraph");
     let userIdSpan = document.createElement("span");
 
+
     let dealNameParagraph = document.createElement("p");
+    dealNameParagraph.setAttribute("id", "dealnameparagraph");
     let dealNameSpan = document.createElement("span");
 
+
     let dealPriceParagraph = document.createElement("p");
+    dealPriceParagraph.setAttribute("id", "dealpriceparagraph");
     let dealPriceSpan = document.createElement("span");
 
+
     let dealPostDateParagraph = document.createElement("p");
+    dealPostDateParagraph.setAttribute("id", "dealpostdateparagraph");
     let dealPostSpan = document.createElement("span");
 
+
     let dealExpiryDateParagraph = document.createElement("p");
+    dealExpiryDateParagraph.setAttribute("id", "dealexpirydateparagraph");
     let dealExpiryDateSpan = document.createElement("span");
 
+
     let dealDescriptionParagraph = document.createElement("p");
+    dealDescriptionParagraph.setAttribute("id", "dealdescriptionparagraph");
     let dealDescriptionSpan = document.createElement("span");
 
+
     let dealStoreLocationParagraph = document.createElement("p");
+    dealStoreLocationParagraph.setAttribute("id", "dealstorelocationparagraph");
     let dealStoreLocationSpan = document.createElement("span");
+
 
     let editDealButton = document.createElement("input");
     editDealButton.setAttribute("class", "edit-deal-button");
     editDealButton.setAttribute("type", "submit");
-    editDealButton.setAttribute("value", "edit deal");
+    editDealButton.setAttribute("value", "Edit deal");
 
     let deleteDealButton = document.createElement("input");
     deleteDealButton.setAttribute("class", "delete-deal-button");
     deleteDealButton.setAttribute("type", "submit");
-    deleteDealButton.setAttribute("value", "delete deal");
+    deleteDealButton.setAttribute("value", "Delete deal");
 
 
     //This block of code to calculate the local time using the built in JavaScript getTimezoneOffset() function is from 
@@ -320,12 +335,15 @@ async function getDeals() {
     dealContainer.insertAdjacentElement("beforeend", dealStoreLocationParagraph);
     dealStoreLocationParagraph.insertAdjacentElement("beforeend", dealStoreLocationSpan);
 
+    let photosContainer = document.createElement("div");
+    photosContainer.setAttribute("id", "photoscontainer");
+
     for (let photo of deal.photos) {
       let photoElement = document.createElement("img");
       photoElement.setAttribute("id", photo.photo_id);
       photoElement.setAttribute("src", photo.photo_url);
       photoElement.setAttribute("class", `dealphoto ${photo.photo_id}`);
-      dealContainer.insertAdjacentElement("beforeend", photoElement);
+      photosContainer.insertAdjacentElement("beforeend", photoElement);
 
       photoElement.addEventListener("click", e => {
         $("#edit-photo-container").data("photoId", e.target.getAttribute("id")).dialog("open");
@@ -334,11 +352,24 @@ async function getDeals() {
         document.querySelector("#edit-image").setAttribute("src", imageUrl);
       })
 
-
       console.log(photo.photo_id);
       console.log(photo.photo_url);
     }
 
+    //put the photos container inside the deal container
+    dealContainer.insertAdjacentElement("beforeend", photosContainer);
+
+    let photoEditDeleteParagraph = document.createElement("p");
+    photoEditDeleteParagraph.setAttribute("id", "photoeditdeleteparagraph");
+    let photoEditDeleteMessageSpan = document.createElement("span");
+    photoEditDeleteMessageSpan.insertAdjacentText("beforeend", "(Tap on an image to edit or delete it)");
+    photoEditDeleteParagraph.insertAdjacentElement("beforeend", photoEditDeleteMessageSpan);
+    
+
+    if (photosContainer.hasChildNodes() == true) {
+      dealContainer.insertAdjacentElement("beforeend", photoEditDeleteParagraph);
+    }
+    
     dealContainer.insertAdjacentElement("beforeend", editDealButton);
     dealContainer.insertAdjacentElement("beforeend", deleteDealButton);
     dealsContainer.insertAdjacentElement("beforeend", dealContainer);
@@ -419,7 +450,9 @@ function editPost(e) {
     console.log(childrenElements[i]);
     console.log(childrenElements[i].tagName);
     if (childrenElements[i].tagName == "P") {
-      deal.push(childrenElements[i].childNodes[1].innerText);
+      if (childrenElements[i].childNodes[1] !== undefined) {
+        deal.push(childrenElements[i].childNodes[1].innerText);
+      }
     }
   }
 
@@ -452,6 +485,9 @@ async function deletePost(e) {
 
   let parentTd = e.target.parentNode;
   let childrenElements = parentTd.children;
+
+  console.log(parentTd);
+  console.log(childrenElements);
 
   let deal = [];
 
