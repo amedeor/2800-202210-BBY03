@@ -1,4 +1,4 @@
-"use strict;"
+"use strict";
 
 const loginButton = document.querySelector("#login-button");
 
@@ -16,6 +16,7 @@ const logoutButton = document.querySelector("#logout-button");
 
 const profileButton = document.querySelector("#profile-button");
 
+
 //Check if the logout icon is null, if it is not, attach an event listener to the link that will fire the /logout get request
 if (logoutIcon != null) {
   logoutIcon.addEventListener("click", async e => {
@@ -28,11 +29,12 @@ if (logoutIcon != null) {
 //Check if the profile icon is null, if it is not, attach an event listener to the link that will fire the /profile get request
 if (profileIcon != null) {
   profileIcon.addEventListener("click", async e => {
-    if (logoutButton != null) {
+    if (profileButton != null) {
       profileButton.click();
     }
   });
 }
+
 
 
 if (loginButton != null) {
@@ -126,4 +128,16 @@ if (signupButton != null) {
       }
     }
   });
+}
+
+var easter_count = 0;
+function easter_egg(){
+  easter_count++;
+  if (easter_count >= 3){
+  document.getElementById("easter_egg").innerHTML = "FoodForLe$$";
+  var link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = "/css/easter_egg.css";
+  document.getElementsByTagName('HEAD')[0].appendChild(link); 
+  }
 }

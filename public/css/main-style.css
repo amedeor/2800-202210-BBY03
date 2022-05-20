@@ -15,12 +15,6 @@ body {
     font-size: 10pt;
   }
 
-  #nav-icons {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-  }
-
   #profile-info {
     grid-column-start: 1;
     grid-column-end: 4;
@@ -48,36 +42,11 @@ body {
     font-weight: bold;
   }
 
-  #nav {
-    grid-column-start: 1;
-    grid-column-end: 4;
-    grid-row-start: 1;
-    grid-row-end: 2;
-    text-align: center;
-    background-color: #fcc603;
-  }
-
-  .nav-icon {
-    width: 1.5em;
-    cursor: pointer;
-  }
-
-
   h1 {
     padding-top: 1em;
     padding-bottom: 1em;
     margin: 0;
-  }
-
-  ul {
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  }
-
-  li {
-    list-style: none;
+    color: black;
   }
 
   table,
@@ -112,6 +81,13 @@ body {
     justify-content: center;
   }
 
+  #deal-heading {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    justify-self: center;
+    text-decoration: underline;
+  }
+
   #footer {
     grid-column-start: 1;
     grid-column-end: 4;
@@ -122,38 +98,166 @@ body {
     justify-self: center;
     text-align: center;
 
-    padding-top: 2em;
-    padding-bottom: 2em;
+    padding-top: 1em;
+    padding-bottom: 1em;
 
     background-color: #fcc603;
     width: 100%;
+
+    color: black;
+    font-weight: bold;
   }
 
-  .look-like-button {
-    background: none;
-    border: none;
-    font: inherit;
-    cursor: pointer;
+  /* Rules for the div that holds the deals */
+  #deals {
+    grid-column-start: 1;
+    grid-column-end: 4;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
-  #logout-button {
-    background: none;
-    border: none;
-    font: inherit;
-    cursor: pointer;
+  .deal-container {
+    background-color: lightblue;
+  }
+
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
+  #user-accounts-heading {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    justify-self: center;
+  }
+
+  /* Rules for the div that holds the deals */
+  #deals {
+    grid-column-start: 1;
+    grid-column-end: 5;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .deal-container {
+    background-color: #fcc603;
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto auto auto auto auto auto auto;
+
+    margin-bottom: 2em;
+    padding-bottom: 1em;
+  }
+
+
+  #dealnameparagraph {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    padding-left: 2em;
+  }
+
+  #dealpostdateparagraph {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    justify-self: end;
+    padding-right: 2em;
+  }
+
+  #photoscontainer {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 3;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  #photoeditdeleteparagraph {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 3;
+    grid-row-end: 4;
+    font-size: 9pt;
+    justify-self: center;
+  }
+
+  #dealidparagraph {
+    display: none;
+  }
+
+  #useridparagraph {
+    display: none;
+  }
+
+  #dealpriceparagraph {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 4;
+    grid-row-end: 5;
+    justify-self: center;
+  }
+
+  #dealexpirydateparagraph {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 5;
+    grid-row-end: 6;
+    justify-self: center;
+  }
+
+  #dealstorelocationparagraph {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 6;
+    grid-row-end: 7;
+    justify-self: center;
+  }
+
+  #dealdescriptionparagraph {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 7;
+    grid-row-end: 8;
+    justify-self: center;
+  }
+
+  .edit-deal-button {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 8;
+    grid-row-end: 9;
+    justify-self: center;
+    width: 10em;
+    margin-bottom: 1em;
+  }
+
+  .delete-deal-button {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 9;
+    grid-row-end: 10;
+    justify-self: center;
+    width: 10em;
   }
 }
 
-a {
-  text-decoration: none;
-  color: black;
-}
 
-#user-accounts-heading {
-  grid-column-start: 1;
-  grid-column-end: 5;
-  justify-self: center;
-}
+
+
 
 @media (min-width: 601px) {
   body {
@@ -163,6 +267,7 @@ a {
   }
 
   h1 {
+    color: black;
     font-size: 24pt;
   }
 
@@ -183,46 +288,6 @@ a {
     grid-column-end: 5;
     justify-self: center;
     margin-bottom: 2em;
-  }
-
-  #nav-icons {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto;
-    justify-content: center;
-  }
-
-  #nav-links {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto;
-    justify-items: center;
-    margin: 0;
-    padding: 0;
-  }
-
-  #nav-items-container {
-    width: 60%;
-  }
-
-  #nav {
-    grid-column-start: 1;
-    grid-column-end: 5;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #fcc603;
-    padding-left: 1em;
-    padding-right: 1em;
-    padding-top: 1em;
-    padding-bottom: 1em;
-  }
-
-  .nav-icon {
-    width: 1.5em;
-    justify-self: center;
-    cursor: pointer;
   }
 
   #profile-info {
@@ -287,25 +352,11 @@ a {
     justify-content: center;
   }
 
-  li {
-    list-style: none;
-    text-align: center;
-  }
-
-  .look-like-button {
-    background: none;
-    border: none;
-    font: inherit;
-    cursor: pointer;
-  }
-
-  #logout-button {
-    background: none;
-    border: none;
-    font: inherit;
-    cursor: pointer;
-    padding: 0;
-    margin: 0;
+  #deal-heading {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    justify-self: center;
+    text-decoration: underline;
   }
 
   #user-accounts-heading {
@@ -314,15 +365,148 @@ a {
     justify-self: center;
   }
 
-  #footer {
+
+  /* Rules for the div that holds the deals */
+  #deals {
     grid-column-start: 1;
     grid-column-end: 5;
-    justify-self: center;
-    justify-self: center;
-    text-align: center;
-    padding-top: 2em;
-    padding-bottom: 2em;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .deal-container {
     background-color: #fcc603;
     width: 100%;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto auto auto auto auto auto auto;
+
+    margin-bottom: 2em;
+    padding-bottom: 1em;
   }
+
+
+  #dealnameparagraph {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    padding-left: 2em;
+  }
+
+  #dealpostdateparagraph {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    justify-self: end;
+    padding-right: 2em;
+  }
+
+  #photoscontainer {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 3;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  #photoeditdeleteparagraph {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 3;
+    grid-row-end: 4;
+    font-size: 9pt;
+    justify-self: center;
+  }
+
+
+
+  #dealidparagraph {
+    display: none;
+  }
+
+  #useridparagraph {
+    display: none;
+  }
+
+  #dealpriceparagraph {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 4;
+    grid-row-end: 5;
+    justify-self: center;
+  }
+
+  #dealexpirydateparagraph {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 5;
+    grid-row-end: 6;
+    justify-self: center;
+  }
+
+  #dealstorelocationparagraph {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 6;
+    grid-row-end: 7;
+    justify-self: center;
+  }
+
+  #dealdescriptionparagraph {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 7;
+    grid-row-end: 8;
+    justify-self: center;
+  }
+
+  .edit-deal-button {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 8;
+    grid-row-end: 9;
+    justify-self: center;
+    width: 10em;
+    margin-bottom: 1em;
+  }
+
+  .delete-deal-button {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 9;
+    grid-row-end: 10;
+    justify-self: center;
+    width: 10em;
+  }
+
+
+
+}
+
+#footer {
+  grid-column-start: 1;
+  grid-column-end: 5;
+
+  bottom: 0;
+  width: 100%;
+
+  justify-self: center;
+  text-align: center;
+
+  padding-top: 1em;
+  padding-bottom: 1em;
+
+  background-color: #fcc603;
+  width: 100%;
+
+  font-weight: bold;
 }

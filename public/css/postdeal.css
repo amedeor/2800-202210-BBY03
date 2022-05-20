@@ -1,0 +1,16 @@
+#deal-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.deal-form-label {
+  padding-bottom: .5em;
+}
+
+.deal-form-input {
+  margin-bottom: .5em;
+}
+
+#deal-submit-button {
+  margin-top: 2em;
+}

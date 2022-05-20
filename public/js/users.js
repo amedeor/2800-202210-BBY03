@@ -1,4 +1,4 @@
-"use strict;"
+"use strict";
 
 var currentName;
 var str;
@@ -29,20 +29,29 @@ async function getUsers() {
     }
 
     let deletebuttons = document.querySelectorAll(".deleteButton");
-    for (let j = 0; j < editbuttons.length; j++) {
-      deletebuttons[j].addEventListener("click", deleteRow);
-    }
+    for (let j = 0; j < deletebuttons.length; j++) {
+      let currentParentTd = deletebuttons[j].parentNode;
+      let currentParentTr = currentParentTd.parentNode;
+      let users = [];
 
+      //Goes through all the rows, adds them to the users array, checks to see if the user's username matches the current user, 
+      //and if it does it will remove the deleteButton class from the delete button and disable it.
+      for (let i = 0, col; col = currentParentTr.cells[i]; i++) {
+        users[i] = col.innerText;
+      }
+      if (users[1] != currentName) {
+        deletebuttons[j].addEventListener("click", deleteRow);
+      } else {
+        deletebuttons[j].classList.remove('deleteButton');
+        deletebuttons[j].disabled = true;
+      }
+    }
   } else {
     console.log("Error: Cannot load users.");
   }
 }
 
 function editRow(e) {
-
-  let modalWindow = document.querySelector(".update-form-window");
-
-  modalWindow.style.display = "block";
 
   let parentTd = e.target.parentNode;
   let parentTr = parentTd.parentNode;
@@ -62,6 +71,9 @@ function editRow(e) {
   document.querySelector("#usertype").value = user[6];
 
   userAvatarUrl = user[7];
+
+  //open the jQuery modal window when the edit button is clicked
+  $("#update-record-form-container").dialog("open");
 }
 
 async function deleteRow(e) {
@@ -89,11 +101,7 @@ async function deleteRow(e) {
   }
 }
 
-let submitButton = document.querySelector("#submit");
-
-submitButton.addEventListener("click", async e => {
-  e.preventDefault();
-
+async function updateUser() {
   let userAvatarUrl;
 
   let form = document.querySelector("#update-record-form");
@@ -132,25 +140,18 @@ submitButton.addEventListener("click", async e => {
     console.log(parsedResponse.status);
   }
 
-  submitButton.addEventListener("click", uploadImage(e, username));
+  uploadImage(username);
 
   //refresh the table after updating the record.
   getUsers();
 
   //reset the user data form
   form.reset();
-
-  let modalWindow = document.querySelector(".update-form-window");
-
-  modalWindow.style.display = "none";
-
-})
-
-getUsers();
+}
 
 //Function to upload a new avatar image on the user's profile page
-async function uploadImage(e, username) {
-  e.preventDefault();
+async function uploadImage(username) {
+  // e.preventDefault();
 
   const imageUpload = document.querySelector('#image-upload');
   const formData = new FormData();
@@ -178,37 +179,15 @@ async function uploadImage(e, username) {
   let updatedRecordResponse = await fetch("/get-user");
 
   let parsedUpdatedRecordResponse = await updatedRecordResponse.json();
+
+  imageUpload.value = ""; //MAY NEED TO REMOVE THIS
+
   getUsers();
 
 }
 
-getUsers();
-
-let modalWindow = document.querySelector(".update-form-window");
-let cancelButton = document.querySelector("#cancel-button");
-
-cancelButton.addEventListener("click", e => {
-  e.preventDefault();
-  modalWindow.style.display = "none";
-})
-
-
-let createUserModalWindow = document.querySelector(".create-form-window");
-let creatUserButton = document.querySelector("#create-user-button");
-let submitUserCreationButton = document.querySelector("#submit-new-user");
-let cancelUserCreationButton = document.querySelector("#cancel-user-creation");
-let createUserAvatar = document.querySelector("#create-image-upload");
-
-// Shows the user creation modal when the "Create User" buton is clicked.
-creatUserButton.addEventListener("click", e => {
-  e.preventDefault();
-  clearInputFile(createUserAvatar);
-  createUserModalWindow.style.display = "block";
-})
-
-// Hides the user creation modal when the "Submit" button is clicked.
-submitUserCreationButton.addEventListener("click", async e => {
-  e.preventDefault();
+async function createUser() {
+  // e.preventDefault();
 
   let createUserAvatarUrl;
 
@@ -247,42 +226,22 @@ submitUserCreationButton.addEventListener("click", async e => {
     console.log(parsedResponse.status);
   }
 
-  submitUserCreationButton.addEventListener("click", uploadCreateImage(e, createUsername));
+
+  uploadCreateImage(createUsername);
 
   //refresh the table after updating the record.
   getUsers();
 
-  //reset the user data form
-  createForm.reset();
+  // //reset the user data form
+   createForm.reset();
 
-  let createUserModalWindow = document.querySelector(".create-form-window");
-
-  createUserModalWindow.style.display = "none";
-
-})
-
-
-// Hides the user creation modal when the "Cancel" button is clicked.
-cancelUserCreationButton.addEventListener("click", e => {
-  e.preventDefault();
-  clearInputFile(createUserAvatar);
-  createUserModalWindow.style.display = "none";
-})
-
-// Removes the file form the input once the "Submit" button or "Cancel" button is clicked.
-function clearInputFile(f) {
-  if (f.value) {
-    try {
-      f.value = '';
-    } catch (error) {
-      console.log(error);
-    }
-  }
 }
 
 //Function to upload a new avatar image on the user's profile page
-async function uploadCreateImage(e, username) {
-  e.preventDefault();
+
+//async function uploadCreateImage(e, username)
+async function uploadCreateImage(username) {
+  //e.preventDefault();
 
   const imageUpload = document.querySelector('#create-image-upload');
   const formData = new FormData();
@@ -314,13 +273,89 @@ async function uploadCreateImage(e, username) {
 
 }
 
-// Clears the input fields for user creation and edit.
-function clearInputs(formInputFields) {
-  for (var j in formInputFields) {
-    try {
-      formInputFields[j].value = "";
-    } catch (error) {
-      console.log(error);
+$("#update-record-form-container").dialog({
+  modal: true,
+  fuild: true, //prevent horizontal scroll bars on mobile layout
+  resizable: false,
+  autoOpen: false,
+  draggable: false,
+  title: "Edit User Info",
+  Width: 50,
+  height: 500,
+  buttons: [
+    {
+      text: "Submit",
+      click: function () {
+        updateUser();
+        clearStatusMessage();
+        $(this).dialog("close");
+      }
+    },
+    {
+      text: "Cancel",
+      click: function () {
+        //select this dialog and close it when cancel is pressed
+        $(this).dialog("close");
+      }
     }
-  }
+  ]
+});
+
+//This block of code to center the jQuery UI modal popup when the window is resized is from
+//https://stackoverflow.com/questions/3060146/how-to-auto-center-jquery-ui-dialog-when-resizing-browser
+//with adaptatations made to apply to my modal window
+$(window).resize(function(){
+  $("#update-record-form-container").dialog( "option", "position", { my: "center", at: "center", of: window } );
+});
+
+let createUserButton = document.querySelector("#create-user-button");
+
+createUserButton.addEventListener("click", e => {
+  $("#create-record-form-container").dialog("open");
+});
+
+function clearStatusMessage() {
+  let statusMessage = document.querySelector("#status");
+  setTimeout(() => {
+    statusMessage.innerText = "";
+  }, 3000)
 }
+
+
+$("#create-record-form-container").dialog({
+  modal: true,
+  fuild: true, //prevent horizontal scroll bars on mobile layout
+  resizable: false,
+  autoOpen: false,
+  draggable: false,
+  title: "Create New User",
+  Width: 50,
+  height: 500,
+  buttons: [
+    {
+      text: "Submit",
+      click: function () {
+        createUser();
+        uploadCreateImage(username); //username is a global variable
+        clearStatusMessage();
+        $(this).dialog("close");
+      }
+    },
+    {
+      text: "Cancel",
+      click: function () {
+        //select this dialog and close it when cancel is pressed
+        $(this).dialog("close");
+      }
+    }
+  ]
+});
+
+//This block of code to center the jQuery UI modal popup when the window is resized is from
+//https://stackoverflow.com/questions/3060146/how-to-auto-center-jquery-ui-dialog-when-resizing-browser
+//with adaptatations made to apply to my modal window
+$(window).resize(function(){
+  $("#create-record-form-container").dialog( "option", "position", { my: "center", at: "center", of: window } );
+});
+
+getUsers();

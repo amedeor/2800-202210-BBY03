@@ -12,8 +12,18 @@ Technologies used for this project:
 * CSS
 * JavaScript
 * Node.js
+* jQuery
+* jQuery UI
+* Froala Editor
 * express
 * express-session
 * multer
 * jsdom
 * mysql2
+
+## Acknowledgements
+* [jQuery](https://jquery.com/)
+* [jQuery UI](https://jqueryui.com/)
+* [Froala Editor](https://froala.com/wysiwyg-editor/)
+* [How to calculate time zone offset in JavaScript](https://stackoverflow.com/questions/7403486/add-or-subtract-timezone-difference-to-javascript-date)
+* [How to center a jQuery UI modal after browser window resize](https://stackoverflow.com/questions/3060146/how-to-auto-center-jquery-ui-dialog-when-resizing-browser)

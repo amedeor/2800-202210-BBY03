@@ -1,9 +1,9 @@
-"use strict;"
+"use strict";
 
-const databaseHost = "us-cdbr-east-05.cleardb.net";
-const databaseUser = "b836f8ec5d5bac";
-const databasePassword = "732ab9c0";
-const databaseName = "heroku_024b43865916c4a";
+const databaseHost = "127.0.0.1";
+const databaseUser = "root";
+const databasePassword = "";
+const databaseName = "COMP2800";
 
 const express = require("express");
 const app = express();
@@ -13,6 +13,7 @@ const { JSDOM } = require("jsdom");
 const mysql = require("mysql2/promise");
 
 const multer = require("multer");
+const res = require("express/lib/response");
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
@@ -60,27 +61,106 @@ app.get("/get-user", async (req, res) => {
     database: databaseName,
     multipleStatements: true
   });
-
+  await connection.connect();
   let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ?", [username], function (error, results, fields) {
     if (error) {
       console.log(error);
     }
   });
 
-  res.send({ status: "success", rows: results });
   connection.end();
+  
+  res.send({ status: "success", rows: results });
+  
+});
+
+app.post("/delete-photo", async (req, res) => {
+  if (req.session.loggedIn === true) {
+    res.setHeader("Content-Type", "application/json");
+
+    let photoId = req.body.photoId;
+
+    const connection = await mysql.createConnection({
+      host: databaseHost,
+      user: databaseUser,
+      password: databasePassword,
+      database: databaseName,
+      multipleStatements: true
+    });
+    await connection.connect();
+    await connection.query("DELETE FROM BBY_03_photo WHERE photo_id = ?", [photoId]);
+    connection.end();
+    res.send({ status: "success" });
+  }
 });
 
 
 
+app.get("/get-deals", async (req, res) => {
+  if (req.session.loggedIn === true) {
+    res.setHeader("Content-Type", "application/json");
+
+    const connection = await mysql.createConnection({
+      host: databaseHost,
+      user: databaseUser,
+      password: databasePassword,
+      database: databaseName,
+      multipleStatements: true
+    });
+    await connection.connect();
+    let currentUserId = req.session.userId;
+
+    let [dealResults, dealFields] = await connection.query("SELECT deal_id, user_id, deal_name, deal_price, deal_description, deal_store_location, deal_post_date_time, deal_expiry_date FROM BBY_03_deal WHERE user_id = (?)", [currentUserId]);
+
+    //deals holds all of the parsed deal and photo information
+    //each object stored in deals contains all of a user's deal information with an array called "photos" that holds the URLs to the images associated with the deal
+    let deals = [];
+
+    for (let deal of dealResults) {
+      //get all the photo URLs associated with a specific deal_id
+      let [results, fields] = await connection.query("SELECT photo_url, photo_id FROM BBY_03_photo WHERE fk_photo_deal_id = ?", [deal.deal_id])
+      //create an array that will hold the URLs of the specific deal's photos
+      let photoUrls = [];
+      for (let result of results) {
+        //loop through the results of the database query on the photos table retrieve just the URLs and then save them to photoUrls
+        photoUrls.push({ "photo_id": result.photo_id, "photo_url": result.photo_url });
+      }
+      //Create an object that contains all of a user's specific deal information with an array of the photos associated with that deal
+      deals.push({ "deal_id": deal.deal_id, "user_id": deal.user_id, "deal_name": deal.deal_name, "deal_price": deal.deal_price, "deal_description": deal.deal_description, "deal_store_location": deal.deal_store_location, "deal_post_date_time": deal.deal_post_date_time, "deal_expiry_date": deal.deal_expiry_date, "photos": photoUrls });
+    }
+
+    connection.end();
+
+    res.send({ "usersDeals": deals });
+    
+  }
+});
 
 
-//the argument to single is the name of the HTML input that is uploading the file
-app.post("/upload-image", upload.single("file"), async (req, res) => {
+//the argument to upload.array is the name of the variable in formData
+app.post("/post-deal", upload.array("files"), async (req, res) => {
+  if (req.session.loggedIn === true) {
+    res.setHeader("Content-Type", "application/json");
 
-  if (req.file != undefined) {
-    let savedFileName = `/img/${req.file.filename}`;
-    let username = req.body.username;
+    let photos = [];
+
+    //if req.files is undefined, it means no photos were uploaded when the deal form was submitted
+    if (req.files != undefined) {
+      for (let i = 0; i < req.files.length; i++) {
+        //add photos to array
+        photos.push(`/img/${req.files[i].filename}`);
+      }
+    }
+
+    //get the currently logged in user's user ID
+    let currentUserId = req.session.userId;
+
+    let dealName = req.body.dealName;
+    let dealPrice = req.body.dealPrice;
+    let dealDescription = req.body.dealDescription;
+    let dealLocation = req.body.dealLocation;
+    let dealExpiryDate = req.body.dealExpiryDate;
+
     const connection = await mysql.createConnection({
       host: databaseHost,
       user: databaseUser,
@@ -90,22 +170,182 @@ app.post("/upload-image", upload.single("file"), async (req, res) => {
     });
 
     await connection.connect();
-    let [results, fields] = await connection.query("UPDATE BBY_03_user SET user_avatar_url = ? WHERE user_username = ?",
-      [savedFileName, username],
+    let dealRecord = "INSERT INTO BBY_03_deal (deal_name, deal_price, deal_description, deal_store_location, deal_expiry_date, user_id) values (?)";
+    let dealRecordValues = [dealName, dealPrice, dealDescription, dealLocation, dealExpiryDate, currentUserId];
+    await connection.query(dealRecord, [dealRecordValues]);
+
+    //Get the deal_id of the last inserted deal into BBY_03_deal
+    let lastInsertIdObject = await connection.query("SELECT LAST_INSERT_ID()");
+    let lastInsertIdArray = lastInsertIdObject[0];
+    let insertObject = lastInsertIdArray[0];
+    let lastInsertedId = insertObject["LAST_INSERT_ID()"]; //This is the deal_id of the deal that was just inserted into the database
+
+    if (req.files != undefined) {
+      for (let photo of photos) {
+        let photoRecord = "INSERT INTO BBY_03_photo (fk_photo_deal_id, photo_url) values (?)";
+        let photoRecordValues = [lastInsertedId, photo];
+        await connection.query(photoRecord, [photoRecordValues]);
+      }
+    }
+
+    connection.end();
+
+    res.send({ "status": "success", "message": "Post created successfully." });
+  }
+});
+
+app.post("/update-deal", upload.array("files"), async (req, res) => {
+  if (req.session.loggedIn === true) {
+    res.setHeader('Content-Type', 'application/json');
+
+    let updatedName = req.body.updatedName;
+    let updatedPrice = req.body.updatedPrice;
+    let updatedLocation = req.body.updatedLocation;
+    let updatedDescription = req.body.updatedDescription;
+    let updatedExpireDate = req.body.updatedExpireDate;
+    let dealID = req.body.dealID;
+
+    const connection = await mysql.createConnection({
+      host: databaseHost,
+      user: databaseUser,
+      password: databasePassword,
+      database: databaseName,
+      multipleStatements: true
+    });
+
+    await connection.connect();
+    let [results, fields] = await connection.query("UPDATE BBY_03_deal SET deal_name = ?, deal_price = ?, deal_description = ?, deal_store_location = ?, deal_expiry_date = ? WHERE deal_id = ?",
+      [updatedName, updatedPrice, updatedDescription, updatedLocation, updatedExpireDate, dealID],
       function (error, results, fields) {
         if (error) {
           console.log(error);
+          res.send({ "status": "fail", "message": "error" });
         }
       });
 
-    //update session variable with new profile picture URL
-    req.session.avatarUrl = savedFileName;
+    let photos = [];
 
+    //if req.files is undefined, it means no photos were uploaded when the deal form was submitted
+    if (req.files != undefined) {
+      for (let i = 0; i < req.files.length; i++) {
+        //add photos to array
+        photos.push(`/img/${req.files[i].filename}`);
+      }
+    }
 
-    res.send({ "status": "success", "message": "Image uploaded successfully." })
+    if (req.files != undefined) {
+      for (let photo of photos) {
+        let photoRecord = "INSERT INTO BBY_03_photo (fk_photo_deal_id, photo_url) values (?)";
+        let photoRecordValues = [dealID, photo];
+        await connection.query(photoRecord, [photoRecordValues]);
+      }
+    }
+
+    connection.end();
+
+    res.send({ status: "success", message: "Record successfully updated." });
+
   }
-
 });
+
+
+app.post("/remove-deal", async (req, res) => {
+  if (req.session.loggedIn === true) {
+    res.setHeader('Content-Type', 'application/json');
+
+    let dealID = req.body.dealID;
+
+
+    const connection = await mysql.createConnection({
+      host: databaseHost,
+      user: databaseUser,
+      password: databasePassword,
+      database: databaseName,
+      multipleStatements: true
+    });
+
+    await connection.connect();
+    let [photoResults, photoFields] = await connection.query("DELETE FROM BBY_03_photo WHERE fk_photo_deal_id = ?",
+      [dealID],
+      function (error, photoResults, photoFields) {
+        if (error) {
+          console.log(error);
+          res.send({ "status": "fail", "message": "error" });
+        }
+      });
+    let [results, fields] = await connection.query("DELETE FROM BBY_03_deal WHERE deal_id = ?",
+      [dealID],
+      function (error, results, fields) {
+        if (error) {
+          console.log(error);
+          res.send({ "status": "fail", "message": "error" });
+        }
+      });
+
+      connection.end();
+
+    res.send({ status: "success", message: "Record successfully updated." });
+    
+  }
+});
+
+
+//the argument to single is the name of the HTML input element that is uploading the file
+app.post("/upload-image", upload.single("file"), async (req, res) => {
+  if (req.session.loggedIn === true) {
+    if (req.file != undefined) {
+      let savedFileName = `/img/${req.file.filename}`;
+      let username = req.body.username;
+      const connection = await mysql.createConnection({
+        host: databaseHost,
+        user: databaseUser,
+        password: databasePassword,
+        database: databaseName,
+        multipleStatements: true
+      });
+
+      await connection.connect();
+      let [results, fields] = await connection.query("UPDATE BBY_03_user SET user_avatar_url = ? WHERE user_username = ?",
+        [savedFileName, username],
+        function (error, results, fields) {
+          if (error) {
+            console.log(error);
+          }
+        });
+
+      //update session variable with new profile picture URL
+      req.session.avatarUrl = savedFileName;
+
+      connection.end();
+
+      res.send({ status: "success", message: "Image uploaded successfully." })
+    }
+  }
+});
+
+app.post("/edit-image", upload.single("file"), async (req, res) => {
+  if (req.session.loggedIn === true) {
+    if (req.file != undefined) {
+      let savedFileName = `/img/${req.file.filename}`;
+      const connection = await mysql.createConnection({
+        host: databaseHost,
+        user: databaseUser,
+        password: databasePassword,
+        database: databaseName,
+        multipleStatements: true
+      });
+
+      await connection.connect();
+
+      await connection.query("UPDATE BBY_03_photo SET photo_url = ? WHERE photo_id = ?", [savedFileName, req.body.photoId]);
+
+      connection.end();
+
+      res.send({ "status": "success", "message": "Image uploaded successfully." })
+      
+    }
+  }
+})
 
 app.get("/profile", async (req, res) => {
   if (req.session.loggedIn === true) {
@@ -290,8 +530,7 @@ app.get("/profile", async (req, res) => {
   } else {
     res.redirect("/");
   }
-}
-);
+});
 
 app.get("/signup", async (req, res) => {
   let signup = fs.readFileSync("./app/html/signup.html", "utf-8");
@@ -312,7 +551,7 @@ app.post("/login", async (req, res) => {
     database: databaseName,
     multipleStatements: true
   });
-
+  await connection.connect();
   //BINARY makes the password query case sensitive
   let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ? AND BINARY user_password = ? ", [username, password]);
 
@@ -343,8 +582,11 @@ app.post("/login", async (req, res) => {
     req.session.usertype = retrievedUserType;
     req.session.avatarUrl = retrievedAvatarUrl;
 
+    connection.end();
+
     res.send({ status: "success", message: "Logged in" });
   }
+  
 });
 
 app.post("/createUser", async (req, res) => {
@@ -363,7 +605,7 @@ app.post("/createUser", async (req, res) => {
     database: databaseName,
     multipleStatements: true
   });
-
+  await connection.connect();
   //Check to see if a user with selected username or email exists.
   let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ? OR user_email = ?", [signupUsername, signupEmail]);
 
@@ -384,6 +626,8 @@ app.post("/createUser", async (req, res) => {
     req.session.usertype = recordValues[5];
     req.session.avatarUrl = recordValues[6];
 
+    connection.end();
+
     res.send({ status: "success", message: "Logged in" });
   } else {
     res.send({ "status": "fail", "message": "Email or Username is already in use" });
@@ -393,7 +637,7 @@ app.post("/createUser", async (req, res) => {
 
 app.post("/admin-create-user", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
-  
+
   let createFirstname = req.body.createFirstname;
   let createLastname = req.body.createLastname;
   let createEmail = req.body.createEmail;
@@ -409,7 +653,7 @@ app.post("/admin-create-user", async (req, res) => {
     database: databaseName,
     multipleStatements: true
   });
-
+  await connection.connect();
   //Check to see if a user with selected username or email exists.
   let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ? OR user_email = ?", [createUsername, createEmail]);
 
@@ -420,6 +664,8 @@ app.post("/admin-create-user", async (req, res) => {
     let recordValues = [createUsername, createFirstname, createLastname, createEmail, createPassword, createUsertype, createUserAvatarUrl];
 
     await connection.query(userRecord, [recordValues]);
+
+    connection.end();
 
     res.send({ "status": "success", "message": "User created!" });
   } else {
@@ -441,7 +687,7 @@ app.post("/deleteUsers", async (req, res) => {
       database: databaseName,
       multipleStatements: true
     });
-
+    await connection.connect();
     let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_id = ? OR user_username = ?", [deleteID, deleteUsername]);
 
     if (results.length === 0) {
@@ -449,13 +695,15 @@ app.post("/deleteUsers", async (req, res) => {
     } else {
       if (deleteUsername != req.session.username) {
         await connection.query("DELETE FROM BBY_03_user WHERE user_id = ? AND user_username = ?", [deleteID, deleteUsername]);
+      
+        connection.end();
       } else {
         res.send({ status: "fail", message: "Can't delete your own account!" });
       }
       res.send({ status: "success", message: "Account deleted!!" });
     }
   }
-})
+});
 
 //when the view user accounts button is clicked, this is what is loaded
 app.get("/admin-dashboard", async (req, res) => {
@@ -478,12 +726,14 @@ app.get("/get-users", async (req, res) => {
       database: databaseName,
       multipleStatements: true
     });
-  let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user");
-    res.send({ status: "success", rows: results, current_username: req.session.username});
+    await connection.connect();
+    let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user");
+    res.send({ status: "success", rows: results, current_username: req.session.username });
+    connection.end();
   } else {
     res.redirect("/");
   }
-})
+});
 
 app.post("/update-user-id", async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
@@ -515,13 +765,10 @@ app.post("/update-user-id", async (req, res) => {
       }
     });
 
+    connection.end();
   res.send({ status: "success", message: "Record successfully updated." });
-  connection.end();
+  
 });
-
-
-
-
 
 app.post("/update-user", async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
@@ -559,12 +806,12 @@ app.post("/update-user", async (req, res) => {
   req.session.firstName = firstname;
   req.session.lastName = lastname;
   req.session.email = email;
-  //req.session.usertype = retrievedUserType;
   req.session.avatarUrl = userAvatarUrl;
 
+  connection.end();
 
   res.send({ status: "success", msg: "User successfully updated." });
-  connection.end();
+  
 });
 
 app.get("/logout", function (req, res) {
@@ -579,5 +826,5 @@ app.get("/logout", function (req, res) {
   }
 });
 
-const port = process.env.PORT || 8000;
+const port = 8000;
 app.listen(port);

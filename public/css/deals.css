@@ -1,0 +1,33 @@
+.dealphoto {
+  align-self: center;
+  max-width: 20em;
+}
+
+.deal-container {
+  width: 100%;
+}
+
+#dealnameparagraph>span {
+  font-weight: bold;
+}
+
+#dealpostdateparagraph>span {
+  font-weight: bold;
+  font-style: italic;
+}
+
+#dealpriceparagraph>span {
+  font-weight: bold;
+}
+
+#dealpostdateparagraph>span {
+  font-weight: bold;
+}
+
+#dealexpirydateparagraph>span {
+  font-weight: bold;
+}
+
+#dealstorelocationparagraph>span {
+  font-weight: bold;
+}
