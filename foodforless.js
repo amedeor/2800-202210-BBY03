@@ -203,8 +203,6 @@ app.post("/update-deal", upload.array("files"), async (req, res) => {
   if (req.session.loggedIn === true) {
     res.setHeader('Content-Type', 'application/json');
 
-    console.log("inside update-deal");
-
     let updatedName = req.body.updatedName;
     let updatedPrice = req.body.updatedPrice;
     let updatedLocation = req.body.updatedLocation;
@@ -239,8 +237,6 @@ app.post("/update-deal", upload.array("files"), async (req, res) => {
         photos.push(`/img/${req.files[i].filename}`);
       }
     }
-
-    console.log(req.files)
 
     if (req.files != undefined) {
       for (let photo of photos) {
@@ -779,10 +775,6 @@ app.post("/update-user-id", async (req, res) => {
   
 });
 
-
-
-
-
 app.post("/update-user", async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
@@ -819,7 +811,6 @@ app.post("/update-user", async (req, res) => {
   req.session.firstName = firstname;
   req.session.lastName = lastname;
   req.session.email = email;
-  //req.session.usertype = retrievedUserType;
   req.session.avatarUrl = userAvatarUrl;
 
   connection.end();

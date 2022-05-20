@@ -212,8 +212,6 @@ async function getDeals() {
 
   let parsedResponse = await response.json();
 
-  // console.log(parsedResponse);
-
   let dealsContainer = document.querySelector("#deals");
 
   dealsContainer.innerHTML = "";
@@ -347,13 +345,9 @@ async function getDeals() {
 
       photoElement.addEventListener("click", e => {
         $("#edit-photo-container").data("photoId", e.target.getAttribute("id")).dialog("open");
-        console.log(e.target.getAttribute("id"));
         let imageUrl = e.target.getAttribute("src");
         document.querySelector("#edit-image").setAttribute("src", imageUrl);
       })
-
-      console.log(photo.photo_id);
-      console.log(photo.photo_url);
     }
 
     //put the photos container inside the deal container
@@ -393,19 +387,12 @@ async function updateDeals(dealID) {
 
   const imageUploadElement = document.querySelector('#updatedealphotos');
 
-  console.log(imageUploadElement.files);
-
   const formData = new FormData();
 
   //Use a loop to get the image from the image upload input and store it in a variable called file
   for (let i = 0; i < imageUploadElement.files.length; i++) {
     formData.append("files", imageUploadElement.files[i]);
   }
-
-  console.log(`Value of the files that are uploaded: ${formData.files}`);
-
-  //append the other deal data from the form to formData
-
   let updatedName = document.querySelector("#updatedealname");
   let updatedPrice = document.querySelector("#updatedealprice");
   let updatedLocation = document.querySelector("#updatedeallocation");
@@ -421,14 +408,6 @@ async function updateDeals(dealID) {
     formData.append("updatedLocation", updatedLocation.value);
     formData.append("updatedDescription", updatedDescription.value);
     formData.append("updatedExpireDate", updatedExpireDate.value);
-
-
-    console.log(dealID.value);
-    console.log(updatedName.value);
-    console.log(updatedPrice.value);
-    console.log(updatedLocation.value);
-    console.log(updatedDescription.value);
-    console.log(updatedExpireDate.value);
 
     const options = {
       method: 'POST',
@@ -447,16 +426,12 @@ var dealID;
 
 function editPost(e) {
 
-  console.log(`parentTd: ${e.target.parentNode}`);
-
   let parentTd = e.target.parentNode;
   let childrenElements = parentTd.children;
 
   let deal = [];
 
   for (let i = 0; childrenElements[i]; i++) {
-    console.log(childrenElements[i]);
-    console.log(childrenElements[i].tagName);
     if (childrenElements[i].tagName == "P") {
       if (childrenElements[i].childNodes[1] !== undefined) {
         deal.push(childrenElements[i].childNodes[1].innerText);
@@ -495,19 +470,12 @@ function editPost(e) {
 
 async function deletePost(e) {
 
-  console.log(`parentTd: ${e.target.parentNode}`);
-
   let parentTd = e.target.parentNode;
   let childrenElements = parentTd.children;
-
-  console.log(parentTd);
-  console.log(childrenElements);
 
   let deal = [];
 
   for (let i = 0; childrenElements[i]; i++) {
-    console.log(childrenElements[i]);
-    console.log(childrenElements[i].tagName);
     if (childrenElements[i].tagName == "P") {
       if (childrenElements[i].childNodes[1] !== undefined) {
         deal.push(childrenElements[i].childNodes[1].innerText);
@@ -662,13 +630,8 @@ async function deletePhoto(photoId) {
 }
 
 async function editPhoto(photoId) {
-  // e.preventDefault();
 
   const iupload = document.querySelector('#iupload');
-
-  console.log(photoId);
-
-  console.log(iupload);
 
   if (iupload.checkValidity() !== false) {
     const formData = new FormData();
@@ -678,14 +641,9 @@ async function editPhoto(photoId) {
       formData.append("file", iupload.files[i]);
     }
 
-    for (var pair of formData.entries()) {
-      console.log(pair[0]);
-    }
-
     //append the user's username to the formData that will be sent to the server
     //this allows us to update the avatar URL for the correct user in the database
     formData.append("photoId", photoId);
-    console.log(photoId);
 
     const options = {
       method: 'POST',
@@ -703,6 +661,5 @@ async function editPhoto(photoId) {
 
   }
 }
-
 
 new FroalaEditor('textarea');

@@ -22,20 +22,12 @@ async function postDeal() {
 
   const imageUploadElement = document.querySelector('#dealphotos');
 
-  console.log(imageUploadElement.files);
-  
-  console.log("postDeal called");
-
   const formData = new FormData();
 
   //Use a loop to get the image from the image upload input and store it in a variable called file
   for (let i = 0; i < imageUploadElement.files.length; i++) {
     formData.append("files", imageUploadElement.files[i]);
   }
-
-  console.log(`Value of the files that are uploaded: ${formData.files}`);
-
-  //append the other deal data from the form to formData
 
   let dealName = document.querySelector("#dealname");
   let dealPrice = document.querySelector("#dealprice");
@@ -45,12 +37,6 @@ async function postDeal() {
 
   if (dealName.checkValidity() !== false && dealPrice.checkValidity() !== false && dealDescription.checkValidity() !== false &&
     dealLocation.checkValidity() != false && dealExpiryDate.checkValidity() != false) {
-
-    // console.log(dealName);
-    // console.log(dealPrice);
-    // console.log(dealDescription);
-    // console.log(dealLocation);
-    // console.log(dealExpiryDate);
 
     formData.append("dealName", dealName.value);
     formData.append("dealPrice", dealPrice.value);
