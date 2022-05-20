@@ -126,7 +126,7 @@ $("#edit-user-info-form").dialog({
   autoOpen: false,
   draggable: false,
   title: "Edit Profile Info",
-  Width: 50,
+  Width: 80,
   height: 450,
   buttons: [
     {
@@ -472,12 +472,12 @@ async function deletePost(e) {
 $("#update-deal-container").data("dealID", dealID).dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
-  resizable: false,
+  resizable: true,
   autoOpen: false,
   draggable: false,
   title: "Edit Deal",
-  Width: 50,
-  height: 500,
+  Width: 100,
+  height: 600,
   buttons: [
     {
       text: "Submit",
@@ -508,8 +508,8 @@ $("#edit-photo-container").dialog({
   autoOpen: false,
   draggable: false,
   title: "Edit Photo",
-  Width: 50,
-  height: 500,
+  Width: 80,
+  height: 600,
   buttons: [
     {
       text: "Submit",
@@ -596,6 +596,7 @@ async function editPhoto(photoId) {
 
   }
 }
-tinymce.init({
-  selector: 'textarea',
-});
+new FroalaEditor('textarea');
+// tinymce.init({
+//   selector: 'textarea',
+// });

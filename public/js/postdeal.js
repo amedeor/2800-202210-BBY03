@@ -64,11 +64,11 @@ async function uploadImages() {
 $("#post-deal-container").dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
-  resizable: false,
+  resizable: true,
   autoOpen: false,
   draggable: false,
   title: "Post a Deal",
-  Width: 50,
+  Width: 100,
   height: 500,
   buttons: [
     {
