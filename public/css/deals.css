@@ -7,27 +7,27 @@
   width: 100%;
 }
 
-#dealnameparagraph > span {
+#dealnameparagraph>span {
   font-weight: bold;
 }
 
-#dealpostdateparagraph > span {
+#dealpostdateparagraph>span {
   font-weight: bold;
   font-style: italic;
 }
 
-#dealpriceparagraph > span {
+#dealpriceparagraph>span {
   font-weight: bold;
 }
 
-#dealpostdateparagraph > span {
+#dealpostdateparagraph>span {
   font-weight: bold;
 }
 
-#dealexpirydateparagraph > span {
+#dealexpirydateparagraph>span {
   font-weight: bold;
 }
 
-#dealstorelocationparagraph > span {
+#dealstorelocationparagraph>span {
   font-weight: bold;
 }

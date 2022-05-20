@@ -15,8 +15,8 @@ body {
 }
 
 #edit-user-info-form {
- display: flex;
- flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 button {
@@ -60,4 +60,3 @@ button {
 .error {
   color: red;
 }
-
