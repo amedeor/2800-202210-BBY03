@@ -22,6 +22,10 @@
     justify-content: space-between;
 }
 
+.dealId {
+    display: none;
+}
+
 .dealName {
     font-weight: bold;
 }

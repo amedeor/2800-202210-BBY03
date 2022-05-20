@@ -267,9 +267,11 @@ app.post("/update-deal", upload.array("files"), async (req, res) => {
 
 app.post("/remove-deal", async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
+  console.log("Inside the remove deal post method");
 
   let dealID = req.body.dealID;
 
+  console.log(dealID);
 
   const connection = await mysql.createConnection({
     host: databaseHost,
@@ -280,7 +282,7 @@ app.post("/remove-deal", async (req, res) => {
   });
 
   await connection.connect();
-  let [photoResults, photoFields] = await connection.query("DELETE FROM BBY_03_photo WHERE fk_photo_deal_id = ?",
+  let [photoResults, photoFields] = await connection.query("DELETE FROM BBY_03_photo WHERE fk_photo_deal_id = ?", 
     [dealID],
     function (error, photoResults, photoFields) {
       if (error) {

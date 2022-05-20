@@ -223,11 +223,15 @@ async function getDeals() {
     let dealContainer = document.createElement("div");
 
     //set the id of the deal container to the id of the specific deal
+
     dealContainer.setAttribute("id", deal.deal_id);
     dealContainer.setAttribute("class", "dealContainer");
 
     let dealHeaderParagraph = document.createElement("p");
     dealHeaderParagraph.setAttribute("class", "dealHeader dealInfo");
+
+    let dealIdSpan = document.createElement("span");
+    dealIdSpan.setAttribute("class", "dealId dealSpan");
 
     let dealNameSpan = document.createElement("span");
     dealNameSpan.setAttribute("class", "dealName dealSpan");
@@ -275,23 +279,25 @@ async function getDeals() {
     let dealPostTimeLocalFormat = localDateTime.toLocaleTimeString();
     let slicedDealExpiryDate = deal.deal_expiry_date.slice(0, 10);
 
+    dealIdSpan.insertAdjacentText("beforeend", `${deal.deal_id}`);
     dealNameSpan.insertAdjacentText("beforeend", `Deal Name: ${deal.deal_name}`);
     dealUserNameSpan.insertAdjacentText("beforeend", `User Name: ${deal.user_username}`);
 
+    dealHeaderParagraph.insertAdjacentElement("beforeend", dealIdSpan);
     dealHeaderParagraph.insertAdjacentElement("beforeend", dealNameSpan);
     dealHeaderParagraph.insertAdjacentElement("beforeend", dealUserNameSpan);
 
-    dealPriceSpan.insertAdjacentText("beforeend", `Deal Price: ${deal.deal_price}`);
+    dealPriceSpan.insertAdjacentText("beforeend", ` Deal Price: ${deal.deal_price}`);
     dealDescriptionSpan.insertAdjacentText("beforeend", `Deal Description: ${deal.deal_description}`);
-    dealStoreLocationSpan.insertAdjacentText("beforeend", `Deal Store Location: ${deal.deal_store_location}`);
-    dealPostDateTimeSpan.insertAdjacentText("beforeend", `${slicedDealPostDate} at ${dealPostTimeLocalFormat}`);
+    dealStoreLocationSpan.insertAdjacentText("beforeend", `Deal Store Location:${deal.deal_store_location}`);
+    dealPostDateTimeSpan.insertAdjacentText("beforeend", `Posted: ${slicedDealPostDate} at ${dealPostTimeLocalFormat}`);
     dealExpiryDateSpan.insertAdjacentText("beforeend", `Deal Expiry Date: ${slicedDealExpiryDate}`);
 
     dealDetailsParagraph.insertAdjacentElement("beforeend", dealPriceSpan);
     dealDetailsParagraph.insertAdjacentElement("beforeend", dealDescriptionSpan);
     dealDetailsParagraph.insertAdjacentElement("beforeend", dealStoreLocationSpan);
-    dealDetailsParagraph.insertAdjacentElement("beforeend", dealPostDateTimeSpan);
     dealDetailsParagraph.insertAdjacentElement("beforeend", dealExpiryDateSpan);
+    dealDetailsParagraph.insertAdjacentElement("beforeend", dealPostDateTimeSpan);
 
     dealContainer.insertAdjacentElement("beforeend", dealHeaderParagraph);
 
@@ -342,6 +348,8 @@ async function getDeals() {
 }
 
 async function updateDeals(dealID) {
+
+  console.log(dealID);
 
   const imageUploadElement = document.querySelector('#updatedealphotos');
 
@@ -404,17 +412,33 @@ function editPost(e) {
     console.log(childrenElements[i]);
     console.log(childrenElements[i].tagName);
     if (childrenElements[i].tagName == "P") {
-      deal.push(childrenElements[i].childNodes[1].innerText);
+      console.log(childrenElements[i]);
+      let childrenSpans = childrenElements[i].childNodes;
+      
+
+      for (let j = 0; childrenSpans[j]; j++) {
+        console.log(childrenSpans[j]);
+        console.log(childrenSpans[j].tagName);
+        if (childrenSpans[j].tagName == "SPAN") {
+          deal.push(childrenSpans[j].innerText);
+        }
+        
+      }
+
     }
   }
 
   dealID = deal[0];
 
-  document.querySelector("#updatedealname").value = deal[2];
+  document.querySelector("#updatedealname").value = deal[1];
   document.querySelector("#updatedealprice").value = deal[3];
-  document.querySelector("#updatedeallocation").value = deal[7];
-  document.querySelector("#updatedealdescription").value = deal[6];
-  document.querySelector("#updatedealexpirydate").value = deal[5];
+  document.querySelector("#updatedeallocation").value = deal[5];
+  document.querySelector("#updatedealdescription").value = deal[4];
+  document.querySelector("#updatedealexpirydate").value = deal[6];
+
+  console.log(deal);
+
+  
 
 
   //open the jQuery modal window when the edit button is clicked
@@ -426,7 +450,7 @@ async function deletePost(e) {
   console.log(`parentTd: ${e.target.parentNode}`);
 
   let parentTd = e.target.parentNode;
-  let childrenElements = parentTd.children;
+  let childrenElements = parentTd.childNodes;
 
   let deal = [];
 
@@ -434,9 +458,31 @@ async function deletePost(e) {
     console.log(childrenElements[i]);
     console.log(childrenElements[i].tagName);
     if (childrenElements[i].tagName == "P") {
-      deal.push(childrenElements[i].childNodes[1].innerText);
+      console.log(childrenElements[i]);
+      let childrenSpans = childrenElements[i].childNodes;
+      
+
+      for (let j = 0; childrenSpans[j]; j++) {
+        console.log(childrenSpans[j]);
+        console.log(childrenSpans[j].tagName);
+        if (childrenSpans[j].tagName == "SPAN") {
+          deal.push(childrenSpans[j].innerText);
+        }
+        
+      }
+
     }
   }
+
+  // for (let i = 0; childrenElements[i]; i++) {
+  //   console.log(childrenElements[i]);
+  //   console.log(childrenElements[i].tagName);
+  //   if (childrenElements[i].tagName == "P") {
+  //     deal.push(childrenElements[i].childNodes[1].innerText);
+  //   }
+  // }
+
+  console.log(deal);
 
   dealID = deal[0];
   let response = await fetch("/remove-deal", {
