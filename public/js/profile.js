@@ -472,6 +472,12 @@ function editPost(e) {
   document.querySelector("#updatedealdescription").value = deal[6];
   document.querySelector("#updatedealexpirydate").value = deal[5];
 
+  let element = document.querySelector(".fr-element");
+  element.childNodes[0].innerText = deal[6];
+
+  let placeholderText = document.querySelector(".fr-placeholder");
+  placeholderText.innerText = "";
+
 
   //open the jQuery modal window when the edit button is clicked
   let dealexpirelabel = document.getElementById("updatedealexpirelabel");
