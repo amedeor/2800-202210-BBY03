@@ -1,10 +1,5 @@
 "use strict";
 
-// const databaseHost = "us-cdbr-east-05.cleardb.net";
-// const databaseUser = "b836f8ec5d5bac";
-// const databasePassword = "732ab9c0";
-// const databaseName = "heroku_024b43865916c4a";
-
 const databaseHost = "127.0.0.1";
 const databaseUser = "root";
 const databasePassword = "";
@@ -203,8 +198,6 @@ app.post("/update-deal", upload.array("files"), async (req, res) => {
   if (req.session.loggedIn === true) {
     res.setHeader('Content-Type', 'application/json');
 
-    console.log("inside update-deal");
-
     let updatedName = req.body.updatedName;
     let updatedPrice = req.body.updatedPrice;
     let updatedLocation = req.body.updatedLocation;
@@ -222,7 +215,7 @@ app.post("/update-deal", upload.array("files"), async (req, res) => {
 
     await connection.connect();
     let [results, fields] = await connection.query("UPDATE BBY_03_deal SET deal_name = ?, deal_price = ?, deal_description = ?, deal_store_location = ?, deal_expiry_date = ? WHERE deal_id = ?",
-      [updatedName, updatedPrice, updatedLocation, updatedDescription, updatedExpireDate, dealID],
+      [updatedName, updatedPrice, updatedDescription, updatedLocation, updatedExpireDate, dealID],
       function (error, results, fields) {
         if (error) {
           console.log(error);
@@ -239,8 +232,6 @@ app.post("/update-deal", upload.array("files"), async (req, res) => {
         photos.push(`/img/${req.files[i].filename}`);
       }
     }
-
-    console.log(req.files)
 
     if (req.files != undefined) {
       for (let photo of photos) {
@@ -779,10 +770,6 @@ app.post("/update-user-id", async (req, res) => {
   
 });
 
-
-
-
-
 app.post("/update-user", async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
@@ -819,7 +806,6 @@ app.post("/update-user", async (req, res) => {
   req.session.firstName = firstname;
   req.session.lastName = lastname;
   req.session.email = email;
-  //req.session.usertype = retrievedUserType;
   req.session.avatarUrl = userAvatarUrl;
 
   connection.end();

@@ -212,8 +212,6 @@ async function getDeals() {
 
   let parsedResponse = await response.json();
 
-  // console.log(parsedResponse);
-
   let dealsContainer = document.querySelector("#deals");
 
   dealsContainer.innerHTML = "";
@@ -306,7 +304,7 @@ async function getDeals() {
     dealExpiryDateSpan.insertAdjacentText("beforeend", slicedDealExpiryDate);
 
     dealDescriptionParagraph.insertAdjacentText("beforeend", "Description: ");
-    dealDescriptionSpan.insertAdjacentText("beforeend", deal.deal_description);
+    dealDescriptionSpan.insertAdjacentHTML("beforeend", deal.deal_description);
 
     dealStoreLocationParagraph.insertAdjacentText("beforeend", "Store Location: ")
     dealStoreLocationSpan.insertAdjacentText("beforeend", deal.deal_store_location);
@@ -347,13 +345,9 @@ async function getDeals() {
 
       photoElement.addEventListener("click", e => {
         $("#edit-photo-container").data("photoId", e.target.getAttribute("id")).dialog("open");
-        console.log(e.target.getAttribute("id"));
         let imageUrl = e.target.getAttribute("src");
         document.querySelector("#edit-image").setAttribute("src", imageUrl);
       })
-
-      console.log(photo.photo_id);
-      console.log(photo.photo_url);
     }
 
     //put the photos container inside the deal container
@@ -364,12 +358,12 @@ async function getDeals() {
     let photoEditDeleteMessageSpan = document.createElement("span");
     photoEditDeleteMessageSpan.insertAdjacentText("beforeend", "(Tap on an image to edit or delete it)");
     photoEditDeleteParagraph.insertAdjacentElement("beforeend", photoEditDeleteMessageSpan);
-    
+
 
     if (photosContainer.hasChildNodes() == true) {
       dealContainer.insertAdjacentElement("beforeend", photoEditDeleteParagraph);
     }
-    
+
     dealContainer.insertAdjacentElement("beforeend", editDealButton);
     dealContainer.insertAdjacentElement("beforeend", deleteDealButton);
     dealsContainer.insertAdjacentElement("beforeend", dealContainer);
@@ -379,21 +373,43 @@ async function getDeals() {
 
   var deleteButtons = document.querySelectorAll(".delete-deal-button");
 
+  // for (let j = 0; j < deleteButtons.length; j++) {
+  //   deleteButtons[j].addEventListener("click", deletePost);
+  // }
+
   for (let j = 0; j < deleteButtons.length; j++) {
-    deleteButtons[j].addEventListener("click", deletePost);
+    deleteButtons[j].addEventListener("click", function (e) {
+      $("#confirm-deal-delete").dialog({
+        title: "Confirm deal delete",
+        resizable: false,
+        draggable: false,
+        height: "auto",
+        width: 400,
+        modal: true,
+        buttons: {
+          "Delete deal": async function () {
+            deletePost(e);
+            $(this).dialog("close");
+          },
+          Cancel: function () {
+            $(this).dialog("close");
+          }
+        }
+      });
+    });
   }
+
 
   for (let j = 0; j < editButtons.length; j++) {
     editButtons[j].addEventListener("click", editPost);
   }
-
 }
+
+
 
 async function updateDeals(dealID) {
 
   const imageUploadElement = document.querySelector('#updatedealphotos');
-
-  console.log(imageUploadElement.files);
 
   const formData = new FormData();
 
@@ -401,11 +417,6 @@ async function updateDeals(dealID) {
   for (let i = 0; i < imageUploadElement.files.length; i++) {
     formData.append("files", imageUploadElement.files[i]);
   }
-
-  console.log(`Value of the files that are uploaded: ${formData.files}`);
-
-  //append the other deal data from the form to formData
-
   let updatedName = document.querySelector("#updatedealname");
   let updatedPrice = document.querySelector("#updatedealprice");
   let updatedLocation = document.querySelector("#updatedeallocation");
@@ -439,16 +450,12 @@ var dealID;
 
 function editPost(e) {
 
-  console.log(`parentTd: ${e.target.parentNode}`);
-
   let parentTd = e.target.parentNode;
   let childrenElements = parentTd.children;
 
   let deal = [];
 
   for (let i = 0; childrenElements[i]; i++) {
-    console.log(childrenElements[i]);
-    console.log(childrenElements[i].tagName);
     if (childrenElements[i].tagName == "P") {
       if (childrenElements[i].childNodes[1] !== undefined) {
         deal.push(childrenElements[i].childNodes[1].innerText);
@@ -463,6 +470,12 @@ function editPost(e) {
   document.querySelector("#updatedeallocation").value = deal[7];
   document.querySelector("#updatedealdescription").value = deal[6];
   document.querySelector("#updatedealexpirydate").value = deal[5];
+
+  let element = document.querySelector(".fr-element");
+  element.childNodes[0].innerText = deal[6];
+
+  let placeholderText = document.querySelector(".fr-placeholder");
+  placeholderText.innerText = "";
 
 
   //open the jQuery modal window when the edit button is clicked
@@ -481,19 +494,12 @@ function editPost(e) {
 
 async function deletePost(e) {
 
-  console.log(`parentTd: ${e.target.parentNode}`);
-
   let parentTd = e.target.parentNode;
   let childrenElements = parentTd.children;
-
-  console.log(parentTd);
-  console.log(childrenElements);
 
   let deal = [];
 
   for (let i = 0; childrenElements[i]; i++) {
-    console.log(childrenElements[i]);
-    console.log(childrenElements[i].tagName);
     if (childrenElements[i].tagName == "P") {
       if (childrenElements[i].childNodes[1] !== undefined) {
         deal.push(childrenElements[i].childNodes[1].innerText);
@@ -528,7 +534,7 @@ $("#update-deal-container").data("dealID", dealID).dialog({
     {
       text: "Submit",
       click: function () {
-                //Checks if the input fields are filled or not, if not it will make the area not filled red
+        //Checks if the input fields are filled or not, if not it will make the area not filled red
         //and doesn't close the popup 
         if (document.querySelector("#updatedealname").value != "") {
           if (document.querySelector("#updatedealprice").value != "") {
@@ -622,10 +628,26 @@ $("#edit-photo-container").dialog({
     },
     {
       text: "Delete Photo",
-      click: async function () {
-        deletePhoto($("#edit-photo-container").data("photoId"));
-        $("#edit-image-form").trigger("reset"); //clear the form when the cancel button is clicked
-        $(this).dialog("close");
+      click: function () {
+        $("#confirm-photo-delete").dialog({
+          title: "Confirm photo delete",
+          resizable: false,
+          draggable: false,
+          height: "auto",
+          width: 400,
+          modal: true,
+          buttons: {
+            "Delete photo": async function () {
+              deletePhoto($("#edit-photo-container").data("photoId"));
+              $("#edit-image-form").trigger("reset"); //clear the form when the cancel button is clicked
+              $(this).dialog("close");
+              $("#edit-photo-container").dialog("close");
+            },
+            Cancel: function () {
+              $(this).dialog("close");
+            }
+          }
+        });
       }
     }
   ],
@@ -648,13 +670,8 @@ async function deletePhoto(photoId) {
 }
 
 async function editPhoto(photoId) {
-  // e.preventDefault();
 
   const iupload = document.querySelector('#iupload');
-
-  console.log(photoId);
-
-  console.log(iupload);
 
   if (iupload.checkValidity() !== false) {
     const formData = new FormData();
@@ -664,14 +681,9 @@ async function editPhoto(photoId) {
       formData.append("file", iupload.files[i]);
     }
 
-    for (var pair of formData.entries()) {
-      console.log(pair[0]);
-    }
-
     //append the user's username to the formData that will be sent to the server
     //this allows us to update the avatar URL for the correct user in the database
     formData.append("photoId", photoId);
-    console.log(photoId);
 
     const options = {
       method: 'POST',
@@ -690,5 +702,6 @@ async function editPhoto(photoId) {
   }
 }
 
-
-new FroalaEditor('textarea');
+new FroalaEditor('textarea', {
+  pluginsEnabled: ["align", "charCounter", "colors", "fontFamily"],
+});

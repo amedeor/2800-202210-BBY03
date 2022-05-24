@@ -105,26 +105,30 @@ td {
   justify-self: center;
   margin-bottom: 2em;
 }
-.deleteButton{
+
+.deleteButton {
   background-color: red;
   color: white;
   border-width: 1px;
   border-color: black;
   border-radius: 0.5em;
 }
-.editButton{
+
+.editButton {
   background-color: #fcc603;
   border-width: 1px;
   border-color: black;
   border-radius: 0.5em;
 }
-#create-user-button{
-  background-color:green;
+
+#create-user-button {
+  background-color: green;
   color: white;
   border-width: 1px;
   border-color: black;
   border-radius: 0.5em;
 }
+
 #footer {
   position: fixed;
   bottom: 0;
