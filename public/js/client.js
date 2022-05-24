@@ -16,6 +16,30 @@ const logoutButton = document.querySelector("#logout-button");
 
 const profileButton = document.querySelector("#profile-button");
 
+const browseIcon = document.querySelector("#browse-icon");
+
+const browseButton = document.querySelector("#browse-button");
+
+const listIcon = document.querySelector("#list-icon");
+
+
+if (listIcon != null) {
+  listIcon.addEventListener("click", async e => {
+    if (listIcon != null) {
+      window.location.replace("/profile#deals");
+    }
+  });
+}
+
+//Check if the browse icon is null, if it is not, attach an event listener to the link that will fire the /browse-deals get request
+if (browseIcon != null) {
+  browseIcon.addEventListener("click", async e => {
+    if (browseIcon != null) {
+      browseButton.click();
+    }
+  });
+}
+
 
 //Check if the logout icon is null, if it is not, attach an event listener to the link that will fire the /logout get request
 if (logoutIcon != null) {
@@ -34,8 +58,6 @@ if (profileIcon != null) {
     }
   });
 }
-
-
 
 if (loginButton != null) {
   loginButton.addEventListener("click", async e => {
@@ -131,13 +153,13 @@ if (signupButton != null) {
 }
 
 var easter_count = 0;
-function easter_egg(){
+function easter_egg() {
   easter_count++;
-  if (easter_count >= 3){
-  document.getElementById("easter_egg").innerHTML = "FoodForLe$$";
-  var link = document.createElement("link");
-  link.rel = "stylesheet";
-  link.href = "/css/easter_egg.css";
-  document.getElementsByTagName('HEAD')[0].appendChild(link); 
+  if (easter_count >= 3) {
+    document.getElementById("easter_egg").innerHTML = "FoodForLe$$";
+    var link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "/css/easter_egg.css";
+    document.getElementsByTagName('HEAD')[0].appendChild(link);
   }
 }

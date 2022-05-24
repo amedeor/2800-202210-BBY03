@@ -94,6 +94,51 @@ app.post("/delete-photo", async (req, res) => {
   }
 });
 
+app.get("/browse-deals", (req, res) => {
+  if (req.session.loggedIn === true) {
+    let doc = fs.readFileSync("./app/html/browsedeals.html", "utf8");
+    res.send(doc);
+  } else {
+    res.redirect("/");
+  }
+})
+
+app.get("/get-all-deals", async (req, res) => {
+  if (req.session.loggedIn === true) {
+    res.setHeader("Content-Type", "application/json");
+
+    const connection = await mysql.createConnection({
+      host: databaseHost,
+      user: databaseUser,
+      password: databasePassword,
+      database: databaseName,
+      multipleStatements: true
+    });
+    await connection.connect();
+
+
+    let [dealResults, dealFields] = await connection.query("SELECT deal_id, user_id, deal_name, deal_price, deal_description, deal_store_location, deal_post_date_time, deal_expiry_date FROM BBY_03_deal");
+
+    let deals = [];
+
+    for (let deal of dealResults) {
+      let [results, fields] = await connection.query("SELECT photo_url, photo_id FROM BBY_03_photo WHERE fk_photo_deal_id = ?", [deal.deal_id]);
+
+      let photoUrls = [];
+      for (let result of results) {
+        photoUrls.push({ "photo_id": result.photo_id, "photo_url": result.photo_url });
+      }
+
+      deals.push({ "deal_id": deal.deal_id, "user_id": deal.user_id, "deal_name": deal.deal_name, "deal_price": deal.deal_price, "deal_description": deal.deal_description, "deal_store_location": deal.deal_store_location, "deal_post_date_time": deal.deal_post_date_time, "deal_expiry_date": deal.deal_expiry_date, "photos": photoUrls });
+    }
+
+
+    connection.end();
+
+    res.send({ "allDeals": deals });
+  } 
+});
+
 
 
 app.get("/get-deals", async (req, res) => {
