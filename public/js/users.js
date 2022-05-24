@@ -40,7 +40,25 @@ async function getUsers() {
         users[i] = col.innerText;
       }
       if (users[1] != currentName) {
-        deletebuttons[j].addEventListener("click", deleteRow);
+        deletebuttons[j].addEventListener("click", function (e) {
+            $("#confirm-user-account-delete").dialog({
+              title: "Confirm user account delete",
+              resizable: false,
+              draggable: false,
+              height: "auto",
+              width: 400,
+              modal: true,
+              buttons: {
+                "Delete user acccount": async function () {
+                  deleteRow(e);
+                  $(this).dialog("close");
+                },
+                Cancel: function () {
+                  $(this).dialog("close");
+                }
+              }
+            });
+          });
       } else {
         deletebuttons[j].classList.remove('deleteButton');
         deletebuttons[j].disabled = true;

@@ -303,7 +303,7 @@ async function getDeals() {
     dealExpiryDateParagraph.insertAdjacentText("beforeend", "Deal Expiry Date: ");
     dealExpiryDateSpan.insertAdjacentText("beforeend", slicedDealExpiryDate);
 
-    dealDescriptionParagraph.insertAdjacentText("beforeend", "Description: "); 
+    dealDescriptionParagraph.insertAdjacentText("beforeend", "Description: ");
     dealDescriptionSpan.insertAdjacentHTML("beforeend", deal.deal_description);
 
     dealStoreLocationParagraph.insertAdjacentText("beforeend", "Store Location: ")
@@ -358,12 +358,12 @@ async function getDeals() {
     let photoEditDeleteMessageSpan = document.createElement("span");
     photoEditDeleteMessageSpan.insertAdjacentText("beforeend", "(Tap on an image to edit or delete it)");
     photoEditDeleteParagraph.insertAdjacentElement("beforeend", photoEditDeleteMessageSpan);
-    
+
 
     if (photosContainer.hasChildNodes() == true) {
       dealContainer.insertAdjacentElement("beforeend", photoEditDeleteParagraph);
     }
-    
+
     dealContainer.insertAdjacentElement("beforeend", editDealButton);
     dealContainer.insertAdjacentElement("beforeend", deleteDealButton);
     dealsContainer.insertAdjacentElement("beforeend", dealContainer);
@@ -373,15 +373,39 @@ async function getDeals() {
 
   var deleteButtons = document.querySelectorAll(".delete-deal-button");
 
+  // for (let j = 0; j < deleteButtons.length; j++) {
+  //   deleteButtons[j].addEventListener("click", deletePost);
+  // }
+
   for (let j = 0; j < deleteButtons.length; j++) {
-    deleteButtons[j].addEventListener("click", deletePost);
+    deleteButtons[j].addEventListener("click", function (e) {
+      $("#confirm-deal-delete").dialog({
+        title: "Confirm deal delete",
+        resizable: false,
+        draggable: false,
+        height: "auto",
+        width: 400,
+        modal: true,
+        buttons: {
+          "Delete deal": async function () {
+            deletePost(e);
+            $(this).dialog("close");
+          },
+          Cancel: function () {
+            $(this).dialog("close");
+          }
+        }
+      });
+    });
   }
+
 
   for (let j = 0; j < editButtons.length; j++) {
     editButtons[j].addEventListener("click", editPost);
   }
-
 }
+
+
 
 async function updateDeals(dealID) {
 
@@ -510,7 +534,7 @@ $("#update-deal-container").data("dealID", dealID).dialog({
     {
       text: "Submit",
       click: function () {
-                //Checks if the input fields are filled or not, if not it will make the area not filled red
+        //Checks if the input fields are filled or not, if not it will make the area not filled red
         //and doesn't close the popup 
         if (document.querySelector("#updatedealname").value != "") {
           if (document.querySelector("#updatedealprice").value != "") {
@@ -604,10 +628,26 @@ $("#edit-photo-container").dialog({
     },
     {
       text: "Delete Photo",
-      click: async function () {
-        deletePhoto($("#edit-photo-container").data("photoId"));
-        $("#edit-image-form").trigger("reset"); //clear the form when the cancel button is clicked
-        $(this).dialog("close");
+      click: function () {
+        $("#confirm-photo-delete").dialog({
+          title: "Confirm photo delete",
+          resizable: false,
+          draggable: false,
+          height: "auto",
+          width: 400,
+          modal: true,
+          buttons: {
+            "Delete photo": async function () {
+              deletePhoto($("#edit-photo-container").data("photoId"));
+              $("#edit-image-form").trigger("reset"); //clear the form when the cancel button is clicked
+              $(this).dialog("close");
+              $("#edit-photo-container").dialog("close");
+            },
+            Cancel: function () {
+              $(this).dialog("close");
+            }
+          }
+        });
       }
     }
   ],
