@@ -104,7 +104,7 @@ async function deleteRow(e) {
     user[i] = col.innerText;
   }
 
-  if (user[1] != currentName) {
+  if (user[0] != currentID) {
     parentTr.remove();
     let response = await fetch("/deleteUsers", {
       method: "post",
