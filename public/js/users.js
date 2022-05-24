@@ -1,6 +1,6 @@
 "use strict";
 
-var currentName;
+var currentID;
 var str;
 
 async function getUsers() {
@@ -9,7 +9,7 @@ async function getUsers() {
 
   let data = await response.json();
 
-  currentName = data.current_username;
+  currentID = data.current_id;
   if (data.status == "success") {
 
     let str = `<tr><th class="id_header"><span>ID</span></th><th class="username_header"><span>Username</span></th><th class="firstname_header"><span>First Name</span></th><th class="lastname_header"><span>Last Name</span></th><th class="email_header"><span>Email</span></th><th class="password_header"><span>Password</span></th><th class="usertype_header"><span>User Type</span></th><th class="avatarimage_header"><span>Avatar</span></th></tr>`;
@@ -39,7 +39,7 @@ async function getUsers() {
       for (let i = 0, col; col = currentParentTr.cells[i]; i++) {
         users[i] = col.innerText;
       }
-      if (users[1] != currentName) {
+      if (users[0] != currentID) {
         deletebuttons[j].addEventListener("click", function (e) {
             $("#confirm-user-account-delete").dialog({
               title: "Confirm user account delete",
@@ -104,7 +104,7 @@ async function deleteRow(e) {
     user[i] = col.innerText;
   }
 
-  if (user[1] != currentName) {
+  if (user[0] != currentID) {
     parentTr.remove();
     let response = await fetch("/deleteUsers", {
       method: "post",
