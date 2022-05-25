@@ -14,3 +14,9 @@
 #deal-submit-button {
   margin-top: 2em;
 }
+
+/* Fixes the height of the nicEdit text input and toolbar */
+#dealdescription {
+  width: 250px;
+  height: 200px;
+}

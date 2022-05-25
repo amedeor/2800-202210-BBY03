@@ -1,7 +1,7 @@
 "use strict";
 
-let postDealLink = document.querySelector("#post-deal-link");
 
+let postDealLink = document.querySelector("#post-deal-link");
 
 postDealLink.addEventListener("click", e => {
   let dealexpirelabel = document.getElementById("dealexpirelabel");
@@ -14,6 +14,9 @@ postDealLink.addEventListener("click", e => {
   dealpricelabel.classList.remove("error");
   let dealnamelabel = document.getElementById("dealnamelabel");
   dealnamelabel.classList.remove("error");
+  //when the jQuery modal opens, clear the nicEdit textarea
+  let dealDescriptionNicEditor = new nicEditors.findEditor("dealdescription");
+  dealDescriptionNicEditor.setContent("");
   $("#post-deal-container").dialog("open");
 })
 
@@ -35,12 +38,14 @@ async function postDeal() {
   let dealLocation = document.querySelector("#deallocation");
   let dealExpiryDate = document.querySelector("#dealexpirydate");
 
-  if (dealName.checkValidity() !== false && dealPrice.checkValidity() !== false && dealDescription.checkValidity() !== false &&
+  let dealDescriptionNicEditor = new nicEditors.findEditor("dealdescription");
+
+  if (dealName.checkValidity() !== false && dealPrice.checkValidity() !== false && dealDescriptionNicEditor.getContent() !== "" &&
     dealLocation.checkValidity() != false && dealExpiryDate.checkValidity() != false) {
 
     formData.append("dealName", dealName.value);
     formData.append("dealPrice", dealPrice.value);
-    formData.append("dealDescription", dealDescription.value);
+    formData.append("dealDescription", dealDescriptionNicEditor.getContent());
     formData.append("dealLocation", dealLocation.value);
     formData.append("dealExpiryDate", dealExpiryDate.value);
 
@@ -75,10 +80,11 @@ $("#post-deal-container").dialog({
         if (document.querySelector("#dealname").value != "") {
           if (document.querySelector("#dealprice").value != "") {
             if (document.querySelector("#deallocation").value != "") {
-              if (document.querySelector("#dealdescription").value != "") {
+              if (new nicEditors.findEditor("dealdescription").getContent() != "") {
                 if (document.querySelector("#dealexpirydate").value != "") {
                   postDeal();
                   $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
+                  new nicEditors.findEditor("dealdescription").setContent("");
                   $(this).dialog("close");
                 }
               }

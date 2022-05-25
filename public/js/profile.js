@@ -405,8 +405,6 @@ async function getDeals() {
   }
 }
 
-
-
 async function updateDeals(dealID) {
 
   const imageUploadElement = document.querySelector('#updatedealphotos');
@@ -420,17 +418,19 @@ async function updateDeals(dealID) {
   let updatedName = document.querySelector("#updatedealname");
   let updatedPrice = document.querySelector("#updatedealprice");
   let updatedLocation = document.querySelector("#updatedeallocation");
-  let updatedDescription = document.querySelector("#updatedealdescription");
   let updatedExpireDate = document.querySelector("#updatedealexpirydate");
+  //get the niceEditor from profile.js that has the id="updatedealdescription"
+  let updateDealDescriptionNicEditor = new nicEditors.findEditor("updatedealdescription"); 
 
-  if (updatedName.checkValidity() !== false && updatedPrice.checkValidity() !== false && updatedLocation.checkValidity() !== false &&
-    updatedDescription.checkValidity() != false && updatedExpireDate.checkValidity() != false) {
+  //A check in the if statement will ensure that a description of <br> cannot be entered. <br> is the default text for the nicEdit textarea and will be rendered as blank in HTML.
+  //updateDealDescriptionNicEditor.getContent() gets the text from the nicEditor
+  if ((updateDealDescriptionNicEditor.getContent() !== "" && updateDealDescriptionNicEditor.getContent() !== "br") && updatedName.checkValidity() !== false && updatedPrice.checkValidity() !== false && updatedExpireDate.checkValidity() != false) {
 
     formData.append("dealID", dealID);
     formData.append("updatedName", updatedName.value);
     formData.append("updatedPrice", updatedPrice.value);
     formData.append("updatedLocation", updatedLocation.value);
-    formData.append("updatedDescription", updatedDescription.value);
+    formData.append("updatedDescription", updateDealDescriptionNicEditor.getContent()); //get the content from the nicEditor
     formData.append("updatedExpireDate", updatedExpireDate.value);
 
     const options = {
@@ -458,7 +458,7 @@ function editPost(e) {
   for (let i = 0; childrenElements[i]; i++) {
     if (childrenElements[i].tagName == "P") {
       if (childrenElements[i].childNodes[1] !== undefined) {
-        deal.push(childrenElements[i].childNodes[1].innerHTML);
+        deal.push(childrenElements[i].childNodes[1].innerHTML); //innerHTML is used so that the rich text is rendered properly for the description
       }
     }
   }
@@ -468,14 +468,11 @@ function editPost(e) {
   document.querySelector("#updatedealname").value = deal[2];
   document.querySelector("#updatedealprice").value = deal[3];
   document.querySelector("#updatedeallocation").value = deal[7];
-  document.querySelector("#updatedealdescription").value = deal[6];
   document.querySelector("#updatedealexpirydate").value = deal[5];
 
-  let element = document.querySelector(".fr-element");
-  element.childNodes[0].innerHTML = deal[6];
-
-  let placeholderText = document.querySelector(".fr-placeholder");
-  placeholderText.innerHTML = "";
+  //get the niceEditor from profile.js that has the id="updatedealdescription"
+  let updateDealDescriptionNicEditor = new nicEditors.findEditor("updatedealdescription");
+  updateDealDescriptionNicEditor.setContent(deal[6]);
 
   //open the jQuery modal window when the edit button is clicked
   let dealexpirelabel = document.getElementById("updatedealexpirelabel");
@@ -538,7 +535,7 @@ $("#update-deal-container").data("dealID", dealID).dialog({
         if (document.querySelector("#updatedealname").value != "") {
           if (document.querySelector("#updatedealprice").value != "") {
             if (document.querySelector("#updatedeallocation").value != "") {
-              if (document.querySelector("#updatedealdescription").value != "") {
+              if (new nicEditors.findEditor("updatedealdescription").getContent() != "") {
                 if (document.querySelector("#updatedealexpirydate").value != "") {
                   updateDeals(dealID);
                   $("#update-deal-form").trigger("reset"); //clear the form when the cancel button is clicked
@@ -701,6 +698,6 @@ async function editPhoto(photoId) {
   }
 }
 
-new FroalaEditor('textarea', {
-  pluginsEnabled: ["align", "charCounter", "colors", "fontFamily"]
-});
+//Change the textareas with id="updatedealdescription" and id="dealdescription" into nicEdit rich text editors
+new nicEditor({ buttonList : ['bold','italic','underline', 'bgcolor', 'forecolor', 'fontFamily', 'fontSize']}).panelInstance("updatedealdescription");
+new nicEditor({ buttonList : ['bold','italic','underline', 'bgcolor', 'forecolor', 'fontFamily', 'fontSize']}).panelInstance("dealdescription");
