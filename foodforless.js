@@ -813,12 +813,12 @@ app.post("/update-user-id", async (req, res) => {
     if (req.session.userId == userId) {
       req.session.username = username;
       req.session.firstname = firstname;
+      req.session.lastname = lastname;
       req.session.email = email;
       req.session.password = password;
       req.session.usertype = usertype;
       req.session.userAvatarUrl = userAvatarUrl;
     }
-    console.log(req.session.username)
   res.send({ status: "success", message: "Record successfully updated." });
   
 });
