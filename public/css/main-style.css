@@ -4,8 +4,23 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
   margin: 0;
   padding: 0;
+  display: grid;
+  grid-template-areas: auto auto auto / auto;
 }
 
+nav {
+  grid-area: 1 / 1 / span 1 / span 1;
+}
+
+main {
+  grid-area: 2 / 1 / span 1 / span 1;
+}
+
+footer {
+  grid-area: 3 / 1 / span 1 / span 1;
+}
+
+  /*
 @media (max-width: 600px) {
 
   body {
@@ -109,6 +124,7 @@ body {
   }
 
   /* Rules for the div that holds the deals */
+  /*
   #deals {
     grid-column-start: 1;
     grid-column-end: 4;
@@ -128,8 +144,10 @@ body {
     grid-column-end: 5;
     justify-self: center;
   }
+  */
 
   /* Rules for the div that holds the deals */
+  /*
   #deals {
     grid-column-start: 1;
     grid-column-end: 5;
@@ -359,9 +377,10 @@ body {
     grid-column-end: 5;
     justify-self: center;
   }
-
+*/
 
   /* Rules for the div that holds the deals */
+  /*
   #deals {
     grid-column-start: 1;
     grid-column-end: 5;
@@ -505,3 +524,4 @@ body {
 
   font-weight: bold;
 }
+*/

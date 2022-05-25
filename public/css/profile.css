@@ -1,5 +1,71 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Source+Sans+Pro:wght@400;600;700&display=swap');
 
+#profile-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2em;
+}
+
+.avatar-image {
+  padding: 0 2em;
+  width: 50vh;
+  height: 50h;
+  justify-self: center;
+}
+
+.username {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+#profile-abilities {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.abilities-button {
+  font-family: 'Source Sans Pro', sans-serif;
+
+  border: solid 1px black;
+  border-radius: 0.5em;
+
+  margin-top: 1em;
+  padding: 0.3em;
+
+  background-color: green;
+  color: white;
+  width: 12em;
+
+  cursor: pointer;
+
+}
+
+[role="dialog"] {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+#edit-user-info-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-form-label {
+  margin: 0.5em 0;
+}
+
+.edit-form-input {
+  margin-bottom: 0.5em;
+}
+
+label {
+  font-weight: bold;
+}
+
+
+/*
 body {
   font-family: 'Source Sans Pro', sans-serif;
 }
@@ -60,3 +126,4 @@ button {
 .error {
   color: red;
 }
+*/

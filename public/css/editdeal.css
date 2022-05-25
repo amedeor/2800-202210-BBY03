@@ -1,16 +1,20 @@
+[role="dialog"] {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
 #update-deal-form {
   display: flex;
   flex-direction: column;
 }
 
 .deal-form-label {
-  padding-bottom: .5em;
+  margin: 0.5em 0;
 }
 
 .deal-form-input {
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
 }
 
-#deal-submit-button {
-  margin-top: 2em;
+#updatedealexpirelabel {
+  margin: 1em 0 0.5em 0;
 }

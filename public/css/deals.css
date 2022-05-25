@@ -1,33 +1,140 @@
- .dealphoto {
+.dealphoto {
   align-self: center;
   max-width: 20em;
 }
 
+#deals {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .deal-container {
+  background-color: #fcc603;
   width: 100%;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto auto auto auto auto auto auto auto;
+
+  margin-bottom: 2em;
+  padding-bottom: 1em;
 }
 
-#dealnameparagraph>span {
+
+#dealnameparagraph {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  padding-left: 2em;
+}
+
+#dealnameparagraph > span {
   font-weight: bold;
 }
 
-#dealpostdateparagraph>span {
-  font-weight: bold;
-  font-style: italic;
+#dealpostdateparagraph {
+  grid-column-start: 3;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  justify-self: end;
+  padding-right: 2em;
 }
 
-#dealpriceparagraph>span {
-  font-weight: bold;
-}
-
-#dealpostdateparagraph>span {
-  font-weight: bold;
-}
-
-#dealexpirydateparagraph>span {
+#dealpostdateparagraph > span {
   font-weight: bold;
 }
 
-#dealstorelocationparagraph>span {
+#photoscontainer {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 2;
+  grid-row-end: 3;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#photoeditdeleteparagraph {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  font-size: 9pt;
+  justify-self: center;
+}
+
+#dealidparagraph {
+  display: none;
+}
+
+#useridparagraph {
+  display: none;
+}
+
+#dealpriceparagraph {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 4;
+  grid-row-end: 5;
+  justify-self: center;
+}
+
+#dealpriceparagraph > span  {
   font-weight: bold;
+}
+
+#dealexpirydateparagraph {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 5;
+  grid-row-end: 6;
+  justify-self: center;
+}
+
+#dealexpirydateparagraph > span {
+  font-weight: bold;
+}
+
+#dealstorelocationparagraph {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 6;
+  grid-row-end: 7;
+  justify-self: center;
+}
+
+#dealstorelocationparagraph > span {
+  font-weight: bold;
+}
+
+#dealdescriptionparagraph {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 7;
+  grid-row-end: 8;
+  justify-self: center;
+}
+
+.edit-deal-button {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 8;
+  grid-row-end: 9;
+  justify-self: center;
+  width: 10em;
+  margin-bottom: 1em;
+}
+
+.delete-deal-button {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 9;
+  grid-row-end: 10;
+  justify-self: center;
+  width: 10em;
 }

@@ -1,16 +1,46 @@
+[role="dialog"] {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
 #deal-form {
   display: flex;
   flex-direction: column;
 }
 
 .deal-form-label {
-  padding-bottom: .5em;
+  margin: 0.5em 0;
 }
 
 .deal-form-input {
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
 }
 
-#deal-submit-button {
+#dealexpirelabel {
+  margin: 1em 0 0.5em 0;
+}
+
+/* #deal-submit-button {
   margin-top: 2em;
+} */
+
+/*
+[role="dialog"] {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+#edit-user-info-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-form-label {
+  margin: 0.5em 0;
+}
+
+.edit-form-input {
+  margin-bottom: 0.5em;
+}
+
+label {
+  font-weight: bold;
 }
