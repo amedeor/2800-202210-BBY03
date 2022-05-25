@@ -41,24 +41,24 @@ async function getUsers() {
       }
       if (users[0] != currentID) {
         deletebuttons[j].addEventListener("click", function (e) {
-            $("#confirm-user-account-delete").dialog({
-              title: "Confirm user account delete",
-              resizable: false,
-              draggable: false,
-              height: "auto",
-              width: 400,
-              modal: true,
-              buttons: {
-                "Delete user acccount": async function () {
-                  deleteRow(e);
-                  $(this).dialog("close");
-                },
-                Cancel: function () {
-                  $(this).dialog("close");
-                }
+          $("#confirm-user-account-delete").dialog({
+            title: "Confirm user account delete",
+            resizable: false,
+            draggable: false,
+            height: "auto",
+            width: 400,
+            modal: true,
+            buttons: {
+              "Delete user acccount": async function () {
+                deleteRow(e);
+                $(this).dialog("close");
+              },
+              Cancel: function () {
+                $(this).dialog("close");
               }
-            });
+            }
           });
+        });
       } else {
         deletebuttons[j].classList.remove('deleteButton');
         deletebuttons[j].disabled = true;
@@ -90,6 +90,13 @@ function editRow(e) {
 
   userAvatarUrl = user[7];
 
+  // if (user[0] == currentID) {
+  //   document.querySelector(".username").innerText = userRecord.user_username;
+  //   document.querySelector(".firstName").innerText = userRecord.user_firstname;
+  //   document.querySelector(".lastName").innerText = userRecord.user_lastname;
+  //   document.querySelector(".email").innerText = userRecord.user_email;
+  //   document.querySelector(".password").innerText = userRecord.user_password;
+  // }
   //open the jQuery modal window when the edit button is clicked
   $("#update-record-form-container").dialog("open");
 }
@@ -251,7 +258,7 @@ async function createUser() {
   getUsers();
 
   // //reset the user data form
-   createForm.reset();
+  createForm.reset();
 
 }
 
@@ -322,8 +329,8 @@ $("#update-record-form-container").dialog({
 //This block of code to center the jQuery UI modal popup when the window is resized is from
 //https://stackoverflow.com/questions/3060146/how-to-auto-center-jquery-ui-dialog-when-resizing-browser
 //with adaptatations made to apply to my modal window
-$(window).resize(function(){
-  $("#update-record-form-container").dialog( "option", "position", { my: "center", at: "center", of: window } );
+$(window).resize(function () {
+  $("#update-record-form-container").dialog("option", "position", { my: "center", at: "center", of: window });
 });
 
 let createUserButton = document.querySelector("#create-user-button");
@@ -372,8 +379,8 @@ $("#create-record-form-container").dialog({
 //This block of code to center the jQuery UI modal popup when the window is resized is from
 //https://stackoverflow.com/questions/3060146/how-to-auto-center-jquery-ui-dialog-when-resizing-browser
 //with adaptatations made to apply to my modal window
-$(window).resize(function(){
-  $("#create-record-form-container").dialog( "option", "position", { my: "center", at: "center", of: window } );
+$(window).resize(function () {
+  $("#create-record-form-container").dialog("option", "position", { my: "center", at: "center", of: window });
 });
 
 getUsers();
