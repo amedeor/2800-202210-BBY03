@@ -430,7 +430,7 @@ async function updateDeals(dealID) {
     formData.append("updatedName", updatedName.value);
     formData.append("updatedPrice", updatedPrice.value);
     formData.append("updatedLocation", updatedLocation.value);
-    formData.append("updatedDescription", tinymce.activeEditor.getContent());
+    formData.append("updatedDescription", updatedDescription.value);
     formData.append("updatedExpireDate", updatedExpireDate.value);
 
     const options = {
@@ -468,9 +468,14 @@ function editPost(e) {
   document.querySelector("#updatedealname").value = deal[2];
   document.querySelector("#updatedealprice").value = deal[3];
   document.querySelector("#updatedeallocation").value = deal[7];
-  console.log(deal[6]);
-  tinymce.activeEditor.setContent(deal[6]);
+  document.querySelector("#updatedealdescription").value = deal[6];
   document.querySelector("#updatedealexpirydate").value = deal[5];
+
+  let element = document.querySelector(".fr-element");
+  element.childNodes[0].innerHTML = deal[6];
+
+  let placeholderText = document.querySelector(".fr-placeholder");
+  placeholderText.innerHTML = "";
 
   //open the jQuery modal window when the edit button is clicked
   let dealexpirelabel = document.getElementById("updatedealexpirelabel");
@@ -533,7 +538,7 @@ $("#update-deal-container").data("dealID", dealID).dialog({
         if (document.querySelector("#updatedealname").value != "") {
           if (document.querySelector("#updatedealprice").value != "") {
             if (document.querySelector("#updatedeallocation").value != "") {
-              if (tinymce.activeEditor.getContent() != "") {
+              if (document.querySelector("#updatedealdescription").value != "") {
                 if (document.querySelector("#updatedealexpirydate").value != "") {
                   updateDeals(dealID);
                   $("#update-deal-form").trigger("reset"); //clear the form when the cancel button is clicked
@@ -696,6 +701,6 @@ async function editPhoto(photoId) {
   }
 }
 
-tinymce.init({
-  selector: "#updatedealdescription"
+new FroalaEditor('textarea', {
+  pluginsEnabled: ["align", "charCounter", "colors", "fontFamily"]
 });
