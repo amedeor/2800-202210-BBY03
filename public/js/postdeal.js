@@ -77,8 +77,7 @@ $("#post-deal-container").dialog({
       click: function () {
         //Checks if the input fields are filled or not, if not it will make the area not filled red
         //and doesn't close the popup 
-        if (document.querySelector("#dealname").value != "") {
-          if (document.querySelector("#dealprice").value != "") {
+        if (document.querySelector("#dealname").value != "" && document.querySelector("#dealprice").value != "") {
             if (document.querySelector("#deallocation").value != "") {
               if (new nicEditors.findEditor("dealdescription").getContent() != "") {
                 if (document.querySelector("#dealexpirydate").value != "") {
@@ -89,7 +88,6 @@ $("#post-deal-container").dialog({
                 }
               }
             }
-          }
         }
         if (document.querySelector("#dealname").value == "") {
           let errorContainer = document.getElementById("dealnamelabel");

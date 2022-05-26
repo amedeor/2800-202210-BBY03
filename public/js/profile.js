@@ -144,17 +144,13 @@ $("#edit-user-info-form").dialog({
       click: function () {
                 //Checks if the input fields are filled or not, if not it will make the area not filled red
         //and doesn't close the popup 
-        if (document.querySelector("#username").value != "") {
-          if (document.querySelector("#firstname").value != "") {
-            if (document.querySelector("#lastname").value != "") {
-              if (document.querySelector("#email").value != "") {
+        if (document.querySelector("#username").value != "" && document.querySelector("#firstname").value != "") {
+            if (document.querySelector("#lastname").value != "" && document.querySelector("#email").value != "") {
                 if (document.querySelector("#password").value != "") {
                   editProfileInfo();
                   $(this).dialog("close");
                 }
-              }
             }
-          }
         }
         if (document.querySelector("#username").value == "") {
           let errorContainer = document.getElementById("usernamelabel");
