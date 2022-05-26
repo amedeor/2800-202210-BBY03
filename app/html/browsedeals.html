@@ -3,9 +3,14 @@
 
 <head>
   <meta charset="UTF-8">
+
   <!-- maximum-scale=1 to prevent zooming in on input fields -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+
+  <!-- JQuery UI Library -->
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+
+  <!-- Style Sheets -->
   <link rel="stylesheet" href="/css/main-style.css">
   <link rel="stylesheet" href="/css/profile.css">
   <link rel="stylesheet" href="/css/navbar.css">
@@ -14,11 +19,16 @@
   <link rel="stylesheet" href="/css/editdeal.css">
   <link rel="stylesheet" href="/css/editimage.css">
   <link rel="stylesheet" href="/css/browsedeals.css">
+
+  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
+
   <title>FoodForLess</title>
 </head>
 
 <body>
+
+  <!-- Nav bar -->
   <nav id="nav">
     <h1 id="easter_egg">FoodForLe<a onclick="easter_egg()">ss</a></h1>
     <div id="nav-items-container">
@@ -52,20 +62,26 @@
 
   </nav>
 
+  <!-- Container to hold all deals posted -->
   <div id="deals">
 
   </div>
 
+  <!-- Footer -->
   <footer id="footer">
     <div>
       <small>Copyright 2022, FoodForLess</small>
     </div>
   </footer>
 
+  <!-- JQuery Scripts -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+  <!-- Scripts -->
   <script src="/js/client.js"></script>
   <script src="/js/browsedeals.js"></script>
+
 </body>
 
 </html>

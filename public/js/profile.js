@@ -2,6 +2,8 @@
 
 getDeals();
 
+
+// Function that retrieves the user's profile info and populates it on a popup form for the user to edit.
 async function editProfileInfo() {
   let currentUsername = document.querySelector(".username").innerText;
 
@@ -49,7 +51,6 @@ async function editProfileInfo() {
 
 //Function to upload a new avatar image on the user's profile page
 async function uploadImage(e) {
-  // e.preventDefault();
 
   const imageUpload = document.querySelector('#image-upload');
 
@@ -129,6 +130,7 @@ editProfileButton.addEventListener("click", e => {
   $("#edit-user-info-form").dialog("open");
 })
 
+// Modal popup form for editin the user's profile information
 $("#edit-user-info-form").dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
@@ -210,6 +212,8 @@ changeAvatarButton.addEventListener("click", e => {
   $("#upload-images-form").dialog("open");
 });
 
+
+// Modal popup form for uploading images to change the user's profile image
 $("#upload-images-form").dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
@@ -244,8 +248,10 @@ $(window).resize(function () {
   $("#upload-images-form").dialog("option", "position", { my: "center", at: "center", of: window });
 });
 
-
+// Counter for "ss" clicks on the "FoodForLess" heading
 var easter_count = 0;
+
+// Changes the styling of the page once the "ss" from the "FoodForLess" heading is clicked three times
 function easter_egg() {
   easter_count++;
   if (easter_count >= 3) {
@@ -257,6 +263,7 @@ function easter_egg() {
   }
 }
 
+// Retrieves and populates all the deals that the user has posted onto the page
 async function getDeals() {
 
   let response = await fetch("/get-deals");
@@ -424,10 +431,7 @@ async function getDeals() {
 
   var deleteButtons = document.querySelectorAll(".delete-deal-button");
 
-  // for (let j = 0; j < deleteButtons.length; j++) {
-  //   deleteButtons[j].addEventListener("click", deletePost);
-  // }
-
+  // Adds an event listener to each delete button's post
   for (let j = 0; j < deleteButtons.length; j++) {
     deleteButtons[j].addEventListener("click", function (e) {
       $("#confirm-deal-delete").dialog({
@@ -456,6 +460,7 @@ async function getDeals() {
   }
 }
 
+// Retrieves and populates a popup form with the deal information to be edited by the user
 async function updateDeals(dealID) {
 
   const imageUploadElement = document.querySelector('#updatedealphotos');
@@ -499,6 +504,7 @@ async function updateDeals(dealID) {
 
 var dealID;
 
+// Retrieves and populates the popup form with the deal information
 function editPost(e) {
 
   let parentTd = e.target.parentNode;
@@ -539,6 +545,7 @@ function editPost(e) {
   $("#update-deal-container").data("dealID", dealID).dialog("open");
 }
 
+// Deletes the post on the page and in the database
 async function deletePost(e) {
 
   let parentTd = e.target.parentNode;
@@ -568,6 +575,7 @@ async function deletePost(e) {
   parentTd.remove();
 }
 
+// Modal popup for the update deal form
 $("#update-deal-container").data("dealID", dealID).dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
@@ -642,6 +650,8 @@ $("#update-deal-container").data("dealID", dealID).dialog({
   }
 });
 
+
+// Modal popup for the edit photo form
 $("#edit-photo-container").dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
@@ -698,6 +708,7 @@ $("#edit-photo-container").dialog({
   }
 });
 
+// Deletes the photo path from the deal in the database
 async function deletePhoto(photoId) {
   let response = await fetch("/delete-photo", {
     method: "post",
@@ -711,6 +722,7 @@ async function deletePhoto(photoId) {
   );
 }
 
+// Posts a new photo from the deal in the database
 async function editPhoto(photoId) {
 
   const iupload = document.querySelector('#iupload');

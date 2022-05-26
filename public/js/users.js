@@ -3,6 +3,7 @@
 var currentID;
 var str;
 
+// Retrieves all the users and their information and populates it onto the page as a table
 async function getUsers() {
 
   let response = await fetch("/get-users");
@@ -69,6 +70,7 @@ async function getUsers() {
   }
 }
 
+// Opens a popup form of the user being edited
 function editRow(e) {
 
   let parentTd = e.target.parentNode;
@@ -101,6 +103,7 @@ function editRow(e) {
   $("#update-record-form-container").dialog("open");
 }
 
+// Deletes the user from the table and in the database
 async function deleteRow(e) {
 
   let parentTd = e.target.parentNode;
@@ -126,6 +129,7 @@ async function deleteRow(e) {
   }
 }
 
+// Opens a popup form to allow the admin to edit the user's information
 async function updateUser() {
   let userAvatarUrl;
 
@@ -176,7 +180,6 @@ async function updateUser() {
 
 //Function to upload a new avatar image on the user's profile page
 async function uploadImage(username) {
-  // e.preventDefault();
 
   const imageUpload = document.querySelector('#image-upload');
   const formData = new FormData();
@@ -211,8 +214,8 @@ async function uploadImage(username) {
 
 }
 
+// Opens a popup form for the admin user to fill-in to create a new user
 async function createUser() {
-  // e.preventDefault();
 
   let createUserAvatarUrl;
 
@@ -266,7 +269,6 @@ async function createUser() {
 
 //async function uploadCreateImage(e, username)
 async function uploadCreateImage(username) {
-  //e.preventDefault();
 
   const imageUpload = document.querySelector('#create-image-upload');
   const formData = new FormData();
@@ -298,6 +300,7 @@ async function uploadCreateImage(username) {
 
 }
 
+// Modal popup form for editing a user's information
 $("#update-record-form-container").dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
@@ -339,6 +342,7 @@ createUserButton.addEventListener("click", e => {
   $("#create-record-form-container").dialog("open");
 });
 
+// Clears the status message after some time has passed
 function clearStatusMessage() {
   let statusMessage = document.querySelector("#status");
   setTimeout(() => {
@@ -346,7 +350,7 @@ function clearStatusMessage() {
   }, 3000)
 }
 
-
+// Modal popup form for creating a new user
 $("#create-record-form-container").dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout

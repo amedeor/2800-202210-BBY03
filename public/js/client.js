@@ -31,7 +31,7 @@ if (listIcon != null) {
   });
 }
 
-//Check if the browse icon is null, if it is not, attach an event listener to the link that will fire the /browse-deals get request
+// Check if the browse icon is null, if it is not, attach an event listener to the link that will fire the /browse-deals get request
 if (browseIcon != null) {
   browseIcon.addEventListener("click", async e => {
     if (browseIcon != null) {
@@ -41,7 +41,7 @@ if (browseIcon != null) {
 }
 
 
-//Check if the logout icon is null, if it is not, attach an event listener to the link that will fire the /logout get request
+// Check if the logout icon is null, if it is not, attach an event listener to the link that will fire the /logout get request
 if (logoutIcon != null) {
   logoutIcon.addEventListener("click", async e => {
     if (logoutButton != null) {
@@ -50,7 +50,7 @@ if (logoutIcon != null) {
   });
 }
 
-//Check if the profile icon is null, if it is not, attach an event listener to the link that will fire the /profile get request
+// Check if the profile icon is null, if it is not, attach an event listener to the link that will fire the /profile get request
 if (profileIcon != null) {
   profileIcon.addEventListener("click", async e => {
     if (profileButton != null) {
@@ -152,7 +152,10 @@ if (signupButton != null) {
   });
 }
 
+// Counter for "ss" clicks on the "FoodForLess" heading
 var easter_count = 0;
+
+// Changes the styling of the page once the "ss" from the "FoodForLess" heading is clicked three times
 function easter_egg() {
   easter_count++;
   if (easter_count >= 3) {

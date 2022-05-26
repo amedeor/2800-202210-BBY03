@@ -2,6 +2,7 @@
 
 getAllDeals();
 
+// Retrieves and populates all posted deals onto the page
 async function getAllDeals() {
   let dealsContainer = document.querySelector("#deals");
 

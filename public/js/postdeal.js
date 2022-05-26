@@ -3,6 +3,7 @@
 
 let postDealLink = document.querySelector("#post-deal-link");
 
+// Adds an event listener to the "Post Deal" button to open the popup form
 postDealLink.addEventListener("click", e => {
   let dealexpirelabel = document.getElementById("dealexpirelabel");
   dealexpirelabel.classList.remove("error");
@@ -63,6 +64,7 @@ async function postDeal() {
   }
 }
 
+// Modal popup form for posting deals
 $("#post-deal-container").dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
