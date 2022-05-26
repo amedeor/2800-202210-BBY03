@@ -142,15 +142,13 @@ $("#edit-user-info-form").dialog({
     {
       text: "Submit",
       click: function () {
-                //Checks if the input fields are filled or not, if not it will make the area not filled red
+        //Checks if the input fields are filled or not, if not it will make the area not filled red
         //and doesn't close the popup 
-        if (document.querySelector("#username").value != "" && document.querySelector("#firstname").value != "") {
-            if (document.querySelector("#lastname").value != "" && document.querySelector("#email").value != "") {
-                if (document.querySelector("#password").value != "") {
-                  editProfileInfo();
-                  $(this).dialog("close");
-                }
-            }
+        if (document.querySelector("#username").value != "" && document.querySelector("#firstname").value != ""
+          && document.querySelector("#lastname").value != "" && document.querySelector("#email").value != ""
+          && document.querySelector("#password").value != "") {
+          editProfileInfo();
+          $(this).dialog("close");
         }
         if (document.querySelector("#username").value == "") {
           let errorContainer = document.getElementById("usernamelabel");
@@ -473,11 +471,11 @@ async function updateDeals(dealID) {
   let updatedLocation = document.querySelector("#updatedeallocation");
   let updatedExpireDate = document.querySelector("#updatedealexpirydate");
   //get the niceEditor from profile.js that has the id="updatedealdescription"
-  let updateDealDescriptionNicEditor = new nicEditors.findEditor("updatedealdescription"); 
+  let updateDealDescriptionNicEditor = new nicEditors.findEditor("updatedealdescription");
 
   //A check in the if statement will ensure that a description of <br> cannot be entered. <br> is the default text for the nicEdit textarea and will be rendered as blank in HTML.
   //updateDealDescriptionNicEditor.getContent() gets the text from the nicEditor
-  if ((updateDealDescriptionNicEditor.getContent() !== "" && updateDealDescriptionNicEditor.getContent() !== "br") && updatedName.checkValidity() !== false && updatedPrice.checkValidity() !== false && updatedExpireDate.checkValidity() != false) {
+  if ((updateDealDescriptionNicEditor.getContent() !== "" && updateDealDescriptionNicEditor.getContent() !== "<br>") && updatedName.checkValidity() !== false && updatedPrice.checkValidity() !== false && updatedExpireDate.checkValidity() != false) {
 
     formData.append("dealID", dealID);
     formData.append("updatedName", updatedName.value);
@@ -585,18 +583,12 @@ $("#update-deal-container").data("dealID", dealID).dialog({
       click: function () {
         //Checks if the input fields are filled or not, if not it will make the area not filled red
         //and doesn't close the popup 
-        if (document.querySelector("#updatedealname").value != "") {
-          if (document.querySelector("#updatedealprice").value != "") {
-            if (document.querySelector("#updatedeallocation").value != "") {
-              if (new nicEditors.findEditor("updatedealdescription").getContent() != "") {
-                if (document.querySelector("#updatedealexpirydate").value != "") {
-                  updateDeals(dealID);
-                  $("#update-deal-form").trigger("reset"); //clear the form when the cancel button is clicked
-                  $(this).dialog("close");
-                }
-              }
-            }
-          }
+        if (document.querySelector("#updatedealname").value != "" && document.querySelector("#updatedealprice").value != ""
+          && document.querySelector("#updatedeallocation").value != "" && new nicEditors.findEditor("updatedealdescription").getContent() !== ""
+          && new nicEditors.findEditor("updatedealdescription").getContent() !== "<br>" && document.querySelector("#updatedealexpirydate").value != "") {
+          updateDeals(dealID);
+          $("#update-deal-form").trigger("reset"); //clear the form when the cancel button is clicked
+          $(this).dialog("close");
         }
         if (document.querySelector("#updatedealname").value == "") {
           let errorContainer = document.getElementById("updatedealnamelabel");
@@ -619,7 +611,8 @@ $("#update-deal-container").data("dealID", dealID).dialog({
           let errorContainer = document.getElementById("updatedeallocationlabel");
           errorContainer.classList.remove("error");
         }
-        if (document.querySelector("#updatedealdescription").value == "") {
+        //check updatedealdescription textarea if it contains a <br> element because this is the default content in the textarea when blank
+        if (new nicEditors.findEditor("updatedealdescription").getContent() == "<br>" || new nicEditors.findEditor("updatedealdescription").getContent() == "") {
           let errorContainer = document.getElementById("updatedealdescriptionlabel");
           errorContainer.classList.add("error");
         } else {
@@ -752,5 +745,5 @@ async function editPhoto(photoId) {
 }
 
 //Change the textareas with id="updatedealdescription" and id="dealdescription" into nicEdit rich text editors
-new nicEditor({ buttonList : ['bold','italic','underline', 'bgcolor', 'forecolor', 'fontFamily', 'fontSize']}).panelInstance("updatedealdescription");
-new nicEditor({ buttonList : ['bold','italic','underline', 'bgcolor', 'forecolor', 'fontFamily', 'fontSize']}).panelInstance("dealdescription");
+new nicEditor({ buttonList: ['bold', 'italic', 'underline', 'bgcolor', 'forecolor', 'fontFamily', 'fontSize'] }).panelInstance("updatedealdescription");
+new nicEditor({ buttonList: ['bold', 'italic', 'underline', 'bgcolor', 'forecolor', 'fontFamily', 'fontSize'] }).panelInstance("dealdescription");
