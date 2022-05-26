@@ -424,7 +424,7 @@ async function updateDeals(dealID) {
 
   //A check in the if statement will ensure that a description of <br> cannot be entered. <br> is the default text for the nicEdit textarea and will be rendered as blank in HTML.
   //updateDealDescriptionNicEditor.getContent() gets the text from the nicEditor
-  if ((updateDealDescriptionNicEditor.getContent() !== "" && updateDealDescriptionNicEditor.getContent() !== "br") && updatedName.checkValidity() !== false && updatedPrice.checkValidity() !== false && updatedExpireDate.checkValidity() != false) {
+  if ((updateDealDescriptionNicEditor.getContent() !== "" && updateDealDescriptionNicEditor.getContent() !== "<br>") && updatedName.checkValidity() !== false && updatedPrice.checkValidity() !== false && updatedExpireDate.checkValidity() != false) {
 
     formData.append("dealID", dealID);
     formData.append("updatedName", updatedName.value);
@@ -535,7 +535,7 @@ $("#update-deal-container").data("dealID", dealID).dialog({
         if (document.querySelector("#updatedealname").value != "") {
           if (document.querySelector("#updatedealprice").value != "") {
             if (document.querySelector("#updatedeallocation").value != "") {
-              if (new nicEditors.findEditor("updatedealdescription").getContent() != "") {
+              if (new nicEditors.findEditor("updatedealdescription").getContent() !== "" && new nicEditors.findEditor("updatedealdescription").getContent() !== "<br>") {
                 if (document.querySelector("#updatedealexpirydate").value != "") {
                   updateDeals(dealID);
                   $("#update-deal-form").trigger("reset"); //clear the form when the cancel button is clicked
@@ -566,7 +566,8 @@ $("#update-deal-container").data("dealID", dealID).dialog({
           let errorContainer = document.getElementById("updatedeallocationlabel");
           errorContainer.classList.remove("error");
         }
-        if (document.querySelector("#updatedealdescription").value == "") {
+        //check updatedealdescription textarea if it contains a <br> element because this is the default content in the textarea when blank
+        if (new nicEditors.findEditor("updatedealdescription").getContent() == "<br>" || new nicEditors.findEditor("updatedealdescription").getContent() == "") {
           let errorContainer = document.getElementById("updatedealdescriptionlabel");
           errorContainer.classList.add("error");
         } else {

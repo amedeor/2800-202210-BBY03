@@ -16,7 +16,8 @@ postDealLink.addEventListener("click", e => {
   dealnamelabel.classList.remove("error");
   //when the jQuery modal opens, clear the nicEdit textarea
   let dealDescriptionNicEditor = new nicEditors.findEditor("dealdescription");
-  dealDescriptionNicEditor.setContent("");
+  //set the NicEditor text area to empty to remove the default <br> tag in the textarea before the modal window opens
+  dealDescriptionNicEditor.setContent(""); 
   $("#post-deal-container").dialog("open");
 })
 
@@ -34,7 +35,7 @@ async function postDeal() {
 
   let dealName = document.querySelector("#dealname");
   let dealPrice = document.querySelector("#dealprice");
-  let dealDescription = document.querySelector("#dealdescription");
+  //let dealDescription = document.querySelector("#dealdescription");
   let dealLocation = document.querySelector("#deallocation");
   let dealExpiryDate = document.querySelector("#dealexpirydate");
 
@@ -84,7 +85,7 @@ $("#post-deal-container").dialog({
                 if (document.querySelector("#dealexpirydate").value != "") {
                   postDeal();
                   $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
-                  new nicEditors.findEditor("dealdescription").setContent("");
+                  new nicEditors.findEditor("dealdescription").setContent(""); //set the content of the NicEdit text area to an empty string
                   $(this).dialog("close");
                 }
               }
@@ -112,7 +113,7 @@ $("#post-deal-container").dialog({
           let errorContainer = document.getElementById("deallocationlabel");
           errorContainer.classList.remove("error");
         }
-        if (document.querySelector("#dealdescription").value == "") {
+        if (new nicEditors.findEditor("dealdescription").getContent() == "") {
           let errorContainer = document.getElementById("dealdescriptionlabel");
           errorContainer.classList.add("error");
         } else {
