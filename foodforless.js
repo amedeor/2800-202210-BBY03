@@ -783,7 +783,7 @@ app.get("/get-users", async (req, res) => {
 app.post("/update-user-id", async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
-
+  
   let userId = req.body.id;
   let username = req.body.username;
   let firstname = req.body.firstname;
@@ -809,8 +809,16 @@ app.post("/update-user-id", async (req, res) => {
         console.log(error);
       }
     });
-
     connection.end();
+    if (req.session.userId == userId) {
+      req.session.username = username;
+      req.session.firstname = firstname;
+      req.session.lastname = lastname;
+      req.session.email = email;
+      req.session.password = password;
+      req.session.usertype = usertype;
+      req.session.userAvatarUrl = userAvatarUrl;
+    }
   res.send({ status: "success", message: "Record successfully updated." });
   
 });

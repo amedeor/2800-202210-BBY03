@@ -116,6 +116,16 @@ editProfileButton.addEventListener("click", e => {
   document.querySelector("#email").value = email;
   document.querySelector("#password").value = password;
   document.querySelector("#username").value = username;
+  let usernameLabel = document.getElementById("usernamelabel");
+  usernameLabel.classList.remove("error");
+  let firstnamelabel = document.getElementById("firstnamelabel");
+  firstnamelabel.classList.remove("error");
+  let lastnamelabel = document.getElementById("lastnamelabel");
+  lastnamelabel.classList.remove("error");
+  let emaillabel = document.getElementById("emaillabel");
+  emaillabel.classList.remove("error");
+  let passwordlabel = document.getElementById("passwordlabel");
+  passwordlabel.classList.remove("error");
   $("#edit-user-info-form").dialog("open");
 })
 
@@ -132,8 +142,55 @@ $("#edit-user-info-form").dialog({
     {
       text: "Submit",
       click: function () {
-        editProfileInfo()
-        $(this).dialog("close");
+                //Checks if the input fields are filled or not, if not it will make the area not filled red
+        //and doesn't close the popup 
+        if (document.querySelector("#username").value != "") {
+          if (document.querySelector("#firstname").value != "") {
+            if (document.querySelector("#lastname").value != "") {
+              if (document.querySelector("#email").value != "") {
+                if (document.querySelector("#password").value != "") {
+                  editProfileInfo();
+                  $(this).dialog("close");
+                }
+              }
+            }
+          }
+        }
+        if (document.querySelector("#username").value == "") {
+          let errorContainer = document.getElementById("usernamelabel");
+          errorContainer.classList.add("error");
+        } else {
+          let errorContainer = document.getElementById("usernamelabel");
+          errorContainer.classList.remove("error");
+        }
+        if (document.querySelector("#firstname").value == "") {
+          let errorContainer = document.getElementById("firstnamelabel");
+          errorContainer.classList.add("error");
+        } else {
+          let errorContainer = document.getElementById("firstnamelabel");
+          errorContainer.classList.remove("error");
+        }
+        if (document.querySelector("#lastname").value == "") {
+          let errorContainer = document.getElementById("lastnamelabel");
+          errorContainer.classList.add("error");
+        } else {
+          let errorContainer = document.getElementById("lastnamelabel");
+          errorContainer.classList.remove("error");
+        }
+        if (document.querySelector("#email").value == "") {
+          let errorContainer = document.getElementById("emaillabel");
+          errorContainer.classList.add("error");
+        } else {
+          let errorContainer = document.getElementById("emaillabel");
+          errorContainer.classList.remove("error");
+        }
+        if (document.querySelector("#password").value == "") {
+          let errorContainer = document.getElementById("passwordlabel");
+          errorContainer.classList.add("error");
+        } else {
+          let errorContainer = document.getElementById("passwordlabel");
+          errorContainer.classList.remove("error");
+        }
       }
     },
     {
