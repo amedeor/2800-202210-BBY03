@@ -88,26 +88,6 @@ body {
     text-decoration: underline;
   }
 
-  #footer {
-    grid-column-start: 1;
-    grid-column-end: 4;
-
-    grid-row-start: 7;
-    grid-row-end: 7;
-
-    justify-self: center;
-    text-align: center;
-
-    padding-top: 1em;
-    padding-bottom: 1em;
-
-    background-color: #fcc603;
-    width: 100%;
-
-    color: black;
-    font-weight: bold;
-  }
-
   /* Rules for the div that holds the deals */
   #deals {
     grid-column-start: 1;
