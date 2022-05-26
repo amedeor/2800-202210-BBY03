@@ -77,17 +77,13 @@ $("#post-deal-container").dialog({
       click: function () {
         //Checks if the input fields are filled or not, if not it will make the area not filled red
         //and doesn't close the popup 
-        if (document.querySelector("#dealname").value != "" && document.querySelector("#dealprice").value != "") {
-            if (document.querySelector("#deallocation").value != "") {
-              if (new nicEditors.findEditor("dealdescription").getContent() != "") {
-                if (document.querySelector("#dealexpirydate").value != "") {
-                  postDeal();
-                  $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
-                  new nicEditors.findEditor("dealdescription").setContent("");
-                  $(this).dialog("close");
-                }
-              }
-            }
+        if (document.querySelector("#dealname").value != "" && document.querySelector("#dealprice").value != ""
+          && document.querySelector("#deallocation").value != "" && new nicEditors.findEditor("dealdescription").getContent() != ""
+          && document.querySelector("#dealexpirydate").value != "") {
+          postDeal();
+          $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
+          new nicEditors.findEditor("dealdescription").setContent("");
+          $(this).dialog("close");
         }
         if (document.querySelector("#dealname").value == "") {
           let errorContainer = document.getElementById("dealnamelabel");
