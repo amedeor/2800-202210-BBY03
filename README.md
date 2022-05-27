@@ -21,8 +21,8 @@ Technologies used for this project:
     * jQuery UI 1.12.1
 
 2. Backend
-    * Node.js version 16.14.0
-    * express version 4.18.1
+    * Node.js 16.14.0
+    * express 4.18.1
     * express-session 1.17.3
     * multer 1.4.4
     * jsdom 19.0.0
@@ -120,12 +120,12 @@ Technologies used for this project:
     6. Start your MySQL server instance
     7. From the command line, change directory to the root of the project folder and start the application by running the command: node foodforless.js
     8. Open a web browser and go to localhost:8000 (The application runs on port 8000 by default)
-    9. You can now login with an administrator account or regular user account using the credentials specified in the useraccounts.txt file
+    9. You can now login with an administrator account or regular user account using the credentials specified in the passwords.txt file
 
 4. [Testing plan/log](https://docs.google.com/spreadsheets/d/1hT7aN8KcQ0bGoOxY-3B9k68t5wRmzynt-ZkHXiF6c48/edit#gid=394496370)
 
 5. How to use our application
-    1. Log in as a regular user or administrator user with the credentials provided in the passwords.txt file.
+    1. Login as a regular user or administrator user with the credentials provided in the passwords.txt file.
     2. After successful login you will be directed to your profile page.
     3. From the profile page, an administrator user account can post deals, access an administrator dashboard to manage other user accounts, and update their profile information. From the profile page, a regular user account can post deals and update their profile information.
     4. To browse deals posted by all other users, click the "Browse" link in the navbar.
@@ -139,6 +139,6 @@ Technologies used for this project:
 * [How to calculate time zone offset in JavaScript](https://stackoverflow.com/questions/7403486/add-or-subtract-timezone-difference-to-javascript-date)
 * [How to center a jQuery UI modal after browser window resize](https://stackoverflow.com/questions/3060146/how-to-auto-center-jquery-ui-dialog-when-resizing-browser)
 
-## Contact Information
+## Contact information
 
 We can be contacted by email at: comp2800teambby03@gmail.com
