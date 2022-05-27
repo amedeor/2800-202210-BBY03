@@ -97,7 +97,7 @@ Technologies used for this project:
     - CSS
     - MySQL (MariaDB)
 
-2. APIs and Frameworks required
+2. APIs and frameworks required
     - Node.js 
     - express (Node.js module)
     - express-session (Node.js module)
