@@ -110,12 +110,12 @@ Technologies used for this project:
     2. Install MySQL server (You can install XAMPP which includes MySQL server)
     3. Run all the SQL queries in the code from the COMP2800.sql file as a root user on your MySQL server instance. This will create the required database and tables to run the application.
     4. Install Node.js
-    5. Install all the requirede Node.js modules globally using the following commands:
-        npm -install -g express
-        npm -install -g express-session
-        npm -install -g mysql2
-        npm -install -g multer
-        npm -install -g jsdom
+    5. Install all the required Node.js modules globally using the following commands:
+        - npm -install -g express
+        - npm -install -g express-session
+        - npm -install -g mysql2
+         -npm -install -g multer
+         -npm -install -g jsdom
     6. Start your MySQL server instance
     7. From the command line, change directory to the root of the project folder and start the application by running the command: node foodforless.js
     8. Open a web browser and go to localhost:8000 (The application runs on port 8000 by default)
