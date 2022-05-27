@@ -124,7 +124,7 @@ Technologies used for this project:
 
 4. [Testing plan/log](https://docs.google.com/spreadsheets/d/1hT7aN8KcQ0bGoOxY-3B9k68t5wRmzynt-ZkHXiF6c48/edit#gid=394496370)
 
-5. How to use our application
+5. Features (how to use our application)
     1. Login as a regular user or administrator user with the credentials provided in the passwords.txt file.
     2. After successful login you will be directed to your profile page.
     3. From the profile page, an administrator user account can post deals, access an administrator dashboard to manage other user accounts, and update their profile information. From the profile page, a regular user account can post deals and update their profile information.
