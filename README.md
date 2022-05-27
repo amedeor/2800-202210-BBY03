@@ -36,25 +36,26 @@ Technologies used for this project:
     * XAMPP (Used for MySQL (MariaDB))
 
 ## List of file contents in project folder
+```
 .
-├── app
-│   └── html
-│       ├── adminprofile.html
-│       ├── browsedeals.html
-│       ├── index.html
-│       ├── profile.html
-│       ├── signup.html
-│       └── users.html
-├── COMP2800.sql
-├── foodforless.js
+├── app                                
+│   └── html                                
+│       ├── adminprofile.html               
+│       ├── browsedeals.html                
+│       ├── index.html                      
+│       ├── profile.html                    
+│       ├── signup.html                     
+│       └── users.html                      
+├── COMP2800.sql                            
+├── foodforless.js                          
 ├── package.json
 ├── package-lock.json
-├── public
-│   ├── css
-│   │   ├── browsedeals.css
-│   │   ├── deals.css
-│   │   ├── easter_egg.css
-│   │   ├── editdeal.css
+├── public                                  
+│   ├── css                                 
+│   │   ├── browsedeals.css                 
+│   │   ├── deals.css                       
+│   │   ├── easter_egg.css                  
+│   │   ├── editdeal.css                    
 │   │   ├── editimage.css
 │   │   ├── main-style.css
 │   │   ├── navbar.css
@@ -85,48 +86,49 @@ Technologies used for this project:
 │       ├── profile.js
 │       └── users.js
 └── README.md
+```
 
 ## Installing and running the project
 
 1. Software and languages required
-    a) HTML
-    b) JavaScript
-    c) CSS
-    d) MySQL (MariaDB)
+    - HTML
+    - JavaScript
+    - CSS
+    - MySQL (MariaDB)
 
 2. APIs and Frameworks required
-    a) Node.js 
-    b) express (Node.js module)
-    c) express-session (Node.js module)
-    d) mysql2 (Node.js module)
-    e) multer (Node.js module)
-    f) JSDOM (Node.js module)
-    g) NicEdit
+    - Node.js 
+    - express (Node.js module)
+    - express-session (Node.js module)
+    - mysql2 (Node.js module)
+    - multer (Node.js module)
+    - JSDOM (Node.js module)
+    - NicEdit
 
 3. Configuration
-    a) Clone the repository from the main branch
-    b) Install MySQL server (You can install XAMPP which includes MySQL server)
-    c) Run all the SQL queries in the code from the COMP2800.sql file as a root user on your MySQL server instance. This will create the required database and tables to run the application.
-    d) Install Node.js
-    e) Install all the requirede Node.js modules globally using the following commands:
+    1. Clone the repository from the main branch
+    2. Install MySQL server (You can install XAMPP which includes MySQL server)
+    3. Run all the SQL queries in the code from the COMP2800.sql file as a root user on your MySQL server instance. This will create the required database and tables to run the application.
+    4. Install Node.js
+    5. Install all the requirede Node.js modules globally using the following commands:
         npm -install -g express
         npm -install -g express-session
         npm -install -g mysql2
         npm -install -g multer
         npm -install -g jsdom
-    f) Start your MySQL server instance
-    g) From the command line, change directory to the root of the project folder and start the application by running the command: node foodforless.js
-    h) Open a web browser and go to localhost:8000 (The application runs on port 8000 by default)
-    i) You can now login with an administrator account or regular user account using the credentials specified in the useraccounts.txt file
+    6. Start your MySQL server instance
+    7. From the command line, change directory to the root of the project folder and start the application by running the command: node foodforless.js
+    8. Open a web browser and go to localhost:8000 (The application runs on port 8000 by default)
+    9. You can now login with an administrator account or regular user account using the credentials specified in the useraccounts.txt file
 
 4. [Testing plan/log](https://docs.google.com/spreadsheets/d/1hT7aN8KcQ0bGoOxY-3B9k68t5wRmzynt-ZkHXiF6c48/edit#gid=394496370)
 
 5. How to use our application
-    a) Log in as a regular user or administrator user with the credentials provided in the passwords.txt file.
-    b) After successful login you will be directed to your profile page.
-    c) From the profile page, an administrator user account can post deals, access an administrator dashboard to manage other user accounts, and update their profile information. From the profile page, a regular user account can post deals and update their profile information.
-    d) To browse deals posted by all other users, click the "Browse" link in the navbar.
-    e) To create a new user account, click the "Create an account" link on the homepage.
+    1. Log in as a regular user or administrator user with the credentials provided in the passwords.txt file.
+    2. After successful login you will be directed to your profile page.
+    3. From the profile page, an administrator user account can post deals, access an administrator dashboard to manage other user accounts, and update their profile information. From the profile page, a regular user account can post deals and update their profile information.
+    4. To browse deals posted by all other users, click the "Browse" link in the navbar.
+    5. To create a new user account, click the "Create an account" link on the homepage.
 
 ## Credits and references
 
