@@ -56,7 +56,20 @@ button {
   border-color: black;
   border-radius: 0.5em;
 }
-
+.delete-deal-button{
+  background-color: red;
+  color: white;
+  border-width: 1px;
+  border-color: black;
+  border-radius: 0.5em;
+}
+.edit-deal-button{
+  background-color: yellow;
+  color: black;
+  border-width: 1px;
+  border-color: black;
+  border-radius: 0.5em;
+}
 .error {
   color: red;
 }

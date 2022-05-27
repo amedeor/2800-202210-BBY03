@@ -2,7 +2,7 @@
 
 let postDealLink = document.querySelector("#post-deal-link");
 
-
+// Adds an event listener to the "Post Deal" button to open the popup form
 postDealLink.addEventListener("click", e => {
   let dealexpirelabel = document.getElementById("dealexpirelabel");
   dealexpirelabel.classList.remove("error");
@@ -14,14 +14,17 @@ postDealLink.addEventListener("click", e => {
   dealpricelabel.classList.remove("error");
   let dealnamelabel = document.getElementById("dealnamelabel");
   dealnamelabel.classList.remove("error");
+  //when the jQuery modal opens, clear the nicEdit textarea
+  let dealDescriptionNicEditor = new nicEditors.findEditor("dealdescription");
+  //set the NicEditor text area to empty to remove the default <br> tag in the textarea before the modal window opens
+  dealDescriptionNicEditor.setContent(""); 
   $("#post-deal-container").dialog("open");
-})
+});
 
 //Function to upload a new avatar image on the user's profile page
 async function postDeal() {
 
   const imageUploadElement = document.querySelector('#dealphotos');
-
   const formData = new FormData();
 
   //Use a loop to get the image from the image upload input and store it in a variable called file
@@ -31,16 +34,18 @@ async function postDeal() {
 
   let dealName = document.querySelector("#dealname");
   let dealPrice = document.querySelector("#dealprice");
-  let dealDescription = document.querySelector("#dealdescription");
+  //let dealDescription = document.querySelector("#dealdescription");
   let dealLocation = document.querySelector("#deallocation");
   let dealExpiryDate = document.querySelector("#dealexpirydate");
 
-  if (dealName.checkValidity() !== false && dealPrice.checkValidity() !== false && dealDescription.checkValidity() !== false &&
+  let dealDescriptionNicEditor = new nicEditors.findEditor("dealdescription");
+
+  if (dealName.checkValidity() !== false && dealPrice.checkValidity() !== false && dealDescriptionNicEditor.getContent() !== "" &&
     dealLocation.checkValidity() != false && dealExpiryDate.checkValidity() != false) {
 
     formData.append("dealName", dealName.value);
     formData.append("dealPrice", dealPrice.value);
-    formData.append("dealDescription", dealDescription.value);
+    formData.append("dealDescription", dealDescriptionNicEditor.getContent());
     formData.append("dealLocation", dealLocation.value);
     formData.append("dealExpiryDate", dealExpiryDate.value);
 
@@ -57,6 +62,7 @@ async function postDeal() {
   }
 }
 
+// Modal popup form for posting deals
 $("#post-deal-container").dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
@@ -64,7 +70,7 @@ $("#post-deal-container").dialog({
   autoOpen: false,
   draggable: false,
   title: "Post a Deal",
-  Width: 50,
+  width: 300,
   height: 500,
   buttons: [
     {
@@ -72,18 +78,13 @@ $("#post-deal-container").dialog({
       click: function () {
         //Checks if the input fields are filled or not, if not it will make the area not filled red
         //and doesn't close the popup 
-        if (document.querySelector("#dealname").value != "") {
-          if (document.querySelector("#dealprice").value != "") {
-            if (document.querySelector("#deallocation").value != "") {
-              if (document.querySelector("#dealdescription").value != "") {
-                if (document.querySelector("#dealexpirydate").value != "") {
-                  postDeal();
-                  $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
-                  $(this).dialog("close");
-                }
-              }
-            }
-          }
+        if (document.querySelector("#dealname").value != "" && document.querySelector("#dealprice").value != ""
+          && document.querySelector("#deallocation").value != "" && new nicEditors.findEditor("dealdescription").getContent() != ""
+          && document.querySelector("#dealexpirydate").value != "") {
+          postDeal();
+          $("#deal-form").trigger("reset"); //clear the form when the cancel button is clicked
+          new nicEditors.findEditor("dealdescription").setContent("");
+          $(this).dialog("close");
         }
         if (document.querySelector("#dealname").value == "") {
           let errorContainer = document.getElementById("dealnamelabel");
@@ -106,7 +107,7 @@ $("#post-deal-container").dialog({
           let errorContainer = document.getElementById("deallocationlabel");
           errorContainer.classList.remove("error");
         }
-        if (document.querySelector("#dealdescription").value == "") {
+        if (new nicEditors.findEditor("dealdescription").getContent() == "") {
           let errorContainer = document.getElementById("dealdescriptionlabel");
           errorContainer.classList.add("error");
         } else {

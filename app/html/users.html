@@ -3,16 +3,26 @@
 
 <head>
   <meta charset="UTF-8">
+
   <!-- maximum-scale=1 to prevent zooming in on input fields -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+
+  <!-- Style Sheets -->
   <link rel="stylesheet" href="/css/navbar.css">
   <link rel="stylesheet" href="/css/users.css">
+
+  <!-- JQuery UI Library -->
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+
+  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
+
   <title>FoodForLess</title>
 </head>
 
 <body>
+
+  <!-- Navigation Bar -->
   <nav id="nav">
     <h1>FoodForLess</h1>
     <div id="nav-items-container">
@@ -24,8 +34,12 @@
       </div>
 
       <ul id="nav-links">
-        <li class="nav-link"><a href="#">Browse</a></li>
-        <li class="nav-link"><a href="#">My Deals</a></li>
+        <li class="nav-link">
+          <form action="/browse-deals" method="get">
+            <input id="browse-button" class="look-like-button" type="submit" value="Browse" />
+          </form>
+        </li>
+        <li class="nav-link"><a href="/profile#deals">My Deals</a></li>
         <li class="nav-link">
           <form action="/profile" method="get">
             <input id="profile-button" class="look-like-button" type="submit" value="Profile" />
@@ -44,6 +58,7 @@
 
   <h2 id="user-accounts-heading">User Accounts</h2>
 
+  <!-- User Table Container -->
   <div id="table-container">
     <div id="users-container">
       <table id="users">
@@ -58,6 +73,7 @@
 
   </div>
 
+  <!-- Create User Form Container -->
   <div id="create-record-form-container">
     <form id="create-record-form">
       <label for="create-username" class="edit-form-label">Username:</label>
@@ -84,7 +100,7 @@
     </form>
   </div>
 
-
+  <!-- Update User Form Container -->
   <div id="update-record-form-container">
     <form id="update-record-form">
       <label for="id" class="edit-form-label">ID:</label>
@@ -114,16 +130,25 @@
     </form>
   </div>
 
+  <div id="confirm-user-account-delete" hidden>
+    <p>Are you sure you would like to permanently delete this user account?</p>
+  </div>
+
+  <!-- Footer -->
   <footer id="footer">
     <div>
       <small>Copyright 2022, FoodForLess</small>
     </div>
   </footer>
+
+  <!-- JQuery Scripts -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
+  <!-- Scripts -->
   <script src="/js/client.js"></script>
   <script src="/js/users.js"></script>
+  
 </body>
 
 </html>

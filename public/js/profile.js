@@ -2,6 +2,7 @@
 
 getDeals();
 
+// Function that retrieves the user's profile info and populates it on a popup form for the user to edit.
 async function editProfileInfo() {
   let currentUsername = document.querySelector(".username").innerText;
 
@@ -49,7 +50,6 @@ async function editProfileInfo() {
 
 //Function to upload a new avatar image on the user's profile page
 async function uploadImage(e) {
-  // e.preventDefault();
 
   const imageUpload = document.querySelector('#image-upload');
 
@@ -77,7 +77,6 @@ async function uploadImage(e) {
     );
 
     let updatedRecordResponse = await fetch("/get-user");
-
     let parsedUpdatedRecordResponse = await updatedRecordResponse.json();
 
     // get the parsed json from the /get-user route and store it in a variable
@@ -93,10 +92,9 @@ async function uploadImage(e) {
     //required attribute must be set on HTML file input to prevent empty photos from being uploaded
     imageUpload.value = "";
   } else {
-    //
+    
   }
 }
-
 
 let editProfileButton = document.querySelector("#edit-profile-button");
 
@@ -116,9 +114,20 @@ editProfileButton.addEventListener("click", e => {
   document.querySelector("#email").value = email;
   document.querySelector("#password").value = password;
   document.querySelector("#username").value = username;
+  let usernameLabel = document.getElementById("usernamelabel");
+  usernameLabel.classList.remove("error");
+  let firstnamelabel = document.getElementById("firstnamelabel");
+  firstnamelabel.classList.remove("error");
+  let lastnamelabel = document.getElementById("lastnamelabel");
+  lastnamelabel.classList.remove("error");
+  let emaillabel = document.getElementById("emaillabel");
+  emaillabel.classList.remove("error");
+  let passwordlabel = document.getElementById("passwordlabel");
+  passwordlabel.classList.remove("error");
   $("#edit-user-info-form").dialog("open");
 })
 
+// Modal popup form for editin the user's profile information
 $("#edit-user-info-form").dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
@@ -126,14 +135,55 @@ $("#edit-user-info-form").dialog({
   autoOpen: false,
   draggable: false,
   title: "Edit Profile Info",
-  Width: 50,
+  width: 300,
   height: 450,
   buttons: [
     {
       text: "Submit",
       click: function () {
-        editProfileInfo()
-        $(this).dialog("close");
+        //Checks if the input fields are filled or not, if not it will make the area not filled red
+        //and doesn't close the popup 
+        if (document.querySelector("#username").value != "" && document.querySelector("#firstname").value != ""
+          && document.querySelector("#lastname").value != "" && document.querySelector("#email").value != ""
+          && document.querySelector("#password").value != "") {
+          editProfileInfo();
+          $(this).dialog("close");
+        }
+        if (document.querySelector("#username").value == "") {
+          let errorContainer = document.getElementById("usernamelabel");
+          errorContainer.classList.add("error");
+        } else {
+          let errorContainer = document.getElementById("usernamelabel");
+          errorContainer.classList.remove("error");
+        }
+        if (document.querySelector("#firstname").value == "") {
+          let errorContainer = document.getElementById("firstnamelabel");
+          errorContainer.classList.add("error");
+        } else {
+          let errorContainer = document.getElementById("firstnamelabel");
+          errorContainer.classList.remove("error");
+        }
+        if (document.querySelector("#lastname").value == "") {
+          let errorContainer = document.getElementById("lastnamelabel");
+          errorContainer.classList.add("error");
+        } else {
+          let errorContainer = document.getElementById("lastnamelabel");
+          errorContainer.classList.remove("error");
+        }
+        if (document.querySelector("#email").value == "") {
+          let errorContainer = document.getElementById("emaillabel");
+          errorContainer.classList.add("error");
+        } else {
+          let errorContainer = document.getElementById("emaillabel");
+          errorContainer.classList.remove("error");
+        }
+        if (document.querySelector("#password").value == "") {
+          let errorContainer = document.getElementById("passwordlabel");
+          errorContainer.classList.add("error");
+        } else {
+          let errorContainer = document.getElementById("passwordlabel");
+          errorContainer.classList.remove("error");
+        }
       }
     },
     {
@@ -159,6 +209,7 @@ changeAvatarButton.addEventListener("click", e => {
   $("#upload-images-form").dialog("open");
 });
 
+// Modal popup form for uploading images to change the user's profile image
 $("#upload-images-form").dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
@@ -166,7 +217,7 @@ $("#upload-images-form").dialog({
   autoOpen: false,
   draggable: false,
   title: "Change Avatar",
-  Width: 300,
+  width: 300,
   height: 200,
   buttons: [
     {
@@ -193,8 +244,10 @@ $(window).resize(function () {
   $("#upload-images-form").dialog("option", "position", { my: "center", at: "center", of: window });
 });
 
-
+// Counter for "ss" clicks on the "FoodForLess" heading
 var easter_count = 0;
+
+// Changes the styling of the page once the "ss" from the "FoodForLess" heading is clicked three times
 function easter_egg() {
   easter_count++;
   if (easter_count >= 3) {
@@ -206,12 +259,10 @@ function easter_egg() {
   }
 }
 
+// Retrieves and populates all the deals that the user has posted onto the page
 async function getDeals() {
-
   let response = await fetch("/get-deals");
-
   let parsedResponse = await response.json();
-
   let dealsContainer = document.querySelector("#deals");
 
   dealsContainer.innerHTML = "";
@@ -232,36 +283,29 @@ async function getDeals() {
     userIdParagraph.setAttribute("id", "useridparagraph");
     let userIdSpan = document.createElement("span");
 
-
     let dealNameParagraph = document.createElement("p");
     dealNameParagraph.setAttribute("id", "dealnameparagraph");
     let dealNameSpan = document.createElement("span");
-
 
     let dealPriceParagraph = document.createElement("p");
     dealPriceParagraph.setAttribute("id", "dealpriceparagraph");
     let dealPriceSpan = document.createElement("span");
 
-
     let dealPostDateParagraph = document.createElement("p");
     dealPostDateParagraph.setAttribute("id", "dealpostdateparagraph");
     let dealPostSpan = document.createElement("span");
-
 
     let dealExpiryDateParagraph = document.createElement("p");
     dealExpiryDateParagraph.setAttribute("id", "dealexpirydateparagraph");
     let dealExpiryDateSpan = document.createElement("span");
 
-
     let dealDescriptionParagraph = document.createElement("p");
     dealDescriptionParagraph.setAttribute("id", "dealdescriptionparagraph");
     let dealDescriptionSpan = document.createElement("span");
 
-
     let dealStoreLocationParagraph = document.createElement("p");
     dealStoreLocationParagraph.setAttribute("id", "dealstorelocationparagraph");
     let dealStoreLocationSpan = document.createElement("span");
-
 
     let editDealButton = document.createElement("input");
     editDealButton.setAttribute("class", "edit-deal-button");
@@ -272,7 +316,6 @@ async function getDeals() {
     deleteDealButton.setAttribute("class", "delete-deal-button");
     deleteDealButton.setAttribute("type", "submit");
     deleteDealButton.setAttribute("value", "Delete deal");
-
 
     //This block of code to calculate the local time using the built in JavaScript getTimezoneOffset() function is from 
     //https://stackoverflow.com/questions/7403486/add-or-subtract-timezone-difference-to-javascript-date
@@ -303,7 +346,7 @@ async function getDeals() {
     dealExpiryDateParagraph.insertAdjacentText("beforeend", "Deal Expiry Date: ");
     dealExpiryDateSpan.insertAdjacentText("beforeend", slicedDealExpiryDate);
 
-    dealDescriptionParagraph.insertAdjacentText("beforeend", "Description: "); 
+    dealDescriptionParagraph.insertAdjacentText("beforeend", "Description: ");
     dealDescriptionSpan.insertAdjacentHTML("beforeend", deal.deal_description);
 
     dealStoreLocationParagraph.insertAdjacentText("beforeend", "Store Location: ")
@@ -347,7 +390,7 @@ async function getDeals() {
         $("#edit-photo-container").data("photoId", e.target.getAttribute("id")).dialog("open");
         let imageUrl = e.target.getAttribute("src");
         document.querySelector("#edit-image").setAttribute("src", imageUrl);
-      })
+      });
     }
 
     //put the photos container inside the deal container
@@ -358,12 +401,11 @@ async function getDeals() {
     let photoEditDeleteMessageSpan = document.createElement("span");
     photoEditDeleteMessageSpan.insertAdjacentText("beforeend", "(Tap on an image to edit or delete it)");
     photoEditDeleteParagraph.insertAdjacentElement("beforeend", photoEditDeleteMessageSpan);
-    
 
     if (photosContainer.hasChildNodes() == true) {
       dealContainer.insertAdjacentElement("beforeend", photoEditDeleteParagraph);
     }
-    
+
     dealContainer.insertAdjacentElement("beforeend", editDealButton);
     dealContainer.insertAdjacentElement("beforeend", deleteDealButton);
     dealsContainer.insertAdjacentElement("beforeend", dealContainer);
@@ -373,16 +415,36 @@ async function getDeals() {
 
   var deleteButtons = document.querySelectorAll(".delete-deal-button");
 
+  // Adds an event listener to each delete button's post
   for (let j = 0; j < deleteButtons.length; j++) {
-    deleteButtons[j].addEventListener("click", deletePost);
+    deleteButtons[j].addEventListener("click", function (e) {
+      $("#confirm-deal-delete").dialog({
+        title: "Confirm deal delete",
+        resizable: false,
+        draggable: false,
+        height: "auto",
+        width: 300,
+        modal: true,
+        buttons: {
+          "Delete deal": async function () {
+            deletePost(e);
+            $(this).dialog("close");
+          },
+          Cancel: function () {
+            $(this).dialog("close");
+          }
+        }
+      });
+    });
   }
+
 
   for (let j = 0; j < editButtons.length; j++) {
     editButtons[j].addEventListener("click", editPost);
   }
-
 }
 
+// Retrieves and populates a popup form with the deal information to be edited by the user
 async function updateDeals(dealID) {
 
   const imageUploadElement = document.querySelector('#updatedealphotos');
@@ -396,17 +458,19 @@ async function updateDeals(dealID) {
   let updatedName = document.querySelector("#updatedealname");
   let updatedPrice = document.querySelector("#updatedealprice");
   let updatedLocation = document.querySelector("#updatedeallocation");
-  let updatedDescription = document.querySelector("#updatedealdescription");
   let updatedExpireDate = document.querySelector("#updatedealexpirydate");
+  //get the niceEditor from profile.js that has the id="updatedealdescription"
+  let updateDealDescriptionNicEditor = new nicEditors.findEditor("updatedealdescription");
 
-  if (updatedName.checkValidity() !== false && updatedPrice.checkValidity() !== false && updatedLocation.checkValidity() !== false &&
-    updatedDescription.checkValidity() != false && updatedExpireDate.checkValidity() != false) {
+  //A check in the if statement will ensure that a description of <br> cannot be entered. <br> is the default text for the NicEdit textarea and will be rendered as blank in HTML.
+  //updateDealDescriptionNicEditor.getContent() gets the text from the nicEditor
+  if ((updateDealDescriptionNicEditor.getContent() !== "" && updateDealDescriptionNicEditor.getContent() !== "<br>") && updatedName.checkValidity() !== false && updatedPrice.checkValidity() !== false && updatedExpireDate.checkValidity() != false) {
 
     formData.append("dealID", dealID);
     formData.append("updatedName", updatedName.value);
     formData.append("updatedPrice", updatedPrice.value);
     formData.append("updatedLocation", updatedLocation.value);
-    formData.append("updatedDescription", updatedDescription.value);
+    formData.append("updatedDescription", updateDealDescriptionNicEditor.getContent()); //get the content from the NicEditor
     formData.append("updatedExpireDate", updatedExpireDate.value);
 
     const options = {
@@ -424,6 +488,7 @@ async function updateDeals(dealID) {
 
 var dealID;
 
+// Retrieves and populates the popup form with the deal information
 function editPost(e) {
 
   let parentTd = e.target.parentNode;
@@ -434,7 +499,7 @@ function editPost(e) {
   for (let i = 0; childrenElements[i]; i++) {
     if (childrenElements[i].tagName == "P") {
       if (childrenElements[i].childNodes[1] !== undefined) {
-        deal.push(childrenElements[i].childNodes[1].innerText);
+        deal.push(childrenElements[i].childNodes[1].innerHTML); //innerHTML is used so that the rich text is rendered properly for the description
       }
     }
   }
@@ -444,15 +509,11 @@ function editPost(e) {
   document.querySelector("#updatedealname").value = deal[2];
   document.querySelector("#updatedealprice").value = deal[3];
   document.querySelector("#updatedeallocation").value = deal[7];
-  document.querySelector("#updatedealdescription").value = deal[6];
   document.querySelector("#updatedealexpirydate").value = deal[5];
 
-  let element = document.querySelector(".fr-element");
-  element.childNodes[0].innerText = deal[6];
-
-  let placeholderText = document.querySelector(".fr-placeholder");
-  placeholderText.innerText = "";
-
+  //get the niceEditor from profile.js that has the id="updatedealdescription"
+  let updateDealDescriptionNicEditor = new nicEditors.findEditor("updatedealdescription");
+  updateDealDescriptionNicEditor.setContent(deal[6]);
 
   //open the jQuery modal window when the edit button is clicked
   let dealexpirelabel = document.getElementById("updatedealexpirelabel");
@@ -468,6 +529,7 @@ function editPost(e) {
   $("#update-deal-container").data("dealID", dealID).dialog("open");
 }
 
+// Deletes the post on the page and in the database
 async function deletePost(e) {
 
   let parentTd = e.target.parentNode;
@@ -497,6 +559,7 @@ async function deletePost(e) {
   parentTd.remove();
 }
 
+// Modal popup for the update deal form
 $("#update-deal-container").data("dealID", dealID).dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
@@ -504,26 +567,20 @@ $("#update-deal-container").data("dealID", dealID).dialog({
   autoOpen: false,
   draggable: false,
   title: "Edit Deal",
-  Width: 50,
+  width: 300,
   height: 500,
   buttons: [
     {
       text: "Submit",
       click: function () {
-                //Checks if the input fields are filled or not, if not it will make the area not filled red
+        //Checks if the input fields are filled or not, if not it will make the area not filled red
         //and doesn't close the popup 
-        if (document.querySelector("#updatedealname").value != "") {
-          if (document.querySelector("#updatedealprice").value != "") {
-            if (document.querySelector("#updatedeallocation").value != "") {
-              if (document.querySelector("#updatedealdescription").value != "") {
-                if (document.querySelector("#updatedealexpirydate").value != "") {
-                  updateDeals(dealID);
-                  $("#update-deal-form").trigger("reset"); //clear the form when the cancel button is clicked
-                  $(this).dialog("close");
-                }
-              }
-            }
-          }
+        if (document.querySelector("#updatedealname").value != "" && document.querySelector("#updatedealprice").value != ""
+          && document.querySelector("#updatedeallocation").value != "" && new nicEditors.findEditor("updatedealdescription").getContent() !== ""
+          && new nicEditors.findEditor("updatedealdescription").getContent() !== "<br>" && document.querySelector("#updatedealexpirydate").value != "") {
+          updateDeals(dealID);
+          $("#update-deal-form").trigger("reset"); //clear the form when the cancel button is clicked
+          $(this).dialog("close");
         }
         if (document.querySelector("#updatedealname").value == "") {
           let errorContainer = document.getElementById("updatedealnamelabel");
@@ -546,7 +603,8 @@ $("#update-deal-container").data("dealID", dealID).dialog({
           let errorContainer = document.getElementById("updatedeallocationlabel");
           errorContainer.classList.remove("error");
         }
-        if (document.querySelector("#updatedealdescription").value == "") {
+        //check updatedealdescription textarea if it contains a <br> element because this is the default content in the textarea when blank
+        if (new nicEditors.findEditor("updatedealdescription").getContent() == "<br>" || new nicEditors.findEditor("updatedealdescription").getContent() == "") {
           let errorContainer = document.getElementById("updatedealdescriptionlabel");
           errorContainer.classList.add("error");
         } else {
@@ -576,6 +634,8 @@ $("#update-deal-container").data("dealID", dealID).dialog({
   }
 });
 
+
+// Modal popup for the edit photo form
 $("#edit-photo-container").dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
@@ -583,7 +643,7 @@ $("#edit-photo-container").dialog({
   autoOpen: false,
   draggable: false,
   title: "Edit Photo",
-  Width: 50,
+  width: 300,
   height: 500,
   buttons: [
     {
@@ -604,10 +664,26 @@ $("#edit-photo-container").dialog({
     },
     {
       text: "Delete Photo",
-      click: async function () {
-        deletePhoto($("#edit-photo-container").data("photoId"));
-        $("#edit-image-form").trigger("reset"); //clear the form when the cancel button is clicked
-        $(this).dialog("close");
+      click: function () {
+        $("#confirm-photo-delete").dialog({
+          title: "Confirm photo delete",
+          resizable: false,
+          draggable: false,
+          height: "auto",
+          width: 300,
+          modal: true,
+          buttons: {
+            "Delete photo": async function () {
+              deletePhoto($("#edit-photo-container").data("photoId"));
+              $("#edit-image-form").trigger("reset"); //clear the form when the cancel button is clicked
+              $(this).dialog("close");
+              $("#edit-photo-container").dialog("close");
+            },
+            Cancel: function () {
+              $(this).dialog("close");
+            }
+          }
+        });
       }
     }
   ],
@@ -616,6 +692,7 @@ $("#edit-photo-container").dialog({
   }
 });
 
+// Deletes the photo path from the deal in the database
 async function deletePhoto(photoId) {
   let response = await fetch("/delete-photo", {
     method: "post",
@@ -629,6 +706,7 @@ async function deletePhoto(photoId) {
   );
 }
 
+// Posts a new photo from the deal in the database
 async function editPhoto(photoId) {
 
   const iupload = document.querySelector('#iupload');
@@ -658,10 +736,10 @@ async function editPhoto(photoId) {
 
     iupload.value = "";
   } else {
-
+    
   }
 }
 
-new FroalaEditor('textarea', {
-  pluginsEnabled: ["align", "charCounter", "colors", "fontFamily"],
-});
+//Change the textareas with id="updatedealdescription" and id="dealdescription" into NicEdit rich text editors
+new nicEditor({ buttonList: ['bold', 'italic', 'underline', 'bgcolor', 'forecolor', 'fontFamily', 'fontSize'] }).panelInstance("updatedealdescription");
+new nicEditor({ buttonList: ['bold', 'italic', 'underline', 'bgcolor', 'forecolor', 'fontFamily', 'fontSize'] }).panelInstance("dealdescription");

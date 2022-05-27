@@ -1,15 +1,16 @@
 "use strict";
 
-var currentName;
+var currentID;
 var str;
 
+// Retrieves all the users and their information and populates it onto the page as a table
 async function getUsers() {
 
   let response = await fetch("/get-users");
 
   let data = await response.json();
 
-  currentName = data.current_username;
+  currentID = data.current_id;
   if (data.status == "success") {
 
     let str = `<tr><th class="id_header"><span>ID</span></th><th class="username_header"><span>Username</span></th><th class="firstname_header"><span>First Name</span></th><th class="lastname_header"><span>Last Name</span></th><th class="email_header"><span>Email</span></th><th class="password_header"><span>Password</span></th><th class="usertype_header"><span>User Type</span></th><th class="avatarimage_header"><span>Avatar</span></th></tr>`;
@@ -39,8 +40,26 @@ async function getUsers() {
       for (let i = 0, col; col = currentParentTr.cells[i]; i++) {
         users[i] = col.innerText;
       }
-      if (users[1] != currentName) {
-        deletebuttons[j].addEventListener("click", deleteRow);
+      if (users[0] != currentID) {
+        deletebuttons[j].addEventListener("click", function (e) {
+          $("#confirm-user-account-delete").dialog({
+            title: "Confirm user account delete",
+            resizable: false,
+            draggable: false,
+            height: "auto",
+            width: 300,
+            modal: true,
+            buttons: {
+              "Delete user acccount": async function () {
+                deleteRow(e);
+                $(this).dialog("close");
+              },
+              Cancel: function () {
+                $(this).dialog("close");
+              }
+            }
+          });
+        });
       } else {
         deletebuttons[j].classList.remove('deleteButton');
         deletebuttons[j].disabled = true;
@@ -51,6 +70,7 @@ async function getUsers() {
   }
 }
 
+// Opens a popup form of the user being edited
 function editRow(e) {
 
   let parentTd = e.target.parentNode;
@@ -72,10 +92,18 @@ function editRow(e) {
 
   userAvatarUrl = user[7];
 
+  // if (user[0] == currentID) {
+  //   document.querySelector(".username").innerText = userRecord.user_username;
+  //   document.querySelector(".firstName").innerText = userRecord.user_firstname;
+  //   document.querySelector(".lastName").innerText = userRecord.user_lastname;
+  //   document.querySelector(".email").innerText = userRecord.user_email;
+  //   document.querySelector(".password").innerText = userRecord.user_password;
+  // }
   //open the jQuery modal window when the edit button is clicked
   $("#update-record-form-container").dialog("open");
 }
 
+// Deletes the user from the table and in the database
 async function deleteRow(e) {
 
   let parentTd = e.target.parentNode;
@@ -86,7 +114,7 @@ async function deleteRow(e) {
     user[i] = col.innerText;
   }
 
-  if (user[1] != currentName) {
+  if (user[0] != currentID) {
     parentTr.remove();
     let response = await fetch("/deleteUsers", {
       method: "post",
@@ -101,6 +129,7 @@ async function deleteRow(e) {
   }
 }
 
+// Opens a popup form to allow the admin to edit the user's information
 async function updateUser() {
   let userAvatarUrl;
 
@@ -151,7 +180,6 @@ async function updateUser() {
 
 //Function to upload a new avatar image on the user's profile page
 async function uploadImage(username) {
-  // e.preventDefault();
 
   const imageUpload = document.querySelector('#image-upload');
   const formData = new FormData();
@@ -186,8 +214,8 @@ async function uploadImage(username) {
 
 }
 
+// Opens a popup form for the admin user to fill-in to create a new user
 async function createUser() {
-  // e.preventDefault();
 
   let createUserAvatarUrl;
 
@@ -233,7 +261,7 @@ async function createUser() {
   getUsers();
 
   // //reset the user data form
-   createForm.reset();
+  createForm.reset();
 
 }
 
@@ -241,7 +269,6 @@ async function createUser() {
 
 //async function uploadCreateImage(e, username)
 async function uploadCreateImage(username) {
-  //e.preventDefault();
 
   const imageUpload = document.querySelector('#create-image-upload');
   const formData = new FormData();
@@ -273,6 +300,7 @@ async function uploadCreateImage(username) {
 
 }
 
+// Modal popup form for editing a user's information
 $("#update-record-form-container").dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
@@ -280,7 +308,7 @@ $("#update-record-form-container").dialog({
   autoOpen: false,
   draggable: false,
   title: "Edit User Info",
-  Width: 50,
+  width: 300,
   height: 500,
   buttons: [
     {
@@ -304,8 +332,8 @@ $("#update-record-form-container").dialog({
 //This block of code to center the jQuery UI modal popup when the window is resized is from
 //https://stackoverflow.com/questions/3060146/how-to-auto-center-jquery-ui-dialog-when-resizing-browser
 //with adaptatations made to apply to my modal window
-$(window).resize(function(){
-  $("#update-record-form-container").dialog( "option", "position", { my: "center", at: "center", of: window } );
+$(window).resize(function () {
+  $("#update-record-form-container").dialog("option", "position", { my: "center", at: "center", of: window });
 });
 
 let createUserButton = document.querySelector("#create-user-button");
@@ -314,6 +342,7 @@ createUserButton.addEventListener("click", e => {
   $("#create-record-form-container").dialog("open");
 });
 
+// Clears the status message after some time has passed
 function clearStatusMessage() {
   let statusMessage = document.querySelector("#status");
   setTimeout(() => {
@@ -321,7 +350,7 @@ function clearStatusMessage() {
   }, 3000)
 }
 
-
+// Modal popup form for creating a new user
 $("#create-record-form-container").dialog({
   modal: true,
   fuild: true, //prevent horizontal scroll bars on mobile layout
@@ -329,7 +358,7 @@ $("#create-record-form-container").dialog({
   autoOpen: false,
   draggable: false,
   title: "Create New User",
-  Width: 50,
+  width: 300,
   height: 500,
   buttons: [
     {
@@ -354,8 +383,8 @@ $("#create-record-form-container").dialog({
 //This block of code to center the jQuery UI modal popup when the window is resized is from
 //https://stackoverflow.com/questions/3060146/how-to-auto-center-jquery-ui-dialog-when-resizing-browser
 //with adaptatations made to apply to my modal window
-$(window).resize(function(){
-  $("#create-record-form-container").dialog( "option", "position", { my: "center", at: "center", of: window } );
+$(window).resize(function () {
+  $("#create-record-form-container").dialog("option", "position", { my: "center", at: "center", of: window });
 });
 
 getUsers();
