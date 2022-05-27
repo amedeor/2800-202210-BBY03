@@ -114,8 +114,8 @@ Technologies used for this project:
         - npm -install -g express
         - npm -install -g express-session
         - npm -install -g mysql2
-         -npm -install -g multer
-         -npm -install -g jsdom
+        - npm -install -g multer
+        - npm -install -g jsdom
     6. Start your MySQL server instance
     7. From the command line, change directory to the root of the project folder and start the application by running the command: node foodforless.js
     8. Open a web browser and go to localhost:8000 (The application runs on port 8000 by default)
