@@ -47,7 +47,7 @@ async function getUsers() {
             resizable: false,
             draggable: false,
             height: "auto",
-            width: 400,
+            width: 300,
             modal: true,
             buttons: {
               "Delete user acccount": async function () {

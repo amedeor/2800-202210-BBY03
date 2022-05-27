@@ -423,7 +423,7 @@ async function getDeals() {
         resizable: false,
         draggable: false,
         height: "auto",
-        width: 400,
+        width: 300,
         modal: true,
         buttons: {
           "Delete deal": async function () {
@@ -670,7 +670,7 @@ $("#edit-photo-container").dialog({
           resizable: false,
           draggable: false,
           height: "auto",
-          width: 400,
+          width: 300,
           modal: true,
           buttons: {
             "Delete photo": async function () {
