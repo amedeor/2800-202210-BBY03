@@ -1,43 +1,47 @@
 # FoodForLess
 
+## Project description
+
 FoodForLess is a web application developed by Team BBY-03 to help low-income earners save money on groceries by allowing them to share the deals they see in stores and view deals posted by other users.
 
 ## 2800-202210-BBY03 
 
 This program is made by 2800-202210-BBY03.
 
-## Technologies
+## Project technologies
 
 Technologies used for this project:
 
 1. Frontend
-    * HTML
-    * CSS
-    * JavaScript
-    * NicEdit
-    * jQuery
-    * jQuery UI
+    * HTML 5 
+    * CSS 3
+    * JavaScript (ES6)
+    * NicEdit 0.9 r25
+    * jQuery 3.6.0
+    * jQuery UI 1.12.1
 
 2. Backend
-    * express
-    * express-session
-    * multer
-    * jsdom
-    * mysql2
-    * Node.js
-
+    * Node.js version 16.14.0
+    * express version 4.18.1
+    * express-session 1.17.3
+    * multer 1.4.4
+    * jsdom 19.0.0
+    * mysql2 2.3.3
+    
 3. Database
-    * mysql (Mariadb)
+    * MySQL (MariaDB) Ver 15.1 Distrib 10.4.24-MariaDB
 
-## File Contents
+4. Other tools
+    * Visual Studio Code
+    * XAMPP (Used for MySQL (MariaDB))
 
+## List of file contents in project folder
 .
 ├── app
 │   └── html
 │       ├── adminprofile.html
 │       ├── browsedeals.html
 │       ├── index.html
-│       ├── mydeals.html
 │       ├── profile.html
 │       ├── signup.html
 │       └── users.html
@@ -45,7 +49,6 @@ Technologies used for this project:
 ├── foodforless.js
 ├── package.json
 ├── package-lock.json
-├── Procfile
 ├── public
 │   ├── css
 │   │   ├── browsedeals.css
@@ -83,29 +86,49 @@ Technologies used for this project:
 │       └── users.js
 └── README.md
 
-## Running this project
+## Installing and running the project
 
-1. Software and languages needed
+1. Software and languages required
     a) HTML
     b) JavaScript
-    c) mySQL(MariaDB)
+    c) CSS
+    d) MySQL (MariaDB)
 
-2. APIs and Frameworks needed in order
-    a) Node.js (modules installed globally)
-    b) express (NodeJs module)
-    c) express-session (NodeJs module)
-    d) multer (NodeJs module)
-    e) JSDOM (NodeJs module)
-    f) NicEdit
+2. APIs and Frameworks required
+    a) Node.js 
+    b) express (Node.js module)
+    c) express-session (Node.js module)
+    d) mysql2 (Node.js module)
+    e) multer (Node.js module)
+    f) JSDOM (Node.js module)
+    g) NicEdit
 
 3. Configuration
-    a) Copy paste the .sql file in root folder into your root mySQL session.
-    b) install node
-    c) install node modules globaly (outside project folder)
+    a) Clone the repository from the main branch
+    b) Install MySQL server (You can install XAMPP which includes MySQL server)
+    c) Run all the SQL queries in the code from the COMP2800.sql file as a root user on your MySQL server instance. This will create the required database and tables to run the application.
+    d) Install Node.js
+    e) Install all the requirede Node.js modules globally using the following commands:
+        npm -install -g express
+        npm -install -g express-session
+        npm -install -g mysql2
+        npm -install -g multer
+        npm -install -g jsdom
+    f) Start your MySQL server instance
+    g) From the command line, change directory to the root of the project folder and start the application by running the command: node foodforless.js
+    h) Open a web browser and go to localhost:8000 (The application runs on port 8000 by default)
+    i) You can now login with an administrator account or regular user account using the credentials specified in the useraccounts.txt file
 
-4. [Testing log](https://docs.google.com/spreadsheets/d/1hT7aN8KcQ0bGoOxY-3B9k68t5wRmzynt-ZkHXiF6c48/edit#gid=394496370)
+4. [Testing plan/log](https://docs.google.com/spreadsheets/d/1hT7aN8KcQ0bGoOxY-3B9k68t5wRmzynt-ZkHXiF6c48/edit#gid=394496370)
 
-## Acknowledgements
+5. How to use our application
+    a) Log in as a regular user or administrator user with the credentials provided in the passwords.txt file.
+    b) After successful login you will be directed to your profile page.
+    c) From the profile page, an administrator user account can post deals, access an administrator dashboard to manage other user accounts, and update their profile information. From the profile page, a regular user account can post deals and update their profile information.
+    d) To browse deals posted by all other users, click the "Browse" link in the navbar.
+    e) To create a new user account, click the "Create an account" link on the homepage.
+
+## Credits and references
 
 * [jQuery](https://jquery.com/)
 * [jQuery UI](https://jqueryui.com/)
@@ -115,4 +138,4 @@ Technologies used for this project:
 
 ## Contact Information
 
-We can be contracted by email at: szahedanaraki@my.bcit.ca, azahedanaraki@my.bcit.ca,
+We can be contacted by email at: comp2800teambby03@gmail.com
