@@ -1,6 +1,5 @@
 "use strict";
 
-
 let postDealLink = document.querySelector("#post-deal-link");
 
 // Adds an event listener to the "Post Deal" button to open the popup form
@@ -20,13 +19,12 @@ postDealLink.addEventListener("click", e => {
   //set the NicEditor text area to empty to remove the default <br> tag in the textarea before the modal window opens
   dealDescriptionNicEditor.setContent(""); 
   $("#post-deal-container").dialog("open");
-})
+});
 
 //Function to upload a new avatar image on the user's profile page
 async function postDeal() {
 
   const imageUploadElement = document.querySelector('#dealphotos');
-
   const formData = new FormData();
 
   //Use a loop to get the image from the image upload input and store it in a variable called file
@@ -72,7 +70,7 @@ $("#post-deal-container").dialog({
   autoOpen: false,
   draggable: false,
   title: "Post a Deal",
-  Width: 50,
+  width: 300,
   height: 500,
   buttons: [
     {

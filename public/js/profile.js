@@ -2,7 +2,6 @@
 
 getDeals();
 
-
 // Function that retrieves the user's profile info and populates it on a popup form for the user to edit.
 async function editProfileInfo() {
   let currentUsername = document.querySelector(".username").innerText;
@@ -78,7 +77,6 @@ async function uploadImage(e) {
     );
 
     let updatedRecordResponse = await fetch("/get-user");
-
     let parsedUpdatedRecordResponse = await updatedRecordResponse.json();
 
     // get the parsed json from the /get-user route and store it in a variable
@@ -94,10 +92,9 @@ async function uploadImage(e) {
     //required attribute must be set on HTML file input to prevent empty photos from being uploaded
     imageUpload.value = "";
   } else {
-    //
+    
   }
 }
-
 
 let editProfileButton = document.querySelector("#edit-profile-button");
 
@@ -138,7 +135,7 @@ $("#edit-user-info-form").dialog({
   autoOpen: false,
   draggable: false,
   title: "Edit Profile Info",
-  Width: 50,
+  width: 300,
   height: 450,
   buttons: [
     {
@@ -212,7 +209,6 @@ changeAvatarButton.addEventListener("click", e => {
   $("#upload-images-form").dialog("open");
 });
 
-
 // Modal popup form for uploading images to change the user's profile image
 $("#upload-images-form").dialog({
   modal: true,
@@ -221,7 +217,7 @@ $("#upload-images-form").dialog({
   autoOpen: false,
   draggable: false,
   title: "Change Avatar",
-  Width: 300,
+  width: 300,
   height: 200,
   buttons: [
     {
@@ -265,11 +261,8 @@ function easter_egg() {
 
 // Retrieves and populates all the deals that the user has posted onto the page
 async function getDeals() {
-
   let response = await fetch("/get-deals");
-
   let parsedResponse = await response.json();
-
   let dealsContainer = document.querySelector("#deals");
 
   dealsContainer.innerHTML = "";
@@ -290,36 +283,29 @@ async function getDeals() {
     userIdParagraph.setAttribute("id", "useridparagraph");
     let userIdSpan = document.createElement("span");
 
-
     let dealNameParagraph = document.createElement("p");
     dealNameParagraph.setAttribute("id", "dealnameparagraph");
     let dealNameSpan = document.createElement("span");
-
 
     let dealPriceParagraph = document.createElement("p");
     dealPriceParagraph.setAttribute("id", "dealpriceparagraph");
     let dealPriceSpan = document.createElement("span");
 
-
     let dealPostDateParagraph = document.createElement("p");
     dealPostDateParagraph.setAttribute("id", "dealpostdateparagraph");
     let dealPostSpan = document.createElement("span");
-
 
     let dealExpiryDateParagraph = document.createElement("p");
     dealExpiryDateParagraph.setAttribute("id", "dealexpirydateparagraph");
     let dealExpiryDateSpan = document.createElement("span");
 
-
     let dealDescriptionParagraph = document.createElement("p");
     dealDescriptionParagraph.setAttribute("id", "dealdescriptionparagraph");
     let dealDescriptionSpan = document.createElement("span");
 
-
     let dealStoreLocationParagraph = document.createElement("p");
     dealStoreLocationParagraph.setAttribute("id", "dealstorelocationparagraph");
     let dealStoreLocationSpan = document.createElement("span");
-
 
     let editDealButton = document.createElement("input");
     editDealButton.setAttribute("class", "edit-deal-button");
@@ -330,7 +316,6 @@ async function getDeals() {
     deleteDealButton.setAttribute("class", "delete-deal-button");
     deleteDealButton.setAttribute("type", "submit");
     deleteDealButton.setAttribute("value", "Delete deal");
-
 
     //This block of code to calculate the local time using the built in JavaScript getTimezoneOffset() function is from 
     //https://stackoverflow.com/questions/7403486/add-or-subtract-timezone-difference-to-javascript-date
@@ -405,7 +390,7 @@ async function getDeals() {
         $("#edit-photo-container").data("photoId", e.target.getAttribute("id")).dialog("open");
         let imageUrl = e.target.getAttribute("src");
         document.querySelector("#edit-image").setAttribute("src", imageUrl);
-      })
+      });
     }
 
     //put the photos container inside the deal container
@@ -416,7 +401,6 @@ async function getDeals() {
     let photoEditDeleteMessageSpan = document.createElement("span");
     photoEditDeleteMessageSpan.insertAdjacentText("beforeend", "(Tap on an image to edit or delete it)");
     photoEditDeleteParagraph.insertAdjacentElement("beforeend", photoEditDeleteMessageSpan);
-
 
     if (photosContainer.hasChildNodes() == true) {
       dealContainer.insertAdjacentElement("beforeend", photoEditDeleteParagraph);
@@ -478,7 +462,7 @@ async function updateDeals(dealID) {
   //get the niceEditor from profile.js that has the id="updatedealdescription"
   let updateDealDescriptionNicEditor = new nicEditors.findEditor("updatedealdescription");
 
-  //A check in the if statement will ensure that a description of <br> cannot be entered. <br> is the default text for the nicEdit textarea and will be rendered as blank in HTML.
+  //A check in the if statement will ensure that a description of <br> cannot be entered. <br> is the default text for the NicEdit textarea and will be rendered as blank in HTML.
   //updateDealDescriptionNicEditor.getContent() gets the text from the nicEditor
   if ((updateDealDescriptionNicEditor.getContent() !== "" && updateDealDescriptionNicEditor.getContent() !== "<br>") && updatedName.checkValidity() !== false && updatedPrice.checkValidity() !== false && updatedExpireDate.checkValidity() != false) {
 
@@ -486,7 +470,7 @@ async function updateDeals(dealID) {
     formData.append("updatedName", updatedName.value);
     formData.append("updatedPrice", updatedPrice.value);
     formData.append("updatedLocation", updatedLocation.value);
-    formData.append("updatedDescription", updateDealDescriptionNicEditor.getContent()); //get the content from the nicEditor
+    formData.append("updatedDescription", updateDealDescriptionNicEditor.getContent()); //get the content from the NicEditor
     formData.append("updatedExpireDate", updatedExpireDate.value);
 
     const options = {
@@ -583,7 +567,7 @@ $("#update-deal-container").data("dealID", dealID).dialog({
   autoOpen: false,
   draggable: false,
   title: "Edit Deal",
-  Width: 50,
+  width: 300,
   height: 500,
   buttons: [
     {
@@ -659,7 +643,7 @@ $("#edit-photo-container").dialog({
   autoOpen: false,
   draggable: false,
   title: "Edit Photo",
-  Width: 50,
+  width: 300,
   height: 500,
   buttons: [
     {
@@ -752,10 +736,10 @@ async function editPhoto(photoId) {
 
     iupload.value = "";
   } else {
-
+    
   }
 }
 
-//Change the textareas with id="updatedealdescription" and id="dealdescription" into nicEdit rich text editors
+//Change the textareas with id="updatedealdescription" and id="dealdescription" into NicEdit rich text editors
 new nicEditor({ buttonList: ['bold', 'italic', 'underline', 'bgcolor', 'forecolor', 'fontFamily', 'fontSize'] }).panelInstance("updatedealdescription");
 new nicEditor({ buttonList: ['bold', 'italic', 'underline', 'bgcolor', 'forecolor', 'fontFamily', 'fontSize'] }).panelInstance("dealdescription");

@@ -8,7 +8,7 @@ FoodForLess is a web application developed by Team BBY-03 to help low-income ear
 
 This program is made by 2800-202210-BBY03.
 
-## Project technologies
+## Technologies used
 
 Technologies used for this project:
 
@@ -45,7 +45,8 @@ Technologies used for this project:
 │       ├── index.html                      
 │       ├── profile.html                    
 │       ├── signup.html                     
-│       └── users.html                      
+│       └── users.html
+├── .gitignore                    
 ├── COMP2800.sql                            
 ├── foodforless.js                          
 ├── package.json

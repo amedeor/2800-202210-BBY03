@@ -308,7 +308,7 @@ $("#update-record-form-container").dialog({
   autoOpen: false,
   draggable: false,
   title: "Edit User Info",
-  Width: 50,
+  width: 300,
   height: 500,
   buttons: [
     {
@@ -358,7 +358,7 @@ $("#create-record-form-container").dialog({
   autoOpen: false,
   draggable: false,
   title: "Create New User",
-  Width: 50,
+  width: 300,
   height: 500,
   buttons: [
     {

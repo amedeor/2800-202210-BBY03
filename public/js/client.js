@@ -1,27 +1,16 @@
 "use strict";
 
 const loginButton = document.querySelector("#login-button");
-
 const signupButton = document.querySelector("#signup-button");
-
 const goToSignupButton = document.querySelector("#go-to-signup-button");
-
 const viewUserAccountsButton = document.querySelector("#view-user-accounts-button");
-
 const logoutIcon = document.querySelector("#logout-icon");
-
 const profileIcon = document.querySelector("#profile-icon");
-
 const logoutButton = document.querySelector("#logout-button");
-
 const profileButton = document.querySelector("#profile-button");
-
 const browseIcon = document.querySelector("#browse-icon");
-
 const browseButton = document.querySelector("#browse-button");
-
 const listIcon = document.querySelector("#list-icon");
-
 
 if (listIcon != null) {
   listIcon.addEventListener("click", async e => {
@@ -39,7 +28,6 @@ if (browseIcon != null) {
     }
   });
 }
-
 
 // Check if the logout icon is null, if it is not, attach an event listener to the link that will fire the /logout get request
 if (logoutIcon != null) {
@@ -120,7 +108,6 @@ if (signupButton != null) {
       let signupEmail = signupEmailElement.value;
       let signupUsername = signupUsernameElement.value;
       let signupPassword = signupPasswordElement.value;
-
 
       let response = await fetch("/createUser", {
         method: "post",

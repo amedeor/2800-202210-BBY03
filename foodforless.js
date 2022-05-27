@@ -69,9 +69,7 @@ app.get("/get-user", async (req, res) => {
   });
 
   connection.end();
-  
   res.send({ status: "success", rows: results });
-  
 });
 
 app.post("/delete-photo", async (req, res) => {
@@ -101,7 +99,7 @@ app.get("/browse-deals", (req, res) => {
   } else {
     res.redirect("/");
   }
-})
+});
 
 app.get("/get-all-deals", async (req, res) => {
   if (req.session.loggedIn === true) {
@@ -115,7 +113,6 @@ app.get("/get-all-deals", async (req, res) => {
       multipleStatements: true
     });
     await connection.connect();
-
 
     let [dealResults, dealFields] = await connection.query("SELECT deal_id, user_id, deal_name, deal_price, deal_description, deal_store_location, deal_post_date_time, deal_expiry_date FROM BBY_03_deal");
 
@@ -132,14 +129,10 @@ app.get("/get-all-deals", async (req, res) => {
       deals.push({ "deal_id": deal.deal_id, "user_id": deal.user_id, "deal_name": deal.deal_name, "deal_price": deal.deal_price, "deal_description": deal.deal_description, "deal_store_location": deal.deal_store_location, "deal_post_date_time": deal.deal_post_date_time, "deal_expiry_date": deal.deal_expiry_date, "photos": photoUrls });
     }
 
-
     connection.end();
-
     res.send({ "allDeals": deals });
-  } 
+  }
 });
-
-
 
 app.get("/get-deals", async (req, res) => {
   if (req.session.loggedIn === true) {
@@ -175,9 +168,7 @@ app.get("/get-deals", async (req, res) => {
     }
 
     connection.end();
-
     res.send({ "usersDeals": deals });
-    
   }
 });
 
@@ -234,7 +225,6 @@ app.post("/post-deal", upload.array("files"), async (req, res) => {
     }
 
     connection.end();
-
     res.send({ "status": "success", "message": "Post created successfully." });
   }
 });
@@ -287,19 +277,15 @@ app.post("/update-deal", upload.array("files"), async (req, res) => {
     }
 
     connection.end();
-
     res.send({ status: "success", message: "Record successfully updated." });
-
   }
 });
-
 
 app.post("/remove-deal", async (req, res) => {
   if (req.session.loggedIn === true) {
     res.setHeader('Content-Type', 'application/json');
 
     let dealID = req.body.dealID;
-
 
     const connection = await mysql.createConnection({
       host: databaseHost,
@@ -327,13 +313,11 @@ app.post("/remove-deal", async (req, res) => {
         }
       });
 
-      connection.end();
-
+    connection.end();
     res.send({ status: "success", message: "Record successfully updated." });
-    
+
   }
 });
-
 
 //the argument to single is the name of the HTML input element that is uploading the file
 app.post("/upload-image", upload.single("file"), async (req, res) => {
@@ -362,7 +346,6 @@ app.post("/upload-image", upload.single("file"), async (req, res) => {
       req.session.avatarUrl = savedFileName;
 
       connection.end();
-
       res.send({ status: "success", message: "Image uploaded successfully." })
     }
   }
@@ -381,16 +364,13 @@ app.post("/edit-image", upload.single("file"), async (req, res) => {
       });
 
       await connection.connect();
-
       await connection.query("UPDATE BBY_03_photo SET photo_url = ? WHERE photo_id = ?", [savedFileName, req.body.photoId]);
 
       connection.end();
-
       res.send({ "status": "success", "message": "Image uploaded successfully." })
-      
     }
   }
-})
+});
 
 app.get("/profile", async (req, res) => {
   if (req.session.loggedIn === true) {
@@ -458,7 +438,6 @@ app.get("/profile", async (req, res) => {
 
       userTypeParagraph.insertAdjacentText("beforeend", `User type: `);
       userTypeSpan.insertAdjacentText("beforeend", req.session.usertype);
-
 
       let profileInfoElement = profileDOM.window.document.querySelector("#profile-info");
 
@@ -600,7 +579,6 @@ app.post("/login", async (req, res) => {
   //BINARY makes the password query case sensitive
   let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ? AND BINARY user_password = ? ", [username, password]);
 
-
   if (results.length === 0) {
     res.send({ "status": "fail", "message": "Incorrect username or password" });
   } else {
@@ -628,10 +606,8 @@ app.post("/login", async (req, res) => {
     req.session.avatarUrl = retrievedAvatarUrl;
 
     connection.end();
-
     res.send({ status: "success", message: "Logged in" });
   }
-  
 });
 
 app.post("/createUser", async (req, res) => {
@@ -663,7 +639,6 @@ app.post("/createUser", async (req, res) => {
     await connection.query(userRecord, [recordValues]);
 
     req.session.loggedIn = true;
-
     req.session.username = recordValues[0];
     req.session.firstName = recordValues[1];
     req.session.lastName = recordValues[2];
@@ -672,7 +647,6 @@ app.post("/createUser", async (req, res) => {
     req.session.avatarUrl = recordValues[6];
 
     connection.end();
-
     res.send({ status: "success", message: "Logged in" });
   } else {
     res.send({ "status": "fail", "message": "Email or Username is already in use" });
@@ -703,21 +677,15 @@ app.post("/admin-create-user", async (req, res) => {
   let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_username = ? OR user_email = ?", [createUsername, createEmail]);
 
   if (results.length === 0) {
-
     let userRecord = "INSERT INTO BBY_03_user (user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url) values (?)";
-
     let recordValues = [createUsername, createFirstname, createLastname, createEmail, createPassword, createUsertype, createUserAvatarUrl];
-
     await connection.query(userRecord, [recordValues]);
-
     connection.end();
-
     res.send({ "status": "success", "message": "User created!" });
   } else {
     res.send({ "status": "fail", "message": "Email or Username is already in use" });
   }
 });
-
 
 app.post("/deleteUsers", async (req, res) => {
   if (req.session.loggedIn && req.session.usertype === "admin") {
@@ -735,12 +703,21 @@ app.post("/deleteUsers", async (req, res) => {
     await connection.connect();
     let [results, fields] = await connection.query("SELECT user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_type, user_avatar_url FROM BBY_03_user WHERE user_id = ? OR user_username = ?", [deleteID, deleteUsername]);
 
+    //Get all deal ids based on the user id for the user that is to be deleted
+    let [dealResults, dealFields] = await connection.query("SELECT deal_id from BBY_03_deal WHERE user_id = ?", [deleteID]);
+
     if (results.length === 0) {
       res.send({ "status": "fail", "message": "No User with that id or username found" });
     } else {
       if (deleteUsername != req.session.username) {
+
+        //delete each photo based on the deal_id of the user that is to be deleted
+        for (let deal of dealResults) {
+          await connection.query("DELETE FROM BBY_03_photo WHERE fk_photo_deal_id = ?", [deal.deal_id]);
+        }
+
+        await connection.query("DELETE FROM BBY_03_deal WHERE user_id = ?", [deleteID]);
         await connection.query("DELETE FROM BBY_03_user WHERE user_id = ? AND user_username = ?", [deleteID, deleteUsername]);
-      
         connection.end();
       } else {
         res.send({ status: "fail", message: "Can't delete your own account!" });
@@ -783,7 +760,6 @@ app.get("/get-users", async (req, res) => {
 app.post("/update-user-id", async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
-  
   let userId = req.body.id;
   let username = req.body.username;
   let firstname = req.body.firstname;
@@ -809,25 +785,24 @@ app.post("/update-user-id", async (req, res) => {
         console.log(error);
       }
     });
-    connection.end();
-    if (req.session.userId == userId) {
-      req.session.username = username;
-      req.session.firstname = firstname;
-      req.session.lastname = lastname;
-      req.session.email = email;
-      req.session.password = password;
-      req.session.usertype = usertype;
-      req.session.userAvatarUrl = userAvatarUrl;
-    }
+  connection.end();
+  if (req.session.userId == userId) {
+    req.session.username = username;
+    req.session.firstname = firstname;
+    req.session.lastname = lastname;
+    req.session.email = email;
+    req.session.password = password;
+    req.session.usertype = usertype;
+    req.session.userAvatarUrl = userAvatarUrl;
+  }
   res.send({ status: "success", message: "Record successfully updated." });
-  
+
 });
 
 app.post("/update-user", async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
   let currentUsername = req.body.currentUsername;
-
   let username = req.body.username;
   let firstname = req.body.firstname;
   let lastname = req.body.lastname;
@@ -853,7 +828,6 @@ app.post("/update-user", async (req, res) => {
     });
 
   //update session variables with new info from database
-
   req.session.username = username;
   req.session.password = password;
   req.session.firstName = firstname;
@@ -864,7 +838,7 @@ app.post("/update-user", async (req, res) => {
   connection.end();
 
   res.send({ status: "success", msg: "User successfully updated." });
-  
+
 });
 
 app.get("/logout", function (req, res) {

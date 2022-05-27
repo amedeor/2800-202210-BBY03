@@ -5,13 +5,9 @@ getAllDeals();
 // Retrieves and populates all posted deals onto the page
 async function getAllDeals() {
   let dealsContainer = document.querySelector("#deals");
-
   let response = await fetch("/get-all-deals");
-  
   let parsedResponse = await response.json();
 
-  console.log(parsedResponse);
-  
     dealsContainer.innerHTML = "";
   
     //allDeals is the name of the variable that holds the json sent from the server
@@ -31,36 +27,29 @@ async function getAllDeals() {
       userIdParagraph.setAttribute("id", "useridparagraph");
       let userIdSpan = document.createElement("span");
   
-  
       let dealNameParagraph = document.createElement("p");
       dealNameParagraph.setAttribute("id", "dealnameparagraph");
       let dealNameSpan = document.createElement("span");
-  
   
       let dealPriceParagraph = document.createElement("p");
       dealPriceParagraph.setAttribute("id", "dealpriceparagraph");
       let dealPriceSpan = document.createElement("span");
   
-  
       let dealPostDateParagraph = document.createElement("p");
       dealPostDateParagraph.setAttribute("id", "dealpostdateparagraph");
       let dealPostSpan = document.createElement("span");
-  
   
       let dealExpiryDateParagraph = document.createElement("p");
       dealExpiryDateParagraph.setAttribute("id", "dealexpirydateparagraph");
       let dealExpiryDateSpan = document.createElement("span");
   
-  
       let dealDescriptionParagraph = document.createElement("p");
       dealDescriptionParagraph.setAttribute("id", "dealdescriptionparagraph");
       let dealDescriptionSpan = document.createElement("span");
   
-  
       let dealStoreLocationParagraph = document.createElement("p");
       dealStoreLocationParagraph.setAttribute("id", "dealstorelocationparagraph");
       let dealStoreLocationSpan = document.createElement("span");
-  
   
       //This block of code to calculate the local time using the built in JavaScript getTimezoneOffset() function is from 
       //https://stackoverflow.com/questions/7403486/add-or-subtract-timezone-difference-to-javascript-date
@@ -133,9 +122,8 @@ async function getAllDeals() {
   
       //put the photos container inside the deal container
       dealContainer.insertAdjacentElement("beforeend", photosContainer);
-    
-      dealsContainer.insertAdjacentElement("beforeend", dealContainer);
     }
+    dealsContainer.insertAdjacentElement("beforeend", dealContainer);
   }
 }
 
